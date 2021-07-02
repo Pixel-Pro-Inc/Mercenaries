@@ -18,13 +18,19 @@ namespace Assets.Entities
 
         public class Nth_Metal : Items, IItemTraits //this is how all items will be defined
         {
+            public static Nth_Metal instance { get; set; }
+            public Nth_Metal()
+            {
+                instance = this;
+            }
+            //Nth_Metal Nth = new Nth_Metal(); This is supposed to be aa geberal instance, not a specific one
             public string ItemName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public string ItemDescription { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
             public bool ActivationRequireMent()
             {
                 throw new NotImplementedException();
-                this.PassiveTraitsState = true;
+                instance.PassiveTraitsState = true;
             }
 
             public void UniqueActiveBuff()

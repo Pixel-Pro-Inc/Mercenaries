@@ -85,6 +85,13 @@ namespace Assets.Entities
             public int Stamina { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public string MinionName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public string MinionDescription { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public List<string> NaturalAllies { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public List<string> NaturalEnemies { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+            public bool ActivationRequireMent()
+            {
+                throw new NotImplementedException();
+            }
 
             public void UniqueActiveBuff()
             {

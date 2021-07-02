@@ -10,15 +10,15 @@ namespace Assets.Entities
     //situation on whether or not those objects are implemented.
     class Cards
     {
-        public bool PassiveTraitsState { get; set; }
-        public void passiveTraits()
+        internal bool PassiveTraitsState { get; set; }
+        internal void passiveTraits()
         {
 
         }
-        public float Cost;
-        public int CardId;
-        public string CardType { get; set; }//This describes what kind of card it is eg, Item, character, minion
-        public string CardCoverImagepath;
-        public string CardFaceImagepath;
+        internal float Cost { get; set; }
+        internal int CardId { get; set; }
+        internal string CardType { get; set; }//This describes what kind of card it is eg, Item, character, minion
+        internal string CardCoverImagepath { get; set; }//whatever
+        internal string CardFaceImagepath { get; set; }
     }
 }
