@@ -11,14 +11,14 @@ namespace Assets.TraitInterface
         /*
          Here we declare all the traits expected of anything (Anyone) that can be described as a warrior (For both playable and NPC)
          */
-        public string BriefDescription { get; set; }
-        public List<string> NaturalAllies { get; set; }
-        public List<string> NaturalEnemies { get; set; }
-        public bool PassiveWarriorTraits { get; set; }
+        string BriefDescription { get; set; }
+        List<string> NaturalAllies { get; set; }
+        List<string> NaturalEnemies { get; set; }
+        bool PassiveWarriorTraits { get; set; }
 
         #region PassiveWarriorTraits
-        public void ActiveBuff();
-        public void ActiveDeBuff();
+        void ActiveBuff();
+        void ActiveDeBuff();
 
         #endregion
     }

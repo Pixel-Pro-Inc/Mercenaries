@@ -11,14 +11,14 @@ namespace Assets.TraitInterface.CombantantType
         /*
          Here we declare all the traits expected of anything (Anyone) that can be described as a Debuffers (For both playable and NPC)
          */
-        public string BriefDescription { get; set; }
-        public List<string> NaturalAllies { get; set; }
-        public List<string> NaturalEnemies { get; set; }
-        public bool PassiveDebufferTraits { get; set; }
+        string BriefDescription { get; set; }
+        List<string> NaturalAllies { get; set; }
+        List<string> NaturalEnemies { get; set; }
+        bool PassiveDebufferTraits { get; set; }
 
         #region PassiveDebufferTraits
-        public void ActiveBuff();
-        public void ActiveDeBuff();
+        void ActiveBuff();
+        void ActiveDeBuff();
 
         #endregion
     }

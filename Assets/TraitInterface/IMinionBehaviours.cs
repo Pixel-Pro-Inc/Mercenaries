@@ -11,19 +11,19 @@ namespace Assets.TraitInterface
         /*
          Here we declare all the traits expected of anything that can be described as a Minion 
          */
-        public string MinionName { get; set; }
-        public string MinionDescription { get; set; } //Here the description of the minion will be defined
-        public List<string> NaturalAllies { get; set; }
-        public List<string> NaturalEnemies { get; set; }
-        public bool ActivationRequireMent();
+        string MinionName { get; set; }
+        string MinionDescription { get; set; } //Here the description of the minion will be defined
+        List<string> NaturalAllies { get; set; }
+        List<string> NaturalEnemies { get; set; }
+        bool ActivationRequireMent();
 
         #region Abilities
 
         //Here you might want to declare the passivetraits/methods as well
 
 
-        public void UniqueActiveBuff();
-        public void UniqueActiveDeBuff();
+        void UniqueActiveBuff();
+        void UniqueActiveDeBuff();
 
 
         #endregion
@@ -35,13 +35,13 @@ namespace Assets.TraitInterface
 
 
         //I was having trouble setting the properties of these varibale with limitations. Something about 'targert runtime doesnt support default interface implementation' 
-        public int Health
+        int Health
         {
             get; set;
             //get { return Health; }
             //set { if (Health > 100) { Health = 100; } }
         }
-        public int Stamina //I assume the hunger method will affect this trait
+        int Stamina //I assume the hunger method will affect this trait
         {
             get; set;
             // get { return Stamina; }
@@ -52,9 +52,9 @@ namespace Assets.TraitInterface
 
         //Here i thought of including all the weird dances and jumps and sounds It might make or do
 
-        public void WeirdDance();
-        public void WeirdVoice();
-        public void WeirdAction();
+        void WeirdDance();
+        void WeirdVoice();
+        void WeirdAction();
         #endregion
     }
 }

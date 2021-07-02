@@ -11,26 +11,26 @@ namespace Assets.TraitInterface
         /*
          Here we declare all the traits expected of anything (Anyone) that can be described as a character (For both playable and NPC)
          */
-        public string CharacterName { get; set; }
-        public string CharacterDescription { get; set; } //Here the personality and backstory of a unique character will be defined
+        string CharacterName { get; set; }
+        string CharacterDescription { get; set; } //Here the personality and backstory of a unique character will be defined
        
         #region Abilities
 
-        public void UniqueActiveBuff();
-        public void UniqueActiveDeBuff();
+        void UniqueActiveBuff();
+        void UniqueActiveDeBuff();
 
 
         #endregion
         #region Stats
 
         //I was having trouble setting the properties of these varibale with limitations. Something about 'targert runtime doesnt support default interface implementation' 
-        public int Health
+        int Health
         {
             get; set;
             //get { return Health; }
             //set { if (Health > 100) { Health = 100; } }
         }
-        public int Mana
+        int Mana
         {
             get; set;
             // get { return Mana; }
@@ -40,7 +40,7 @@ namespace Assets.TraitInterface
             //Pluss in my head the cards that a character will be able to use from the many cards on deck will be dependant on the amount of mana the individual 
             //character has currently
         }
-        public int Stamina //I assume the hunger method will affect this trait
+        int Stamina //I assume the hunger method will affect this trait
         {
             get; set;
             // get { return Stamina; }

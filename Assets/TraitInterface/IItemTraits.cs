@@ -12,14 +12,14 @@ namespace Assets.TraitInterface
          Here we declare all the traits expected of anything (Anyone) that can be described as a character (For both playable and NPC)
          */
 
-        public string ItemName { get; set; }
-        public string ItemDescription { get; set; }//A Brief description of what the item does and what its worth in a desired currency
-        public bool ActivationRequireMent();
+        string ItemName { get; set; }
+        string ItemDescription { get; set; }//A Brief description of what the item does and what its worth in a desired currency
+        bool ActivationRequireMent();
         #region Abilities
 
 
-        public void UniqueActiveBuff();
-        public void UniqueActiveDeBuff();
+        void UniqueActiveBuff();
+        void UniqueActiveDeBuff();
 
 
         #endregion
