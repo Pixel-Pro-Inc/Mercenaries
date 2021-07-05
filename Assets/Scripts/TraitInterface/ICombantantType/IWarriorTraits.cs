@@ -19,7 +19,6 @@ namespace Assets.TraitInterface
         #region PassiveWarriorTraits
         void ActiveBuff();
         void ActiveDeBuff();
-
         #endregion
     }
 }
