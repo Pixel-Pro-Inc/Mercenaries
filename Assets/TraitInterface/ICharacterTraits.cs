@@ -46,6 +46,7 @@ namespace Assets.TraitInterface
             // get { return Stamina; }
             //set { if (Stamina > 100) { Stamina = 100; } 
         }
+        int ExpPoints { get; set; }//set=> if(expPoints>1000){instance.ExperinceLevel.Index++; expPoints=0;}
         #endregion
 
     }

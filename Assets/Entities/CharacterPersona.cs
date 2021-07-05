@@ -47,6 +47,16 @@ namespace Assets.Entities
             Triton,
             Unknown
         };
+        internal enum ExperinceLevel
+        {
+            Beginner,
+            novice,
+            Intermediate,
+            Accomplished,
+            Master,
+            Sage,
+            Ancient_One
+        };
         #endregion
         //below is an example of how peter is going to be defined
         public class Peter : CharacterPersona, ICharacterTraits, IWarriorTraits
@@ -60,6 +70,7 @@ namespace Assets.Entities
             public List<string> NaturalAllies { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public List<string> NaturalEnemies { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public bool PassiveWarriorTraits { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public int ExpPoints { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
             //Here you might want to declare the passivetraits/methods as well
 
