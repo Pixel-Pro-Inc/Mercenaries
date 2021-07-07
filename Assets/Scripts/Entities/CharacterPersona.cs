@@ -274,61 +274,14 @@ namespace Assets.Entities
             public void LevelIncrease()
             {
                 Instance.ExperienceLevel++;
-                #region Health
                 if (Foe == false)
                 {
                     Instance.Health += 10;
-                }
-                else
-                {
-                    Instance.Health += 5;
-                }
-                #endregion
-                #region dodge
-                if (Foe == false)
-                {
                     Instance.dodge += 2;
-                }
-                else
-                {
-                    Instance.dodge += 2;
-                }
-                #endregion
-                #region Speed
-                if (Foe == false)
-                {
                     Instance.Speed += 2;
-                }
-                else
-                {
-                    Instance.Speed += 1;
-                }
-                #endregion
-                #region CritC
-                if (Foe == false)
-                {
                     Instance.CritC += 1;
-                }
-                else
-                {
-                    Instance.CritC += 1;
-                }
-                #endregion
-                #region MagicRes & Armour
-                if (Foe == false)
-                {
                     Instance.MagicRes += 1;
                     Instance.Armour += 1;
-                }
-                else
-                {
-                    Instance.MagicRes += 0;
-                    Instance.Armour += 0;
-                }
-                #endregion
-                #region Damage
-                if (Foe == false)
-                {
                     if (LowDamageWarrior == true) Instance.Damage += 3;
                     else
                     {
@@ -337,13 +290,18 @@ namespace Assets.Entities
                 }
                 else
                 {
+                    Instance.Health += 5;
+                    Instance.dodge += 2;
+                    Instance.Speed += 1;
+                    Instance.CritC += 1;
+                    Instance.MagicRes += 0;
+                    Instance.Armour += 0;
                     if (LowDamageWarrior == true) Instance.Damage += 1;
                     else
                     {
                         Instance.Damage += 2;
                     }
                 }
-                #endregion
                 //fire levelIncrease animation
             }
             public void XPIncrease(bool earnXp, int newEarnedXp)
@@ -371,24 +329,122 @@ namespace Assets.Entities
             #region Character variables
             public string CharacterName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public string CharacterDescription { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-            public int Health { get { return Health; } set { Health = 35; if (Health > 100) Health = 100; if (Health < 0) Health = 0; } }
-            public int dodge { get { return dodge; } set { dodge = 1; } }
-            public int Speed { get { return Speed; } set { Speed = 1; } }
-            public double CritC { get { return CritC; } set { CritC = 8; } }
-            public int MagicRes { get { return MagicRes; } set { MagicRes = 5; } }
-            public int Armour { get { return Armour; } set { Armour = 3; } }
+            public int Health
+            {
+                get { return Health; }
+                set
+                {
+                    if (Foe == false)
+                    {
+                        Health = 35; if (Health > 100) Health = 100; if (Health < 0) Health = 0; 
+                    }
+                    else
+                    {
+                        Health = 25; if (Health > 100) Health = 100; if (Health < 0) Health = 0;
+                    }
+                }
+            }
+            public int dodge
+            {
+                get { return dodge; }
+                set
+                {
+                    if (Foe == false)
+                    {
+                        dodge = 1;
+                    }
+                    else
+                    {
+                        dodge = 0;
+                    }
+                }
+            }
+            public int Speed
+            {
+                get { return Speed; }
+                set
+                {
+                    if (Foe == false)
+                    {
+                        Speed = 1;
+                    }
+                    else
+                    {
+                        Speed = 1;
+                    }
+                }
+            }
+            public double CritC
+            {
+                get { return CritC; }
+                set
+                {
+                    if (Foe == false)
+                    {
+                        CritC = 8;
+                    }
+                    else
+                    {
+                        CritC = 1;
+                    }
+                }
+            }
+            public int MagicRes
+            {
+                get { return MagicRes; }
+                set
+                {
+                    if (Foe == false)
+                    {
+                        MagicRes = 5;
+                    }
+                    else
+                    {
+                        MagicRes = 5;
+                    }
+                }
+            }
+            public int Armour
+            {
+                get { return Armour; }
+                set
+                {
+                    if (Foe == false)
+                    {
+                        Armour = 3;
+                    }
+                    else
+                    {
+                        Armour = 5;
+                    }
+                }
+            }
             public int Damage
             {
                 get { return Damage; }
                 set
                 {
-                    if (LowDamageTankWarrior == true)
+                    if (Foe == false)
                     {
-                        Damage = 8;
+                        if (LowDamageTankWarrior == true)
+                        {
+                            Damage = 8;
+                        }
+                        else
+                        {
+                            Damage = 13;
+                        }
                     }
                     else
                     {
-                        Damage = 13;
+                        if (LowDamageTankWarrior == true)
+                        {
+                            Damage = 2;
+                        }
+                        else
+                        {
+                            Damage = 4;
+                        }
                     }
                 }
             }
@@ -463,17 +519,34 @@ namespace Assets.Entities
 
             public void LevelIncrease()
             {
-                Instance.ExperienceLevel++;
-                Instance.Health += 12;
-                Instance.dodge += 1;
-                Instance.Speed += 1;
-                Instance.CritC += 1;
-                Instance.MagicRes += 1;
-                Instance.Armour += 2;
-                if (LowDamageTankWarrior == true) Instance.Damage += 2;
+                if (Foe == false)
+                {
+
+                    Instance.Health += 12;
+                    Instance.dodge += 1;
+                    Instance.Speed += 1;
+                    Instance.CritC += 1;
+                    Instance.MagicRes += 1;
+                    Instance.Armour += 2;
+                    if (LowDamageTankWarrior == true) Instance.Damage += 2;
+                    else
+                    {
+                        Instance.Damage += 2;
+                    }
+                }
                 else
                 {
-                    Instance.Damage += 2;
+                    Instance.Health += 8;
+                    Instance.dodge += 0;
+                    Instance.Speed += 1;
+                    Instance.CritC += 1;
+                    Instance.MagicRes += 1;
+                    Instance.Armour += 2;
+                    if (LowDamageTankWarrior == true) Instance.Damage += 1;
+                    else
+                    {
+                        Instance.Damage += 1;
+                    }
                 }
                 //fire levelIncrease animation
             }
