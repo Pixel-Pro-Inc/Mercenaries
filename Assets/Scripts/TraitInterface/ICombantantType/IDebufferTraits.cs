@@ -15,6 +15,7 @@ namespace Assets.TraitInterface.CombantantType
         List<string> NaturalAllies { get; set; }
         List<string> NaturalEnemies { get; set; }
         bool PassiveDebufferTraits { get; set; }
+        bool LowDamageDebuffer { get; set; }
 
         #region PassiveDebufferTraits
         void ActiveBuff();

@@ -15,6 +15,7 @@ namespace Assets.TraitInterface.CombantantType
         List<string> NaturalAllies { get; set; }
         List<string> NaturalEnemies { get; set; }
         bool PassiveArcherTraits { get; set; }
+        bool LowDamageArcher { get; set; }
 
         #region PassiveArcherTraits
         void ActiveBuff();

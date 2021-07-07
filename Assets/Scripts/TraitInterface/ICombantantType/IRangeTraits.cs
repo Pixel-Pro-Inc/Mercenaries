@@ -15,6 +15,7 @@ namespace Assets.TraitInterface.CombantantType
         List<string> NaturalAllies { get; set; }
         List<string> NaturalEnemies { get; set; }
         bool PassiveRangeTraits { get; set; }
+        bool LowDamageRange { get; set; }
 
         #region PassiveRangeTraits
         void ActiveBuff();

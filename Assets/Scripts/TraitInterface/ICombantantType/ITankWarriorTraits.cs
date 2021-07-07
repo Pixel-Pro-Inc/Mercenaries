@@ -15,6 +15,7 @@ namespace Assets.TraitInterface.CombantantType
         List<string> NaturalAllies { get; set; }
         List<string> NaturalEnemies { get; set; }
         bool PassiveTankTraits { get; set; }
+        bool LowDamageTankWarrior { get; set; }
 
         #region PassiveTankTraits
         void ActiveBuff();

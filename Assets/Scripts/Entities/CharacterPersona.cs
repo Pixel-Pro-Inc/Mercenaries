@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.TraitInterface;
 using Assets.TraitInterface;
+using Assets.TraitInterface.CombantantType;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -66,8 +67,8 @@ namespace Assets.Entities
             public int MagicRes { get => throw new NotImplementedException(); set { MagicRes = 2; } }
             public int Armour { get => throw new NotImplementedException(); set { Armour = 2; } }
             public int Damage 
-            { 
-                get => throw new NotImplementedException(); 
+            {
+                get { return Damage; }
                 set 
                 {
                     if (LowDamageWarrior==true)
@@ -173,7 +174,6 @@ namespace Assets.Entities
             //Experince methods
             public void LevelIncrease()
             {
-                //The only place ExperienceLevel is defined is in the CharacterPersona class and its used only here so far
                 Instance.ExperienceLevel++;
                 Instance.Health += 10;
                 Instance.dodge += 2;
@@ -197,6 +197,144 @@ namespace Assets.Entities
 
             #endregion
 
+        }
+        #endregion
+        #region TankWarriorCharacter Template
+
+        public class TankWarriorTemplate : CharacterPersona, ICardTraits, ICharacterTraits, ITankWarriorTraits
+        {
+            public static TankWarriorTemplate Instance { get; set; }
+            public TankWarriorTemplate()
+            {
+                Instance = this;
+            }
+
+
+            #region Character variables
+            public string CharacterName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public string CharacterDescription { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public int Health { get { return Health; } set { Health = 35; if (Health > 100) Health = 100; if (Health < 0) Health = 0; } }
+            public int dodge { get { return dodge; } set { dodge = 1; } }
+            public int Speed { get { return Speed; } set { Speed = 1; } }
+            public double CritC { get { return CritC; } set { CritC = 8; } }
+            public int MagicRes { get { return MagicRes; } set { MagicRes = 5; } }
+            public int Armour { get { return Armour; } set { Armour = 3; } }
+            public int Damage
+            {
+                get { return Damage; }
+                set
+                {
+                    if (LowDamageTankWarrior == true)
+                    {
+                        Damage = 8;
+                    }
+                    else
+                    {
+                        Damage = 13;
+                    }
+                }
+            }
+            public int Mana { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public int Stamina { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public int ExpPoints
+            {
+                get { return ExpPoints; }
+                set
+                {
+                    if (true/*sessionStarted?*/)
+                    {
+                        Instance.ExpPoints += NewEarnedXp;
+                    }
+                    if (Instance.ExpPoints > 1000)
+                    {
+                        Instance.LevelIncrease();
+                        Instance.ExpPoints -= 1000;
+                    }
+                }
+            }
+            public int NewEarnedXp
+            {
+                get { return NewEarnedXp; }
+                set
+                {
+                    if (EarnedXp == true)
+                    {
+                        Instance.NewEarnedXp = NewEarnedXp;
+                    }
+                    else
+                    {
+                        Instance.NewEarnedXp = 0;
+                    }
+                }
+            }
+            public bool EarnedXp
+            {
+                get { return EarnedXp; }
+                set
+                {
+                    if (true)
+                    {
+                        //SessionOver?EarnedXp=false;
+                    }
+                }
+            } //This bool is made true when XPIncrease is fired and should be made of when sessionOver is true
+            public string BriefDescription { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public List<string> NaturalAllies { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public List<string> NaturalEnemies { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public bool PassiveTankTraits { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public bool LowDamageTankWarrior { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+            #endregion
+            #region Character Methods
+
+            void ICardTraits.passiveTraits()
+            {
+                throw new NotImplementedException();
+            }
+
+            public void UniqueActiveBuff()
+            {
+                throw new NotImplementedException();
+            }
+
+            public void UniqueActiveDeBuff()
+            {
+                throw new NotImplementedException();
+            }
+
+            public void LevelIncrease()
+            {
+                Instance.ExperienceLevel++;
+                Instance.Health += 12;
+                Instance.dodge += 1;
+                Instance.Speed += 1;
+                Instance.CritC += 1;
+                Instance.MagicRes += 1;
+                Instance.Armour += 2;
+                if (LowDamageTankWarrior == true) Instance.Damage += 2;
+                else
+                {
+                    Instance.Damage += 2;
+                }
+                //fire levelIncrease animation
+            }
+
+            public void XPIncrease(bool earnXp, int newEarnedXp)
+            {
+                EarnedXp = earnXp;
+                NewEarnedXp = newEarnedXp;
+            }
+
+            public void ActiveBuff()
+            {
+                throw new NotImplementedException();
+            }
+
+            public void ActiveDeBuff()
+            {
+                throw new NotImplementedException();
+            }
+            #endregion
         }
         #endregion
     }
