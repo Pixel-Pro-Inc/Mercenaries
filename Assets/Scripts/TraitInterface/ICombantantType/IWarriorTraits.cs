@@ -15,6 +15,7 @@ namespace Assets.TraitInterface
         List<string> NaturalAllies { get; set; }
         List<string> NaturalEnemies { get; set; }
         bool PassiveWarriorTraits { get; set; }
+        bool LowDamageWarrior { get; set; }
 
         #region PassiveWarriorTraits
         void ActiveBuff();

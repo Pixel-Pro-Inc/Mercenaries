@@ -25,6 +25,14 @@ namespace Assets.TraitInterface
 
         //I was having trouble setting the properties of these varibale with limitations. Something about 'targert runtime doesnt support default interface implementation' 
         int Health { get; set; }
+        int dodge { get; set; }
+        int Speed { get; set; }
+        double CritC { get; set; }
+        int MagicRes { get; set; }
+        int Armour { get; set; }
+        int Damage { get; set; }
+
+
         int Mana
         {
             get; set;

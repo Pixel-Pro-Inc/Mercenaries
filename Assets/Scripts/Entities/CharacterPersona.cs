@@ -59,13 +59,37 @@ namespace Assets.Entities
             #region Character variables
             public string CharacterName { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
             public string BriefDescription { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-            public int Health { get { return Health; } set { if (Health > 100)Health = 100; if (Health < 0) Health = 0; } }
+            public int Health { get { return Health; } set { Health = 33; if (Health > 100)Health = 100; if (Health < 0) Health = 0; } }
+            public int dodge { get => throw new NotImplementedException(); set { dodge = 6; } }
+            public int Speed { get => throw new NotImplementedException(); set { Speed = 1; } }
+            public double CritC { get => throw new NotImplementedException(); set { CritC = 6; } }
+            public int MagicRes { get => throw new NotImplementedException(); set { MagicRes = 2; } }
+            public int Armour { get => throw new NotImplementedException(); set { Armour = 2; } }
+            public int Damage 
+            { 
+                get => throw new NotImplementedException(); 
+                set 
+                {
+                    if (LowDamageWarrior==true)
+                    {
+                        Damage = 8;
+                    }
+                    else
+                    {
+                        Damage = 13;
+                    }
+                } 
+            }
+
+
             public int Mana { get { return Mana; } set { if (Mana > 100) Mana = 100; if (Mana < 0) Mana = 0; } }
             public int Stamina { get { return Stamina; } set { if (Stamina > 100) Stamina = 100; if (Stamina < 0) Stamina = 0; } }
             public string CharacterDescription { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public List<string> NaturalAllies { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public List<string> NaturalEnemies { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public bool PassiveWarriorTraits { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public bool LowDamageWarrior { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
             public int ExpPoints
             {
                 get { return ExpPoints; }
@@ -108,12 +132,13 @@ namespace Assets.Entities
                     }
                 }
             } //This bool is made true when XPIncrease is fired and should be made of when sessionOver is true
+            
 
             #endregion
             #region Character Methods
 
             //Here are the passive traits of the card themselves
-            public void passiveTraits()
+            public new void passiveTraits()
             {
                 throw new NotImplementedException();
             }
@@ -150,6 +175,17 @@ namespace Assets.Entities
             {
                 //The only place ExperienceLevel is defined is in the CharacterPersona class and its used only here so far
                 Instance.ExperienceLevel++;
+                Instance.Health += 10;
+                Instance.dodge += 2;
+                Instance.Speed += 2;
+                Instance.CritC += 1;
+                Instance.MagicRes += 1;
+                Instance.Armour += 1;
+                if (LowDamageWarrior == true) Instance.Damage += 3;
+                else
+                {
+                    Instance.Damage += 2;
+                }
                 //fire levelIncrease animation
             }
             public void XPIncrease(bool earnXp, int newEarnedXp)
