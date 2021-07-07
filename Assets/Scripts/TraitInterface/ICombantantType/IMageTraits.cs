@@ -16,6 +16,7 @@ namespace Assets.TraitInterface.CombantantType
         List<string> NaturalEnemies { get; set; }
         bool PassiveMageTraits { get; set; }
         bool LowDamageMage { get; set; }
+        bool SupportMage { get; set; }
 
         #region PassiveMageTraits
         void ActiveBuff();

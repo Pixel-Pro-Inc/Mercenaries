@@ -451,7 +451,7 @@ namespace Assets.Entities
                 {
                     Instance.MagicRes += 1;
                     Instance.Armour += 1;
-                }
+                }//I only wrote here +1 for both stats to fill it with something.But It was never specified what actually happens after Level 3
                 if (LowDamageRange == true) Instance.Damage += 2;
                 else
                 {
@@ -496,24 +496,112 @@ namespace Assets.Entities
 
             public string CharacterName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public string CharacterDescription { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-            public int Health { get { return Health; } set { Health = 20; if (Health > 100) Health = 100; if (Health < 0) Health = 0; } }
-            public int dodge { get { return dodge; } set { dodge = 5; } }
-            public int Speed { get { return Speed; } set { Speed = 1; } }
-            public double CritC { get { return CritC; } set { CritC = 4; } }
-            public int MagicRes { get { return MagicRes; } set { MagicRes = 2; } }
-            public int Armour { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public int Health 
+            {
+                get { return Health; }
+                set 
+                {
+
+                    if (SupportMage==false)
+                    {
+                        Health = 20; 
+                        if (Health > 100) Health = 100; if (Health < 0) Health = 0;
+                    }
+                    else
+                    {
+                        Health = 26;
+                        if (Health > 100) Health = 100; if (Health < 0) Health = 0;
+                    }
+
+                }
+            }
+            public int dodge
+            { 
+                get { return dodge; } 
+                set
+                {
+                    if (SupportMage==false)
+                    {
+                        dodge = 5;
+                    }
+                    else
+                    {
+                        dodge = 10;
+                    }
+                } 
+            }
+            public int Speed
+            {
+                get { return Speed; }
+                set
+                {
+                    if (SupportMage == false)
+                    {
+                        Speed = 1;
+                    }
+                    else
+                    {
+                        Speed = 10;
+                    }
+                }
+            }
+            public double CritC
+            {
+                get { return CritC; }
+                set
+                {
+                    if (SupportMage == false)
+                    {
+                        CritC = 4;
+                    }
+                    else
+                    {
+                        CritC = 1;
+                    }
+                }
+            }
+            public int MagicRes
+            {
+                get { return MagicRes; }
+                set
+                {
+                    if (SupportMage == false)
+                    {
+                        MagicRes = 2;
+                    }
+                    else
+                    {
+                        MagicRes = 1;
+                    }
+                }
+            }
+            public int Armour { get { return Armour; } set { Armour = 0; } }
             public int Damage
             {
                 get { return Damage; }
                 set
                 {
-                    if (LowDamageMage == true)
+                    if (SupportMage == false)
                     {
-                        Damage = 1;
+                        if (LowDamageMage == true)
+                        {
+                            Damage = 1;
+                        }
+                        else
+                        {
+                            Damage = 25;
+                        }
                     }
                     else
                     {
-                        Damage = 25;
+                        if (LowDamageMage == true)
+                        {
+                            Damage = 1;
+                        }
+                        else
+                        {
+                            Damage = 10;
+                        }
                     }
                 }
             }
@@ -566,6 +654,7 @@ namespace Assets.Entities
             public List<string> NaturalEnemies { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public bool PassiveMageTraits { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public bool LowDamageMage { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public bool SupportMage { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             #endregion
             #region Character Methods
 
@@ -587,21 +676,43 @@ namespace Assets.Entities
             public void LevelIncrease()
             {
                 Instance.ExperienceLevel++;
-                Instance.Health += 5;
-                Instance.dodge += 5;
-                Instance.Speed += 1;
-                Instance.CritC += 1;
-                if (ExperienceLevel > 3)
+                #region If Support variables Increase logic 
+                if (SupportMage == false)
                 {
-                    Instance.MagicRes += 1;
-                    Instance.Armour += 1;
+                    Instance.Health += 5;
+                    Instance.dodge += 5;
+                    Instance.Speed += 1;
+                    Instance.CritC += 1;
+                    #region Damage
+                    if (LowDamageMage == true) Instance.Damage += 5;
+                    else
+                    {
+                        Instance.Damage += 4;
+                    }
+                    #endregion
+                    if (ExperienceLevel > 3)
+                    {
+                        Instance.MagicRes += 1;
+                        Instance.Armour += 1;
+                    }//I only wrote here +1 for both stats to fill it with something.But It was never specified what actually happens after Level 3
                 }
-                if (LowDamageMage == true) Instance.Damage += 5;
                 else
                 {
-                    Instance.Damage += 4;
+                    Instance.Health += 5;
+                    Instance.dodge += 5;
+                    Instance.Speed += 6;
+                    Instance.CritC += 1;
+                    Instance.MagicRes += 1;
+                    Instance.Armour += 1;
+                    if (LowDamageMage == true) Instance.Damage += 3;
+                    else
+                    {
+                        Instance.Damage += 4;
+                    }
                 }
+                #endregion
                 //fire levelIncrease animation
+
             }
 
             public void XPIncrease(bool earnXp, int newEarnedXp)
