@@ -60,24 +60,122 @@ namespace Assets.Entities
             #region Character variables
             public string CharacterName { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
             public string BriefDescription { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-            public int Health { get { return Health; } set { Health = 33; if (Health > 100)Health = 100; if (Health < 0) Health = 0; } }
-            public int dodge { get => throw new NotImplementedException(); set { dodge = 6; } }
-            public int Speed { get => throw new NotImplementedException(); set { Speed = 1; } }
-            public double CritC { get => throw new NotImplementedException(); set { CritC = 6; } }
-            public int MagicRes { get => throw new NotImplementedException(); set { MagicRes = 2; } }
-            public int Armour { get => throw new NotImplementedException(); set { Armour = 2; } }
+            public int Health 
+            { 
+                get { return Health; }
+                set
+                {
+                    if (Foe == false)
+                    {
+                        Health = 33; if (Health > 100) Health = 100; if (Health < 0) Health = 0;
+                    }
+                    else
+                    {
+                        Health = 15; if (Health > 100) Health = 100; if (Health < 0) Health = 0;
+                    }
+                }
+            }
+            public int dodge
+            { 
+                get { return dodge; } 
+                set 
+                {
+                    if (Foe == false)
+                    {
+                        dodge = 6;
+                    }
+                    else
+                    {
+                        dodge = 0;
+                    }
+                } 
+            }
+            public int Speed
+            {
+                get { return Speed; }
+                set
+                {
+                    if (Foe == false)
+                    {
+                        Speed = 1;
+                    }
+                    else
+                    {
+                        Speed = 1;
+                    }
+                }
+            }
+            public double CritC
+            {
+                get { return CritC; }
+                set
+                {
+                    if (Foe == false)
+                    {
+                        CritC = 6;
+                    }
+                    else
+                    {
+                        CritC = 1;
+                    }
+                }
+            }
+            public int MagicRes
+            {
+                get { return MagicRes; }
+                set
+                {
+                    if (Foe == false)
+                    {
+                        MagicRes = 2;
+                    }
+                    else
+                    {
+                        MagicRes = 0;
+                    }
+                }
+            }
+            public int Armour
+            {
+                get { return Armour; }
+                set
+                {
+                    if (Foe == false)
+                    {
+                        Armour = 2;
+                    }
+                    else
+                    {
+                        Armour = 0;
+                    }
+                }
+            }
             public int Damage 
             {
                 get { return Damage; }
                 set 
                 {
-                    if (LowDamageWarrior==true)
+                    if (Foe == false)
                     {
-                        Damage = 8;
+                        if (LowDamageWarrior == true)
+                        {
+                            Damage = 8;
+                        }
+                        else
+                        {
+                            Damage = 13;
+                        }
                     }
                     else
                     {
-                        Damage = 13;
+                        if (LowDamageWarrior == true)
+                        {
+                            Damage = 3;
+                        }
+                        else
+                        {
+                            Damage = 6;
+                        }
                     }
                 } 
             }
@@ -88,6 +186,7 @@ namespace Assets.Entities
             public string CharacterDescription { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public List<string> NaturalAllies { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public List<string> NaturalEnemies { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public bool Foe { get { return Foe; } set { Foe = false; } }
             public bool PassiveWarriorTraits { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public bool LowDamageWarrior { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
@@ -133,7 +232,7 @@ namespace Assets.Entities
                     }
                 }
             } //This bool is made true when XPIncrease is fired and should be made of when sessionOver is true
-            
+
 
             #endregion
             #region Character Methods
@@ -175,17 +274,76 @@ namespace Assets.Entities
             public void LevelIncrease()
             {
                 Instance.ExperienceLevel++;
-                Instance.Health += 10;
-                Instance.dodge += 2;
-                Instance.Speed += 2;
-                Instance.CritC += 1;
-                Instance.MagicRes += 1;
-                Instance.Armour += 1;
-                if (LowDamageWarrior == true) Instance.Damage += 3;
+                #region Health
+                if (Foe == false)
+                {
+                    Instance.Health += 10;
+                }
                 else
                 {
-                    Instance.Damage += 2;
+                    Instance.Health += 5;
                 }
+                #endregion
+                #region dodge
+                if (Foe == false)
+                {
+                    Instance.dodge += 2;
+                }
+                else
+                {
+                    Instance.dodge += 2;
+                }
+                #endregion
+                #region Speed
+                if (Foe == false)
+                {
+                    Instance.Speed += 2;
+                }
+                else
+                {
+                    Instance.Speed += 1;
+                }
+                #endregion
+                #region CritC
+                if (Foe == false)
+                {
+                    Instance.CritC += 1;
+                }
+                else
+                {
+                    Instance.CritC += 1;
+                }
+                #endregion
+                #region MagicRes & Armour
+                if (Foe == false)
+                {
+                    Instance.MagicRes += 1;
+                    Instance.Armour += 1;
+                }
+                else
+                {
+                    Instance.MagicRes += 0;
+                    Instance.Armour += 0;
+                }
+                #endregion
+                #region Damage
+                if (Foe == false)
+                {
+                    if (LowDamageWarrior == true) Instance.Damage += 3;
+                    else
+                    {
+                        Instance.Damage += 2;
+                    }
+                }
+                else
+                {
+                    if (LowDamageWarrior == true) Instance.Damage += 1;
+                    else
+                    {
+                        Instance.Damage += 2;
+                    }
+                }
+                #endregion
                 //fire levelIncrease animation
             }
             public void XPIncrease(bool earnXp, int newEarnedXp)
@@ -281,6 +439,7 @@ namespace Assets.Entities
             public string BriefDescription { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public List<string> NaturalAllies { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public List<string> NaturalEnemies { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public bool Foe { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public bool PassiveTankTraits { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public bool LowDamageTankWarrior { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 

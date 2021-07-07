@@ -14,6 +14,7 @@ namespace Assets.TraitInterface
         string BriefDescription { get; set; }
         List<string> NaturalAllies { get; set; }
         List<string> NaturalEnemies { get; set; }
+        public bool Foe { get; set; }
         bool PassiveWarriorTraits { get; set; }
         bool LowDamageWarrior { get; set; }
 
