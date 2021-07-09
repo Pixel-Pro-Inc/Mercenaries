@@ -1441,24 +1441,122 @@ namespace Assets.Entities
 
             public string CharacterName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public string CharacterDescription { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-            public int Health { get { return Health; } set { Health = 28; if (Health > 100) Health = 100; if (Health < 0) Health = 0; } }
-            public int dodge { get { return dodge; } set { dodge = 8; } }
-            public int Speed { get { return Speed; } set { Speed = 6; } }
-            public double CritC { get { return CritC; } set { CritC = 6; } }
-            public int MagicRes { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-            public int Armour { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public int Health
+            {
+                get { return Health; }
+                set
+                {
+                    if (Foe == false)
+                    {
+                        Health = 28; if (Health > 100) Health = 100; if (Health < 0) Health = 0;
+                    }
+                    else
+                    {
+                        Health = 15; if (Health > 100) Health = 100; if (Health < 0) Health = 0;
+                    }
+                }
+            }
+            public int dodge
+            {
+                get { return dodge; }
+                set
+                {
+                    if (Foe == false)
+                    {
+                        dodge = 8;
+                    }
+                    else
+                    {
+                        dodge = 5;
+                    }
+                }
+            }
+            public int Speed
+            {
+                get { return dodge; }
+                set
+                {
+                    if (Foe == false)
+                    {
+                        Speed = 6;
+                    }
+                    else
+                    {
+                        Speed = 5;
+                    }
+                }
+            }
+            public double CritC
+            {
+                get { return CritC; }
+                set
+                {
+                    if (Foe == false)
+                    {
+                        CritC = 6;
+                    }
+                    else
+                    {
+                        CritC = 5;
+                    }
+                }
+            }
+            public int MagicRes
+            {
+                get { return MagicRes; }
+                set
+                {
+                    if (Foe == false)
+                    {
+                        MagicRes = 0;
+                    }
+                    else
+                    {
+                        MagicRes = 5;
+                    }
+                }
+            }
+            public int Armour
+            {
+                get { return Armour; }
+                set
+                {
+                    if (Foe == false)
+                    {
+                        Armour = 6;
+                    }
+                    else
+                    {
+                        Armour = 5;
+                    }
+                }
+            }
             public int Damage
             {
                 get { return Damage; }
                 set
                 {
-                    if (LowDamageArcher == true)
+                    if (Foe == false)
                     {
-                        Damage = 4;
+                        if (LowDamageArcher == true)
+                        {
+                            Damage = 4;
+                        }
+                        else
+                        {
+                            Damage = 16;
+                        }
                     }
                     else
                     {
-                        Damage = 16;
+                        if (LowDamageArcher == true)
+                        {
+                            Damage = 1;
+                        }
+                        else
+                        {
+                            Damage = 10;
+                        }
                     }
                 }
             }
@@ -1510,6 +1608,7 @@ namespace Assets.Entities
             public string BriefDescription { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public List<string> NaturalAllies { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public List<string> NaturalEnemies { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public bool Foe { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public bool PassiveArcherTraits { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public bool LowDamageArcher { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             #endregion
@@ -1534,21 +1633,39 @@ namespace Assets.Entities
             public void LevelIncrease()
             {
                 Instance.ExperienceLevel++;
-                Instance.Health += 8;
-                Instance.dodge += 4;
-                Instance.Speed += 4;
-                Instance.CritC += 2;
-                if (ExperienceLevel > 3)
+                if (Foe == false)
+                {
+                    Instance.Health += 8;
+                    Instance.dodge += 4;
+                    Instance.Speed += 4;
+                    Instance.CritC += 2;
+                    if (ExperienceLevel > 3)
                     {
                         Instance.MagicRes += 1;
                         Instance.Armour += 1;
                     }//I only wrote here +1 for both stats to fill it with something.But It was never specified what actually happens after Level 3
-                if (LowDamageArcher == true) Instance.Damage += 2;
+                    if (LowDamageArcher == true) Instance.Damage += 2;
+                    else
+                    {
+                        Instance.Damage += 3;
+                    }
+                    //fire levelIncrease animation
+                }
                 else
                 {
-                    Instance.Damage += 3;
+                    Instance.Health += 5;
+                    Instance.dodge += 2;
+                    Instance.Speed += 1;
+                    Instance.CritC += 1;
+                    Instance.MagicRes += 0;
+                    Instance.Armour += 0;
+                    if (LowDamageArcher == true) Instance.Damage += 1;
+                    else
+                    {
+                        Instance.Damage += 2;
+                    }
+                    //fire levelIncrease animation
                 }
-                //fire levelIncrease animation
             }
 
             public void XPIncrease(bool earnXp, int newEarnedXp)
