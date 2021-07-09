@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Assets.Entities
 {
-    class CharacterPersona: Cards
+    public class CharacterPersona: Cards
     {
         /*
          Here I planned on defining each unique character and all their traits and abilities (methods).
@@ -43,8 +43,7 @@ namespace Assets.Entities
             Fish,
             Salamander,
             Frog,
-            Triton,
-            Unknown
+            Triton
         };
         internal int ExperienceLevel;
         #endregion

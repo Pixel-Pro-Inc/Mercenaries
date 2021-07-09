@@ -1,16 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using static Assets.Entities.CharacterPersona;
 
 public class CharacterBehaviour : MonoBehaviour
 {
-    public Vector3[] positions = {new Vector3(-7.0f, -1.4f, 1.0f), new Vector3(-4.0f, -1.4f, 1.0f), new Vector3(-1.0f, -1.4f, 1.0f), new Vector3(2.0f, -1.4f, 1.0f)};
+    public Vector3[] positions = {new Vector3(-7.0f, -1.6f, 1.0f), new Vector3(-5.0f, -1.6f, 1.0f), new Vector3(-3.0f, -1.6f, 1.0f), new Vector3(-1.0f, -1.6f, 1.0f)};
     public GameObject parent;
     public Vector3 Goto;
+    public SpeciesType species;
+    public Image Deck;
     void Awake() 
     {
         parent = transform.parent.gameObject;
         Goto = transform.position;
+        Deck = GameObject.Find("Deck").GetComponent<Image>();
     }
     
     public void OnMouseDown()
@@ -23,6 +28,18 @@ public class CharacterBehaviour : MonoBehaviour
                 Goto = positions[3];
             }
         }
+
+        SpeciesType[] array = (SpeciesType[])(SpeciesType.GetValues(typeof(SpeciesType)));
+        for (int i = 0; i < array.Length; i++)
+        {
+            if (array[i] == species)
+                Deck.sprite = DeckPopulate.Instance.cardsBack[i];
+
+            if (array[i] == species)
+                Deck.gameObject.GetComponent<SpeciesHolder>().type = array[i];
+        }
+
+        DeckPopulate.Instance.HideDeck();
     }
     public void Update()
     {
