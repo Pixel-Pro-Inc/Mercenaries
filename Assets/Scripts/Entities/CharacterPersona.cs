@@ -842,52 +842,71 @@ namespace Assets.Entities
 
             public string CharacterName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public string CharacterDescription { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-            public int Health 
+            public int Health
             {
                 get { return Health; }
-                set 
+                set
                 {
-
-                    if (SupportMage==false)
+                    if (Foe == false)
                     {
-                        Health = 20; 
-                        if (Health > 100) Health = 100; if (Health < 0) Health = 0;
+                        if (SupportMage == false)
+                        {
+                            Health = 20;
+                            if (Health > 100) Health = 100; if (Health < 0) Health = 0;
+                        }
+                        else
+                        {
+                            Health = 26;
+                            if (Health > 100) Health = 100; if (Health < 0) Health = 0;
+                        }
                     }
                     else
                     {
-                        Health = 26;
-                        if (Health > 100) Health = 100; if (Health < 0) Health = 0;
+                        Health = 6; if (Health > 100) Health = 100; if (Health < 0) Health = 0;
                     }
-
                 }
             }
             public int dodge
-            { 
-                get { return dodge; } 
+            {
+                get { return dodge; }
                 set
                 {
-                    if (SupportMage==false)
+                    if (Foe == false)
                     {
-                        dodge = 5;
+                        if (SupportMage == false)
+                        {
+                            dodge = 5;
+                        }
+                        else
+                        {
+                            dodge = 10;
+                        }
                     }
                     else
                     {
                         dodge = 10;
                     }
-                } 
+                }
             }
             public int Speed
             {
                 get { return Speed; }
                 set
                 {
-                    if (SupportMage == false)
+                    if (Foe == false)
                     {
-                        Speed = 1;
+                        if (SupportMage == false)
+                        {
+                            Speed = 1;
+                        }
+                        else
+                        {
+                            Speed = 10;
+                        }
                     }
                     else
                     {
-                        Speed = 10;
+                        Speed = 1;
                     }
                 }
             }
@@ -896,9 +915,16 @@ namespace Assets.Entities
                 get { return CritC; }
                 set
                 {
-                    if (SupportMage == false)
+                    if (Foe == false)
                     {
-                        CritC = 4;
+                        if (SupportMage == false)
+                        {
+                            CritC = 4;
+                        }
+                        else
+                        {
+                            CritC = 1;
+                        }
                     }
                     else
                     {
@@ -911,13 +937,20 @@ namespace Assets.Entities
                 get { return MagicRes; }
                 set
                 {
-                    if (SupportMage == false)
+                    if (Foe == false)
                     {
-                        MagicRes = 2;
+                        if (SupportMage == false)
+                        {
+                            MagicRes = 2;
+                        }
+                        else
+                        {
+                            MagicRes = 1;
+                        }
                     }
                     else
                     {
-                        MagicRes = 1;
+                        MagicRes = 0;
                     }
                 }
             }
@@ -926,13 +959,20 @@ namespace Assets.Entities
                 get { return Armour; }
                 set
                 {
-                    if (SupportMage == false)
+                    if (Foe == false)
                     {
-                        Armour = 0;
+                        if (SupportMage == false)
+                        {
+                            Armour = 0;
+                        }
+                        else
+                        {
+                            Armour = 1;
+                        }
                     }
                     else
                     {
-                        Armour = 1;
+                        Armour = 0;
                     }
                 }
             }
@@ -941,15 +981,29 @@ namespace Assets.Entities
                 get { return Damage; }
                 set
                 {
-                    if (SupportMage == false)
+                    if (Foe == false)
                     {
-                        if (LowDamageMage == true)
+                        if (SupportMage == false)
                         {
-                            Damage = 1;
+                            if (LowDamageMage == true)
+                            {
+                                Damage = 1;
+                            }
+                            else
+                            {
+                                Damage = 25;
+                            }
                         }
                         else
                         {
-                            Damage = 25;
+                            if (LowDamageMage == true)
+                            {
+                                Damage = 1;
+                            }
+                            else
+                            {
+                                Damage = 10;
+                            }
                         }
                     }
                     else
@@ -960,7 +1014,7 @@ namespace Assets.Entities
                         }
                         else
                         {
-                            Damage = 10;
+                            Damage = 20;
                         }
                     }
                 }
@@ -1012,6 +1066,7 @@ namespace Assets.Entities
             public string BriefDescription { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public List<string> NaturalAllies { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public List<string> NaturalEnemies { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public bool Foe { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public bool PassiveMageTraits { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public bool LowDamageMage { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public bool SupportMage { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
@@ -1037,37 +1092,56 @@ namespace Assets.Entities
             {
                 Instance.ExperienceLevel++;
                 #region If Support variables Increase logic 
-                if (SupportMage == false)
+                if (Foe == false)
                 {
-                    Instance.Health += 5;
-                    Instance.dodge += 5;
-                    Instance.Speed += 1;
-                    Instance.CritC += 1;
-                    #region Damage
-                    if (LowDamageMage == true) Instance.Damage += 5;
+
+                    if (SupportMage == false)
+                    {
+                        Instance.Health += 5;
+                        Instance.dodge += 5;
+                        Instance.Speed += 1;
+                        Instance.CritC += 1;
+                        #region Damage
+                        if (LowDamageMage == true) Instance.Damage += 5;
+                        else
+                        {
+                            Instance.Damage += 4;
+                        }
+                        #endregion
+                        if (ExperienceLevel > 3)
+                        {
+                            Instance.MagicRes += 1;
+                            Instance.Armour += 1;
+                        }//I only wrote here +1 for both stats to fill it with something.But It was never specified what actually happens after Level 3
+                    }
                     else
                     {
-                        Instance.Damage += 4;
-                    }
-                    #endregion
-                    if (ExperienceLevel > 3)
-                    {
+                        Instance.Health += 5;
+                        Instance.dodge += 5;
+                        Instance.Speed += 6;
+                        Instance.CritC += 1;
                         Instance.MagicRes += 1;
                         Instance.Armour += 1;
-                    }//I only wrote here +1 for both stats to fill it with something.But It was never specified what actually happens after Level 3
+                        if (LowDamageMage == true) Instance.Damage += 3;
+                        else
+                        {
+                            Instance.Damage += 4;
+                        }
+                    }
+                    //fire levelIncrease animation
                 }
                 else
                 {
-                    Instance.Health += 5;
-                    Instance.dodge += 5;
-                    Instance.Speed += 6;
+                    Instance.Health += 1;
+                    Instance.dodge += 2;
+                    Instance.Speed += 1;
                     Instance.CritC += 1;
-                    Instance.MagicRes += 1;
-                    Instance.Armour += 1;
-                    if (LowDamageMage == true) Instance.Damage += 3;
+                    Instance.MagicRes += 0;
+                    Instance.Armour += 0;
+                    if (LowDamageMage == true) Instance.Damage += 1;
                     else
                     {
-                        Instance.Damage += 4;
+                        Instance.Damage += 5;
                     }
                 }
                 #endregion
