@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace Assets.Entities
 {
@@ -285,7 +286,32 @@ namespace Assets.Entities
             //Here are the passive traits of the card themselves
             void ICardTraits.passiveTraits()
             {
-                throw new NotImplementedException();
+                #region Passive option 2 Warrior
+
+                //Passive 2 - Stacks atack speed up to 5 times (5% each)
+                int CacheSpeed = 0;
+                int StackCount = 5;
+                int StackSpeed()
+                {
+                    if (StackCount > 0)
+                    {
+                        Instance.Speed += (int)(Instance.Speed * 0.05);
+                        CacheSpeed += (int)(Instance.Speed * 0.05);
+                        StackCount--;
+                    }
+                    else
+                    {
+                        //Print " cannot stack any more" or "Stack limit reached"
+                    }
+                    return Instance.Speed;
+                }
+                if (true/*GameOver==true*/)
+                {
+                    Instance.Speed -= CacheSpeed;
+                    CacheSpeed = 0;
+                    StackCount = 5;
+                }
+                #endregion
             }
 
             //string CitizenOf = (string)WarriorTemplate.Kingdom.DarkSyde; // Here I was just experimenting to see how the citizenship can be set
@@ -996,6 +1022,8 @@ namespace Assets.Entities
 
         public class MageTemplate: CharacterPersona, ICardTraits, ICharacterTraits, IMageTraits
         {
+            private Timer myTimer;
+
             public static MageTemplate Instance { get; set; }
             public MageTemplate()
             {
@@ -1277,7 +1305,23 @@ namespace Assets.Entities
 
             void ICardTraits.passiveTraits()
             {
-                throw new NotImplementedException();
+                #region Passive option 2 Mage
+
+                //Mana regen every 5 seconds
+
+                // Create a timer
+                myTimer = new System.Timers.Timer();
+                // Tell the timer what to do when it elapses
+                myTimer.Elapsed += new ElapsedEventHandler(myEvent);
+                // Set it to go off every five seconds
+                myTimer.Interval = 5000;
+                // And start it        
+                myTimer.Enabled = true;
+
+                // Implement a call with the right signature for events going off
+                void myEvent(object source, ElapsedEventArgs e) { Mana++; }
+                #endregion
+
             }
 
             public void UniqueActiveBuff()
