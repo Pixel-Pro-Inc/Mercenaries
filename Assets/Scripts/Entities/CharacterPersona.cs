@@ -1181,13 +1181,125 @@ namespace Assets.Entities
             #region Character Variables
             public string CharacterName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public string CharacterDescription { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-            public int Health { get { return Health; } set { Health = 33; if (Health > 100) Health = 100; if (Health < 0) Health = 0; } }
-            public int dodge { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-            public int Speed { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-            public double CritC { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-            public int MagicRes { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-            public int Armour { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-            public int Damage { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public int Health
+            {
+                get { return Health; }
+                set
+                {
+                    if (Foe == false)
+                    {
+                        Health = 33; if (Health > 100) Health = 100; if (Health < 0) Health = 0;
+                    }
+                    else
+                    {
+                        Health = 10; if (Health > 100) Health = 100; if (Health < 0) Health = 0;
+                    }
+                }
+            }
+            public int dodge
+            {
+                get { return dodge; }
+                set
+                {
+                    if (Foe == false)
+                    {
+                        dodge = 0;
+                    }
+                    else
+                    {
+                        dodge = 5;
+                    }
+                }
+            }
+            public int Speed
+            {
+                get { return Speed; }
+                set
+                {
+                    if (Foe == false)
+                    {
+                        Speed = 0;
+                    }
+                    else
+                    {
+                        Speed = 6;
+                    }
+                }
+            }
+            public double CritC
+            {
+                get { return CritC; }
+                set
+                {
+                    if (Foe == false)
+                    {
+                        CritC    = 0;
+                    }
+                    else
+                    {
+                        CritC = 0;
+                    }
+                }
+            }
+            public int MagicRes
+            {
+                get { return MagicRes; }
+                set
+                {
+                    if (Foe == false)
+                    {
+                        MagicRes = 0;
+                    }
+                    else
+                    {
+                        MagicRes = 3;
+                    }
+                }
+            }
+            public int Armour
+            {
+                get { return Armour; }
+                set
+                {
+                    if (Foe == false)
+                    {
+                        Armour = 0;
+                    }
+                    else
+                    {
+                        Armour = 3;
+                    }
+                }
+            }
+            public int Damage
+            {
+                get { return Damage; }
+                set
+                {
+                    if (Foe == false)
+                    {
+                        if (LowDamageDebuffer == true)
+                        {
+                            Damage = 4;
+                        }
+                        else
+                        {
+                            Damage = 16;
+                        }
+                    }
+                    else
+                    {
+                        if (LowDamageDebuffer == true)
+                        {
+                            Damage = 1;
+                        }
+                        else
+                        {
+                            Damage = 2;
+                        }
+                    }
+                }
+            }
             public int Mana { get { return Mana; } set { if (Mana > 100) Mana = 100; if (Mana < 0) Mana = 0; } }
             public int Stamina { get { return Stamina; } set { if (Stamina > 100) Stamina = 100; if (Stamina < 0) Stamina = 0; } }
             public int ExpPoints
@@ -1235,6 +1347,7 @@ namespace Assets.Entities
             public string BriefDescription { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public List<string> NaturalAllies { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public List<string> NaturalEnemies { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public bool Foe { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public bool PassiveDebufferTraits { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public bool LowDamageDebuffer { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
@@ -1259,18 +1372,39 @@ namespace Assets.Entities
             public void LevelIncrease()
             {
                 Instance.ExperienceLevel++;
-                Instance.Health += 10;
-                Instance.dodge += 2;
-                Instance.Speed += 2;
-                Instance.CritC += 1;
-                Instance.MagicRes += 1;
-                Instance.Armour += 1;
-                if (LowDamageDebuffer == true) Instance.Damage += 3;
+                if (Foe == false)
+                {
+                    Instance.Health += 10;
+                    Instance.dodge += 2;
+                    Instance.Speed += 2;
+                    Instance.CritC += 1;
+                    Instance.MagicRes += 1;
+                    Instance.Armour += 1;
+                    if (LowDamageDebuffer == true) Instance.Damage += 3;
+                    else
+                    {
+                        Instance.Damage += 2;
+                    }
+                    //fire levelIncrease animation
+                }
                 else
                 {
-                    Instance.Damage += 2;
+                    Instance.Health += 3;
+                    Instance.dodge += 5;
+                    Instance.Speed += 3;
+                    Instance.CritC += 1; 
+                    if (ExperienceLevel > 3)
+                    {
+                        Instance.MagicRes += 1;
+                        Instance.Armour += 1;
+                    }
+                    if (LowDamageDebuffer == true) Instance.Damage += 1;
+                    else
+                    {
+                        Instance.Damage += 2;
+                    }
+                    //fire levelIncrease animation
                 }
-                //fire levelIncrease animation
             }
 
 
