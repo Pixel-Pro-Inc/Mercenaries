@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -54,6 +55,8 @@ namespace Assets.TraitInterface
 
         void LevelIncrease();
         void XPIncrease(bool earnXp, int newEarnedXp);
+
+        void TraitLevelUpActivation( int experienceLevel, List<Items> Items);
 
         #endregion
 

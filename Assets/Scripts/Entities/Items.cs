@@ -24,29 +24,46 @@ namespace Assets.Entities
             {
                 instance = this;
             }
-            public void passiveTraits()
-            {
-                throw new NotImplementedException();
-            }
-            
+
+            #region Item Variables
+
             public string ItemName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public string ItemDescription { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+            #endregion
+
+            #region Item Methods
 
             public bool ActivationRequireMent()
             {
                 throw new NotImplementedException();
                 //instance.PassiveTraitsState = true;
             }
+            public void passiveTraits()
+            {
+                if (ActivationRequireMent()==true)
+                {
 
+                }
+            }
             public void UniqueActiveBuff()
             {
-                throw new NotImplementedException();
+                if (ActivationRequireMent() == true)
+                {
+
+                }
             }
 
             public void UniqueActiveDeBuff()
             {
-                throw new NotImplementedException();
+                if (ActivationRequireMent() == true)
+                {
+
+                }
             }
+
+            #endregion
+
 
         }
 

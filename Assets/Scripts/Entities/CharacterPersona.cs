@@ -286,9 +286,22 @@ namespace Assets.Entities
             //Here are the passive traits of the card themselves
             void ICardTraits.passiveTraits()
             {
+                
+            }
+
+            //string CitizenOf = (string)WarriorTemplate.Kingdom.DarkSyde; // Here I was just experimenting to see how the citizenship can be set
+            //After We figure out how to set the respective variables to the specific enum value I want to use peter as a reference for other characters so we
+            //forget to include the correct and necesary info
+
+
+
+            //Default Methods of Character Combantant type
+            public void ActiveBuff()
+            {
                 #region Passive option 2 Warrior
 
-                //Passive 2 - Stacks atack speed up to 5 times (5% each)
+                //Passive 2 - Stacks atack speed up to 5 times (5% each)
+
                 int CacheSpeed = 0;
                 int StackCount = 5;
                 int StackSpeed()
@@ -312,19 +325,6 @@ namespace Assets.Entities
                     StackCount = 5;
                 }
                 #endregion
-            }
-
-            //string CitizenOf = (string)WarriorTemplate.Kingdom.DarkSyde; // Here I was just experimenting to see how the citizenship can be set
-            //After We figure out how to set the respective variables to the specific enum value I want to use peter as a reference for other characters so we
-            //forget to include the correct and necesary info
-
-
-
-            //Default Methods of Character Combantant type
-            public void ActiveBuff()
-            {
-                throw new System.NotImplementedException();
-                // this.Mana++;  I just put this up so that I know to change the stats and other variables on command
             }
             public void ActiveDeBuff()
             {
@@ -387,6 +387,11 @@ namespace Assets.Entities
                 Instance.MagicalDamageTaken -= Instance.MagicRes;
                 int damageTaken = Instance.MagicalDamageTaken + Instance.PhysicalDamageTaken;
                 return damageTaken;
+            }
+
+            public void TraitLevelUpActivation(int experienceLevel, List<Items> Items)
+            {
+                throw new NotImplementedException();
             }
 
 
@@ -618,29 +623,7 @@ namespace Assets.Entities
 
             void ICardTraits.passiveTraits()
             {
-                #region Passive option 1 Tank
-
-                /*
-                 Passive 1 - each 1% of health lost, you gain 2% more armor and magic resistance
-                 */
-                int percentageHealthLoss = (int)(HealthLoss() / Health);
-                int CacheArmour = 0;
-                int CacheMagicalresistance = 0;
-                for (int per = 0; per < percentageHealthLoss; per++)
-                {
-                    Instance.Armour += (int)(Instance.Armour * 0.02);
-                    CacheArmour+= (int)(Instance.Armour * 0.02);
-                    Instance.MagicRes += (int)(Instance.MagicRes * 0.02);
-                    CacheMagicalresistance+= (int)(Instance.MagicRes * 0.02);
-                }
-                if (true/*GameOver==true*/)
-                {
-                    Instance.Armour -= CacheArmour;
-                    Instance.MagicRes -= CacheMagicalresistance;
-                    CacheArmour = 0;
-                    CacheMagicalresistance = 0;
-                }
-                #endregion
+                
             }
 
             public void UniqueActiveBuff()
@@ -696,7 +679,29 @@ namespace Assets.Entities
 
             public void ActiveBuff()
             {
-                throw new NotImplementedException();
+                #region Passive option 1 Tank
+
+                /*
+                 Passive 1 - each 1% of health lost, you gain 2% more armor and magic resistance
+                 */
+                int percentageHealthLoss = (int)(HealthLoss() / Health);
+                int CacheArmour = 0;
+                int CacheMagicalresistance = 0;
+                for (int per = 0; per < percentageHealthLoss; per++)
+                {
+                    Instance.Armour += (int)(Instance.Armour * 0.02);
+                    CacheArmour += (int)(Instance.Armour * 0.02);
+                    Instance.MagicRes += (int)(Instance.MagicRes * 0.02);
+                    CacheMagicalresistance += (int)(Instance.MagicRes * 0.02);
+                }
+                if (true/*GameOver==true*/)
+                {
+                    Instance.Armour -= CacheArmour;
+                    Instance.MagicRes -= CacheMagicalresistance;
+                    CacheArmour = 0;
+                    CacheMagicalresistance = 0;
+                }
+                #endregion
             }
 
             public void ActiveDeBuff()
@@ -710,6 +715,11 @@ namespace Assets.Entities
                 Instance.MagicalDamageTaken -= Instance.MagicRes;
                 int damageTaken = Instance.MagicalDamageTaken + Instance.PhysicalDamageTaken;
                 return damageTaken;
+            }
+
+            public void TraitLevelUpActivation(int experienceLevel, List<Items> Items)
+            {
+                throw new NotImplementedException();
             }
             #endregion
         }
@@ -1015,6 +1025,11 @@ namespace Assets.Entities
                 return damageTaken;
             }
 
+            public void TraitLevelUpActivation(int experienceLevel, List<Items> Items)
+            {
+                throw new NotImplementedException();
+            }
+
             #endregion
         }
         #endregion
@@ -1305,23 +1320,7 @@ namespace Assets.Entities
 
             void ICardTraits.passiveTraits()
             {
-                #region Passive option 2 Mage
-
-                //Mana regen every 5 seconds
-
-                // Create a timer
-                myTimer = new System.Timers.Timer();
-                // Tell the timer what to do when it elapses
-                myTimer.Elapsed += new ElapsedEventHandler(myEvent);
-                // Set it to go off every five seconds
-                myTimer.Interval = 5000;
-                // And start it        
-                myTimer.Enabled = true;
-
-                // Implement a call with the right signature for events going off
-                void myEvent(object source, ElapsedEventArgs e) { Mana++; }
-                #endregion
-
+               
             }
 
             public void UniqueActiveBuff()
@@ -1403,7 +1402,23 @@ namespace Assets.Entities
 
             public void ActiveBuff()
             {
-                throw new NotImplementedException();
+                #region Passive option 2 Mage
+
+                //Mana regen every 5 seconds
+
+                // Create a timer
+                myTimer = new System.Timers.Timer();
+                // Tell the timer what to do when it elapses
+                myTimer.Elapsed += new ElapsedEventHandler(myEvent);
+                // Set it to go off every five seconds
+                myTimer.Interval = 5000;
+                // And start it        
+                myTimer.Enabled = true;
+
+                // Implement a call with the right signature for events going off
+                void myEvent(object source, ElapsedEventArgs e) { Mana++; }
+                #endregion
+
             }
 
             public void ActiveDeBuff()
@@ -1417,6 +1432,11 @@ namespace Assets.Entities
                 Instance.MagicalDamageTaken -= Instance.MagicRes;
                 int damageTaken = Instance.MagicalDamageTaken + Instance.PhysicalDamageTaken;
                 return damageTaken;
+            }
+
+            public void TraitLevelUpActivation(int experienceLevel, List<Items> Items)
+            {
+                throw new NotImplementedException();
             }
             #endregion
         }
@@ -1723,6 +1743,12 @@ namespace Assets.Entities
                 int damageTaken = Instance.MagicalDamageTaken + Instance.PhysicalDamageTaken;
                 return damageTaken;
             }
+
+            public void TraitLevelUpActivation(int experienceLevel, List<Items> Items)
+            {
+                throw new NotImplementedException();
+            }
+
             #endregion
         }
         #endregion
@@ -2030,6 +2056,11 @@ namespace Assets.Entities
                 Instance.MagicalDamageTaken -= Instance.MagicRes;
                 int damageTaken = Instance.MagicalDamageTaken + Instance.PhysicalDamageTaken;
                 return damageTaken;
+            }
+
+            public void TraitLevelUpActivation(int experienceLevel, List<Items> Items)
+            {
+                throw new NotImplementedException();
             }
 
             #endregion
