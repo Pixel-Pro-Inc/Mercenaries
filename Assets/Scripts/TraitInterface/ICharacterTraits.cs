@@ -23,7 +23,8 @@ namespace Assets.TraitInterface
         #endregion
         #region Stats
 
-        //I was having trouble setting the properties of these varibale with limitations. Something about 'targert runtime doesnt support default interface implementation' 
+        bool DefaultValue { get; set; }
+
         int Health { get; set; }
         int dodge { get; set; }
         int Speed { get; set; }

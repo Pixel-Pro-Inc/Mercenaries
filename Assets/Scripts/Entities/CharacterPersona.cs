@@ -60,18 +60,25 @@ namespace Assets.Entities
             #region Character variables
             public string CharacterName { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
             public string BriefDescription { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+
+            public bool DefaultValue { get { return DefaultValue; } set { DefaultValue = true; } }
             public int Health 
             { 
                 get { return Health; }
                 set
                 {
+                    if (Health < 0) Health = 0;
+                    if (DefaultValue==true)
+                    {
+
+                    }
                     if (Foe == false)
                     {
-                        Health = 33; if (Health > 100) Health = 100; if (Health < 0) Health = 0;
+                        Health = 33; 
                     }
                     else
                     {
-                        Health = 15; if (Health > 100) Health = 100; if (Health < 0) Health = 0;
+                        Health = 15;
                     }
                 }
             }
@@ -80,14 +87,19 @@ namespace Assets.Entities
                 get { return dodge; } 
                 set 
                 {
-                    if (Foe == false)
+                    if (DefaultValue == true)
                     {
-                        dodge = 6;
+                        if (Foe == false)
+                        {
+                            dodge = 6;
+                        }
+                        else
+                        {
+                            dodge = 0;
+                        }
                     }
-                    else
-                    {
-                        dodge = 0;
-                    }
+                    if (dodge < 0) dodge = 0;
+                   
                 } 
             }
             public int Speed
@@ -95,14 +107,19 @@ namespace Assets.Entities
                 get { return Speed; }
                 set
                 {
-                    if (Foe == false)
+                    if (DefaultValue == true)
                     {
-                        Speed = 1;
+                        if (Foe == false)
+                        {
+                            Speed = 1;
+                        }
+                        else
+                        {
+                            Speed = 1;
+                        }
                     }
-                    else
-                    {
-                        Speed = 1;
-                    }
+                    if (Speed < 0) Speed = 0;
+                    
                 }
             }
             public double CritC
@@ -110,14 +127,19 @@ namespace Assets.Entities
                 get { return CritC; }
                 set
                 {
-                    if (Foe == false)
+                    if (DefaultValue == true)
                     {
-                        CritC = 6;
+                        if (Foe == false)
+                        {
+                            CritC = 6;
+                        }
+                        else
+                        {
+                            CritC = 1;
+                        }
                     }
-                    else
-                    {
-                        CritC = 1;
-                    }
+                    if (CritC < 0) CritC = 0;
+                    
                 }
             }
             public int MagicRes
@@ -125,14 +147,19 @@ namespace Assets.Entities
                 get { return MagicRes; }
                 set
                 {
-                    if (Foe == false)
+                    if (DefaultValue == true)
                     {
-                        MagicRes = 2;
+                        if (Foe == false)
+                        {
+                            MagicRes = 2;
+                        }
+                        else
+                        {
+                            MagicRes = 0;
+                        }
                     }
-                    else
-                    {
-                        MagicRes = 0;
-                    }
+                    if (MagicRes < 0) MagicRes = 0;
+                    
                 }
             }
             public int Armour
@@ -140,14 +167,19 @@ namespace Assets.Entities
                 get { return Armour; }
                 set
                 {
-                    if (Foe == false)
+                    if (DefaultValue == true)
                     {
-                        Armour = 2;
+                        if (Foe == false)
+                        {
+                            Armour = 2;
+                        }
+                        else
+                        {
+                            Armour = 0;
+                        }
                     }
-                    else
-                    {
-                        Armour = 0;
-                    }
+                    if (Armour < 0) Armour = 0;
+                    
                 }
             }
             public int Damage 
@@ -155,34 +187,41 @@ namespace Assets.Entities
                 get { return Damage; }
                 set 
                 {
-                    if (Foe == false)
+                    if (DefaultValue == true)
                     {
-                        if (LowDamageWarrior == true)
+                        if (Foe == false)
                         {
-                            Damage = 8;
+                            if (LowDamageWarrior == true)
+                            {
+                                Damage = 8;
+                            }
+                            else
+                            {
+                                Damage = 13;
+                            }
                         }
                         else
                         {
-                            Damage = 13;
+                            if (LowDamageWarrior == true)
+                            {
+                                Damage = 3;
+                            }
+                            else
+                            {
+                                Damage = 6;
+                            }
                         }
                     }
-                    else
-                    {
-                        if (LowDamageWarrior == true)
-                        {
-                            Damage = 3;
-                        }
-                        else
-                        {
-                            Damage = 6;
-                        }
-                    }
+                    if (Damage < 0) Damage = 0;
+                    
                 } 
             }
 
 
-            public int Mana { get { return Mana; } set { if (Mana > 100) Mana = 100; if (Mana < 0) Mana = 0; } }
-            public int Stamina { get { return Stamina; } set { if (Stamina > 100) Stamina = 100; if (Stamina < 0) Stamina = 0; } }
+            public int Mana { get { return Mana; } set { if (DefaultValue == true){if (Mana > 100) Mana = 100; if (Mana < 0) Mana = 0;} }}
+            public int Stamina { get { return Stamina; } set { if (DefaultValue == true) { if (Stamina > 100) Stamina = 100; if (Stamina < 0) Stamina = 0;} }
+
+            }
             public string CharacterDescription { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public List<string> NaturalAllies { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public List<string> NaturalEnemies { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
@@ -195,6 +234,7 @@ namespace Assets.Entities
                 get { return ExpPoints; }
                 set
                 {
+                    if (ExpPoints < 0) ExpPoints = 0;
                     if (true/*sessionStarted?*/)
                     {
                         Instance.ExpPoints += NewEarnedXp;
@@ -211,6 +251,7 @@ namespace Assets.Entities
                 get { return NewEarnedXp; }
                 set
                 {
+                    if (NewEarnedXp < 0) NewEarnedXp = 0;
                     if (EarnedXp == true)
                     {
                         Instance.NewEarnedXp = NewEarnedXp;
@@ -233,8 +274,9 @@ namespace Assets.Entities
                 }
             } //This bool is made true when XPIncrease is fired and should be made of when sessionOver is true
 
-            public int MagicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-            public int PhysicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public int MagicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); /*if (MagicalDama < 0) MagicalDa = 0;*/}
+            public int PhysicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); /*if (PhysicalDama < 0) PhyscialDama = 0;*/}
+            
 
 
             #endregion
@@ -340,18 +382,26 @@ namespace Assets.Entities
             #region Character variables
             public string CharacterName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public string CharacterDescription { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+
+            public bool DefaultValue { get { return DefaultValue; } set { DefaultValue = true; } }
             public int Health
             {
                 get { return Health; }
                 set
                 {
-                    if (Foe == false)
+                    if (Health < 0) Health = 0;
+                    if (DefaultValue==true)
                     {
-                        Health = 35; if (Health > 100) Health = 100; if (Health < 0) Health = 0; 
-                    }
-                    else
-                    {
-                        Health = 25; if (Health > 100) Health = 100; if (Health < 0) Health = 0;
+
+                        if (Foe == false)
+                        {
+                            Health = 35; 
+                        }
+                        else
+                        {
+                            Health = 25; 
+                        }
                     }
                 }
             }
@@ -360,13 +410,17 @@ namespace Assets.Entities
                 get { return dodge; }
                 set
                 {
-                    if (Foe == false)
+                    if (dodge < 0) dodge = 0;
+                    if (DefaultValue==true)
                     {
-                        dodge = 1;
-                    }
-                    else
-                    {
-                        dodge = 0;
+                        if (Foe == false)
+                        {
+                            dodge = 1;
+                        }
+                        else
+                        {
+                            dodge = 0;
+                        }
                     }
                 }
             }
@@ -375,13 +429,18 @@ namespace Assets.Entities
                 get { return Speed; }
                 set
                 {
-                    if (Foe == false)
+                    if (Speed < 0) Speed = 0;
+                    if (DefaultValue == true)
                     {
-                        Speed = 1;
-                    }
-                    else
-                    {
-                        Speed = 1;
+                        if (Foe == false)
+                        {
+                            Speed = 1;
+                        }
+                        else
+                        {
+                            Speed = 1;
+                        }
+
                     }
                 }
             }
@@ -390,13 +449,17 @@ namespace Assets.Entities
                 get { return CritC; }
                 set
                 {
-                    if (Foe == false)
+                    if (CritC < 0) CritC = 0;
+                    if (DefaultValue == true)
                     {
-                        CritC = 8;
-                    }
-                    else
-                    {
-                        CritC = 1;
+                        if (Foe == false)
+                        {
+                            CritC = 8;
+                        }
+                        else
+                        {
+                            CritC = 1;
+                        }
                     }
                 }
             }
@@ -405,13 +468,16 @@ namespace Assets.Entities
                 get { return MagicRes; }
                 set
                 {
-                    if (Foe == false)
+                    if (DefaultValue == true)
                     {
-                        MagicRes = 5;
-                    }
-                    else
-                    {
-                        MagicRes = 5;
+                        if (Foe == false)
+                        {
+                            MagicRes = 5;
+                        }
+                        else
+                        {
+                            MagicRes = 5;
+                        }
                     }
                 }
             }
@@ -420,13 +486,17 @@ namespace Assets.Entities
                 get { return Armour; }
                 set
                 {
-                    if (Foe == false)
+                    if (DefaultValue == true)
                     {
-                        Armour = 3;
-                    }
-                    else
-                    {
-                        Armour = 5;
+                        if (Foe == false)
+                        {
+                            Armour = 3;
+                        }
+                        else
+                        {
+                            Armour = 5;
+                        }
+
                     }
                 }
             }
@@ -435,32 +505,36 @@ namespace Assets.Entities
                 get { return Damage; }
                 set
                 {
-                    if (Foe == false)
+                    if (DefaultValue == true)
                     {
-                        if (LowDamageTankWarrior == true)
+                        if (Foe == false)
                         {
-                            Damage = 8;
+                            if (LowDamageTankWarrior == true)
+                            {
+                                Damage = 8;
+                            }
+                            else
+                            {
+                                Damage = 13;
+                            }
                         }
                         else
                         {
-                            Damage = 13;
+                            if (LowDamageTankWarrior == true)
+                            {
+                                Damage = 2;
+                            }
+                            else
+                            {
+                                Damage = 4;
+                            }
                         }
-                    }
-                    else
-                    {
-                        if (LowDamageTankWarrior == true)
-                        {
-                            Damage = 2;
-                        }
-                        else
-                        {
-                            Damage = 4;
-                        }
+
                     }
                 }
             }
-            public int Mana { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-            public int Stamina { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public int Mana { get => throw new NotImplementedException(); set => throw new NotImplementedException();/*if(DefaultValue==true){  }*/}
+            public int Stamina { get => throw new NotImplementedException(); set => throw new NotImplementedException();/*if(DefaultValue==true){  }*/ }
             public int ExpPoints
             {
                 get { return ExpPoints; }
@@ -628,18 +702,24 @@ namespace Assets.Entities
             #region Character variables
             public string CharacterName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public string CharacterDescription { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+            public bool DefaultValue { get { return DefaultValue; } set { DefaultValue = true; } }
             public int Health
             {
                 get { return Health; }
                 set
                 {
-                    if (Foe == false)
+                    if (Health < 0) Health = 0;
+                    if (DefaultValue==true)
                     {
-                        Health = 28; if (Health > 100) Health = 100; if (Health < 0) Health = 0;
-                    }
-                    else
-                    {
-                        Health = 8; if (Health > 100) Health = 100; if (Health < 0) Health = 0;
+                        if (Foe == false)
+                        {
+                            Health = 28; 
+                        }
+                        else
+                        {
+                            Health = 8; 
+                        }
                     }
                 }
             }
@@ -648,6 +728,11 @@ namespace Assets.Entities
                 get { return dodge; }
                 set
                 {
+                    if (dodge < 0) dodge = 0;
+                    if (DefaultValue == true)
+                    {
+
+                    }
                     if (Foe == false)
                     {
                         dodge = 8;
@@ -663,13 +748,18 @@ namespace Assets.Entities
                 get { return Speed; }
                 set
                 {
-                    if (Foe == false)
+                    if (Speed < 0) Speed = 0;
+                    if (DefaultValue == true)
                     {
-                        Speed = 6;
-                    }
-                    else
-                    {
-                        Speed = 7;
+                        if (Foe == false)
+                        {
+                            Speed = 6;
+                        }
+                        else
+                        {
+                            Speed = 7;
+                        }
+
                     }
                 }
             }
@@ -678,13 +768,18 @@ namespace Assets.Entities
                 get { return CritC; }
                 set
                 {
-                    if (Foe == false)
+                    if (CritC < 0) CritC = 0;
+                    if (DefaultValue == true)
                     {
-                        CritC = 6;
-                    }
-                    else
-                    {
-                        CritC = 2;
+                        if (Foe == false)
+                        {
+                            CritC = 6;
+                        }
+                        else
+                        {
+                            CritC = 2;
+                        }
+
                     }
                 }
             }
@@ -693,13 +788,18 @@ namespace Assets.Entities
                 get { return MagicRes; }
                 set
                 {
-                    if (Foe == false)
+                    if (MagicRes < 0) MagicRes = 0;
+                    if (DefaultValue == true)
                     {
-                        MagicRes = 0;
-                    }
-                    else
-                    {
-                        MagicRes = 0;
+                        if (Foe == false)
+                        {
+                            MagicRes = 0;
+                        }
+                        else
+                        {
+                            MagicRes = 0;
+                        }
+
                     }
                 }
             }
@@ -708,13 +808,18 @@ namespace Assets.Entities
                 get { return Armour; }
                 set
                 {
-                    if (Foe == false)
+                    if (Armour < 0) Armour = 0;
+                    if (DefaultValue == true)
                     {
-                        Armour = 0;
-                    }
-                    else
-                    {
-                        Armour = 0;
+                        if (Foe == false)
+                        {
+                            Armour = 0;
+                        }
+                        else
+                        {
+                            Armour = 0;
+                        }
+
                     }
                 }
             }
@@ -723,27 +828,32 @@ namespace Assets.Entities
                 get { return Damage; }
                 set
                 {
-                    if (Foe == false)
+                    if (Damage < 0) Damage = 0;
+                    if (DefaultValue == true)
                     {
-                        if (LowDamageRange == true)
+                        if (Foe == false)
                         {
-                            Damage = 4;
+                            if (LowDamageRange == true)
+                            {
+                                Damage = 4;
+                            }
+                            else
+                            {
+                                Damage = 16;
+                            }
                         }
                         else
                         {
-                            Damage = 16;
+                            if (LowDamageRange == true)
+                            {
+                                Damage = 2;
+                            }
+                            else
+                            {
+                                Damage = 6;
+                            }
                         }
-                    }
-                    else
-                    {
-                        if (LowDamageRange == true)
-                        {
-                            Damage =2;
-                        }
-                        else
-                        {
-                            Damage = 6;
-                        }
+
                     }
                 }
             }
@@ -897,28 +1007,33 @@ namespace Assets.Entities
 
             public string CharacterName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public string CharacterDescription { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+            public bool DefaultValue { get { return DefaultValue; } set { DefaultValue = true; } }
             public int Health
             {
                 get { return Health; }
                 set
                 {
-                    if (Foe == false)
+                    if (DefaultValue==true)
                     {
-                        if (SupportMage == false)
+                        if (Foe == false)
                         {
-                            Health = 20;
-                            if (Health > 100) Health = 100; if (Health < 0) Health = 0;
+                            if (SupportMage == false)
+                            {
+                                Health = 20;
+                            }
+                            else
+                            {
+                                Health = 26;
+                            }
                         }
                         else
                         {
-                            Health = 26;
-                            if (Health > 100) Health = 100; if (Health < 0) Health = 0;
+                            Health = 6;
                         }
                     }
-                    else
-                    {
-                        Health = 6; if (Health > 100) Health = 100; if (Health < 0) Health = 0;
-                    }
+                    if (Health < 0) Health = 0;
+                    
                 }
             }
             public int dodge
@@ -926,20 +1041,25 @@ namespace Assets.Entities
                 get { return dodge; }
                 set
                 {
-                    if (Foe == false)
+                    if (dodge < 0) dodge = 0;
+                    if (DefaultValue == true)
                     {
-                        if (SupportMage == false)
+                        if (Foe == false)
                         {
-                            dodge = 5;
+                            if (SupportMage == false)
+                            {
+                                dodge = 5;
+                            }
+                            else
+                            {
+                                dodge = 10;
+                            }
                         }
                         else
                         {
                             dodge = 10;
                         }
-                    }
-                    else
-                    {
-                        dodge = 10;
+
                     }
                 }
             }
@@ -948,20 +1068,25 @@ namespace Assets.Entities
                 get { return Speed; }
                 set
                 {
-                    if (Foe == false)
+                    if (Speed < 0) Speed = 0;
+                    if (DefaultValue == true)
                     {
-                        if (SupportMage == false)
+                        if (Foe == false)
                         {
-                            Speed = 1;
+                            if (SupportMage == false)
+                            {
+                                Speed = 1;
+                            }
+                            else
+                            {
+                                Speed = 10;
+                            }
                         }
                         else
                         {
-                            Speed = 10;
+                            Speed = 1;
                         }
-                    }
-                    else
-                    {
-                        Speed = 1;
+
                     }
                 }
             }
@@ -970,20 +1095,25 @@ namespace Assets.Entities
                 get { return CritC; }
                 set
                 {
-                    if (Foe == false)
+                    if (CritC < 0) CritC = 0;
+                    if (DefaultValue == true)
                     {
-                        if (SupportMage == false)
+                        if (Foe == false)
                         {
-                            CritC = 4;
+                            if (SupportMage == false)
+                            {
+                                CritC = 4;
+                            }
+                            else
+                            {
+                                CritC = 1;
+                            }
                         }
                         else
                         {
                             CritC = 1;
                         }
-                    }
-                    else
-                    {
-                        CritC = 1;
+
                     }
                 }
             }
@@ -992,20 +1122,25 @@ namespace Assets.Entities
                 get { return MagicRes; }
                 set
                 {
-                    if (Foe == false)
+                    if (MagicRes < 0) MagicRes = 0;
+                    if (DefaultValue == true)
                     {
-                        if (SupportMage == false)
+                        if (Foe == false)
                         {
-                            MagicRes = 2;
+                            if (SupportMage == false)
+                            {
+                                MagicRes = 2;
+                            }
+                            else
+                            {
+                                MagicRes = 1;
+                            }
                         }
                         else
                         {
-                            MagicRes = 1;
+                            MagicRes = 0;
                         }
-                    }
-                    else
-                    {
-                        MagicRes = 0;
+
                     }
                 }
             }
@@ -1014,20 +1149,25 @@ namespace Assets.Entities
                 get { return Armour; }
                 set
                 {
-                    if (Foe == false)
+                    if (Armour < 0) Armour = 0;
+                    if (DefaultValue==true)
                     {
-                        if (SupportMage == false)
+                        if (Foe == false)
                         {
-                            Armour = 0;
+                            if (SupportMage == false)
+                            {
+                                Armour = 0;
+                            }
+                            else
+                            {
+                                Armour = 1;
+                            }
                         }
                         else
                         {
-                            Armour = 1;
+                            Armour = 0;
                         }
-                    }
-                    else
-                    {
-                        Armour = 0;
+
                     }
                 }
             }
@@ -1036,17 +1176,32 @@ namespace Assets.Entities
                 get { return Damage; }
                 set
                 {
-                    if (Foe == false)
+                    if (Damage < 0) Damage = 0;
+                    if (DefaultValue == true)
                     {
-                        if (SupportMage == false)
+                        if (Foe == false)
                         {
-                            if (LowDamageMage == true)
+                            if (SupportMage == false)
                             {
-                                Damage = 1;
+                                if (LowDamageMage == true)
+                                {
+                                    Damage = 1;
+                                }
+                                else
+                                {
+                                    Damage = 25;
+                                }
                             }
                             else
                             {
-                                Damage = 25;
+                                if (LowDamageMage == true)
+                                {
+                                    Damage = 1;
+                                }
+                                else
+                                {
+                                    Damage = 10;
+                                }
                             }
                         }
                         else
@@ -1057,19 +1212,8 @@ namespace Assets.Entities
                             }
                             else
                             {
-                                Damage = 10;
+                                Damage = 20;
                             }
-                        }
-                    }
-                    else
-                    {
-                        if (LowDamageMage == true)
-                        {
-                            Damage = 1;
-                        }
-                        else
-                        {
-                            Damage = 20;
                         }
                     }
                 }
@@ -1247,18 +1391,25 @@ namespace Assets.Entities
             #region Character Variables
             public string CharacterName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public string CharacterDescription { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+            public bool DefaultValue { get { return DefaultValue; } set { DefaultValue = true; } }
             public int Health
             {
                 get { return Health; }
                 set
                 {
+                    if (Health < 0) Health = 0;
+                    if (DefaultValue==true)
+                    {
+
+                    }
                     if (Foe == false)
                     {
-                        Health = 33; if (Health > 100) Health = 100; if (Health < 0) Health = 0;
+                        Health = 33; 
                     }
                     else
                     {
-                        Health = 10; if (Health > 100) Health = 100; if (Health < 0) Health = 0;
+                        Health = 10;
                     }
                 }
             }
@@ -1267,13 +1418,18 @@ namespace Assets.Entities
                 get { return dodge; }
                 set
                 {
-                    if (Foe == false)
+                    if (dodge < 0) dodge = 0;
+                    if (DefaultValue==true)
                     {
-                        dodge = 0;
-                    }
-                    else
-                    {
-                        dodge = 5;
+                        if (Foe == false)
+                        {
+                            dodge = 0;
+                        }
+                        else
+                        {
+                            dodge = 5;
+                        }
+
                     }
                 }
             }
@@ -1282,13 +1438,18 @@ namespace Assets.Entities
                 get { return Speed; }
                 set
                 {
-                    if (Foe == false)
+                    if (Speed < 0) Speed = 0;
+                    if (DefaultValue == true)
                     {
-                        Speed = 0;
-                    }
-                    else
-                    {
-                        Speed = 6;
+                        if (Foe == false)
+                        {
+                            Speed = 0;
+                        }
+                        else
+                        {
+                            Speed = 6;
+                        }
+
                     }
                 }
             }
@@ -1297,13 +1458,18 @@ namespace Assets.Entities
                 get { return CritC; }
                 set
                 {
-                    if (Foe == false)
+                    if (CritC < 0) CritC = 0;
+                    if (DefaultValue == true)
                     {
-                        CritC    = 0;
-                    }
-                    else
-                    {
-                        CritC = 0;
+                        if (Foe == false)
+                        {
+                            CritC = 0;
+                        }
+                        else
+                        {
+                            CritC = 0;
+                        }
+
                     }
                 }
             }
@@ -1312,13 +1478,17 @@ namespace Assets.Entities
                 get { return MagicRes; }
                 set
                 {
-                    if (Foe == false)
+                    if (MagicRes < 0) MagicRes = 0;
+                    if (DefaultValue == true)
                     {
-                        MagicRes = 0;
-                    }
-                    else
-                    {
-                        MagicRes = 3;
+                        if (Foe == false)
+                        {
+                            MagicRes = 0;
+                        }
+                        else
+                        {
+                            MagicRes = 3;
+                        }
                     }
                 }
             }
@@ -1327,13 +1497,18 @@ namespace Assets.Entities
                 get { return Armour; }
                 set
                 {
-                    if (Foe == false)
+                    if (Armour < 0) Armour = 0;
+                    if (DefaultValue == true)
                     {
-                        Armour = 0;
-                    }
-                    else
-                    {
-                        Armour = 3;
+                        if (Foe == false)
+                        {
+                            Armour = 0;
+                        }
+                        else
+                        {
+                            Armour = 3;
+                        }
+
                     }
                 }
             }
@@ -1342,27 +1517,32 @@ namespace Assets.Entities
                 get { return Damage; }
                 set
                 {
-                    if (Foe == false)
+                    if (Damage < 0) Damage = 0;
+                    if (DefaultValue == true)
                     {
-                        if (LowDamageDebuffer == true)
+                        if (Foe == false)
                         {
-                            Damage = 4;
+                            if (LowDamageDebuffer == true)
+                            {
+                                Damage = 4;
+                            }
+                            else
+                            {
+                                Damage = 16;
+                            }
                         }
                         else
                         {
-                            Damage = 16;
+                            if (LowDamageDebuffer == true)
+                            {
+                                Damage = 1;
+                            }
+                            else
+                            {
+                                Damage = 2;
+                            }
                         }
-                    }
-                    else
-                    {
-                        if (LowDamageDebuffer == true)
-                        {
-                            Damage = 1;
-                        }
-                        else
-                        {
-                            Damage = 2;
-                        }
+
                     }
                 }
             }
@@ -1419,7 +1599,6 @@ namespace Assets.Entities
 
             public int MagicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public int PhysicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
             #endregion
             #region Character Methods
 
@@ -1518,18 +1697,25 @@ namespace Assets.Entities
 
             public string CharacterName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public string CharacterDescription { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+            public bool DefaultValue { get { return DefaultValue; } set { DefaultValue = true; } }
             public int Health
             {
                 get { return Health; }
                 set
                 {
-                    if (Foe == false)
+                    if (Health < 0) Health = 0;
+                    if (DefaultValue==true)
                     {
-                        Health = 28; if (Health > 100) Health = 100; if (Health < 0) Health = 0;
-                    }
-                    else
-                    {
-                        Health = 15; if (Health > 100) Health = 100; if (Health < 0) Health = 0;
+                        if (Foe == false)
+                        {
+                            Health = 28;
+                        }
+                        else
+                        {
+                            Health = 15;
+                        }
+
                     }
                 }
             }
@@ -1538,28 +1724,38 @@ namespace Assets.Entities
                 get { return dodge; }
                 set
                 {
-                    if (Foe == false)
+                    if (dodge < 0) dodge = 0;
+                    if (DefaultValue == true)
                     {
-                        dodge = 8;
-                    }
-                    else
-                    {
-                        dodge = 5;
+                        if (Foe == false)
+                        {
+                            dodge = 8;
+                        }
+                        else
+                        {
+                            dodge = 5;
+                        }
+
                     }
                 }
             }
             public int Speed
             {
-                get { return dodge; }
+                get { return Speed; }
                 set
                 {
-                    if (Foe == false)
+                    if (Speed < 0) Speed = 0;
+                    if (DefaultValue == true)
                     {
-                        Speed = 6;
-                    }
-                    else
-                    {
-                        Speed = 5;
+                        if (Foe == false)
+                        {
+                            Speed = 6;
+                        }
+                        else
+                        {
+                            Speed = 5;
+                        }
+
                     }
                 }
             }
@@ -1568,13 +1764,18 @@ namespace Assets.Entities
                 get { return CritC; }
                 set
                 {
-                    if (Foe == false)
+                    if (CritC < 0) CritC = 0;
+                    if (DefaultValue == true)
                     {
-                        CritC = 6;
-                    }
-                    else
-                    {
-                        CritC = 5;
+                        if (Foe == false)
+                        {
+                            CritC = 6;
+                        }
+                        else
+                        {
+                            CritC = 5;
+                        }
+
                     }
                 }
             }
@@ -1583,13 +1784,18 @@ namespace Assets.Entities
                 get { return MagicRes; }
                 set
                 {
-                    if (Foe == false)
+                    if (MagicRes < 0) MagicRes = 0;
+                    if (DefaultValue == true)
                     {
-                        MagicRes = 0;
-                    }
-                    else
-                    {
-                        MagicRes = 5;
+                        if (Foe == false)
+                        {
+                            MagicRes = 0;
+                        }
+                        else
+                        {
+                            MagicRes = 5;
+                        }
+
                     }
                 }
             }
@@ -1598,13 +1804,18 @@ namespace Assets.Entities
                 get { return Armour; }
                 set
                 {
-                    if (Foe == false)
+                    if (Armour < 0) Armour = 0;
+                    if (DefaultValue == true)
                     {
-                        Armour = 6;
-                    }
-                    else
-                    {
-                        Armour = 5;
+                        if (Foe == false)
+                        {
+                            Armour = 6;
+                        }
+                        else
+                        {
+                            Armour = 5;
+                        }
+
                     }
                 }
             }
@@ -1613,27 +1824,32 @@ namespace Assets.Entities
                 get { return Damage; }
                 set
                 {
-                    if (Foe == false)
+                    if (Damage < 0) Damage = 0;
+                    if (DefaultValue == true)
                     {
-                        if (LowDamageArcher == true)
+                        if (Foe == false)
                         {
-                            Damage = 4;
+                            if (LowDamageArcher == true)
+                            {
+                                Damage = 4;
+                            }
+                            else
+                            {
+                                Damage = 16;
+                            }
                         }
                         else
                         {
-                            Damage = 16;
+                            if (LowDamageArcher == true)
+                            {
+                                Damage = 1;
+                            }
+                            else
+                            {
+                                Damage = 10;
+                            }
                         }
-                    }
-                    else
-                    {
-                        if (LowDamageArcher == true)
-                        {
-                            Damage = 1;
-                        }
-                        else
-                        {
-                            Damage = 10;
-                        }
+
                     }
                 }
             }
