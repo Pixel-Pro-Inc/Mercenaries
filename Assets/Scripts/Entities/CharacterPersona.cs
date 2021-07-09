@@ -233,12 +233,15 @@ namespace Assets.Entities
                 }
             } //This bool is made true when XPIncrease is fired and should be made of when sessionOver is true
 
+            public int MagicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public int PhysicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
 
             #endregion
             #region Character Methods
 
             //Here are the passive traits of the card themselves
-            public new void passiveTraits()
+            void ICardTraits.passiveTraits()
             {
                 throw new NotImplementedException();
             }
@@ -308,6 +311,14 @@ namespace Assets.Entities
             {
                 EarnedXp = earnXp;
                 NewEarnedXp = newEarnedXp;
+            }
+
+            public int HealthLoss()
+            {
+                Instance.PhysicalDamageTaken -= Instance.Armour;
+                Instance.MagicalDamageTaken -= Instance.MagicRes;
+                int damageTaken = Instance.MagicalDamageTaken + Instance.PhysicalDamageTaken;
+                return damageTaken;
             }
 
 
@@ -499,12 +510,37 @@ namespace Assets.Entities
             public bool PassiveTankTraits { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public bool LowDamageTankWarrior { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
+            public int MagicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public int PhysicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
             #endregion
             #region Character Methods
 
             void ICardTraits.passiveTraits()
             {
-                throw new NotImplementedException();
+                #region Passive option 1 Tank
+
+                /*
+                 Passive 1 - each 1% of health lost, you gain 2% more armor and magic resistance
+                 */
+                int percentageHealthLoss = (int)(HealthLoss() / Health);
+                int CacheArmour = 0;
+                int CacheMagicalresistance = 0;
+                for (int per = 0; per < percentageHealthLoss; per++)
+                {
+                    Instance.Armour += (int)(Instance.Armour * 0.02);
+                    CacheArmour+= (int)(Instance.Armour * 0.02);
+                    Instance.MagicRes += (int)(Instance.MagicRes * 0.02);
+                    CacheMagicalresistance+= (int)(Instance.MagicRes * 0.02);
+                }
+                if (true/*GameOver==true*/)
+                {
+                    Instance.Armour -= CacheArmour;
+                    Instance.MagicRes -= CacheMagicalresistance;
+                    CacheArmour = 0;
+                    CacheMagicalresistance = 0;
+                }
+                #endregion
             }
 
             public void UniqueActiveBuff()
@@ -566,6 +602,14 @@ namespace Assets.Entities
             public void ActiveDeBuff()
             {
                 throw new NotImplementedException();
+            }
+
+            public int HealthLoss()
+            {
+                Instance.PhysicalDamageTaken -= Instance.Armour;
+                Instance.MagicalDamageTaken -= Instance.MagicRes;
+                int damageTaken = Instance.MagicalDamageTaken + Instance.PhysicalDamageTaken;
+                return damageTaken;
             }
             #endregion
         }
@@ -755,6 +799,9 @@ namespace Assets.Entities
             public bool Foe { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public bool PassiveRangeTraits { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public bool LowDamageRange { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+            public int MagicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public int PhysicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             #endregion
             #region Character Methods
 
@@ -823,7 +870,15 @@ namespace Assets.Entities
             {
                 throw new NotImplementedException();
             }
-           
+
+            public int HealthLoss()
+            {
+                Instance.PhysicalDamageTaken -= Instance.Armour;
+                Instance.MagicalDamageTaken -= Instance.MagicRes;
+                int damageTaken = Instance.MagicalDamageTaken + Instance.PhysicalDamageTaken;
+                return damageTaken;
+            }
+
             #endregion
         }
         #endregion
@@ -1070,6 +1125,9 @@ namespace Assets.Entities
             public bool PassiveMageTraits { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public bool LowDamageMage { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public bool SupportMage { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+            public int MagicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public int PhysicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             #endregion
             #region Character Methods
 
@@ -1163,6 +1221,14 @@ namespace Assets.Entities
             public void ActiveDeBuff()
             {
                 throw new NotImplementedException();
+            }
+
+            public int HealthLoss()
+            {
+                Instance.PhysicalDamageTaken -= Instance.Armour;
+                Instance.MagicalDamageTaken -= Instance.MagicRes;
+                int damageTaken = Instance.MagicalDamageTaken + Instance.PhysicalDamageTaken;
+                return damageTaken;
             }
             #endregion
         }
@@ -1351,6 +1417,9 @@ namespace Assets.Entities
             public bool PassiveDebufferTraits { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public bool LowDamageDebuffer { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
+            public int MagicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public int PhysicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
             #endregion
             #region Character Methods
 
@@ -1422,6 +1491,14 @@ namespace Assets.Entities
             public void ActiveDeBuff()
             {
                 throw new NotImplementedException();
+            }
+
+            public int HealthLoss()
+            {
+                Instance.PhysicalDamageTaken -= Instance.Armour;
+                Instance.MagicalDamageTaken -= Instance.MagicRes;
+                int damageTaken = Instance.MagicalDamageTaken + Instance.PhysicalDamageTaken;
+                return damageTaken;
             }
             #endregion
         }
@@ -1611,6 +1688,9 @@ namespace Assets.Entities
             public bool Foe { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public bool PassiveArcherTraits { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public bool LowDamageArcher { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+            public int MagicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public int PhysicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             #endregion
             #region Character Methods
 
@@ -1682,6 +1762,14 @@ namespace Assets.Entities
             public void ActiveDeBuff()
             {
                 throw new NotImplementedException();
+            }
+
+            public int HealthLoss()
+            {
+                Instance.PhysicalDamageTaken -= Instance.Armour;
+                Instance.MagicalDamageTaken -= Instance.MagicRes;
+                int damageTaken = Instance.MagicalDamageTaken + Instance.PhysicalDamageTaken;
+                return damageTaken;
             }
 
             #endregion

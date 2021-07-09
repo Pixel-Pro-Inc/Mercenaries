@@ -42,6 +42,10 @@ namespace Assets.TraitInterface
         }
         int Stamina { get; set; }//I assume the hunger method will affect this trait
 
+        int MagicalDamageTaken { get; set; }
+        int PhysicalDamageTaken { get; set; }
+        int HealthLoss();
+
 
         int ExpPoints { get; set; }
         int NewEarnedXp { get; set; }
