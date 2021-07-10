@@ -33,6 +33,7 @@ namespace Assets.TraitInterface
         int MagicRes { get; set; }
         int Armour { get; set; }
         int Damage { get; set; }
+        int DamageGiven();
         int Accuracy { get; set; }
 
 

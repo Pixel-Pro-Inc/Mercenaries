@@ -413,6 +413,23 @@ namespace Assets.Entities
                 throw new NotImplementedException();
             }
 
+            public int DamageGiven()
+            {
+                int damageGiven = 0;
+                if (Foe==false)
+                {
+                    Random r = new Random();
+                    damageGiven = r.Next(14, 20);
+                }
+                else
+                {
+                    Random r = new Random();
+                    damageGiven = r.Next(3, 7);
+                }
+
+                return damageGiven;
+            }
+
 
             #endregion
 
@@ -760,6 +777,23 @@ namespace Assets.Entities
             {
                 throw new NotImplementedException();
             }
+
+            public int DamageGiven()
+            {
+                int damageGiven = 0;
+                if (Foe == false)
+                {
+                    Random r = new Random();
+                    damageGiven = r.Next(8, 14);
+                }
+                else
+                {
+                    Random r = new Random();
+                    damageGiven = r.Next(2, 5);
+                }
+
+                return damageGiven;
+            }
             #endregion
         }
         #endregion
@@ -1087,6 +1121,22 @@ namespace Assets.Entities
             public void TraitLevelUpActivation(int experienceLevel, List<Items> Items)
             {
                 throw new NotImplementedException();
+            }
+
+            public int DamageGiven()
+            {
+                int damageGiven = 0;
+                if (Foe == false)
+                {
+                    Random r = new Random();
+                    damageGiven = r.Next(4, 17);
+                }
+                else
+                {
+                    Random r = new Random();
+                    damageGiven = r.Next(2, 7);
+                }
+                return damageGiven;
             }
 
             #endregion
@@ -1514,6 +1564,22 @@ namespace Assets.Entities
             {
                 throw new NotImplementedException();
             }
+
+            public int DamageGiven()
+            {
+                int damageGiven = 0;
+                if (Foe == false)
+                {
+                    Random r = new Random();
+                    damageGiven = r.Next(5, 26);
+                }
+                else
+                {
+                    Random r = new Random();
+                    damageGiven = r.Next(5, 11);
+                }
+                return damageGiven;
+            }
             #endregion
         }
         #endregion
@@ -1845,6 +1911,22 @@ namespace Assets.Entities
                 throw new NotImplementedException();
             }
 
+            public int DamageGiven()
+            {
+                int damageGiven = 0;
+                if (Foe == false)
+                {
+                    Random r = new Random();
+                    damageGiven = r.Next(5, 11);
+                }
+                else
+                {
+                    Random r = new Random();
+                    damageGiven = r.Next(1, 3);
+                }
+                return damageGiven;
+            }
+
             #endregion
         }
         #endregion
@@ -2173,6 +2255,22 @@ namespace Assets.Entities
             public void TraitLevelUpActivation(int experienceLevel, List<Items> Items)
             {
                 throw new NotImplementedException();
+            }
+
+            public int DamageGiven()
+            {
+                int damageGiven = 0;
+                if (Foe == false)
+                {
+                    Random r = new Random();
+                    damageGiven = r.Next(10, 11);
+                }
+                else
+                {
+                    Random r = new Random();
+                    damageGiven = r.Next(1, 11);
+                }
+                return damageGiven;
             }
 
             #endregion
