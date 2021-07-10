@@ -16,7 +16,7 @@ namespace Assets.Entities
          Here I planned on defining each unique character and all their traits and abilities (methods).
         In my mind each one will be of Type 'Class' and so this will just be used as a reference for their names.
         When you want to get the names of enemies and allies and masters, you 
-        just use the index to get the unique string that will be passed to access the class instance with the name desired.
+        just use the index to get the unique string that will be passed to access the class Instance with the name desired.
          */
         public enum MasterCharacterList
         {
