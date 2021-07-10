@@ -47,7 +47,7 @@ namespace Assets.Entities
             Triton,
             Unknown
         };
-        internal int ExperienceLevel;
+        internal int ExperienceLevel { get { return ExperienceLevel;  } set { if (ExperienceLevel < 0) ExperienceLevel = 0; } }
         #endregion
 
         #region WarriorCharacter Template
@@ -72,14 +72,14 @@ namespace Assets.Entities
                     if (DefaultValue==true)
                     {
 
-                    }
-                    if (Foe == false)
-                    {
-                        Health = 33; 
-                    }
-                    else
-                    {
-                        Health = 15;
+                        if (Foe == false)
+                        {
+                            Health = 70;
+                        }
+                        else
+                        {
+                            Health = 15;
+                        }
                     }
                 }
             }
@@ -112,7 +112,7 @@ namespace Assets.Entities
                     {
                         if (Foe == false)
                         {
-                            Speed = 1;
+                            Speed = 10;
                         }
                         else
                         {
@@ -194,11 +194,11 @@ namespace Assets.Entities
                         {
                             if (LowDamageWarrior == true)
                             {
-                                Damage = 8;
+                                Damage = 14;
                             }
                             else
                             {
-                                Damage = 13;
+                                Damage = 19;
                             }
                         }
                         else
@@ -347,30 +347,30 @@ namespace Assets.Entities
                 Instance.ExperienceLevel++;
                 if (Foe == false)
                 {
-                    Instance.Health += 10;
-                    Instance.dodge += 2;
-                    Instance.Speed += 2;
-                    Instance.CritC += 1;
-                    Instance.MagicRes += 1;
-                    Instance.Armour += 1;
-                    if (LowDamageWarrior == true) Instance.Damage += 3;
+                    Instance.Health += 20 *Instance.ExperienceLevel;
+                    Instance.dodge += 2 * Instance.ExperienceLevel;
+                    Instance.Speed += 2 * Instance.ExperienceLevel;
+                    Instance.CritC += 1 * Instance.ExperienceLevel;
+                    Instance.MagicRes += 1 * Instance.ExperienceLevel;
+                    Instance.Armour += 3 * Instance.ExperienceLevel;
+                    if (LowDamageWarrior == true) Instance.Damage += 3 * Instance.ExperienceLevel;
                     else
                     {
-                        Instance.Damage += 2;
+                        Instance.Damage += 2 * Instance.ExperienceLevel;
                     }
                 }
                 else
                 {
-                    Instance.Health += 5;
-                    Instance.dodge += 2;
-                    Instance.Speed += 1;
-                    Instance.CritC += 1;
+                    Instance.Health += 5 * Instance.ExperienceLevel;
+                    Instance.dodge += 2 * Instance.ExperienceLevel;
+                    Instance.Speed += 1 * Instance.ExperienceLevel;
+                    Instance.CritC += 1 * Instance.ExperienceLevel;
                     Instance.MagicRes += 0;
                     Instance.Armour += 0;
-                    if (LowDamageWarrior == true) Instance.Damage += 1;
+                    if (LowDamageWarrior == true) Instance.Damage += 1 * Instance.ExperienceLevel;
                     else
                     {
-                        Instance.Damage += 2;
+                        Instance.Damage += 2 * Instance.ExperienceLevel;
                     }
                 }
                 //fire levelIncrease animation
@@ -427,7 +427,7 @@ namespace Assets.Entities
 
                         if (Foe == false)
                         {
-                            Health = 35; 
+                            Health = 120; 
                         }
                         else
                         {
@@ -485,7 +485,7 @@ namespace Assets.Entities
                     {
                         if (Foe == false)
                         {
-                            CritC = 8;
+                            CritC = 3;
                         }
                         else
                         {
@@ -642,30 +642,30 @@ namespace Assets.Entities
                 if (Foe == false)
                 {
 
-                    Instance.Health += 12;
-                    Instance.dodge += 1;
-                    Instance.Speed += 1;
-                    Instance.CritC += 1;
-                    Instance.MagicRes += 1;
-                    Instance.Armour += 2;
-                    if (LowDamageTankWarrior == true) Instance.Damage += 2;
+                    Instance.Health += 40 * Instance.ExperienceLevel;
+                    Instance.dodge += 1 * Instance.ExperienceLevel;
+                    Instance.Speed += 1 * Instance.ExperienceLevel;
+                    Instance.CritC += 1 * Instance.ExperienceLevel;
+                    Instance.MagicRes += 1 * Instance.ExperienceLevel;
+                    Instance.Armour += 2 * Instance.ExperienceLevel;
+                    if (LowDamageTankWarrior == true) Instance.Damage += 2 * Instance.ExperienceLevel;
                     else
                     {
-                        Instance.Damage += 2;
+                        Instance.Damage += 2 * Instance.ExperienceLevel;
                     }
                 }
                 else
                 {
-                    Instance.Health += 8;
-                    Instance.dodge += 0;
-                    Instance.Speed += 1;
-                    Instance.CritC += 1;
-                    Instance.MagicRes += 1;
-                    Instance.Armour += 2;
-                    if (LowDamageTankWarrior == true) Instance.Damage += 1;
+                    Instance.Health += 8 * Instance.ExperienceLevel;
+                    Instance.dodge += 0 * Instance.ExperienceLevel;
+                    Instance.Speed += 1 * Instance.ExperienceLevel;
+                    Instance.CritC += 1 * Instance.ExperienceLevel;
+                    Instance.MagicRes += 1 * Instance.ExperienceLevel;
+                    Instance.Armour += 2 * Instance.ExperienceLevel;
+                    if (LowDamageTankWarrior == true) Instance.Damage += 1 * Instance.ExperienceLevel;
                     else
                     {
-                        Instance.Damage += 1;
+                        Instance.Damage += 1 * Instance.ExperienceLevel;
                     }
                 }
                 //fire levelIncrease animation
@@ -750,7 +750,7 @@ namespace Assets.Entities
                     {
                         if (Foe == false)
                         {
-                            Health = 28; 
+                            Health = 58; 
                         }
                         else
                         {
@@ -829,7 +829,7 @@ namespace Assets.Entities
                     {
                         if (Foe == false)
                         {
-                            MagicRes = 0;
+                            MagicRes = 1;
                         }
                         else
                         {
@@ -849,7 +849,7 @@ namespace Assets.Entities
                     {
                         if (Foe == false)
                         {
-                            Armour = 0;
+                            Armour = 3;
                         }
                         else
                         {
@@ -971,31 +971,31 @@ namespace Assets.Entities
                 if (Foe == false)
                 {
                     
-                Instance.Health += 8;
-                Instance.dodge += 4;
-                Instance.Speed += 4;
-                Instance.CritC += 2;
-                Instance.MagicRes += 0;
-                Instance.Armour += 0;
-                if (LowDamageRange == true) Instance.Damage += 2;
+                Instance.Health += 11 * Instance.ExperienceLevel;
+                Instance.dodge += 4 * Instance.ExperienceLevel;
+                Instance.Speed += 4 * Instance.ExperienceLevel;
+                Instance.CritC += 2 * Instance.ExperienceLevel;
+                Instance.MagicRes += 2 * (Instance.ExperienceLevel-2);
+                Instance.Armour += 2 * (Instance.ExperienceLevel-2);
+                if (LowDamageRange == true) Instance.Damage += 2 * Instance.ExperienceLevel;
                 else
                 {
-                    Instance.Damage += 3;
+                    Instance.Damage += 4 * Instance.ExperienceLevel;
                 }
                 //fire levelIncrease animation
                 }
                 else
                 {
-                    Instance.Health += 3;
-                    Instance.dodge += 1;
-                    Instance.Speed += 4;
-                    Instance.CritC += 2;
-                    Instance.MagicRes += 0;
-                    Instance.Armour += 0;
-                    if (LowDamageRange == true) Instance.Damage += 1;
+                    Instance.Health += 3 * Instance.ExperienceLevel;
+                    Instance.dodge += 1 * Instance.ExperienceLevel;
+                    Instance.Speed += 4 * Instance.ExperienceLevel;
+                    Instance.CritC += 2 * Instance.ExperienceLevel;
+                    Instance.MagicRes += 0 * (Instance.ExperienceLevel - 2);
+                    Instance.Armour += 0 * (Instance.ExperienceLevel - 2);
+                    if (LowDamageRange == true) Instance.Damage += 1 * Instance.ExperienceLevel;
                     else
                     {
-                        Instance.Damage += 2;
+                        Instance.Damage += 2 * Instance.ExperienceLevel;
                     }
                 }
                 //fire levelIncrease animation
@@ -1063,7 +1063,7 @@ namespace Assets.Entities
                         {
                             if (SupportMage == false)
                             {
-                                Health = 20;
+                                Health = 55;
                             }
                             else
                             {
@@ -1145,7 +1145,7 @@ namespace Assets.Entities
                         {
                             if (SupportMage == false)
                             {
-                                CritC = 4;
+                                CritC = 2;
                             }
                             else
                             {
@@ -1199,7 +1199,7 @@ namespace Assets.Entities
                         {
                             if (SupportMage == false)
                             {
-                                Armour = 0;
+                                Armour = 2;
                             }
                             else
                             {
@@ -1228,7 +1228,7 @@ namespace Assets.Entities
                             {
                                 if (LowDamageMage == true)
                                 {
-                                    Damage = 1;
+                                    Damage = 5;
                                 }
                                 else
                                 {
@@ -1342,51 +1342,48 @@ namespace Assets.Entities
 
                     if (SupportMage == false)
                     {
-                        Instance.Health += 5;
-                        Instance.dodge += 5;
-                        Instance.Speed += 1;
-                        Instance.CritC += 1;
+                        Instance.Health += 5 * Instance.ExperienceLevel;
+                        Instance.dodge += 5 * Instance.ExperienceLevel;
+                        Instance.Speed += 1 * Instance.ExperienceLevel;
+                        Instance.CritC += 1 * Instance.ExperienceLevel;
+                        Instance.MagicRes += 3 * (Instance.ExperienceLevel - 2);
+                        Instance.Armour += 1 * (Instance.ExperienceLevel - 2);
                         #region Damage
-                        if (LowDamageMage == true) Instance.Damage += 5;
+                        if (LowDamageMage == true) Instance.Damage += 5 * Instance.ExperienceLevel;
                         else
                         {
-                            Instance.Damage += 4;
+                            Instance.Damage += 4 * Instance.ExperienceLevel;
                         }
                         #endregion
-                        if (ExperienceLevel > 3)
-                        {
-                            Instance.MagicRes += 1;
-                            Instance.Armour += 1;
-                        }//I only wrote here +1 for both stats to fill it with something.But It was never specified what actually happens after Level 3
                     }
                     else
                     {
-                        Instance.Health += 5;
-                        Instance.dodge += 5;
-                        Instance.Speed += 6;
-                        Instance.CritC += 1;
-                        Instance.MagicRes += 1;
-                        Instance.Armour += 1;
-                        if (LowDamageMage == true) Instance.Damage += 3;
+                        Instance.Health += 5 * Instance.ExperienceLevel;
+                        Instance.dodge += 5 * Instance.ExperienceLevel;
+                        Instance.Speed += 6 * Instance.ExperienceLevel;
+                        Instance.CritC += 1 * Instance.ExperienceLevel;
+                        Instance.MagicRes += 1 * Instance.ExperienceLevel;
+                        Instance.Armour += 1 * Instance.ExperienceLevel;
+                        if (LowDamageMage == true) Instance.Damage += 3 * Instance.ExperienceLevel;
                         else
                         {
-                            Instance.Damage += 4;
+                            Instance.Damage += 4 * Instance.ExperienceLevel;
                         }
                     }
                     //fire levelIncrease animation
                 }
                 else
                 {
-                    Instance.Health += 1;
-                    Instance.dodge += 2;
-                    Instance.Speed += 1;
-                    Instance.CritC += 1;
-                    Instance.MagicRes += 0;
-                    Instance.Armour += 0;
-                    if (LowDamageMage == true) Instance.Damage += 1;
+                    Instance.Health += 1 * Instance.ExperienceLevel;
+                    Instance.dodge += 2 * Instance.ExperienceLevel;
+                    Instance.Speed += 1 * Instance.ExperienceLevel;
+                    Instance.CritC += 1 * Instance.ExperienceLevel;
+                    Instance.MagicRes += 0 * Instance.ExperienceLevel;
+                    Instance.Armour += 0 * Instance.ExperienceLevel;
+                    if (LowDamageMage == true) Instance.Damage += 1 * Instance.ExperienceLevel;
                     else
                     {
-                        Instance.Damage += 5;
+                        Instance.Damage += 5 * Instance.ExperienceLevel;
                     }
                 }
                 #endregion
@@ -1441,12 +1438,12 @@ namespace Assets.Entities
             #endregion
         }
         #endregion
-        #region DeBufferCharacter Template
+        #region ControllerCharacter Template
 
-        public class DeBufferTemplate: CharacterPersona, ICardTraits, ICharacterTraits, IDebufferTraits
+        public class ControllerTemplate: CharacterPersona, ICardTraits, ICharacterTraits, IControllerTraits
         {
-            public static DeBufferTemplate Instance { get; set; }
-            public DeBufferTemplate()
+            public static ControllerTemplate Instance { get; set; }
+            public ControllerTemplate()
             {
                 Instance = this;
             }
@@ -1469,7 +1466,7 @@ namespace Assets.Entities
                     }
                     if (Foe == false)
                     {
-                        Health = 33; 
+                        Health = 68; 
                     }
                     else
                     {
@@ -1487,7 +1484,7 @@ namespace Assets.Entities
                     {
                         if (Foe == false)
                         {
-                            dodge = 0;
+                            dodge = 10;
                         }
                         else
                         {
@@ -1507,7 +1504,7 @@ namespace Assets.Entities
                     {
                         if (Foe == false)
                         {
-                            Speed = 0;
+                            Speed = 10;
                         }
                         else
                         {
@@ -1527,7 +1524,7 @@ namespace Assets.Entities
                     {
                         if (Foe == false)
                         {
-                            CritC = 0;
+                            CritC = 1;
                         }
                         else
                         {
@@ -1547,7 +1544,7 @@ namespace Assets.Entities
                     {
                         if (Foe == false)
                         {
-                            MagicRes = 0;
+                            MagicRes = 1;
                         }
                         else
                         {
@@ -1566,7 +1563,7 @@ namespace Assets.Entities
                     {
                         if (Foe == false)
                         {
-                            Armour = 0;
+                            Armour = 1;
                         }
                         else
                         {
@@ -1586,18 +1583,18 @@ namespace Assets.Entities
                     {
                         if (Foe == false)
                         {
-                            if (LowDamageDebuffer == true)
+                            if (LowDamageController == true)
                             {
-                                Damage = 4;
+                                Damage = 5;
                             }
                             else
                             {
-                                Damage = 16;
+                                Damage = 10;
                             }
                         }
                         else
                         {
-                            if (LowDamageDebuffer == true)
+                            if (LowDamageController == true)
                             {
                                 Damage = 1;
                             }
@@ -1658,8 +1655,8 @@ namespace Assets.Entities
             public List<string> NaturalAllies { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public List<string> NaturalEnemies { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public bool Foe { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-            public bool PassiveDebufferTraits { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-            public bool LowDamageDebuffer { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public bool PassiveControllerTraits { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public bool LowDamageController { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
             public int MagicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public int PhysicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
@@ -1686,16 +1683,16 @@ namespace Assets.Entities
                 Instance.ExperienceLevel++;
                 if (Foe == false)
                 {
-                    Instance.Health += 10;
-                    Instance.dodge += 2;
-                    Instance.Speed += 2;
-                    Instance.CritC += 1;
-                    Instance.MagicRes += 1;
-                    Instance.Armour += 1;
-                    if (LowDamageDebuffer == true) Instance.Damage += 3;
+                    Instance.Health += 15 * Instance.ExperienceLevel;
+                    Instance.dodge += 5 * Instance.ExperienceLevel;
+                    Instance.Speed += 6 * Instance.ExperienceLevel;
+                    Instance.CritC += 1 * Instance.ExperienceLevel;
+                    Instance.MagicRes += 1 * Instance.ExperienceLevel;
+                    Instance.Armour += 1 * Instance.ExperienceLevel;
+                    if (LowDamageController == true) Instance.Damage += 3 * Instance.ExperienceLevel;
                     else
                     {
-                        Instance.Damage += 2;
+                        Instance.Damage += 4 * Instance.ExperienceLevel;
                     }
                     //fire levelIncrease animation
                 }
@@ -1710,7 +1707,7 @@ namespace Assets.Entities
                         Instance.MagicRes += 1;
                         Instance.Armour += 1;
                     }
-                    if (LowDamageDebuffer == true) Instance.Damage += 1;
+                    if (LowDamageController == true) Instance.Damage += 1;
                     else
                     {
                         Instance.Damage += 2;

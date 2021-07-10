@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Assets.TraitInterface.CombantantType
 {
-    interface IDebufferTraits
+    interface IControllerTraits
     {
         /*
          Here we declare all the traits expected of anything (Anyone) that can be described as a Debuffers (For both playable and NPC)
@@ -15,10 +15,10 @@ namespace Assets.TraitInterface.CombantantType
         List<string> NaturalAllies { get; set; }
         List<string> NaturalEnemies { get; set; }
         public bool Foe { get; set; }
-        bool PassiveDebufferTraits { get; set; }
-        bool LowDamageDebuffer { get; set; }
+        bool PassiveControllerTraits { get; set; }
+        bool LowDamageController { get; set; }
 
-        #region PassiveDebufferTraits
+        #region PassiveControllerTraits
         void ActiveBuff();
         void ActiveDeBuff();
 
