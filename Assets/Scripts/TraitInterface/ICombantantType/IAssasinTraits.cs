@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Assets.TraitInterface.CombantantType
 {
-    interface IArcherTraits
+    interface IAssasinTraits
     {
         /*
          Here we declare all the traits expected of anything (Anyone) that can be described as a Archer (For both playable and NPC)
@@ -15,10 +15,10 @@ namespace Assets.TraitInterface.CombantantType
         List<string> NaturalAllies { get; set; }
         List<string> NaturalEnemies { get; set; }
         public bool Foe { get; set; }
-        bool PassiveArcherTraits { get; set; }
-        bool LowDamageArcher { get; set; }
+        bool PassiveAssasinTraits { get; set; }
+        bool LowDamageAssasin { get; set; }
 
-        #region PassiveArcherTraits
+        #region PassiveAssasinTraits
         void ActiveBuff();
         void ActiveDeBuff();
 

@@ -215,6 +215,25 @@ namespace Assets.Entities
                     }
                     if (Damage < 0) Damage = 0;
                     
+                }
+            }
+            public int Accuracy 
+            { 
+                get { return Accuracy; }
+                set 
+                {
+                    if (DefaultValue == true)
+                    {
+                        if (Foe == false)
+                        {
+                            Accuracy = 95;
+                        }
+                        else
+                        {
+                            Accuracy = 0;
+                        }
+                    }
+                    if (Accuracy < 0) Accuracy = 0;
                 } 
             }
 
@@ -277,7 +296,7 @@ namespace Assets.Entities
 
             public int MagicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); /*if (MagicalDama < 0) MagicalDa = 0;*/}
             public int PhysicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); /*if (PhysicalDama < 0) PhyscialDama = 0;*/}
-            
+
 
 
             #endregion
@@ -564,6 +583,25 @@ namespace Assets.Entities
                     }
                 }
             }
+            public int Accuracy
+            {
+                get { return Accuracy; }
+                set
+                {
+                    if (DefaultValue == true)
+                    {
+                        if (Foe == false)
+                        {
+                            Accuracy = 80;
+                        }
+                        else
+                        {
+                            Accuracy = 0;
+                        }
+                    }
+                    if (Accuracy < 0) Accuracy = 0;
+                }
+            }
             public int Mana { get => throw new NotImplementedException(); set => throw new NotImplementedException();/*if(DefaultValue==true){  }*/}
             public int Stamina { get => throw new NotImplementedException(); set => throw new NotImplementedException();/*if(DefaultValue==true){  }*/ }
             public int ExpPoints
@@ -617,6 +655,7 @@ namespace Assets.Entities
 
             public int MagicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public int PhysicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            
 
             #endregion
             #region Character Methods
@@ -893,6 +932,25 @@ namespace Assets.Entities
                     }
                 }
             }
+            public int Accuracy
+            {
+                get { return Accuracy; }
+                set
+                {
+                    if (DefaultValue == true)
+                    {
+                        if (Foe == false)
+                        {
+                            Accuracy = 95;
+                        }
+                        else
+                        {
+                            Accuracy = 0;
+                        }
+                    }
+                    if (Accuracy < 0) Accuracy = 0;
+                }
+            }
 
 
             public int Mana { get { return Mana; } set { if (Mana > 100) Mana = 100; if (Mana < 0) Mana = 0; } }
@@ -948,6 +1006,7 @@ namespace Assets.Entities
 
             public int MagicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public int PhysicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            
             #endregion
             #region Character Methods
 
@@ -1261,6 +1320,25 @@ namespace Assets.Entities
                     }
                 }
             }
+            public int Accuracy
+            {
+                get { return Accuracy; }
+                set
+                {
+                    if (DefaultValue == true)
+                    {
+                        if (Foe == false)
+                        {
+                            Accuracy = 85;
+                        }
+                        else
+                        {
+                            Accuracy = 0;
+                        }
+                    }
+                    if (Accuracy < 0) Accuracy = 0;
+                }
+            }
             public int Mana { get { return Mana; } set { if (Mana > 100) Mana = 100; if (Mana < 0) Mana = 0; } }
             public int Stamina { get { return Stamina; } set { if (Stamina > 100) Stamina = 100; if (Stamina < 0) Stamina = 0; } }
             public int ExpPoints
@@ -1315,6 +1393,7 @@ namespace Assets.Entities
 
             public int MagicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public int PhysicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+           
             #endregion
             #region Character Methods
 
@@ -1607,6 +1686,25 @@ namespace Assets.Entities
                     }
                 }
             }
+            public int Accuracy
+            {
+                get { return Accuracy; }
+                set
+                {
+                    if (DefaultValue == true)
+                    {
+                        if (Foe == false)
+                        {
+                            Accuracy = 90;
+                        }
+                        else
+                        {
+                            Accuracy = 0;
+                        }
+                    }
+                    if (Accuracy < 0) Accuracy = 0;
+                }
+            }
             public int Mana { get { return Mana; } set { if (Mana > 100) Mana = 100; if (Mana < 0) Mana = 0; } }
             public int Stamina { get { return Stamina; } set { if (Stamina > 100) Stamina = 100; if (Stamina < 0) Stamina = 0; } }
             public int ExpPoints
@@ -1660,6 +1758,7 @@ namespace Assets.Entities
 
             public int MagicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public int PhysicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+           
             #endregion
             #region Character Methods
 
@@ -1749,12 +1848,12 @@ namespace Assets.Entities
             #endregion
         }
         #endregion
-        #region ArcherCharacter Template
+        #region AssasinCharacter Template
 
-        public class ArcherTemplate: CharacterPersona, ICardTraits, ICharacterTraits, IArcherTraits
+        public class AssasinTemplate: CharacterPersona, ICardTraits, ICharacterTraits, IAssasinTraits
         {
-            public static ArcherTemplate Instance { get; set; }
-            public ArcherTemplate()
+            public static AssasinTemplate Instance { get; set; }
+            public AssasinTemplate()
             {
                 Instance = this;
             }
@@ -1776,7 +1875,7 @@ namespace Assets.Entities
                     {
                         if (Foe == false)
                         {
-                            Health = 28;
+                            Health = 50;
                         }
                         else
                         {
@@ -1796,7 +1895,7 @@ namespace Assets.Entities
                     {
                         if (Foe == false)
                         {
-                            dodge = 8;
+                            dodge = 15;
                         }
                         else
                         {
@@ -1836,7 +1935,7 @@ namespace Assets.Entities
                     {
                         if (Foe == false)
                         {
-                            CritC = 6;
+                            CritC = 10;
                         }
                         else
                         {
@@ -1856,7 +1955,7 @@ namespace Assets.Entities
                     {
                         if (Foe == false)
                         {
-                            MagicRes = 0;
+                            MagicRes = 3;
                         }
                         else
                         {
@@ -1876,7 +1975,7 @@ namespace Assets.Entities
                     {
                         if (Foe == false)
                         {
-                            Armour = 6;
+                            Armour = 3;
                         }
                         else
                         {
@@ -1896,18 +1995,18 @@ namespace Assets.Entities
                     {
                         if (Foe == false)
                         {
-                            if (LowDamageArcher == true)
+                            if (LowDamageAssasin == true)
                             {
-                                Damage = 4;
+                                Damage = 10;
                             }
                             else
                             {
-                                Damage = 16;
+                                Damage = 10;
                             }
                         }
                         else
                         {
-                            if (LowDamageArcher == true)
+                            if (LowDamageAssasin == true)
                             {
                                 Damage = 1;
                             }
@@ -1918,6 +2017,25 @@ namespace Assets.Entities
                         }
 
                     }
+                }
+            }
+            public int Accuracy
+            {
+                get { return Accuracy; }
+                set
+                {
+                    if (DefaultValue == true)
+                    {
+                        if (Foe == false)
+                        {
+                            Accuracy = 100;
+                        }
+                        else
+                        {
+                            Accuracy = 0;
+                        }
+                    }
+                    if (Accuracy < 0) Accuracy = 0;
                 }
             }
             public int Mana { get { return Mana; } set { if (Mana > 100) Mana = 100; if (Mana < 0) Mana = 0; } }
@@ -1969,8 +2087,8 @@ namespace Assets.Entities
             public List<string> NaturalAllies { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public List<string> NaturalEnemies { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public bool Foe { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-            public bool PassiveArcherTraits { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-            public bool LowDamageArcher { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public bool PassiveAssasinTraits { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public bool LowDamageAssasin { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
             public int MagicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public int PhysicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
@@ -1998,34 +2116,31 @@ namespace Assets.Entities
                 Instance.ExperienceLevel++;
                 if (Foe == false)
                 {
-                    Instance.Health += 8;
-                    Instance.dodge += 4;
-                    Instance.Speed += 4;
-                    Instance.CritC += 2;
-                    if (ExperienceLevel > 3)
-                    {
-                        Instance.MagicRes += 1;
-                        Instance.Armour += 1;
-                    }//I only wrote here +1 for both stats to fill it with something.But It was never specified what actually happens after Level 3
-                    if (LowDamageArcher == true) Instance.Damage += 2;
+                    Instance.Health += 12 * Instance.ExperienceLevel;
+                    Instance.dodge += 6 * Instance.ExperienceLevel;
+                    Instance.Speed += 3 * Instance.ExperienceLevel;
+                    Instance.CritC += 3 * Instance.ExperienceLevel;
+                    Instance.MagicRes += 2 * (Instance.ExperienceLevel - 2);
+                    Instance.Armour += 2 * (Instance.ExperienceLevel - 2);
+                    if (LowDamageAssasin == true) Instance.Damage += 6 * Instance.ExperienceLevel;
                     else
                     {
-                        Instance.Damage += 3;
+                        Instance.Damage += 7 * Instance.ExperienceLevel;
                     }
                     //fire levelIncrease animation
                 }
                 else
                 {
-                    Instance.Health += 5;
-                    Instance.dodge += 2;
-                    Instance.Speed += 1;
-                    Instance.CritC += 1;
-                    Instance.MagicRes += 0;
-                    Instance.Armour += 0;
-                    if (LowDamageArcher == true) Instance.Damage += 1;
+                    Instance.Health += 5 * Instance.ExperienceLevel;
+                    Instance.dodge += 2 * Instance.ExperienceLevel;
+                    Instance.Speed += 1 * Instance.ExperienceLevel;
+                    Instance.CritC += 1 * Instance.ExperienceLevel;
+                    Instance.MagicRes += 0 * Instance.ExperienceLevel;
+                    Instance.Armour += 0 * Instance.ExperienceLevel;
+                    if (LowDamageAssasin == true) Instance.Damage += 1 * Instance.ExperienceLevel;
                     else
                     {
-                        Instance.Damage += 2;
+                        Instance.Damage += 2 * Instance.ExperienceLevel;
                     }
                     //fire levelIncrease animation
                 }
