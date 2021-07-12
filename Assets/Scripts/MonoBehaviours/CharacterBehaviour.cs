@@ -27,7 +27,7 @@ public class CharacterBehaviour : MonoBehaviour
     public void Update()
     {
         transform.position = Vector3.Lerp(Goto, transform.position, .125f);
-        if (transform.position == Goto) ;
+        if (transform.position == Goto);
             //IdleAnimation();
     }
     Vector3 scale = new Vector3(0.25f, 0.2407f, 0.25f);

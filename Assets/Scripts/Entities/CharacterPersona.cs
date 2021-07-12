@@ -48,8 +48,15 @@ namespace Assets.Entities
             Unknown
         };
         internal int ExperienceLevel { get { return ExperienceLevel;  } set { if (ExperienceLevel < 0) ExperienceLevel = 0; } }
-        #endregion
 
+        #endregion
+        #region Items 
+
+        Items.HolyCrossTemplate HolyCrossItem = new Items.HolyCrossTemplate();
+        Items.Nth_Metal Nth_Metal_Item = new Items.Nth_Metal();
+
+
+        #endregion
         #region WarriorCharacter Template
         public class WarriorTemplate : CharacterPersona, ICardTraits, ICharacterTraits, IWarriorTraits
         {
@@ -313,6 +320,8 @@ namespace Assets.Entities
             //forget to include the correct and necesary info
 
 
+            
+            
 
             //Default Methods of Character Combantant type
             public void ActiveBuff()
