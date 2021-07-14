@@ -54,16 +54,21 @@ namespace Assets.Entities
 
         Items.HolyCrossTemplate HolyCrossItem = new Items.HolyCrossTemplate();
         Items.Nth_Metal Nth_Metal_Item = new Items.Nth_Metal();
+        Items.GaiaShieldTemplate GaiaShieldTemplate = new Items.GaiaShieldTemplate();
 
         public void EquipItem(object item, object CharacterInstance)
         {
-            if (item==HolyCrossItem)
+            if (item.GetType() == typeof(Items.HolyCrossTemplate))
             {
                 HolyCrossItem.ActivationRequireMent(CharacterInstance);
             }
-            if (item==Nth_Metal_Item)
+            if (item.GetType() == typeof(Items.Nth_Metal))
             {
                 Nth_Metal_Item.ActivationRequireMent(CharacterInstance);
+            }
+            if (item.GetType() == typeof(Items.GaiaShieldTemplate))
+            {
+                GaiaShieldTemplate.ActivationRequireMent(CharacterInstance);
             }
         }
         #endregion
@@ -477,8 +482,7 @@ namespace Assets.Entities
 
             }
 
-
-            public void HealthLoss(int damageGiven)
+            public int HealthLoss(int damageGiven)
             {
                 Instance.PhysicalDamageTaken = (int)(damageGiven * 0.4);
                 Instance.MagicalDamageTaken = (int)(damageGiven * 0.6);
@@ -486,6 +490,7 @@ namespace Assets.Entities
                 Instance.MagicalDamageTaken -= Instance.MagicRes;
                 int damageTaken = Instance.MagicalDamageTaken + Instance.PhysicalDamageTaken;
                 Instance.Health -= damageTaken;
+                return damageTaken;
             }
             #endregion
 
@@ -796,8 +801,9 @@ namespace Assets.Entities
 
                 /*
                  Passive 1 - each 1% of health lost, you gain 2% more armor and magic resistance
-                 */
-                int percentageHealthLoss = (int)(HealthLoss() / Health);
+
+                int percentageHealthLoss =(Instance.HealthLoss(TankWarriorTemplate.Instance.DamageGiven(TankWarriorTemplate.Instance))/ Health);
+                //This line above doesn't make sense. damageGiven needs to be passed through ActiveBuff for it to work. We cant use the above parameter in HealthLoss it has to be something past into the activeBuff()
                 int CacheArmour = 0;
                 int CacheMagicalresistance = 0;
                 for (int per = 0; per < percentageHealthLoss; per++)
@@ -807,13 +813,16 @@ namespace Assets.Entities
                     Instance.MagicRes += (int)(Instance.MagicRes * 0.02);
                     CacheMagicalresistance += (int)(Instance.MagicRes * 0.02);
                 }
-                if (true/*GameOver==true*/)
+                if (GameOver==true)
                 {
                     Instance.Armour -= CacheArmour;
                     Instance.MagicRes -= CacheMagicalresistance;
                     CacheArmour = 0;
                     CacheMagicalresistance = 0;
                 }
+
+                */
+                
                 #endregion
             }
 
@@ -878,8 +887,7 @@ namespace Assets.Entities
 
                 return damageGiven;
             }
-
-            public void HealthLoss(int damageGiven)
+            public int HealthLoss(int damageGiven)
             {
                 Instance.PhysicalDamageTaken = (int)(damageGiven * 0.4);
                 Instance.MagicalDamageTaken = (int)(damageGiven * 0.6);
@@ -887,6 +895,8 @@ namespace Assets.Entities
                 Instance.MagicalDamageTaken -= Instance.MagicRes;
                 int damageTaken = Instance.MagicalDamageTaken + Instance.PhysicalDamageTaken;
                 Instance.Health -= damageTaken;
+
+                return damageTaken;
             }
             #endregion
         }
@@ -1262,7 +1272,7 @@ namespace Assets.Entities
                 return damageGiven;
             }
 
-            public void HealthLoss(int damageGiven)
+            public int HealthLoss(int damageGiven)
             {
                 Instance.PhysicalDamageTaken = (int)(damageGiven * 0.4);
                 Instance.MagicalDamageTaken = (int)(damageGiven * 0.6);
@@ -1270,6 +1280,7 @@ namespace Assets.Entities
                 Instance.MagicalDamageTaken -= Instance.MagicRes;
                 int damageTaken = Instance.MagicalDamageTaken + Instance.PhysicalDamageTaken;
                 Instance.Health -= damageTaken;
+                return damageTaken;
             }
 
             #endregion
@@ -1742,8 +1753,7 @@ namespace Assets.Entities
 
                 return damageGiven;
             }
-
-            public void HealthLoss(int damageGiven)
+            public int HealthLoss(int damageGiven)
             {
                 Instance.PhysicalDamageTaken = (int)(damageGiven * 0.4);
                 Instance.MagicalDamageTaken = (int)(damageGiven * 0.6);
@@ -1751,6 +1761,7 @@ namespace Assets.Entities
                 Instance.MagicalDamageTaken -= Instance.MagicRes;
                 int damageTaken = Instance.MagicalDamageTaken + Instance.PhysicalDamageTaken;
                 Instance.Health -= damageTaken;
+                return damageTaken;
             }
             #endregion
         }
@@ -2128,7 +2139,7 @@ namespace Assets.Entities
                 return damageGiven;
             }
 
-            public void HealthLoss(int damageGiven)
+            public int HealthLoss(int damageGiven)
             {
                 Instance.PhysicalDamageTaken = (int)(damageGiven * 0.4);
                 Instance.MagicalDamageTaken = (int)(damageGiven * 0.6);
@@ -2136,6 +2147,7 @@ namespace Assets.Entities
                 Instance.MagicalDamageTaken -= Instance.MagicRes;
                 int damageTaken = Instance.MagicalDamageTaken + Instance.PhysicalDamageTaken;
                 Instance.Health -= damageTaken;
+                return damageTaken;
             }
 
             #endregion
@@ -2513,7 +2525,7 @@ namespace Assets.Entities
                 return damageGiven;
             }
 
-            public void HealthLoss(int damageGiven)
+            public int HealthLoss(int damageGiven)
             {
                 Instance.PhysicalDamageTaken = (int)(damageGiven * 0.4);
                 Instance.MagicalDamageTaken = (int)(damageGiven * 0.6);
@@ -2521,6 +2533,7 @@ namespace Assets.Entities
                 Instance.MagicalDamageTaken -= Instance.MagicRes;
                 int damageTaken = Instance.MagicalDamageTaken + Instance.PhysicalDamageTaken;
                 Instance.Health -= damageTaken;
+                return damageTaken;
             }
 
             #endregion
