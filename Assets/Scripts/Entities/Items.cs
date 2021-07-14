@@ -40,11 +40,13 @@ namespace Assets.Entities
                 }//This here is used to clear the cache of effects if relic is not in use
             }
 
+            object OnwerType { get; set; } //This is used in experiment to see if this object can be given the typeof a template and will be able to acess
+
             #region Item Variables
 
             public string ItemName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public string ItemDescription { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-            public bool Relic { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public bool Relic { get { return Relic; } set { Relic = true; } }
             public bool BeingUsed { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public int Owner { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
@@ -79,6 +81,15 @@ namespace Assets.Entities
                     Instance.Owner = 6;
                 }
                 #endregion
+
+                #region ExperiMent
+                if (CharacterInstance==CharacterPersona.WarriorTemplate.Instance)
+                {
+                    OnwerType = typeof(CharacterPersona.WarriorTemplate);
+                   // OnwerType.Health++;
+                }
+                #endregion
+
 
                 Instance.Equip();
                 return BeingUsed;

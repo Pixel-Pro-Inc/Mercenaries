@@ -55,7 +55,17 @@ namespace Assets.Entities
         Items.HolyCrossTemplate HolyCrossItem = new Items.HolyCrossTemplate();
         Items.Nth_Metal Nth_Metal_Item = new Items.Nth_Metal();
 
-
+        public void EquipItem(object item, object CharacterInstance)
+        {
+            if (item==HolyCrossItem)
+            {
+                HolyCrossItem.ActivationRequireMent(CharacterInstance);
+            }
+            if (item==Nth_Metal_Item)
+            {
+                Nth_Metal_Item.ActivationRequireMent(CharacterInstance);
+            }
+        }
         #endregion
         #region WarriorCharacter Template
         public class WarriorTemplate : CharacterPersona, ICardTraits, ICharacterTraits, IWarriorTraits
@@ -303,6 +313,7 @@ namespace Assets.Entities
 
             public int MagicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); /*if (MagicalDama < 0) MagicalDa = 0;*/}
             public int PhysicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); /*if (PhysicalDama < 0) PhyscialDama = 0;*/}
+            public int HitCount { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
 
 
@@ -312,7 +323,8 @@ namespace Assets.Entities
             //Here are the passive traits of the card themselves
             void ICardTraits.passiveTraits()
             {
-                
+                //Instance.EquipItem(HolyCrossItem, Instance); I dont expect this to be used at all here. It would be clled some place else, I wrrote it here to see if it would work
+                Instance.ActiveBuff(); 
             }
 
             //string CitizenOf = (string)WarriorTemplate.Kingdom.DarkSyde; // Here I was just experimenting to see how the citizenship can be set
@@ -326,25 +338,21 @@ namespace Assets.Entities
             //Default Methods of Character Combantant type
             public void ActiveBuff()
             {
-                #region Passive option 2 Warrior
+                #region Passive option 2 Warrior StackSpeed
 
                 //Passive 2 - Stacks atack speed up to 5 times (5% each)
 
                 int CacheSpeed = 0;
                 int StackCount = 5;
-                int StackSpeed()
+                if (StackCount > 0&&HitCount<5)
                 {
-                    if (StackCount > 0)
-                    {
-                        Instance.Speed += (int)(Instance.Speed * 0.05);
-                        CacheSpeed += (int)(Instance.Speed * 0.05);
-                        StackCount--;
-                    }
-                    else
-                    {
-                        //Print " cannot stack any more" or "Stack limit reached"
-                    }
-                    return Instance.Speed;
+                    Instance.Speed += (int)(Instance.Speed * 0.05);
+                    CacheSpeed += (int)(Instance.Speed * 0.05);
+                    StackCount--;
+                }
+                else
+                {
+                    //Print " cannot stack any more" or "Stack limit reached"
                 }
                 if (true/*GameOver==true*/)
                 {
@@ -681,7 +689,8 @@ namespace Assets.Entities
 
             public int MagicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public int PhysicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-            
+            public int HitCount { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
 
             #endregion
             #region Character Methods
@@ -1049,7 +1058,8 @@ namespace Assets.Entities
 
             public int MagicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public int PhysicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-            
+            public int HitCount { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
             #endregion
             #region Character Methods
 
@@ -1452,7 +1462,8 @@ namespace Assets.Entities
 
             public int MagicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public int PhysicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-           
+            public int HitCount { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
             #endregion
             #region Character Methods
 
@@ -1833,7 +1844,8 @@ namespace Assets.Entities
 
             public int MagicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public int PhysicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-           
+            public int HitCount { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
             #endregion
             #region Character Methods
 
@@ -2183,6 +2195,7 @@ namespace Assets.Entities
 
             public int MagicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public int PhysicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public int HitCount { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             #endregion
             #region Character Methods
 
