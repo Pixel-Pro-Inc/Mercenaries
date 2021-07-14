@@ -34,7 +34,7 @@ namespace Assets.TraitInterface
         int Armour { get; set; }
         int Damage { get; set; }
         int HitCount { get; set; }
-        int DamageGiven();
+        int DamageGiven(object CharacterInstance);
         int Accuracy { get; set; }
 
 
@@ -49,7 +49,7 @@ namespace Assets.TraitInterface
 
         int MagicalDamageTaken { get; set; }
         int PhysicalDamageTaken { get; set; }
-        int HealthLoss();
+        void HealthLoss(int damageGiven);
 
 
         int ExpPoints { get; set; }

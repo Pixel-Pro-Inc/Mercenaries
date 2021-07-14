@@ -67,6 +67,7 @@ namespace Assets.Entities
             }
         }
         #endregion
+
         #region WarriorCharacter Template
         public class WarriorTemplate : CharacterPersona, ICardTraits, ICharacterTraits, IWarriorTraits
         {
@@ -417,23 +418,16 @@ namespace Assets.Entities
                 NewEarnedXp = newEarnedXp;
             }
 
-            public int HealthLoss()
-            {
-                Instance.PhysicalDamageTaken -= Instance.Armour;
-                Instance.MagicalDamageTaken -= Instance.MagicRes;
-                int damageTaken = Instance.MagicalDamageTaken + Instance.PhysicalDamageTaken;
-                return damageTaken;
-            }
-
             public void TraitLevelUpActivation(int experienceLevel, List<Items> Items)
             {
                 throw new NotImplementedException();
             }
 
-            public int DamageGiven()
+
+            public int DamageGiven(object CharacterInstance)
             {
                 int damageGiven = 0;
-                if (Foe==false)
+                if (Foe == false)
                 {
                     Random r = new Random();
                     damageGiven = r.Next(14, 20);
@@ -444,10 +438,55 @@ namespace Assets.Entities
                     damageGiven = r.Next(3, 7);
                 }
 
+                #region template logic
+                
+                 
+                if (CharacterInstance.GetType() == typeof(CharacterPersona.WarriorTemplate))
+                {
+                    CharacterPersona.WarriorTemplate starter = (CharacterPersona.WarriorTemplate)CharacterInstance;
+                    starter.HealthLoss(damageGiven);
+                }
+                if (CharacterInstance.GetType() == typeof(CharacterPersona.TankWarriorTemplate))
+                {
+                    CharacterPersona.TankWarriorTemplate starter = (CharacterPersona.TankWarriorTemplate)CharacterInstance;
+                    starter.HealthLoss(damageGiven);
+                }
+                if (CharacterInstance.GetType() == typeof(CharacterPersona.RangeTemplate))
+                {
+                    CharacterPersona.RangeTemplate starter = (CharacterPersona.RangeTemplate)CharacterInstance;
+                    starter.HealthLoss(damageGiven);
+                }
+                if (CharacterInstance.GetType() == typeof(CharacterPersona.MageTemplate))
+                {
+                    CharacterPersona.MageTemplate starter = (CharacterPersona.MageTemplate)CharacterInstance;
+                    starter.HealthLoss(damageGiven);
+                }
+                if (CharacterInstance.GetType() == typeof(CharacterPersona.ControllerTemplate))
+                {
+                    CharacterPersona.ControllerTemplate starter = (CharacterPersona.ControllerTemplate)CharacterInstance;
+                    starter.HealthLoss(damageGiven);
+                }
+                if (CharacterInstance.GetType() == typeof(CharacterPersona.AssasinTemplate))
+                {
+                    CharacterPersona.AssasinTemplate starter = (CharacterPersona.AssasinTemplate)CharacterInstance;
+                    starter.HealthLoss(damageGiven);
+                }
+                #endregion
+
                 return damageGiven;
+
             }
 
 
+            public void HealthLoss(int damageGiven)
+            {
+                Instance.PhysicalDamageTaken = (int)(damageGiven * 0.4);
+                Instance.MagicalDamageTaken = (int)(damageGiven * 0.6);
+                Instance.PhysicalDamageTaken -= Instance.Armour;
+                Instance.MagicalDamageTaken -= Instance.MagicRes;
+                int damageTaken = Instance.MagicalDamageTaken + Instance.PhysicalDamageTaken;
+                Instance.Health -= damageTaken;
+            }
             #endregion
 
         }
@@ -783,20 +822,12 @@ namespace Assets.Entities
                 throw new NotImplementedException();
             }
 
-            public int HealthLoss()
-            {
-                Instance.PhysicalDamageTaken -= Instance.Armour;
-                Instance.MagicalDamageTaken -= Instance.MagicRes;
-                int damageTaken = Instance.MagicalDamageTaken + Instance.PhysicalDamageTaken;
-                return damageTaken;
-            }
-
             public void TraitLevelUpActivation(int experienceLevel, List<Items> Items)
             {
                 throw new NotImplementedException();
             }
 
-            public int DamageGiven()
+            public int DamageGiven(object CharacterInstance)
             {
                 int damageGiven = 0;
                 if (Foe == false)
@@ -810,7 +841,52 @@ namespace Assets.Entities
                     damageGiven = r.Next(2, 5);
                 }
 
+                #region template logic
+
+
+                if (CharacterInstance.GetType() == typeof(CharacterPersona.WarriorTemplate))
+                {
+                    CharacterPersona.WarriorTemplate starter = (CharacterPersona.WarriorTemplate)CharacterInstance;
+                    starter.HealthLoss(damageGiven);
+                }
+                if (CharacterInstance.GetType() == typeof(CharacterPersona.TankWarriorTemplate))
+                {
+                    CharacterPersona.TankWarriorTemplate starter = (CharacterPersona.TankWarriorTemplate)CharacterInstance;
+                    starter.HealthLoss(damageGiven);
+                }
+                if (CharacterInstance.GetType() == typeof(CharacterPersona.RangeTemplate))
+                {
+                    CharacterPersona.RangeTemplate starter = (CharacterPersona.RangeTemplate)CharacterInstance;
+                    starter.HealthLoss(damageGiven);
+                }
+                if (CharacterInstance.GetType() == typeof(CharacterPersona.MageTemplate))
+                {
+                    CharacterPersona.MageTemplate starter = (CharacterPersona.MageTemplate)CharacterInstance;
+                    starter.HealthLoss(damageGiven);
+                }
+                if (CharacterInstance.GetType() == typeof(CharacterPersona.ControllerTemplate))
+                {
+                    CharacterPersona.ControllerTemplate starter = (CharacterPersona.ControllerTemplate)CharacterInstance;
+                    starter.HealthLoss(damageGiven);
+                }
+                if (CharacterInstance.GetType() == typeof(CharacterPersona.AssasinTemplate))
+                {
+                    CharacterPersona.AssasinTemplate starter = (CharacterPersona.AssasinTemplate)CharacterInstance;
+                    starter.HealthLoss(damageGiven);
+                }
+                #endregion
+
                 return damageGiven;
+            }
+
+            public void HealthLoss(int damageGiven)
+            {
+                Instance.PhysicalDamageTaken = (int)(damageGiven * 0.4);
+                Instance.MagicalDamageTaken = (int)(damageGiven * 0.6);
+                Instance.PhysicalDamageTaken -= Instance.Armour;
+                Instance.MagicalDamageTaken -= Instance.MagicRes;
+                int damageTaken = Instance.MagicalDamageTaken + Instance.PhysicalDamageTaken;
+                Instance.Health -= damageTaken;
             }
             #endregion
         }
@@ -1129,20 +1205,12 @@ namespace Assets.Entities
                 throw new NotImplementedException();
             }
 
-            public int HealthLoss()
-            {
-                Instance.PhysicalDamageTaken -= Instance.Armour;
-                Instance.MagicalDamageTaken -= Instance.MagicRes;
-                int damageTaken = Instance.MagicalDamageTaken + Instance.PhysicalDamageTaken;
-                return damageTaken;
-            }
-
             public void TraitLevelUpActivation(int experienceLevel, List<Items> Items)
             {
                 throw new NotImplementedException();
             }
 
-            public int DamageGiven()
+            public int DamageGiven(object CharacterInstance)
             {
                 int damageGiven = 0;
                 if (Foe == false)
@@ -1155,7 +1223,53 @@ namespace Assets.Entities
                     Random r = new Random();
                     damageGiven = r.Next(2, 7);
                 }
+
+                #region template logic
+
+
+                if (CharacterInstance.GetType() == typeof(CharacterPersona.WarriorTemplate))
+                {
+                    CharacterPersona.WarriorTemplate starter = (CharacterPersona.WarriorTemplate)CharacterInstance;
+                    starter.HealthLoss(damageGiven);
+                }
+                if (CharacterInstance.GetType() == typeof(CharacterPersona.TankWarriorTemplate))
+                {
+                    CharacterPersona.TankWarriorTemplate starter = (CharacterPersona.TankWarriorTemplate)CharacterInstance;
+                    starter.HealthLoss(damageGiven);
+                }
+                if (CharacterInstance.GetType() == typeof(CharacterPersona.RangeTemplate))
+                {
+                    CharacterPersona.RangeTemplate starter = (CharacterPersona.RangeTemplate)CharacterInstance;
+                    starter.HealthLoss(damageGiven);
+                }
+                if (CharacterInstance.GetType() == typeof(CharacterPersona.MageTemplate))
+                {
+                    CharacterPersona.MageTemplate starter = (CharacterPersona.MageTemplate)CharacterInstance;
+                    starter.HealthLoss(damageGiven);
+                }
+                if (CharacterInstance.GetType() == typeof(CharacterPersona.ControllerTemplate))
+                {
+                    CharacterPersona.ControllerTemplate starter = (CharacterPersona.ControllerTemplate)CharacterInstance;
+                    starter.HealthLoss(damageGiven);
+                }
+                if (CharacterInstance.GetType() == typeof(CharacterPersona.AssasinTemplate))
+                {
+                    CharacterPersona.AssasinTemplate starter = (CharacterPersona.AssasinTemplate)CharacterInstance;
+                    starter.HealthLoss(damageGiven);
+                }
+                #endregion
+
                 return damageGiven;
+            }
+
+            public void HealthLoss(int damageGiven)
+            {
+                Instance.PhysicalDamageTaken = (int)(damageGiven * 0.4);
+                Instance.MagicalDamageTaken = (int)(damageGiven * 0.6);
+                Instance.PhysicalDamageTaken -= Instance.Armour;
+                Instance.MagicalDamageTaken -= Instance.MagicRes;
+                int damageTaken = Instance.MagicalDamageTaken + Instance.PhysicalDamageTaken;
+                Instance.Health -= damageTaken;
             }
 
             #endregion
@@ -1572,20 +1686,12 @@ namespace Assets.Entities
                 throw new NotImplementedException();
             }
 
-            public int HealthLoss()
-            {
-                Instance.PhysicalDamageTaken -= Instance.Armour;
-                Instance.MagicalDamageTaken -= Instance.MagicRes;
-                int damageTaken = Instance.MagicalDamageTaken + Instance.PhysicalDamageTaken;
-                return damageTaken;
-            }
-
             public void TraitLevelUpActivation(int experienceLevel, List<Items> Items)
             {
                 throw new NotImplementedException();
             }
 
-            public int DamageGiven()
+            public int DamageGiven(object CharacterInstance)
             {
                 int damageGiven = 0;
                 if (Foe == false)
@@ -1598,7 +1704,53 @@ namespace Assets.Entities
                     Random r = new Random();
                     damageGiven = r.Next(5, 11);
                 }
+
+                #region template logic
+
+
+                if (CharacterInstance.GetType() == typeof(CharacterPersona.WarriorTemplate))
+                {
+                    CharacterPersona.WarriorTemplate starter = (CharacterPersona.WarriorTemplate)CharacterInstance;
+                    starter.HealthLoss(damageGiven);
+                }
+                if (CharacterInstance.GetType() == typeof(CharacterPersona.TankWarriorTemplate))
+                {
+                    CharacterPersona.TankWarriorTemplate starter = (CharacterPersona.TankWarriorTemplate)CharacterInstance;
+                    starter.HealthLoss(damageGiven);
+                }
+                if (CharacterInstance.GetType() == typeof(CharacterPersona.RangeTemplate))
+                {
+                    CharacterPersona.RangeTemplate starter = (CharacterPersona.RangeTemplate)CharacterInstance;
+                    starter.HealthLoss(damageGiven);
+                }
+                if (CharacterInstance.GetType() == typeof(CharacterPersona.MageTemplate))
+                {
+                    CharacterPersona.MageTemplate starter = (CharacterPersona.MageTemplate)CharacterInstance;
+                    starter.HealthLoss(damageGiven);
+                }
+                if (CharacterInstance.GetType() == typeof(CharacterPersona.ControllerTemplate))
+                {
+                    CharacterPersona.ControllerTemplate starter = (CharacterPersona.ControllerTemplate)CharacterInstance;
+                    starter.HealthLoss(damageGiven);
+                }
+                if (CharacterInstance.GetType() == typeof(CharacterPersona.AssasinTemplate))
+                {
+                    CharacterPersona.AssasinTemplate starter = (CharacterPersona.AssasinTemplate)CharacterInstance;
+                    starter.HealthLoss(damageGiven);
+                }
+                #endregion
+
                 return damageGiven;
+            }
+
+            public void HealthLoss(int damageGiven)
+            {
+                Instance.PhysicalDamageTaken = (int)(damageGiven * 0.4);
+                Instance.MagicalDamageTaken = (int)(damageGiven * 0.6);
+                Instance.PhysicalDamageTaken -= Instance.Armour;
+                Instance.MagicalDamageTaken -= Instance.MagicRes;
+                int damageTaken = Instance.MagicalDamageTaken + Instance.PhysicalDamageTaken;
+                Instance.Health -= damageTaken;
             }
             #endregion
         }
@@ -1919,20 +2071,12 @@ namespace Assets.Entities
                 throw new NotImplementedException();
             }
 
-            public int HealthLoss()
-            {
-                Instance.PhysicalDamageTaken -= Instance.Armour;
-                Instance.MagicalDamageTaken -= Instance.MagicRes;
-                int damageTaken = Instance.MagicalDamageTaken + Instance.PhysicalDamageTaken;
-                return damageTaken;
-            }
-
             public void TraitLevelUpActivation(int experienceLevel, List<Items> Items)
             {
                 throw new NotImplementedException();
             }
 
-            public int DamageGiven()
+            public int DamageGiven(object CharacterInstance)
             {
                 int damageGiven = 0;
                 if (Foe == false)
@@ -1945,7 +2089,53 @@ namespace Assets.Entities
                     Random r = new Random();
                     damageGiven = r.Next(1, 3);
                 }
+
+                #region template logic
+
+
+                if (CharacterInstance.GetType() == typeof(CharacterPersona.WarriorTemplate))
+                {
+                    CharacterPersona.WarriorTemplate starter = (CharacterPersona.WarriorTemplate)CharacterInstance;
+                    starter.HealthLoss(damageGiven);
+                }
+                if (CharacterInstance.GetType() == typeof(CharacterPersona.TankWarriorTemplate))
+                {
+                    CharacterPersona.TankWarriorTemplate starter = (CharacterPersona.TankWarriorTemplate)CharacterInstance;
+                    starter.HealthLoss(damageGiven);
+                }
+                if (CharacterInstance.GetType() == typeof(CharacterPersona.RangeTemplate))
+                {
+                    CharacterPersona.RangeTemplate starter = (CharacterPersona.RangeTemplate)CharacterInstance;
+                    starter.HealthLoss(damageGiven);
+                }
+                if (CharacterInstance.GetType() == typeof(CharacterPersona.MageTemplate))
+                {
+                    CharacterPersona.MageTemplate starter = (CharacterPersona.MageTemplate)CharacterInstance;
+                    starter.HealthLoss(damageGiven);
+                }
+                if (CharacterInstance.GetType() == typeof(CharacterPersona.ControllerTemplate))
+                {
+                    CharacterPersona.ControllerTemplate starter = (CharacterPersona.ControllerTemplate)CharacterInstance;
+                    starter.HealthLoss(damageGiven);
+                }
+                if (CharacterInstance.GetType() == typeof(CharacterPersona.AssasinTemplate))
+                {
+                    CharacterPersona.AssasinTemplate starter = (CharacterPersona.AssasinTemplate)CharacterInstance;
+                    starter.HealthLoss(damageGiven);
+                }
+                #endregion
+
                 return damageGiven;
+            }
+
+            public void HealthLoss(int damageGiven)
+            {
+                Instance.PhysicalDamageTaken = (int)(damageGiven * 0.4);
+                Instance.MagicalDamageTaken = (int)(damageGiven * 0.6);
+                Instance.PhysicalDamageTaken -= Instance.Armour;
+                Instance.MagicalDamageTaken -= Instance.MagicRes;
+                int damageTaken = Instance.MagicalDamageTaken + Instance.PhysicalDamageTaken;
+                Instance.Health -= damageTaken;
             }
 
             #endregion
@@ -2266,20 +2456,12 @@ namespace Assets.Entities
                 throw new NotImplementedException();
             }
 
-            public int HealthLoss()
-            {
-                Instance.PhysicalDamageTaken -= Instance.Armour;
-                Instance.MagicalDamageTaken -= Instance.MagicRes;
-                int damageTaken = Instance.MagicalDamageTaken + Instance.PhysicalDamageTaken;
-                return damageTaken;
-            }
-
             public void TraitLevelUpActivation(int experienceLevel, List<Items> Items)
             {
                 throw new NotImplementedException();
             }
 
-            public int DamageGiven()
+            public int DamageGiven(object CharacterInstance)
             {
                 int damageGiven = 0;
                 if (Foe == false)
@@ -2292,7 +2474,53 @@ namespace Assets.Entities
                     Random r = new Random();
                     damageGiven = r.Next(1, 11);
                 }
+
+                #region template logic
+
+
+                if (CharacterInstance.GetType() == typeof(CharacterPersona.WarriorTemplate))
+                {
+                    CharacterPersona.WarriorTemplate starter = (CharacterPersona.WarriorTemplate)CharacterInstance;
+                    starter.HealthLoss(damageGiven);
+                }
+                if (CharacterInstance.GetType() == typeof(CharacterPersona.TankWarriorTemplate))
+                {
+                    CharacterPersona.TankWarriorTemplate starter = (CharacterPersona.TankWarriorTemplate)CharacterInstance;
+                    starter.HealthLoss(damageGiven);
+                }
+                if (CharacterInstance.GetType() == typeof(CharacterPersona.RangeTemplate))
+                {
+                    CharacterPersona.RangeTemplate starter = (CharacterPersona.RangeTemplate)CharacterInstance;
+                    starter.HealthLoss(damageGiven);
+                }
+                if (CharacterInstance.GetType() == typeof(CharacterPersona.MageTemplate))
+                {
+                    CharacterPersona.MageTemplate starter = (CharacterPersona.MageTemplate)CharacterInstance;
+                    starter.HealthLoss(damageGiven);
+                }
+                if (CharacterInstance.GetType() == typeof(CharacterPersona.ControllerTemplate))
+                {
+                    CharacterPersona.ControllerTemplate starter = (CharacterPersona.ControllerTemplate)CharacterInstance;
+                    starter.HealthLoss(damageGiven);
+                }
+                if (CharacterInstance.GetType() == typeof(CharacterPersona.AssasinTemplate))
+                {
+                    CharacterPersona.AssasinTemplate starter = (CharacterPersona.AssasinTemplate)CharacterInstance;
+                    starter.HealthLoss(damageGiven);
+                }
+                #endregion
+
                 return damageGiven;
+            }
+
+            public void HealthLoss(int damageGiven)
+            {
+                Instance.PhysicalDamageTaken = (int)(damageGiven * 0.4);
+                Instance.MagicalDamageTaken = (int)(damageGiven * 0.6);
+                Instance.PhysicalDamageTaken -= Instance.Armour;
+                Instance.MagicalDamageTaken -= Instance.MagicRes;
+                int damageTaken = Instance.MagicalDamageTaken + Instance.PhysicalDamageTaken;
+                Instance.Health -= damageTaken;
             }
 
             #endregion
