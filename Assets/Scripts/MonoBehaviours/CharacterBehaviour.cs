@@ -20,6 +20,11 @@ public class CharacterBehaviour : MonoBehaviour
     
     public void OnMouseDown()
     {
+        for (int i = 0; i < positions.Length; i++)
+        {
+            positions[i] = GameManager.Instance.characters[i].transform.GetChild(0).localPosition;
+        }
+
         for (int i = 0; i < parent.transform.childCount; i++)
         {
             if (parent.transform.GetChild(i).transform.localPosition == positions[3])
@@ -44,8 +49,7 @@ public class CharacterBehaviour : MonoBehaviour
     public void Update()
     {
         transform.position = Vector3.Lerp(Goto, transform.position, .125f);
-        if (transform.position == Goto);
-            //IdleAnimation();
+        //IdleAnimation();
     }
     Vector3 scale = new Vector3(0.25f, 0.2407f, 0.25f);
     Vector3 initial = new Vector3();
@@ -55,22 +59,22 @@ public class CharacterBehaviour : MonoBehaviour
     public Vector3 GotoP;
     public void IdleAnimation()
     {
-        initial = new Vector3(transform.position.x, -1.4f, 1f);
-        desired = new Vector3(transform.position.x, -1.463f, 1f);
+        initial = new Vector3(transform.parent.position.x, -1.4f, 1f);
+        desired = new Vector3(transform.parent.position.x, -1.463f, 1f);
 
-        if(transform.localScale == new Vector3(.25f, .25f, .25f))
+        if(transform.parent.localScale == new Vector3(.25f, .25f, .25f))
         {
             GotoS = scale;
             GotoP = desired;
         }        
 
-        if (transform.localScale == scale)
+        if (transform.parent.localScale == scale)
             GotoS = new Vector3(.25f, .25f, .25f);
 
         if (GotoS != scale)
             GotoP = initial;
 
-        transform.localScale = Vector3.Lerp(GotoS, transform.localScale, .1f);
-        transform.position = Vector3.Lerp(GotoP, transform.position, .1f);
+        transform.parent.localScale = Vector3.Lerp(GotoS, transform.parent.localScale, .1f);
+        transform.parent.position = Vector3.Lerp(GotoP, transform.parent.position, .1f);
     }
 }
