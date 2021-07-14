@@ -6,18 +6,19 @@ using System.Threading.Tasks;
 
 namespace Assets.TraitInterface.CombantantType
 {
-    interface IDebufferTraits
+    interface IAssasinTraits
     {
         /*
-         Here we declare all the traits expected of anything (Anyone) that can be described as a Debuffers (For both playable and NPC)
+         Here we declare all the traits expected of anything (Anyone) that can be described as a Archer (For both playable and NPC)
          */
         string BriefDescription { get; set; }
         List<string> NaturalAllies { get; set; }
         List<string> NaturalEnemies { get; set; }
-        bool PassiveDebufferTraits { get; set; }
-        bool LowDamageDebuffer { get; set; }
+        public bool Foe { get; set; }
+        bool PassiveAssasinTraits { get; set; }
+        bool LowDamageAssasin { get; set; }
 
-        #region PassiveDebufferTraits
+        #region PassiveAssasinTraits
         void ActiveBuff();
         void ActiveDeBuff();
 

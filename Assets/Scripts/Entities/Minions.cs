@@ -42,6 +42,13 @@ namespace Assets.Entities
 
         public class GlowBuddy : Minions, IMinionBehaviours
         {
+            public static GlowBuddy Instance { get; set; }
+            public GlowBuddy()
+            {
+                Instance = this;
+            }
+
+
             public int Health { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public int Stamina { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public string MinionName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
@@ -81,6 +88,13 @@ namespace Assets.Entities
         }
         public class DevilCritter : Minions, IMinionBehaviours
         {
+            public static DevilCritter Instance { get; set; }
+            public DevilCritter()
+            {
+                Instance = this;
+            }
+
+
             public int Health { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public int Stamina { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public string MinionName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }

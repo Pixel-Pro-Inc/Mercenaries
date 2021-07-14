@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,7 +24,8 @@ namespace Assets.TraitInterface
         #endregion
         #region Stats
 
-        //I was having trouble setting the properties of these varibale with limitations. Something about 'targert runtime doesnt support default interface implementation' 
+        bool DefaultValue { get; set; }
+
         int Health { get; set; }
         int dodge { get; set; }
         int Speed { get; set; }
@@ -31,6 +33,8 @@ namespace Assets.TraitInterface
         int MagicRes { get; set; }
         int Armour { get; set; }
         int Damage { get; set; }
+        int DamageGiven();
+        int Accuracy { get; set; }
 
 
         int Mana
@@ -42,6 +46,10 @@ namespace Assets.TraitInterface
         }
         int Stamina { get; set; }//I assume the hunger method will affect this trait
 
+        int MagicalDamageTaken { get; set; }
+        int PhysicalDamageTaken { get; set; }
+        int HealthLoss();
+
 
         int ExpPoints { get; set; }
         int NewEarnedXp { get; set; }
@@ -49,6 +57,8 @@ namespace Assets.TraitInterface
 
         void LevelIncrease();
         void XPIncrease(bool earnXp, int newEarnedXp);
+
+        void TraitLevelUpActivation( int experienceLevel, List<Items> Items);
 
         #endregion
 

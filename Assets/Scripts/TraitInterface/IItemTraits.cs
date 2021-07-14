@@ -14,7 +14,15 @@ namespace Assets.TraitInterface
 
         string ItemName { get; set; }
         string ItemDescription { get; set; }//A Brief description of what the item does and what its worth in a desired currency
-        bool ActivationRequireMent();
+        int Owner { get; set; }
+
+        bool Relic { get; set; } // this will be set true if relic and so will be nonconsumbalable 
+        bool BeingUsed { get; set; }
+
+        void Equip();
+        void Remove();
+        bool ActivationRequireMent(object CharacterInstance); //Returns if you have all the necessary things to activate the item and if true it equips it
+
         #region Abilities
 
 
