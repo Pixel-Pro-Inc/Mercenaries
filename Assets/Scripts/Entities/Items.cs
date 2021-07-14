@@ -360,7 +360,11 @@ namespace Assets.Entities
             #region Item Variables
 
             public string ItemName { get { return ItemName; } set { ItemName = "Gaia's Shield"; } }
+<<<<<<< HEAD
             public string ItemDescription { get { return ItemDescription; } set { ItemDescription = "+10% armour/Magic Resistance on user"; } }
+=======
+            public string ItemDescription { get { return ItemDescription; } set { ItemDescription = "+10% armour on user"; } }
+>>>>>>> master
             public int Owner { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public object Ownertype { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public bool Relic { get { return Relic; } set { Relic = true; } }
