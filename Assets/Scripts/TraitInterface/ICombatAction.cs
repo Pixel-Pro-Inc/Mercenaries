@@ -22,69 +22,69 @@ namespace Assets.Scripts.TraitInterface
          Right now these are set to only work on the instance its being used by. But we might need it to be declareed as such:
         UniqueSkill(object CharacterInstance, List<object> CHaracteraffectedInstances);
          */
-        public void UniqueSkill(object CharacterInstance);
-        void UniqueActiveBuff(object CharacterInstance);
-        void UniqueActiveDeBuff(object CharacterInstance);
+        public void UniqueSkill(object CharacterInstance, object TargetInstance);
+        void UniqueActiveBuff(object CharacterInstance, object TargetInstance);
+        void UniqueActiveDeBuff(object CharacterInstance, object TargetInstance);
 
         #endregion
 
         #region Attack
 
-        bool PhysicalDamage(object CharacterInstance);
-        bool MagicalDamage(object CharacterInstance);
-        bool TrueDamage(object CharacterInstance);
-        bool Drain(object CharacterInstance);
-        bool Ignite(object CharacterInstance);
-        bool Bleed(object CharacterInstance);
-        bool Blight(object CharacterInstance);
-        bool BalancedDamage(object CharacterInstance);
-        bool Curse(object CharacterInstance);
-        bool Feign(object CharacterInstance);
+        bool PhysicalDamage(object CharacterInstance, object TargetInstance);
+        bool MagicalDamage(object CharacterInstance, object TargetInstance);
+        bool TrueDamage(object CharacterInstance, object TargetInstance);
+        bool Drain(object CharacterInstance, object TargetInstance);
+        bool Ignite(object CharacterInstance, object TargetInstance);
+        bool Bleed(object CharacterInstance, object TargetInstance);
+        bool Blight(object CharacterInstance, object TargetInstance);
+        bool BalancedDamage(object CharacterInstance, object TargetInstance);
+        bool Curse(object CharacterInstance, object TargetInstance);
+        bool Feign(object CharacterInstance, object TargetInstance);
 
         #endregion
         #region Defend
-        bool PutArmour(object CharacterInstance);
-        bool IncreaseMagicalResistance(object CharacterInstance);
-        bool ShieldUp(object CharacterInstance);
-        bool Purified(object CharacterInstance);
-        bool Block(object CharacterInstance);
-        bool Immune(object CharacterInstance);
+        bool PutArmour(object CharacterInstance, object TargetInstance);
+        bool IncreaseMagicalResistance(object CharacterInstance, object TargetInstance);
+        bool ShieldUp(object CharacterInstance, object TargetInstance);
+        bool Purified(object CharacterInstance, object TargetInstance);
+        bool Block(object CharacterInstance, object TargetInstance);
+        bool Immune(object CharacterInstance, object TargetInstance);
 
         #endregion
 
         #region Buff
 
-        bool Agile(object CharacterInstance);
-        bool PolishWeapon(object CharacterInstance);
-        bool Chosen(object CharacterInstance);
-        bool Aware(object CharacterInstance);
-        bool OnGuard(object CharacterInstance);
-        bool Provoking(object CharacterInstance); //this will be difficult
+        bool Agile(object CharacterInstance, object TargetInstance);
+        bool PolishWeapon(object CharacterInstance, object TargetInstance);
+        bool Chosen(object CharacterInstance, object TargetInstance);
+        bool Aware(object CharacterInstance, object TargetInstance);
+        bool OnGuard(object CharacterInstance, object TargetInstance);
+        bool Provoking(object CharacterInstance, object TargetInstance); //this will be difficult
         bool Protector(object OwnerInstance, object CharacterInstance);
-        bool Protected(object CharacterInstance);//If hit, protector will take damage instead
-        bool Revigorate(object CharacterInstance);
-        bool GodsBlessing(object CharacterInstance);
+        bool Protected(object CharacterInstance, object TargetInstance);//If hit, protector will take damage instead
+        bool Revigorate(object CharacterInstance, object TargetInstance);
+        bool GodsBlessing(object CharacterInstance, List<string> Allies);// I left it as allies so that its easier to deal with
 
         #endregion
         #region Debuff
 
-        bool Slow(object CharacterInstance);
-        bool Rooted(object CharacterInstance);
-        bool WeakGrip(object CharacterInstance);
-        bool Exiled(object CharacterInstance);
-        bool Marked(object CharacterInstance);
-        bool Calm(object CharacterInstance);
-        bool BrokenGuard(object CharacterInstance);
-        bool Burnt(object CharacterInstance);
-        bool Stun(object CharacterInstance);
-        bool Freeze(object CharacterInstance);//stuns after cold applied twice
-        bool Cold(object CharacterInstance);
-        bool Blinded(object CharacterInstance);
-        bool Tainted(object CharacterInstance);
-        bool Sleep(object CharacterInstance);
-        bool Hungry(object CharacterInstance);
-        bool Unhealthy(object CharacterInstance);
-        bool GodsAnger(object CharacterInstance);
+        bool Slow(object CharacterInstance, object TargetInstance);
+        bool Rooted(object CharacterInstance, object TargetInstance);
+        bool WeakGrip(object CharacterInstance, object TargetInstance);
+        bool Exiled(object CharacterInstance, object TargetInstance);
+        bool Marked(object CharacterInstance, object TargetInstance);
+        bool Calm(object CharacterInstance, object TargetInstance);
+        bool BrokenGuard(object CharacterInstance, object TargetInstance);
+        bool Burnt(object CharacterInstance, object TargetInstance);
+        bool Stun(object CharacterInstance, object TargetInstance);
+        bool Freeze(object CharacterInstance, object TargetInstance);//stuns after cold applied twice
+        bool Cold(object CharacterInstance, object TargetInstance);
+        bool Blinded(object CharacterInstance, object TargetInstance);
+        bool Tainted(object CharacterInstance, object TargetInstance);
+        bool Sleep(object CharacterInstance, object TargetInstance);
+        bool Hungry(object CharacterInstance, object TargetInstance);
+        bool Unhealthy(object CharacterInstance, object TargetInstance);
+        bool GodsAnger(object CharacterInstance, List<string> Allies);
         #endregion
 
     }

@@ -26,18 +26,17 @@ namespace Assets.Entities
         {
             //Here a list of every individual character will be defined.Then they will be accessed with their indexes as needed in below lists eg List<>Allies
             #region Heros
-            Peter, Mister_Glubglub, Mister_Froggo, Mister_Salaboned, Mister_Lizzacorn, Mister_Liodin, Mister_Lacrox, Mister_Birbarcher
+            Peter, Mister_Glubglub, Mister_Froggo, Mister_Salaboned, Mister_Lizzacorn, Mister_Liodin, Mister_Lacrox, Mister_Birbarcher, Mister_PirateParrot,
+            Mister_SilverSkull, Mister_Mantis, Mister_Hippo,
             #endregion
             #region Foes
-
+            HammerHead,GreatWhite, SpiderCrustacean, NecroBoar, ElderStag, DevilBird, DragonSloth
             #endregion
         }
 
-
+        
         //Be sure to define the passive traits!!!!!!!!!
         //and the costs if there are any!!!!!!!!
-
-
         #region GivenCharacterTraits
 
 
@@ -57,13 +56,45 @@ namespace Assets.Entities
             Unknown
         };
         internal int ExperienceLevel { get { return ExperienceLevel;  } set { if (ExperienceLevel < 0) ExperienceLevel = 0; } }
-        int shield { get; set; } //We are defining (not ICharacterTraits here cause it isn't used by everyone often but can be, and its null for everyone starting off
+        int shield { get; set; } //We are defining it (not ICharacterTraits) here cause it isn't used by everyone often but can be, and its null for everyone starting off
+
+        //The code below was created because i was tired of writting the template code over and over
+        public int TemplateIdentificationNumber(object CharacterInstance)
+        {
+            int TemplateId = 0;
+            if (CharacterInstance.GetType() == typeof(CharacterPersona.WarriorTemplate))
+            {
+                TemplateId = 1;
+            }
+            if (CharacterInstance.GetType() == typeof(CharacterPersona.TankWarriorTemplate))
+            {
+                TemplateId = 2;
+            }
+            if (CharacterInstance.GetType() == typeof(CharacterPersona.RangeTemplate))
+            {
+                TemplateId = 3;
+            }
+            if (CharacterInstance.GetType() == typeof(CharacterPersona.MageTemplate))
+            {
+                TemplateId = 4;
+            }
+            if (CharacterInstance.GetType() == typeof(CharacterPersona.ControllerTemplate))
+            {
+                TemplateId = 5;
+            }
+            if (CharacterInstance.GetType() == typeof(CharacterPersona.AssasinTemplate))
+            {
+                TemplateId = 6;
+            }
+            return TemplateId;
+        }
+
         #endregion
         #region Combat Action
 
         #region Unique Traits
 
-        public void UniqueSkill(object CharacterInstance)
+        public void UniqueSkill(object CharacterInstance, object TargetInstance)
         {
             #region Unique template logic
 
@@ -119,11 +150,34 @@ namespace Assets.Entities
                     break;
                 case "Mister Birbarcher":
                     break;
+                case "Mister PirateParrot":
+                    break;
+                case "Mister SilverSkull":
+                    break;
+                case "Mister Mantis":
+                    break;
+                case "Mister Hippo":
+                    break;
+                case "HammerHead":
+                    break;
+                case "GreatWhite":
+                    break;
+                case "SpiderCrustacean":
+                    break;
+                case "NecroBoar":
+                    break;
+                case "ElderStag":
+                    break;
+                case "DevilBird":
+                    break;
+                case "DragonSloth":
+                    break;
+
             }
 
             #endregion
         }
-        public void UniqueActiveBuff(object CharacterInstance)
+        public void UniqueActiveBuff(object CharacterInstance, object TargetInstance)
         {
             #region Unique template logic
 
@@ -179,12 +233,35 @@ namespace Assets.Entities
                     break;
                 case "Mister Birbarcher":
                     break;
+                case "Mister PirateParrot":
+                    break;
+                case "Mister SilverSkull":
+                    break;
+                case "Mister Mantis":
+                    break;
+                case "Mister Hippo":
+                    break;
+                case "HammerHead":
+                    break;
+                case "GreatWhite":
+                    break;
+                case "SpiderCrustacean":
+                    break;
+                case "NecroBoar":
+                    break;
+                case "ElderStag":
+                    break;
+                case "DevilBird":
+                    break;
+                case "DragonSloth":
+                    break;
+
             }
 
             #endregion
         }
 
-        public void UniqueActiveDeBuff(object CharacterInstance)
+        public void UniqueActiveDeBuff(object CharacterInstance, object TargetInstance)
         {
             #region Unique template logic
 
@@ -240,6 +317,29 @@ namespace Assets.Entities
                     break;
                 case "Mister Birbarcher":
                     break;
+                case "Mister PirateParrot":
+                    break;
+                case "Mister SilverSkull":
+                    break;
+                case "Mister Mantis":
+                    break;
+                case "Mister Hippo":
+                    break;
+                case "HammerHead":
+                    break;
+                case "GreatWhite":
+                    break;
+                case "SpiderCrustacean":
+                    break;
+                case "NecroBoar":
+                    break;
+                case "ElderStag":
+                    break;
+                case "DevilBird":
+                    break;
+                case "DragonSloth":
+                    break;
+
             }
 
             #endregion
@@ -250,51 +350,425 @@ namespace Assets.Entities
 
         #region Attack
 
-        public bool TrueDamage(object CharacterInstance)
+        public bool TrueDamage(object CharacterInstance, object TargetInstance)
         {
-            throw new NotImplementedException();
+            #region CharacterInstance template logic
+
+            int CharacterTemplateid= TemplateIdentificationNumber(CharacterInstance);
+            if (CharacterTemplateid == 1)
+            {
+                CharacterPersona.WarriorTemplate starter = (CharacterPersona.WarriorTemplate)CharacterInstance;
+                starter.DamageGiven(TargetInstance);
+            }
+            if (CharacterTemplateid == 2)
+            {
+                CharacterPersona.TankWarriorTemplate starter = (CharacterPersona.TankWarriorTemplate)CharacterInstance;
+                starter.DamageGiven(TargetInstance);
+            }
+            if (CharacterTemplateid == 3)
+            {
+                CharacterPersona.RangeTemplate starter = (CharacterPersona.RangeTemplate)CharacterInstance;
+                starter.DamageGiven(TargetInstance);
+            }
+            if (CharacterTemplateid == 4)
+            {
+                CharacterPersona.MageTemplate starter = (CharacterPersona.MageTemplate)CharacterInstance;
+                starter.DamageGiven(TargetInstance);
+            }
+            if (CharacterTemplateid == 5)
+            {
+                CharacterPersona.ControllerTemplate starter = (CharacterPersona.ControllerTemplate)CharacterInstance;
+                starter.DamageGiven(TargetInstance);
+            }
+            if (CharacterTemplateid == 6)
+            {
+                CharacterPersona.AssasinTemplate starter = (CharacterPersona.AssasinTemplate)CharacterInstance;
+                starter.DamageGiven(TargetInstance);
+            }
+            #endregion
+            return false;//I made this false because the instance isn't getting the effect, but the enemyInstance
         }
-        public bool PhysicalDamage(object CharacterInstance)
+        public bool PhysicalDamage(object CharacterInstance, object TargetInstance)
+        {
+            int physicalDamage = 0;
+            int SaveValue = 0;
+            #region Target template logic
+
+            #region CharacterInstance template logic
+
+            int CharacterTemplateid = TemplateIdentificationNumber(CharacterInstance);
+            if (CharacterTemplateid == 1)
+            {
+                CharacterPersona.WarriorTemplate starter = (CharacterPersona.WarriorTemplate)CharacterInstance;
+                #region Target
+                int TargetTemplateid = TemplateIdentificationNumber(TargetInstance);
+                if (TargetTemplateid == 1)
+                {
+                    WarriorTemplate finisher = (WarriorTemplate)TargetInstance;
+                    SaveValue = finisher.Armour;
+                    physicalDamage = starter.DamageGiven(TargetInstance);
+                    SaveValue -= physicalDamage;
+                    finisher.Health += SaveValue;
+                }
+                if (TargetTemplateid == 2)
+                {
+                    TankWarriorTemplate finisher = (TankWarriorTemplate)TargetInstance;
+                    SaveValue = finisher.Armour;
+                    physicalDamage = starter.DamageGiven(TargetInstance);
+                    SaveValue -= physicalDamage;
+                    finisher.Health += SaveValue;
+                }
+                if (TargetTemplateid == 3)
+                {
+                    RangeTemplate finisher = (RangeTemplate)TargetInstance;
+                    SaveValue = finisher.Armour;
+                    physicalDamage = starter.DamageGiven(TargetInstance);
+                    SaveValue -= physicalDamage;
+                    finisher.Health += SaveValue;
+                }
+                if (TargetTemplateid == 4)
+                {
+                    MageTemplate finisher = (MageTemplate)TargetInstance;
+                    SaveValue = finisher.Armour;
+                    physicalDamage = starter.DamageGiven(TargetInstance);
+                    SaveValue -= physicalDamage;
+                    finisher.Health += SaveValue;
+                }
+                if (TargetTemplateid == 5)
+                {
+                    ControllerTemplate finisher = (ControllerTemplate)TargetInstance;
+                    SaveValue = finisher.Armour;
+                    physicalDamage = starter.DamageGiven(TargetInstance);
+                    SaveValue -= physicalDamage;
+                    finisher.Health += SaveValue;
+                }
+                if (TargetTemplateid == 6)
+                {
+                    AssasinTemplate finisher = (AssasinTemplate)TargetInstance;
+                    SaveValue = finisher.Armour;
+                    physicalDamage = starter.DamageGiven(TargetInstance);
+                    SaveValue -= physicalDamage;
+                    finisher.Health += SaveValue;
+                }
+                #endregion
+            }
+            if (CharacterTemplateid == 2)
+            {
+                CharacterPersona.TankWarriorTemplate starter = (CharacterPersona.TankWarriorTemplate)CharacterInstance;
+                #region Target
+                int TargetTemplateid = TemplateIdentificationNumber(TargetInstance);
+                if (TargetTemplateid == 1)
+                {
+                    WarriorTemplate finisher = (WarriorTemplate)TargetInstance;
+                    SaveValue = finisher.Armour;
+                    physicalDamage = starter.DamageGiven(TargetInstance);
+                    SaveValue -= physicalDamage;
+                    finisher.Health += SaveValue;
+                }
+                if (TargetTemplateid == 2)
+                {
+                    TankWarriorTemplate finisher = (TankWarriorTemplate)TargetInstance;
+                    SaveValue = finisher.Armour;
+                    physicalDamage = starter.DamageGiven(TargetInstance);
+                    SaveValue -= physicalDamage;
+                    finisher.Health += SaveValue;
+                }
+                if (TargetTemplateid == 3)
+                {
+                    RangeTemplate finisher = (RangeTemplate)TargetInstance;
+                    SaveValue = finisher.Armour;
+                    physicalDamage = starter.DamageGiven(TargetInstance);
+                    SaveValue -= physicalDamage;
+                    finisher.Health += SaveValue;
+                }
+                if (TargetTemplateid == 4)
+                {
+                    MageTemplate finisher = (MageTemplate)TargetInstance;
+                    SaveValue = finisher.Armour;
+                    physicalDamage = starter.DamageGiven(TargetInstance);
+                    SaveValue -= physicalDamage;
+                    finisher.Health += SaveValue;
+                }
+                if (TargetTemplateid == 5)
+                {
+                    ControllerTemplate finisher = (ControllerTemplate)TargetInstance;
+                    SaveValue = finisher.Armour;
+                    physicalDamage = starter.DamageGiven(TargetInstance);
+                    SaveValue -= physicalDamage;
+                    finisher.Health += SaveValue;
+                }
+                if (TargetTemplateid == 6)
+                {
+                    AssasinTemplate finisher = (AssasinTemplate)TargetInstance;
+                    SaveValue = finisher.Armour;
+                    physicalDamage = starter.DamageGiven(TargetInstance);
+                    SaveValue -= physicalDamage;
+                    finisher.Health += SaveValue;
+                }
+                #endregion
+            }
+            if (CharacterTemplateid == 3)
+            {
+                CharacterPersona.RangeTemplate starter = (CharacterPersona.RangeTemplate)CharacterInstance;
+                #region Target
+                int TargetTemplateid = TemplateIdentificationNumber(TargetInstance);
+                if (TargetTemplateid == 1)
+                {
+                    WarriorTemplate finisher = (WarriorTemplate)TargetInstance;
+                    SaveValue = finisher.Armour;
+                    physicalDamage = starter.DamageGiven(TargetInstance);
+                    SaveValue -= physicalDamage;
+                    finisher.Health += SaveValue;
+                }
+                if (TargetTemplateid == 2)
+                {
+                    TankWarriorTemplate finisher = (TankWarriorTemplate)TargetInstance;
+                    SaveValue = finisher.Armour;
+                    physicalDamage = starter.DamageGiven(TargetInstance);
+                    SaveValue -= physicalDamage;
+                    finisher.Health += SaveValue;
+                }
+                if (TargetTemplateid == 3)
+                {
+                    RangeTemplate finisher = (RangeTemplate)TargetInstance;
+                    SaveValue = finisher.Armour;
+                    physicalDamage = starter.DamageGiven(TargetInstance);
+                    SaveValue -= physicalDamage;
+                    finisher.Health += SaveValue;
+                }
+                if (TargetTemplateid == 4)
+                {
+                    MageTemplate finisher = (MageTemplate)TargetInstance;
+                    SaveValue = finisher.Armour;
+                    physicalDamage = starter.DamageGiven(TargetInstance);
+                    SaveValue -= physicalDamage;
+                    finisher.Health += SaveValue;
+                }
+                if (TargetTemplateid == 5)
+                {
+                    ControllerTemplate finisher = (ControllerTemplate)TargetInstance;
+                    SaveValue = finisher.Armour;
+                    physicalDamage = starter.DamageGiven(TargetInstance);
+                    SaveValue -= physicalDamage;
+                    finisher.Health += SaveValue;
+                }
+                if (TargetTemplateid == 6)
+                {
+                    AssasinTemplate finisher = (AssasinTemplate)TargetInstance;
+                    SaveValue = finisher.Armour;
+                    physicalDamage = starter.DamageGiven(TargetInstance);
+                    SaveValue -= physicalDamage;
+                    finisher.Health += SaveValue;
+                }
+                #endregion
+            }
+            if (CharacterTemplateid == 4)
+            {
+                CharacterPersona.MageTemplate starter = (CharacterPersona.MageTemplate)CharacterInstance;
+                #region Target
+                int TargetTemplateid = TemplateIdentificationNumber(TargetInstance);
+                if (TargetTemplateid == 1)
+                {
+                    WarriorTemplate finisher = (WarriorTemplate)TargetInstance;
+                    SaveValue = finisher.Armour;
+                    physicalDamage = starter.DamageGiven(TargetInstance);
+                    SaveValue -= physicalDamage;
+                    finisher.Health += SaveValue;
+                }
+                if (TargetTemplateid == 2)
+                {
+                    TankWarriorTemplate finisher = (TankWarriorTemplate)TargetInstance;
+                    SaveValue = finisher.Armour;
+                    physicalDamage = starter.DamageGiven(TargetInstance);
+                    SaveValue -= physicalDamage;
+                    finisher.Health += SaveValue;
+                }
+                if (TargetTemplateid == 3)
+                {
+                    RangeTemplate finisher = (RangeTemplate)TargetInstance;
+                    SaveValue = finisher.Armour;
+                    physicalDamage = starter.DamageGiven(TargetInstance);
+                    SaveValue -= physicalDamage;
+                    finisher.Health += SaveValue;
+                }
+                if (TargetTemplateid == 4)
+                {
+                    MageTemplate finisher = (MageTemplate)TargetInstance;
+                    SaveValue = finisher.Armour;
+                    physicalDamage = starter.DamageGiven(TargetInstance);
+                    SaveValue -= physicalDamage;
+                    finisher.Health += SaveValue;
+                }
+                if (TargetTemplateid == 5)
+                {
+                    ControllerTemplate finisher = (ControllerTemplate)TargetInstance;
+                    SaveValue = finisher.Armour;
+                    physicalDamage = starter.DamageGiven(TargetInstance);
+                    SaveValue -= physicalDamage;
+                    finisher.Health += SaveValue;
+                }
+                if (TargetTemplateid == 6)
+                {
+                    AssasinTemplate finisher = (AssasinTemplate)TargetInstance;
+                    SaveValue = finisher.Armour;
+                    physicalDamage = starter.DamageGiven(TargetInstance);
+                    SaveValue -= physicalDamage;
+                    finisher.Health += SaveValue;
+                }
+                #endregion
+            }
+            if (CharacterTemplateid == 5)
+            {
+                CharacterPersona.ControllerTemplate starter = (CharacterPersona.ControllerTemplate)CharacterInstance;
+                #region Target
+                int TargetTemplateid = TemplateIdentificationNumber(TargetInstance);
+                if (TargetTemplateid == 1)
+                {
+                    WarriorTemplate finisher = (WarriorTemplate)TargetInstance;
+                    SaveValue = finisher.Armour;
+                    physicalDamage = starter.DamageGiven(TargetInstance);
+                    SaveValue -= physicalDamage;
+                    finisher.Health += SaveValue;
+                }
+                if (TargetTemplateid == 2)
+                {
+                    TankWarriorTemplate finisher = (TankWarriorTemplate)TargetInstance;
+                    SaveValue = finisher.Armour;
+                    physicalDamage = starter.DamageGiven(TargetInstance);
+                    SaveValue -= physicalDamage;
+                    finisher.Health += SaveValue;
+                }
+                if (TargetTemplateid == 3)
+                {
+                    RangeTemplate finisher = (RangeTemplate)TargetInstance;
+                    SaveValue = finisher.Armour;
+                    physicalDamage = starter.DamageGiven(TargetInstance);
+                    SaveValue -= physicalDamage;
+                    finisher.Health += SaveValue;
+                }
+                if (TargetTemplateid == 4)
+                {
+                    MageTemplate finisher = (MageTemplate)TargetInstance;
+                    SaveValue = finisher.Armour;
+                    physicalDamage = starter.DamageGiven(TargetInstance);
+                    SaveValue -= physicalDamage;
+                    finisher.Health += SaveValue;
+                }
+                if (TargetTemplateid == 5)
+                {
+                    ControllerTemplate finisher = (ControllerTemplate)TargetInstance;
+                    SaveValue = finisher.Armour;
+                    physicalDamage = starter.DamageGiven(TargetInstance);
+                    SaveValue -= physicalDamage;
+                    finisher.Health += SaveValue;
+                }
+                if (TargetTemplateid == 6)
+                {
+                    AssasinTemplate finisher = (AssasinTemplate)TargetInstance;
+                    SaveValue = finisher.Armour;
+                    physicalDamage = starter.DamageGiven(TargetInstance);
+                    SaveValue -= physicalDamage;
+                    finisher.Health += SaveValue;
+                }
+                #endregion
+            }
+            if (CharacterTemplateid == 6)
+            {
+                CharacterPersona.AssasinTemplate starter = (CharacterPersona.AssasinTemplate)CharacterInstance;
+                #region Target
+                int TargetTemplateid = TemplateIdentificationNumber(TargetInstance);
+                if (TargetTemplateid == 1)
+                {
+                    WarriorTemplate finisher = (WarriorTemplate)TargetInstance;
+                    SaveValue = finisher.Armour;
+                    physicalDamage = starter.DamageGiven(TargetInstance);
+                    SaveValue -= physicalDamage;
+                    finisher.Health += SaveValue;
+                }
+                if (TargetTemplateid == 2)
+                {
+                    TankWarriorTemplate finisher = (TankWarriorTemplate)TargetInstance;
+                    SaveValue = finisher.Armour;
+                    physicalDamage = starter.DamageGiven(TargetInstance);
+                    SaveValue -= physicalDamage;
+                    finisher.Health += SaveValue;
+                }
+                if (TargetTemplateid == 3)
+                {
+                    RangeTemplate finisher = (RangeTemplate)TargetInstance;
+                    SaveValue = finisher.Armour;
+                    physicalDamage = starter.DamageGiven(TargetInstance);
+                    SaveValue -= physicalDamage;
+                    finisher.Health += SaveValue;
+                }
+                if (TargetTemplateid == 4)
+                {
+                    MageTemplate finisher = (MageTemplate)TargetInstance;
+                    SaveValue = finisher.Armour;
+                    physicalDamage = starter.DamageGiven(TargetInstance);
+                    SaveValue -= physicalDamage;
+                    finisher.Health += SaveValue;
+                }
+                if (TargetTemplateid == 5)
+                {
+                    ControllerTemplate finisher = (ControllerTemplate)TargetInstance;
+                    SaveValue = finisher.Armour;
+                    physicalDamage = starter.DamageGiven(TargetInstance);
+                    SaveValue -= physicalDamage;
+                    finisher.Health += SaveValue;
+                }
+                if (TargetTemplateid == 6)
+                {
+                    AssasinTemplate finisher = (AssasinTemplate)TargetInstance;
+                    SaveValue = finisher.Armour;
+                    physicalDamage = starter.DamageGiven(TargetInstance);
+                    SaveValue -= physicalDamage;
+                    finisher.Health += SaveValue;
+                }
+                #endregion
+            }
+            #endregion
+
+            #endregion
+            return false;//I made this false because the instance isn't getting the effect, but the enemyInstance
+        }
+
+        public bool MagicalDamage(object CharacterInstance, object TargetInstance)
         {
             throw new NotImplementedException();
         }
 
-        public bool MagicalDamage(object CharacterInstance)
+        public bool Drain(object CharacterInstance, object TargetInstance)
         {
             throw new NotImplementedException();
         }
 
-        public bool Drain(object CharacterInstance)
+        public bool Ignite(object CharacterInstance, object TargetInstance)
         {
             throw new NotImplementedException();
         }
 
-        public bool Ignite(object CharacterInstance)
+        public bool Bleed(object CharacterInstance, object TargetInstance)
         {
             throw new NotImplementedException();
         }
 
-        public bool Bleed(object CharacterInstance)
+        public bool Blight(object CharacterInstance, object TargetInstance)
         {
             throw new NotImplementedException();
         }
 
-        public bool Blight(object CharacterInstance)
+        public bool BalancedDamage(object CharacterInstance, object TargetInstance)
         {
             throw new NotImplementedException();
         }
 
-        public bool BalancedDamage(object CharacterInstance)
+        public bool Curse(object CharacterInstance, object TargetInstance)
         {
             throw new NotImplementedException();
         }
 
-        public bool Curse(object CharacterInstance)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Feign(object CharacterInstance)
+        public bool Feign(object CharacterInstance, object TargetInstance)
         {
             throw new NotImplementedException();
         }
@@ -302,32 +776,32 @@ namespace Assets.Entities
         #endregion
         #region Defend
 
-        public bool PutArmour(object CharacterInstance)
+        public bool PutArmour(object CharacterInstance, object TargetInstance)
         {
             throw new NotImplementedException();
         }
 
-        public bool IncreaseMagicalResistance(object CharacterInstance)
+        public bool IncreaseMagicalResistance(object CharacterInstance, object TargetInstance)
         {
             throw new NotImplementedException();
         }
 
-        public bool ShieldUp(object CharacterInstance)
+        public bool ShieldUp(object CharacterInstance, object TargetInstance)
         {
             throw new NotImplementedException();
         }
 
-        public bool Purified(object CharacterInstance)
+        public bool Purified(object CharacterInstance, object TargetInstance)
         {
             throw new NotImplementedException();
         }
 
-        public bool Block(object CharacterInstance)
+        public bool Block(object CharacterInstance, object TargetInstance)
         {
             throw new NotImplementedException();
         }
 
-        public bool Immune(object CharacterInstance)
+        public bool Immune(object CharacterInstance, object TargetInstance)
         {
             throw new NotImplementedException();
         }
@@ -336,32 +810,32 @@ namespace Assets.Entities
 
         #region Buff
 
-        public bool Agile(object CharacterInstance)
+        public bool Agile(object CharacterInstance, object TargetInstance)
         {
             throw new NotImplementedException();
         }
 
-        public bool PolishWeapon(object CharacterInstance)
+        public bool PolishWeapon(object CharacterInstance, object TargetInstance)
         {
             throw new NotImplementedException();
         }
 
-        public bool Chosen(object CharacterInstance)
+        public bool Chosen(object CharacterInstance, object TargetInstance)
         {
             throw new NotImplementedException();
         }
 
-        public bool Aware(object CharacterInstance)
+        public bool Aware(object CharacterInstance, object TargetInstance)
         {
             throw new NotImplementedException();
         }
 
-        public bool OnGuard(object CharacterInstance)
+        public bool OnGuard(object CharacterInstance, object TargetInstance)
         {
             throw new NotImplementedException();
         }
 
-        public bool Provoking(object CharacterInstance)
+        public bool Provoking(object CharacterInstance, object TargetInstance)
         {
             throw new NotImplementedException();
         }
@@ -371,104 +845,104 @@ namespace Assets.Entities
             throw new NotImplementedException();
         }
 
-        public bool Protected(object CharacterInstance)
+        public bool Protected(object CharacterInstance, object TargetInstance)
         {
             throw new NotImplementedException();
         }
 
-        public bool Revigorate(object CharacterInstance)
+        public bool Revigorate(object CharacterInstance, object TargetInstance)
         {
             throw new NotImplementedException();
         }
 
-        public bool GodsBlessing(object CharacterInstance)
+        public bool GodsBlessing(object CharacterInstance, List<string> Allies)
         {
             throw new NotImplementedException();
         }
         #endregion
         #region Debuff
 
-        public bool Slow(object CharacterInstance)
+        public bool Slow(object CharacterInstance, object TargetInstance)
         {
             throw new NotImplementedException();
         }
 
-        public bool Rooted(object CharacterInstance)
+        public bool Rooted(object CharacterInstance, object TargetInstance)
         {
             throw new NotImplementedException();
         }
 
-        public bool WeakGrip(object CharacterInstance)
+        public bool WeakGrip(object CharacterInstance, object TargetInstance)
         {
             throw new NotImplementedException();
         }
 
-        public bool Exiled(object CharacterInstance)
+        public bool Exiled(object CharacterInstance, object TargetInstance)
         {
             throw new NotImplementedException();
         }
 
-        public bool Marked(object CharacterInstance)
+        public bool Marked(object CharacterInstance, object TargetInstance)
         {
             throw new NotImplementedException();
         }
 
-        public bool Calm(object CharacterInstance)
+        public bool Calm(object CharacterInstance, object TargetInstance)
         {
             throw new NotImplementedException();
         }
 
-        public bool BrokenGuard(object CharacterInstance)
+        public bool BrokenGuard(object CharacterInstance, object TargetInstance)
         {
             throw new NotImplementedException();
         }
 
-        public bool Burnt(object CharacterInstance)
+        public bool Burnt(object CharacterInstance, object TargetInstance)
         {
             throw new NotImplementedException();
         }
 
-        public bool Stun(object CharacterInstance)
+        public bool Stun(object CharacterInstance, object TargetInstance)
         {
             throw new NotImplementedException();
         }
 
-        public bool Freeze(object CharacterInstance)
+        public bool Freeze(object CharacterInstance, object TargetInstance)
         {
             throw new NotImplementedException();
         }
 
-        public bool Cold(object CharacterInstance)
+        public bool Cold(object CharacterInstance, object TargetInstance)
         {
             throw new NotImplementedException();
         }
 
-        public bool Blinded(object CharacterInstance)
+        public bool Blinded(object CharacterInstance, object TargetInstance)
         {
             throw new NotImplementedException();
         }
 
-        public bool Tainted(object CharacterInstance)
+        public bool Tainted(object CharacterInstance, object TargetInstance)
         {
             throw new NotImplementedException();
         }
 
-        public bool Sleep(object CharacterInstance)
+        public bool Sleep(object CharacterInstance, object TargetInstance)
         {
             throw new NotImplementedException();
         }
 
-        public bool Hungry(object CharacterInstance)
+        public bool Hungry(object CharacterInstance, object TargetInstance)
         {
             throw new NotImplementedException();
         }
 
-        public bool Unhealthy(object CharacterInstance)
+        public bool Unhealthy(object CharacterInstance, object TargetInstance)
         {
             throw new NotImplementedException();
         }
 
-        public bool GodsAnger(object CharacterInstance)
+        public bool GodsAnger(object CharacterInstance, List<string> Allies)
         {
             throw new NotImplementedException();
         }
@@ -861,6 +1335,7 @@ namespace Assets.Entities
                     damageGiven = r.Next(3, 7);
                 }
 
+                //The code below doesn't need to be here because its already in true damage but ill leaving it here just in case
                 #region template logic
                 
                  
@@ -902,17 +1377,8 @@ namespace Assets.Entities
 
             public int HealthLoss(int damageGiven)
             {
-                /*I think that the types of attacks logic will be made here. It will be easier to set how the health and armour and Magres wil be affected
-                 allin the same place. There will be if statement for all types of attacks. I am Also thinking of making bool statements in Characterpersona
-                so that instances can have their bool eg drain for example, to be set true. And if that happens the logic iin healthloss(damageGiven) is fired.
-                */
-                Instance.PhysicalDamageTaken = (int)(damageGiven * 0.4);
-                Instance.MagicalDamageTaken = (int)(damageGiven * 0.6);
-                Instance.PhysicalDamageTaken -= Instance.Armour;
-                Instance.MagicalDamageTaken -= Instance.MagicRes;
-                int damageTaken = Instance.MagicalDamageTaken + Instance.PhysicalDamageTaken;
-                Instance.Health -= damageTaken;
-                return damageTaken;
+                Instance.Health -= damageGiven;
+                return damageGiven;
             }
 
 
@@ -1303,14 +1769,8 @@ namespace Assets.Entities
             }
             public int HealthLoss(int damageGiven)
             {
-                Instance.PhysicalDamageTaken = (int)(damageGiven * 0.4);
-                Instance.MagicalDamageTaken = (int)(damageGiven * 0.6);
-                Instance.PhysicalDamageTaken -= Instance.Armour;
-                Instance.MagicalDamageTaken -= Instance.MagicRes;
-                int damageTaken = Instance.MagicalDamageTaken + Instance.PhysicalDamageTaken;
-                Instance.Health -= damageTaken;
-
-                return damageTaken;
+                Instance.Health -= damageGiven;
+                return damageGiven;
             }
 
             #endregion
@@ -1679,13 +2139,8 @@ namespace Assets.Entities
 
             public int HealthLoss(int damageGiven)
             {
-                Instance.PhysicalDamageTaken = (int)(damageGiven * 0.4);
-                Instance.MagicalDamageTaken = (int)(damageGiven * 0.6);
-                Instance.PhysicalDamageTaken -= Instance.Armour;
-                Instance.MagicalDamageTaken -= Instance.MagicRes;
-                int damageTaken = Instance.MagicalDamageTaken + Instance.PhysicalDamageTaken;
-                Instance.Health -= damageTaken;
-                return damageTaken;
+                Instance.Health -= damageGiven;
+                return damageGiven;
             }
 
 
@@ -1696,7 +2151,7 @@ namespace Assets.Entities
 
         public class MageTemplate: CharacterPersona, ICardTraits, ICharacterTraits, IMageTraits
         {
-            private Timer myTimer;
+            private Timer myTimer;// this is used for a passive mage trait
 
             public static MageTemplate Instance { get; set; }
             public MageTemplate()
@@ -2151,8 +2606,6 @@ namespace Assets.Entities
             }
             public int HealthLoss(int damageGiven)
             {
-                Instance.PhysicalDamageTaken = (int)(damageGiven * 0.4);
-                Instance.MagicalDamageTaken = (int)(damageGiven * 0.6);
                 Instance.PhysicalDamageTaken -= Instance.Armour;
                 Instance.MagicalDamageTaken -= Instance.MagicRes;
                 int damageTaken = Instance.MagicalDamageTaken + Instance.PhysicalDamageTaken;
@@ -2529,13 +2982,8 @@ namespace Assets.Entities
 
             public int HealthLoss(int damageGiven)
             {
-                Instance.PhysicalDamageTaken = (int)(damageGiven * 0.4);
-                Instance.MagicalDamageTaken = (int)(damageGiven * 0.6);
-                Instance.PhysicalDamageTaken -= Instance.Armour;
-                Instance.MagicalDamageTaken -= Instance.MagicRes;
-                int damageTaken = Instance.MagicalDamageTaken + Instance.PhysicalDamageTaken;
-                Instance.Health -= damageTaken;
-                return damageTaken;
+                Instance.Health -= damageGiven;
+                return damageGiven;
             }
 
             #endregion
@@ -2905,13 +3353,8 @@ namespace Assets.Entities
 
             public int HealthLoss(int damageGiven)
             {
-                Instance.PhysicalDamageTaken = (int)(damageGiven * 0.4);
-                Instance.MagicalDamageTaken = (int)(damageGiven * 0.6);
-                Instance.PhysicalDamageTaken -= Instance.Armour;
-                Instance.MagicalDamageTaken -= Instance.MagicRes;
-                int damageTaken = Instance.MagicalDamageTaken + Instance.PhysicalDamageTaken;
-                Instance.Health -= damageTaken;
-                return damageTaken;
+                Instance.Health -= damageGiven;
+                return damageGiven;
             }
 
             #endregion
