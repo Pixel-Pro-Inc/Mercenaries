@@ -10,17 +10,27 @@ using System.Timers;
 
 namespace Assets.Entities
 {
-    class CharacterPersona: Cards
+    class CharacterPersona: Cards, ICombatAction
     {
+
         /*
-         Here I planned on defining each unique character and all their traits and abilities (methods).
-        In my mind each one will be of Type 'Class' and so this will just be used as a reference for their names.
-        When you want to get the names of enemies and allies and masters, you 
-        just use the index to get the unique string that will be passed to access the class Instance with the name desired.
+         This CharacterPersona is the bluprint for all characters, friend and foe. The properties listed below are all the properties that each character shares
+        that does not need to be given a unique default value for that character. Its also the place for variables that arent used often and don't need to be 
+        defined. The 'must have' properties are defined in ICharacterTraits. In ICHaractertraits each property will be unique per character and is important and 
+        must be implemented and defined.
+
+        Below I planned on defining each unique character and all their traits and abilities (methods).
+        In my mind each one will be of Type 'Class' and so this will just be used as a reference for their combat types.
          */
         public enum MasterCharacterList
         {
             //Here a list of every individual character will be defined.Then they will be accessed with their indexes as needed in below lists eg List<>Allies
+            #region Heros
+            Peter, Mister_Glubglub, Mister_Froggo, Mister_Salaboned, Mister_Lizzacorn, Mister_Liodin, Mister_Lacrox, Mister_Birbarcher
+            #endregion
+            #region Foes
+
+            #endregion
         }
 
 
@@ -30,8 +40,7 @@ namespace Assets.Entities
 
         #region GivenCharacterTraits
 
-        //I wasn't able to implement these enums with the respective interfaces, so i simply made the class have the atrributes, so that the subclass
-        //(Unique individuals) inhert those traits
+
         public enum Kingdom { FarWest, MiddleEarth, DarkSyde };
         
         public List<string> Master { get; set; }
@@ -48,8 +57,239 @@ namespace Assets.Entities
             Unknown
         };
         internal int ExperienceLevel { get { return ExperienceLevel;  } set { if (ExperienceLevel < 0) ExperienceLevel = 0; } }
+        int shield { get; set; } //We are defining (not ICharacterTraits here cause it isn't used by everyone often but can be, and its null for everyone starting off
+        #endregion
+        #region Combat Action
+
+        #region Attack
+
+        public bool TrueDamage(object CharacterInstance)
+        {
+            throw new NotImplementedException();
+        }
+        public bool PhysicalDamage(object CharacterInstance)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool MagicalDamage(object CharacterInstance)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Drain(object CharacterInstance)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Ignite(object CharacterInstance)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Bleed(object CharacterInstance)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Blight(object CharacterInstance)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool BalancedDamage(object CharacterInstance)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Curse(object CharacterInstance)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Feign(object CharacterInstance)
+        {
+            throw new NotImplementedException();
+        }
 
         #endregion
+        #region Defend
+
+        public bool PutArmour(object CharacterInstance)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool IncreaseMagicalResistance(object CharacterInstance)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool ShieldUp(object CharacterInstance)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Purified(object CharacterInstance)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Block(object CharacterInstance)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Immune(object CharacterInstance)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region Buff
+
+        public bool Agile(object CharacterInstance)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool PolishWeapon(object CharacterInstance)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Chosen(object CharacterInstance)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Aware(object CharacterInstance)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool OnGuard(object CharacterInstance)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Provoking(object CharacterInstance)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Protector(object OwnerInstance, object CharacterInstance)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Protected(object CharacterInstance)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Revigorate(object CharacterInstance)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool GodsBlessing(object CharacterInstance)
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
+        #region Debuff
+
+        public bool Slow(object CharacterInstance)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Rooted(object CharacterInstance)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool WeakGrip(object CharacterInstance)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Exiled(object CharacterInstance)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Marked(object CharacterInstance)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Calm(object CharacterInstance)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool BrokenGuard(object CharacterInstance)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Burnt(object CharacterInstance)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Stun(object CharacterInstance)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Freeze(object CharacterInstance)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Cold(object CharacterInstance)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Blinded(object CharacterInstance)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Tainted(object CharacterInstance)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Sleep(object CharacterInstance)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Hungry(object CharacterInstance)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Unhealthy(object CharacterInstance)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool GodsAnger(object CharacterInstance)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #endregion
+
         #region Items 
 
         Items.HolyCrossTemplate HolyCrossItem = new Items.HolyCrossTemplate();
@@ -71,7 +311,9 @@ namespace Assets.Entities
                 GaiaShieldTemplate.ActivationRequireMent(CharacterInstance);
             }
         }
+
         #endregion
+
 
         #region WarriorCharacter Template
         public class WarriorTemplate : CharacterPersona, ICardTraits, ICharacterTraits, IWarriorTraits
@@ -327,7 +569,7 @@ namespace Assets.Entities
             #region Character Methods
 
             //Here are the passive traits of the card themselves
-            void ICardTraits.passiveTraits()
+            public void passiveTraits()
             {
                 //Instance.EquipItem(HolyCrossItem, Instance); I dont expect this to be used at all here. It would be clled some place else, I wrrote it here to see if it would work
                 Instance.ActiveBuff(); 
@@ -374,13 +616,65 @@ namespace Assets.Entities
             }
 
             //Unique Methods to Character
+
+
+            public void UniqueSkill(object CharacterInstance)
+            {
+                throw new NotImplementedException();
+            }
             public void UniqueActiveBuff()
             {
-                throw new System.NotImplementedException("UniqueActiveBuff was not set");
+                #region Unique Character logic
+
+                switch (CharacterName)
+                {
+                    case "Peter":
+                        break;
+                    case "Mister GlubGlub":
+                        break;
+                    case "Mister froggo":
+                        break;
+                    case "Mister Salaboned":
+                        break;
+                    case "Mister Lizzacorn":
+                        break;
+                    case "Mister Liodin":
+                        break;
+                    case "Mister Lacrox":
+                        break;
+                    case "Mister Birbarcher":
+                        break;
+                }
+
+                #endregion
+
             }
             public void UniqueActiveDeBuff()
             {
-                throw new System.NotImplementedException("UniqueActiveDeBuff was not set");
+
+                #region Unique Character logic
+
+                switch (CharacterName)
+                {
+                    case "Peter":
+                        break;
+                    case "Mister GlubGlub":
+                        break;
+                    case "Mister froggo":
+                        break;
+                    case "Mister Salaboned":
+                        break;
+                    case "Mister Lizzacorn":
+                        break;
+                    case "Mister Liodin":
+                        break;
+                    case "Mister Lacrox":
+                        break;
+                    case "Mister Birbarcher":
+                        break;
+                }
+
+                #endregion
             }
 
             //Experince methods
@@ -484,6 +778,10 @@ namespace Assets.Entities
 
             public int HealthLoss(int damageGiven)
             {
+                /*I think that the types of attacks logic will be made here. It will be easier to set how the health and armour and Magres wil be affected
+                 allin the same place. There will be if statement for all types of attacks. I am Also thinking of making bool statements in Characterpersona
+                so that instances can have their bool eg drain for example, to be set true. And if that happens the logic iin healthloss(damageGiven) is fired.
+                */
                 Instance.PhysicalDamageTaken = (int)(damageGiven * 0.4);
                 Instance.MagicalDamageTaken = (int)(damageGiven * 0.6);
                 Instance.PhysicalDamageTaken -= Instance.Armour;
@@ -492,6 +790,8 @@ namespace Assets.Entities
                 Instance.Health -= damageTaken;
                 return damageTaken;
             }
+
+
             #endregion
 
         }
@@ -739,11 +1039,14 @@ namespace Assets.Entities
             #endregion
             #region Character Methods
 
-            void ICardTraits.passiveTraits()
+            public void passiveTraits()
             {
                 
             }
-
+            public void UniqueSkill(object CharacterInstance)
+            {
+                throw new NotImplementedException();
+            }
             public void UniqueActiveBuff()
             {
                 throw new NotImplementedException();
@@ -898,6 +1201,7 @@ namespace Assets.Entities
 
                 return damageTaken;
             }
+
             #endregion
         }
         #endregion
@@ -1149,7 +1453,11 @@ namespace Assets.Entities
             #endregion
             #region Character Methods
 
-            void ICardTraits.passiveTraits()
+            public void passiveTraits()
+            {
+                throw new NotImplementedException();
+            }
+            public void UniqueSkill(object CharacterInstance)
             {
                 throw new NotImplementedException();
             }
@@ -1282,6 +1590,7 @@ namespace Assets.Entities
                 Instance.Health -= damageTaken;
                 return damageTaken;
             }
+
 
             #endregion
         }
@@ -1592,11 +1901,14 @@ namespace Assets.Entities
             #endregion
             #region Character Methods
 
-            void ICardTraits.passiveTraits()
+            public void passiveTraits()
             {
                
             }
-
+            public void UniqueSkill(object CharacterInstance)
+            {
+                throw new NotImplementedException();
+            }
             public void UniqueActiveBuff()
             {
                 throw new NotImplementedException();
@@ -1763,6 +2075,8 @@ namespace Assets.Entities
                 Instance.Health -= damageTaken;
                 return damageTaken;
             }
+
+
             #endregion
         }
         #endregion
@@ -2012,11 +2326,14 @@ namespace Assets.Entities
             #endregion
             #region Character Methods
 
-            void ICardTraits.passiveTraits()
+            public void passiveTraits()
             {
                 throw new NotImplementedException();
             }
-
+            public void UniqueSkill(object CharacterInstance)
+            {
+                throw new NotImplementedException();
+            }
             public void UniqueActiveBuff()
             {
                 throw new NotImplementedException();
@@ -2402,7 +2719,12 @@ namespace Assets.Entities
             #region Character Methods
 
 
-            void ICardTraits.passiveTraits()
+            public void passiveTraits()
+            {
+                throw new NotImplementedException();
+            }
+
+            public void UniqueSkill(object CharacterInstance)
             {
                 throw new NotImplementedException();
             }

@@ -11,12 +11,16 @@ namespace Assets.TraitInterface
     {
         /*
          Here we declare all the traits expected of anything (Anyone) that can be described as a character (For both playable and NPC)
+
+        The reason we did it here instead of just defining it in CharacterPersona is that each class that will implement this interface will have 
+        different values of individual properties
          */
         string CharacterName { get; set; }
         string CharacterDescription { get; set; } //Here the personality and backstory of a unique character will be defined
 
         #region Abilities
 
+        public void UniqueSkill(object CharacterInstance);
         void UniqueActiveBuff();
         void UniqueActiveDeBuff();
 
