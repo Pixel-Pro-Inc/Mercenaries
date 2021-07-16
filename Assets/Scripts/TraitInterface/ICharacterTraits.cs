@@ -18,14 +18,7 @@ namespace Assets.TraitInterface
         string CharacterName { get; set; }
         string CharacterDescription { get; set; } //Here the personality and backstory of a unique character will be defined
 
-        #region Abilities
-
-        public void UniqueSkill(object CharacterInstance);
-        void UniqueActiveBuff();
-        void UniqueActiveDeBuff();
-
-
-        #endregion
+       
         #region Stats
 
         bool DefaultValue { get; set; }

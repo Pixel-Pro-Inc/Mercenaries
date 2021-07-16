@@ -61,6 +61,193 @@ namespace Assets.Entities
         #endregion
         #region Combat Action
 
+        #region Unique Traits
+
+        public void UniqueSkill(object CharacterInstance)
+        {
+            #region Unique template logic
+
+            string name = "";
+            if (CharacterInstance.GetType() == typeof(CharacterPersona.WarriorTemplate))
+            {
+                CharacterPersona.WarriorTemplate starter = (CharacterPersona.WarriorTemplate)CharacterInstance;
+                name = starter.CharacterName;
+            }
+            if (CharacterInstance.GetType() == typeof(CharacterPersona.TankWarriorTemplate))
+            {
+                CharacterPersona.TankWarriorTemplate starter = (CharacterPersona.TankWarriorTemplate)CharacterInstance;
+                name = starter.CharacterName;
+            }
+            if (CharacterInstance.GetType() == typeof(CharacterPersona.RangeTemplate))
+            {
+                CharacterPersona.RangeTemplate starter = (CharacterPersona.RangeTemplate)CharacterInstance;
+                name = starter.CharacterName;
+            }
+            if (CharacterInstance.GetType() == typeof(CharacterPersona.MageTemplate))
+            {
+                CharacterPersona.MageTemplate starter = (CharacterPersona.MageTemplate)CharacterInstance;
+                name = starter.CharacterName;
+            }
+            if (CharacterInstance.GetType() == typeof(CharacterPersona.ControllerTemplate))
+            {
+                CharacterPersona.ControllerTemplate starter = (CharacterPersona.ControllerTemplate)CharacterInstance;
+                name = starter.CharacterName;
+            }
+            if (CharacterInstance.GetType() == typeof(CharacterPersona.AssasinTemplate))
+            {
+                CharacterPersona.AssasinTemplate starter = (CharacterPersona.AssasinTemplate)CharacterInstance;
+                name = starter.CharacterName;
+            }
+            #endregion
+            #region Unique Character logic
+
+            switch (name)
+            {
+                case "Peter":
+                    break;
+                case "Mister GlubGlub":
+                    break;
+                case "Mister froggo":
+                    break;
+                case "Mister Salaboned":
+                    break;
+                case "Mister Lizzacorn":
+                    break;
+                case "Mister Liodin":
+                    break;
+                case "Mister Lacrox":
+                    break;
+                case "Mister Birbarcher":
+                    break;
+            }
+
+            #endregion
+        }
+        public void UniqueActiveBuff(object CharacterInstance)
+        {
+            #region Unique template logic
+
+            string name = "";
+            if (CharacterInstance.GetType() == typeof(CharacterPersona.WarriorTemplate))
+            {
+                CharacterPersona.WarriorTemplate starter = (CharacterPersona.WarriorTemplate)CharacterInstance;
+                name = starter.CharacterName;
+            }
+            if (CharacterInstance.GetType() == typeof(CharacterPersona.TankWarriorTemplate))
+            {
+                CharacterPersona.TankWarriorTemplate starter = (CharacterPersona.TankWarriorTemplate)CharacterInstance;
+                name = starter.CharacterName;
+            }
+            if (CharacterInstance.GetType() == typeof(CharacterPersona.RangeTemplate))
+            {
+                CharacterPersona.RangeTemplate starter = (CharacterPersona.RangeTemplate)CharacterInstance;
+                name = starter.CharacterName;
+            }
+            if (CharacterInstance.GetType() == typeof(CharacterPersona.MageTemplate))
+            {
+                CharacterPersona.MageTemplate starter = (CharacterPersona.MageTemplate)CharacterInstance;
+                name = starter.CharacterName;
+            }
+            if (CharacterInstance.GetType() == typeof(CharacterPersona.ControllerTemplate))
+            {
+                CharacterPersona.ControllerTemplate starter = (CharacterPersona.ControllerTemplate)CharacterInstance;
+                name = starter.CharacterName;
+            }
+            if (CharacterInstance.GetType() == typeof(CharacterPersona.AssasinTemplate))
+            {
+                CharacterPersona.AssasinTemplate starter = (CharacterPersona.AssasinTemplate)CharacterInstance;
+                name = starter.CharacterName;
+            }
+            #endregion
+            #region Unique Character logic
+
+            switch (name)
+            {
+                case "Peter":
+                    break;
+                case "Mister GlubGlub":
+                    break;
+                case "Mister froggo":
+                    break;
+                case "Mister Salaboned":
+                    break;
+                case "Mister Lizzacorn":
+                    break;
+                case "Mister Liodin":
+                    break;
+                case "Mister Lacrox":
+                    break;
+                case "Mister Birbarcher":
+                    break;
+            }
+
+            #endregion
+        }
+
+        public void UniqueActiveDeBuff(object CharacterInstance)
+        {
+            #region Unique template logic
+
+            string name = "";
+            if (CharacterInstance.GetType() == typeof(CharacterPersona.WarriorTemplate))
+            {
+                CharacterPersona.WarriorTemplate starter = (CharacterPersona.WarriorTemplate)CharacterInstance;
+                name = starter.CharacterName;
+            }
+            if (CharacterInstance.GetType() == typeof(CharacterPersona.TankWarriorTemplate))
+            {
+                CharacterPersona.TankWarriorTemplate starter = (CharacterPersona.TankWarriorTemplate)CharacterInstance;
+                name = starter.CharacterName;
+            }
+            if (CharacterInstance.GetType() == typeof(CharacterPersona.RangeTemplate))
+            {
+                CharacterPersona.RangeTemplate starter = (CharacterPersona.RangeTemplate)CharacterInstance;
+                name = starter.CharacterName;
+            }
+            if (CharacterInstance.GetType() == typeof(CharacterPersona.MageTemplate))
+            {
+                CharacterPersona.MageTemplate starter = (CharacterPersona.MageTemplate)CharacterInstance;
+                name = starter.CharacterName;
+            }
+            if (CharacterInstance.GetType() == typeof(CharacterPersona.ControllerTemplate))
+            {
+                CharacterPersona.ControllerTemplate starter = (CharacterPersona.ControllerTemplate)CharacterInstance;
+                name = starter.CharacterName;
+            }
+            if (CharacterInstance.GetType() == typeof(CharacterPersona.AssasinTemplate))
+            {
+                CharacterPersona.AssasinTemplate starter = (CharacterPersona.AssasinTemplate)CharacterInstance;
+                name = starter.CharacterName;
+            }
+            #endregion
+            #region Unique Character logic
+
+            switch (name)
+            {
+                case "Peter":
+                    break;
+                case "Mister GlubGlub":
+                    break;
+                case "Mister froggo":
+                    break;
+                case "Mister Salaboned":
+                    break;
+                case "Mister Lizzacorn":
+                    break;
+                case "Mister Liodin":
+                    break;
+                case "Mister Lacrox":
+                    break;
+                case "Mister Birbarcher":
+                    break;
+            }
+
+            #endregion
+        }
+
+        #endregion
+
+
         #region Attack
 
         public bool TrueDamage(object CharacterInstance)
@@ -614,69 +801,6 @@ namespace Assets.Entities
             {
                 throw new System.NotImplementedException();
             }
-
-            //Unique Methods to Character
-
-
-            public void UniqueSkill(object CharacterInstance)
-            {
-                throw new NotImplementedException();
-            }
-            public void UniqueActiveBuff()
-            {
-                #region Unique Character logic
-
-                switch (CharacterName)
-                {
-                    case "Peter":
-                        break;
-                    case "Mister GlubGlub":
-                        break;
-                    case "Mister froggo":
-                        break;
-                    case "Mister Salaboned":
-                        break;
-                    case "Mister Lizzacorn":
-                        break;
-                    case "Mister Liodin":
-                        break;
-                    case "Mister Lacrox":
-                        break;
-                    case "Mister Birbarcher":
-                        break;
-                }
-
-                #endregion
-
-            }
-            public void UniqueActiveDeBuff()
-            {
-
-                #region Unique Character logic
-
-                switch (CharacterName)
-                {
-                    case "Peter":
-                        break;
-                    case "Mister GlubGlub":
-                        break;
-                    case "Mister froggo":
-                        break;
-                    case "Mister Salaboned":
-                        break;
-                    case "Mister Lizzacorn":
-                        break;
-                    case "Mister Liodin":
-                        break;
-                    case "Mister Lacrox":
-                        break;
-                    case "Mister Birbarcher":
-                        break;
-                }
-
-                #endregion
-            }
-
             //Experince methods
             public void LevelIncrease()
             {
@@ -1042,19 +1166,6 @@ namespace Assets.Entities
             public void passiveTraits()
             {
                 
-            }
-            public void UniqueSkill(object CharacterInstance)
-            {
-                throw new NotImplementedException();
-            }
-            public void UniqueActiveBuff()
-            {
-                throw new NotImplementedException();
-            }
-
-            public void UniqueActiveDeBuff()
-            {
-                throw new NotImplementedException();
             }
 
             public void LevelIncrease()
@@ -1457,20 +1568,6 @@ namespace Assets.Entities
             {
                 throw new NotImplementedException();
             }
-            public void UniqueSkill(object CharacterInstance)
-            {
-                throw new NotImplementedException();
-            }
-            public void UniqueActiveBuff()
-            {
-                throw new NotImplementedException();
-            }
-
-            public void UniqueActiveDeBuff()
-            {
-                throw new NotImplementedException();
-            }
-
             public void LevelIncrease()
             {
                 Instance.ExperienceLevel++;
@@ -1905,19 +2002,6 @@ namespace Assets.Entities
             {
                
             }
-            public void UniqueSkill(object CharacterInstance)
-            {
-                throw new NotImplementedException();
-            }
-            public void UniqueActiveBuff()
-            {
-                throw new NotImplementedException();
-            }
-
-            public void UniqueActiveDeBuff()
-            {
-                throw new NotImplementedException();
-            }
 
             public void LevelIncrease()
             {
@@ -2330,19 +2414,6 @@ namespace Assets.Entities
             {
                 throw new NotImplementedException();
             }
-            public void UniqueSkill(object CharacterInstance)
-            {
-                throw new NotImplementedException();
-            }
-            public void UniqueActiveBuff()
-            {
-                throw new NotImplementedException();
-            }
-
-            public void UniqueActiveDeBuff()
-            {
-                throw new NotImplementedException();
-            }
 
             public void LevelIncrease()
             {
@@ -2720,21 +2791,6 @@ namespace Assets.Entities
 
 
             public void passiveTraits()
-            {
-                throw new NotImplementedException();
-            }
-
-            public void UniqueSkill(object CharacterInstance)
-            {
-                throw new NotImplementedException();
-            }
-
-            public void UniqueActiveBuff()
-            {
-                throw new NotImplementedException();
-            }
-
-            public void UniqueActiveDeBuff()
             {
                 throw new NotImplementedException();
             }

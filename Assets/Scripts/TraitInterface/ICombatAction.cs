@@ -16,6 +16,18 @@ namespace Assets.Scripts.TraitInterface
 
 
          */
+        #region Unqiue Action
+
+        /*
+         Right now these are set to only work on the instance its being used by. But we might need it to be declareed as such:
+        UniqueSkill(object CharacterInstance, List<object> CHaracteraffectedInstances);
+         */
+        public void UniqueSkill(object CharacterInstance);
+        void UniqueActiveBuff(object CharacterInstance);
+        void UniqueActiveDeBuff(object CharacterInstance);
+
+        #endregion
+
         #region Attack
 
         bool PhysicalDamage(object CharacterInstance);
