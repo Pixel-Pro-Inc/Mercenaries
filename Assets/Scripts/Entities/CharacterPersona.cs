@@ -777,7 +777,6 @@ namespace Assets.Entities
 
             return false;//I made this false because the instance isn't getting the effect, but the enemyInstance
         }
-
         public bool Drain(object CharacterInstance, object TargetInstance)
         {
             BattleCalculate = true; //This true so all the int DamageGiven() can be done without firing Healthloss
@@ -1257,7 +1256,7 @@ namespace Assets.Entities
                 set
                 {
                     if (ExpPoints < 0) ExpPoints = 0;
-                    if (true/*sessionStarted?*/)
+                    if (BattleCalculate == true/*This means characters can level up durning battle*/)
                     {
                         Instance.ExpPoints += NewEarnedXp;
                     }
@@ -1289,9 +1288,9 @@ namespace Assets.Entities
                 get { return EarnedXp; }
                 set
                 {
-                    if (true)
+                    if (BattleCalculate == false/*This means characters can level up durning battle*/)
                     {
-                        //SessionOver?EarnedXp=false;
+                        EarnedXp=false;
                     }
                 }
             } //This bool is made true when XPIncrease is fired and should be made of when sessionOver is true
@@ -1658,7 +1657,7 @@ namespace Assets.Entities
                 get { return ExpPoints; }
                 set
                 {
-                    if (true/*sessionStarted?*/)
+                    if (BattleCalculate == true/*This means characters can level up durning battle*/)
                     {
                         Instance.ExpPoints += NewEarnedXp;
                     }
@@ -1689,9 +1688,9 @@ namespace Assets.Entities
                 get { return EarnedXp; }
                 set
                 {
-                    if (true)
+                    if (BattleCalculate == false)
                     {
-                        //SessionOver?EarnedXp=false;
+                        EarnedXp=false;
                     }
                 }
             } //This bool is made true when XPIncrease is fired and should be made of when sessionOver is true
@@ -2058,7 +2057,7 @@ namespace Assets.Entities
                 get { return ExpPoints; }
                 set
                 {
-                    if (true/*sessionStarted?*/)
+                    if (BattleCalculate == true/*This means characters can level up durning battle*/)
                     {
                         Instance.ExpPoints += NewEarnedXp;
                     }
@@ -2089,9 +2088,9 @@ namespace Assets.Entities
                 get { return EarnedXp; }
                 set
                 {
-                    if (true)
+                    if (BattleCalculate == false)
                     {
-                        //SessionOver?EarnedXp=false;
+                        EarnedXp=false;
                     }
                 }
             } //This bool is made true when XPIncrease is fired and should be made of when sessionOver is true
@@ -2490,7 +2489,7 @@ namespace Assets.Entities
                 get { return ExpPoints; }
                 set
                 {
-                    if (true/*sessionStarted?*/)
+                    if ( BattleCalculate== true/*This means characters can level up durning battle*/)
                     {
                         Instance.ExpPoints += NewEarnedXp;
                     }
@@ -2506,7 +2505,7 @@ namespace Assets.Entities
                 get { return NewEarnedXp; }
                 set
                 {
-                    if (EarnedXp == true)
+                    if (EarnedXp == true/*this is set true in XPIncrease()*/)
                     {
                         Instance.NewEarnedXp = NewEarnedXp;
                     }
@@ -2521,9 +2520,9 @@ namespace Assets.Entities
                 get { return EarnedXp; }
                 set
                 {
-                    if (true)
+                    if (BattleCalculate == false/*This means characters can level up durning battle*/)
                     {
-                        //SessionOver?EarnedXp=false;
+                        EarnedXp=false;
                     }
                 }
             } //This bool is made true when XPIncrease is fired and should be made of when sessionOver is true
@@ -2905,7 +2904,7 @@ namespace Assets.Entities
                 get { return ExpPoints; }
                 set
                 {
-                    if (true/*sessionStarted?*/)
+                    if (BattleCalculate == true/*This means characters can level up durning battle*/)
                     {
                         Instance.ExpPoints += NewEarnedXp;
                     }
@@ -2936,9 +2935,9 @@ namespace Assets.Entities
                 get { return EarnedXp; }
                 set
                 {
-                    if (true)
+                    if (BattleCalculate == false)
                     {
-                        //SessionOver?EarnedXp=false;
+                        EarnedXp=false;
                     }
                 }
             } //This bool is made true when XPIncrease is fired and should be made of when sessionOver is true
@@ -3283,7 +3282,7 @@ namespace Assets.Entities
                 get { return ExpPoints; }
                 set
                 {
-                    if (true/*sessionStarted?*/)
+                    if (BattleCalculate == true/*This means characters can level up durning battle*/)
                     {
                         Instance.ExpPoints += NewEarnedXp;
                     }
@@ -3314,9 +3313,9 @@ namespace Assets.Entities
                 get { return EarnedXp; }
                 set
                 {
-                    if (true)
+                    if (BattleCalculate == false)
                     {
-                        //SessionOver?EarnedXp=false;
+                        EarnedXp=false;
                     }
                 }
             } //This bool is made true when XPIncrease is fired and should be made of when sessionOver is true
