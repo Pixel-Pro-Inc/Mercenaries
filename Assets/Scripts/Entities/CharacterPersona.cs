@@ -56,38 +56,99 @@ namespace Assets.Entities
             Unknown
         };
         internal int ExperienceLevel { get { return ExperienceLevel;  } set { if (ExperienceLevel < 0) ExperienceLevel = 0; } }
-        int shield { get; set; } //We are defining it (not ICharacterTraits) here cause it isn't used by everyone often but can be, and its null for everyone starting off
+        int shield { get { return shield; } set { if (shield < 0) shield = 0; shield = 0; } } //We are defining it (not ICharacterTraits) here cause it isn't used by everyone often but can be, and its 0 for everyone starting off
 
+        #region Template Logic
         //The code below was created because i was tired of writting the template code over and over
-        public int TemplateIdentificationNumber(object CharacterInstance)
+        WarriorTemplate WarriorCBase;
+        WarriorTemplate WarriorTarBase;
+
+        TankWarriorTemplate TankCBase;
+        TankWarriorTemplate TankTarBase;
+
+        RangeTemplate RangeCBase;
+        RangeTemplate RangeTarBase;
+
+        MageTemplate MageCBase;
+        MageTemplate MageTarBase;
+
+        ControllerTemplate ControllerCBase;
+        ControllerTemplate ControllerTarBase;
+
+        AssasinTemplate AssasinCBase;
+        AssasinTemplate AssasinTarBase;
+        public int TemplateCharacter(object CharacterInstance)
         {
-            int TemplateId = 0;
+            int TempCharNumber = 0;
             if (CharacterInstance.GetType() == typeof(CharacterPersona.WarriorTemplate))
             {
-                TemplateId = 1;
+                WarriorCBase = (WarriorTemplate)CharacterInstance;
+                TempCharNumber = 1;
             }
             if (CharacterInstance.GetType() == typeof(CharacterPersona.TankWarriorTemplate))
             {
-                TemplateId = 2;
+                TankCBase = (TankWarriorTemplate)CharacterInstance;
+                TempCharNumber = 2;
             }
             if (CharacterInstance.GetType() == typeof(CharacterPersona.RangeTemplate))
             {
-                TemplateId = 3;
+                RangeCBase = (RangeTemplate)CharacterInstance;
+                TempCharNumber = 3;
             }
             if (CharacterInstance.GetType() == typeof(CharacterPersona.MageTemplate))
             {
-                TemplateId = 4;
+                MageCBase = (MageTemplate)CharacterInstance;
+                TempCharNumber = 4;
             }
             if (CharacterInstance.GetType() == typeof(CharacterPersona.ControllerTemplate))
             {
-                TemplateId = 5;
+                ControllerCBase = (ControllerTemplate)CharacterInstance;
+                TempCharNumber = 5;
             }
             if (CharacterInstance.GetType() == typeof(CharacterPersona.AssasinTemplate))
             {
-                TemplateId = 6;
+                AssasinCBase = (AssasinTemplate)CharacterInstance;
+                TempCharNumber = 6;
             }
-            return TemplateId;
+            return TempCharNumber;
         }
+        public string TemplateTarget(object TargetInstance)
+        {
+            string TempTargetChar="";
+            if (TargetInstance.GetType() == typeof(CharacterPersona.WarriorTemplate))
+            {
+                WarriorTarBase = (WarriorTemplate)TargetInstance;
+                TempTargetChar = "a";
+            }
+            if (TargetInstance.GetType() == typeof(CharacterPersona.TankWarriorTemplate))
+            {
+                TankTarBase = (TankWarriorTemplate)TargetInstance;
+                TempTargetChar = "b";
+            }
+            if (TargetInstance.GetType() == typeof(CharacterPersona.RangeTemplate))
+            {
+                RangeTarBase = (RangeTemplate)TargetInstance;
+                TempTargetChar = "c";
+            }
+            if (TargetInstance.GetType() == typeof(CharacterPersona.MageTemplate))
+            {
+                MageTarBase = (MageTemplate)TargetInstance;
+                TempTargetChar = "d";
+            }
+            if (TargetInstance.GetType() == typeof(CharacterPersona.ControllerTemplate))
+            {
+                ControllerTarBase = (ControllerTemplate)TargetInstance;
+                TempTargetChar = "e";
+            }
+            if (TargetInstance.GetType() == typeof(CharacterPersona.AssasinTemplate))
+            {
+                AssasinTarBase = (AssasinTemplate)TargetInstance;
+                TempTargetChar = "f";
+            }
+            return TempTargetChar;
+        }
+        #endregion
+
 
         #endregion
         #region Combat Action
@@ -354,393 +415,363 @@ namespace Assets.Entities
         {
             #region CharacterInstance template logic
 
-            int CharacterTemplateid= TemplateIdentificationNumber(CharacterInstance);
-            if (CharacterTemplateid == 1)
+            int characterNumber = TemplateCharacter(CharacterInstance);
+            if (characterNumber == 1)
             {
-                CharacterPersona.WarriorTemplate starter = (CharacterPersona.WarriorTemplate)CharacterInstance;
-                starter.DamageGiven(TargetInstance);
+                WarriorCBase.DamageGiven(TargetInstance);
             }
-            if (CharacterTemplateid == 2)
+            if (characterNumber == 2)
             {
-                CharacterPersona.TankWarriorTemplate starter = (CharacterPersona.TankWarriorTemplate)CharacterInstance;
-                starter.DamageGiven(TargetInstance);
+                TankCBase.DamageGiven(TargetInstance);
             }
-            if (CharacterTemplateid == 3)
+            if (characterNumber == 3)
             {
-                CharacterPersona.RangeTemplate starter = (CharacterPersona.RangeTemplate)CharacterInstance;
-                starter.DamageGiven(TargetInstance);
+                RangeCBase.DamageGiven(TargetInstance);
             }
-            if (CharacterTemplateid == 4)
+            if (characterNumber == 4)
             {
-                CharacterPersona.MageTemplate starter = (CharacterPersona.MageTemplate)CharacterInstance;
-                starter.DamageGiven(TargetInstance);
+                MageCBase.DamageGiven(TargetInstance);
             }
-            if (CharacterTemplateid == 5)
+            if (characterNumber == 5)
             {
-                CharacterPersona.ControllerTemplate starter = (CharacterPersona.ControllerTemplate)CharacterInstance;
-                starter.DamageGiven(TargetInstance);
+                ControllerCBase.DamageGiven(TargetInstance);
             }
-            if (CharacterTemplateid == 6)
+            if (characterNumber == 6)
             {
-                CharacterPersona.AssasinTemplate starter = (CharacterPersona.AssasinTemplate)CharacterInstance;
-                starter.DamageGiven(TargetInstance);
+                AssasinCBase.DamageGiven(TargetInstance);
             }
             #endregion
-            return false;//I made this false because the instance isn't getting the effect, but the enemyInstance
+            return false;//This method should be void
         }
         public bool PhysicalDamage(object CharacterInstance, object TargetInstance)
         {
             int physicalDamage = 0;
             int SaveValue = 0;
-            #region Target template logic
-
+            int shieldcache=0;
+            int armourcahe=0;
             #region CharacterInstance template logic
 
-            int CharacterTemplateid = TemplateIdentificationNumber(CharacterInstance);
-            if (CharacterTemplateid == 1)
+            int characterNumber = TemplateCharacter(CharacterInstance);
+            //the method DamageGiven needs to be done but the value also needs to be stored. I don't do them separate cause healthlos will still get fired
+            if (characterNumber == 1)
             {
-                CharacterPersona.WarriorTemplate starter = (CharacterPersona.WarriorTemplate)CharacterInstance;
-                #region Target
-                int TargetTemplateid = TemplateIdentificationNumber(TargetInstance);
-                if (TargetTemplateid == 1)
-                {
-                    WarriorTemplate finisher = (WarriorTemplate)TargetInstance;
-                    SaveValue = finisher.Armour;
-                    physicalDamage = starter.DamageGiven(TargetInstance);
-                    SaveValue -= physicalDamage;
-                    finisher.Health += SaveValue;
-                }
-                if (TargetTemplateid == 2)
-                {
-                    TankWarriorTemplate finisher = (TankWarriorTemplate)TargetInstance;
-                    SaveValue = finisher.Armour;
-                    physicalDamage = starter.DamageGiven(TargetInstance);
-                    SaveValue -= physicalDamage;
-                    finisher.Health += SaveValue;
-                }
-                if (TargetTemplateid == 3)
-                {
-                    RangeTemplate finisher = (RangeTemplate)TargetInstance;
-                    SaveValue = finisher.Armour;
-                    physicalDamage = starter.DamageGiven(TargetInstance);
-                    SaveValue -= physicalDamage;
-                    finisher.Health += SaveValue;
-                }
-                if (TargetTemplateid == 4)
-                {
-                    MageTemplate finisher = (MageTemplate)TargetInstance;
-                    SaveValue = finisher.Armour;
-                    physicalDamage = starter.DamageGiven(TargetInstance);
-                    SaveValue -= physicalDamage;
-                    finisher.Health += SaveValue;
-                }
-                if (TargetTemplateid == 5)
-                {
-                    ControllerTemplate finisher = (ControllerTemplate)TargetInstance;
-                    SaveValue = finisher.Armour;
-                    physicalDamage = starter.DamageGiven(TargetInstance);
-                    SaveValue -= physicalDamage;
-                    finisher.Health += SaveValue;
-                }
-                if (TargetTemplateid == 6)
-                {
-                    AssasinTemplate finisher = (AssasinTemplate)TargetInstance;
-                    SaveValue = finisher.Armour;
-                    physicalDamage = starter.DamageGiven(TargetInstance);
-                    SaveValue -= physicalDamage;
-                    finisher.Health += SaveValue;
-                }
-                #endregion
+                physicalDamage = WarriorCBase.DamageGiven(TargetInstance);
             }
-            if (CharacterTemplateid == 2)
+            if (characterNumber == 2)
             {
-                CharacterPersona.TankWarriorTemplate starter = (CharacterPersona.TankWarriorTemplate)CharacterInstance;
-                #region Target
-                int TargetTemplateid = TemplateIdentificationNumber(TargetInstance);
-                if (TargetTemplateid == 1)
-                {
-                    WarriorTemplate finisher = (WarriorTemplate)TargetInstance;
-                    SaveValue = finisher.Armour;
-                    physicalDamage = starter.DamageGiven(TargetInstance);
-                    SaveValue -= physicalDamage;
-                    finisher.Health += SaveValue;
-                }
-                if (TargetTemplateid == 2)
-                {
-                    TankWarriorTemplate finisher = (TankWarriorTemplate)TargetInstance;
-                    SaveValue = finisher.Armour;
-                    physicalDamage = starter.DamageGiven(TargetInstance);
-                    SaveValue -= physicalDamage;
-                    finisher.Health += SaveValue;
-                }
-                if (TargetTemplateid == 3)
-                {
-                    RangeTemplate finisher = (RangeTemplate)TargetInstance;
-                    SaveValue = finisher.Armour;
-                    physicalDamage = starter.DamageGiven(TargetInstance);
-                    SaveValue -= physicalDamage;
-                    finisher.Health += SaveValue;
-                }
-                if (TargetTemplateid == 4)
-                {
-                    MageTemplate finisher = (MageTemplate)TargetInstance;
-                    SaveValue = finisher.Armour;
-                    physicalDamage = starter.DamageGiven(TargetInstance);
-                    SaveValue -= physicalDamage;
-                    finisher.Health += SaveValue;
-                }
-                if (TargetTemplateid == 5)
-                {
-                    ControllerTemplate finisher = (ControllerTemplate)TargetInstance;
-                    SaveValue = finisher.Armour;
-                    physicalDamage = starter.DamageGiven(TargetInstance);
-                    SaveValue -= physicalDamage;
-                    finisher.Health += SaveValue;
-                }
-                if (TargetTemplateid == 6)
-                {
-                    AssasinTemplate finisher = (AssasinTemplate)TargetInstance;
-                    SaveValue = finisher.Armour;
-                    physicalDamage = starter.DamageGiven(TargetInstance);
-                    SaveValue -= physicalDamage;
-                    finisher.Health += SaveValue;
-                }
-                #endregion
+                physicalDamage = TankCBase.DamageGiven(TargetInstance);
             }
-            if (CharacterTemplateid == 3)
+            if (characterNumber == 3)
             {
-                CharacterPersona.RangeTemplate starter = (CharacterPersona.RangeTemplate)CharacterInstance;
-                #region Target
-                int TargetTemplateid = TemplateIdentificationNumber(TargetInstance);
-                if (TargetTemplateid == 1)
-                {
-                    WarriorTemplate finisher = (WarriorTemplate)TargetInstance;
-                    SaveValue = finisher.Armour;
-                    physicalDamage = starter.DamageGiven(TargetInstance);
-                    SaveValue -= physicalDamage;
-                    finisher.Health += SaveValue;
-                }
-                if (TargetTemplateid == 2)
-                {
-                    TankWarriorTemplate finisher = (TankWarriorTemplate)TargetInstance;
-                    SaveValue = finisher.Armour;
-                    physicalDamage = starter.DamageGiven(TargetInstance);
-                    SaveValue -= physicalDamage;
-                    finisher.Health += SaveValue;
-                }
-                if (TargetTemplateid == 3)
-                {
-                    RangeTemplate finisher = (RangeTemplate)TargetInstance;
-                    SaveValue = finisher.Armour;
-                    physicalDamage = starter.DamageGiven(TargetInstance);
-                    SaveValue -= physicalDamage;
-                    finisher.Health += SaveValue;
-                }
-                if (TargetTemplateid == 4)
-                {
-                    MageTemplate finisher = (MageTemplate)TargetInstance;
-                    SaveValue = finisher.Armour;
-                    physicalDamage = starter.DamageGiven(TargetInstance);
-                    SaveValue -= physicalDamage;
-                    finisher.Health += SaveValue;
-                }
-                if (TargetTemplateid == 5)
-                {
-                    ControllerTemplate finisher = (ControllerTemplate)TargetInstance;
-                    SaveValue = finisher.Armour;
-                    physicalDamage = starter.DamageGiven(TargetInstance);
-                    SaveValue -= physicalDamage;
-                    finisher.Health += SaveValue;
-                }
-                if (TargetTemplateid == 6)
-                {
-                    AssasinTemplate finisher = (AssasinTemplate)TargetInstance;
-                    SaveValue = finisher.Armour;
-                    physicalDamage = starter.DamageGiven(TargetInstance);
-                    SaveValue -= physicalDamage;
-                    finisher.Health += SaveValue;
-                }
-                #endregion
+                physicalDamage = RangeCBase.DamageGiven(TargetInstance);
             }
-            if (CharacterTemplateid == 4)
+            if (characterNumber == 4)
             {
-                CharacterPersona.MageTemplate starter = (CharacterPersona.MageTemplate)CharacterInstance;
-                #region Target
-                int TargetTemplateid = TemplateIdentificationNumber(TargetInstance);
-                if (TargetTemplateid == 1)
-                {
-                    WarriorTemplate finisher = (WarriorTemplate)TargetInstance;
-                    SaveValue = finisher.Armour;
-                    physicalDamage = starter.DamageGiven(TargetInstance);
-                    SaveValue -= physicalDamage;
-                    finisher.Health += SaveValue;
-                }
-                if (TargetTemplateid == 2)
-                {
-                    TankWarriorTemplate finisher = (TankWarriorTemplate)TargetInstance;
-                    SaveValue = finisher.Armour;
-                    physicalDamage = starter.DamageGiven(TargetInstance);
-                    SaveValue -= physicalDamage;
-                    finisher.Health += SaveValue;
-                }
-                if (TargetTemplateid == 3)
-                {
-                    RangeTemplate finisher = (RangeTemplate)TargetInstance;
-                    SaveValue = finisher.Armour;
-                    physicalDamage = starter.DamageGiven(TargetInstance);
-                    SaveValue -= physicalDamage;
-                    finisher.Health += SaveValue;
-                }
-                if (TargetTemplateid == 4)
-                {
-                    MageTemplate finisher = (MageTemplate)TargetInstance;
-                    SaveValue = finisher.Armour;
-                    physicalDamage = starter.DamageGiven(TargetInstance);
-                    SaveValue -= physicalDamage;
-                    finisher.Health += SaveValue;
-                }
-                if (TargetTemplateid == 5)
-                {
-                    ControllerTemplate finisher = (ControllerTemplate)TargetInstance;
-                    SaveValue = finisher.Armour;
-                    physicalDamage = starter.DamageGiven(TargetInstance);
-                    SaveValue -= physicalDamage;
-                    finisher.Health += SaveValue;
-                }
-                if (TargetTemplateid == 6)
-                {
-                    AssasinTemplate finisher = (AssasinTemplate)TargetInstance;
-                    SaveValue = finisher.Armour;
-                    physicalDamage = starter.DamageGiven(TargetInstance);
-                    SaveValue -= physicalDamage;
-                    finisher.Health += SaveValue;
-                }
-                #endregion
+                physicalDamage = MageCBase.DamageGiven(TargetInstance);
             }
-            if (CharacterTemplateid == 5)
+            if (characterNumber == 5)
             {
-                CharacterPersona.ControllerTemplate starter = (CharacterPersona.ControllerTemplate)CharacterInstance;
-                #region Target
-                int TargetTemplateid = TemplateIdentificationNumber(TargetInstance);
-                if (TargetTemplateid == 1)
-                {
-                    WarriorTemplate finisher = (WarriorTemplate)TargetInstance;
-                    SaveValue = finisher.Armour;
-                    physicalDamage = starter.DamageGiven(TargetInstance);
-                    SaveValue -= physicalDamage;
-                    finisher.Health += SaveValue;
-                }
-                if (TargetTemplateid == 2)
-                {
-                    TankWarriorTemplate finisher = (TankWarriorTemplate)TargetInstance;
-                    SaveValue = finisher.Armour;
-                    physicalDamage = starter.DamageGiven(TargetInstance);
-                    SaveValue -= physicalDamage;
-                    finisher.Health += SaveValue;
-                }
-                if (TargetTemplateid == 3)
-                {
-                    RangeTemplate finisher = (RangeTemplate)TargetInstance;
-                    SaveValue = finisher.Armour;
-                    physicalDamage = starter.DamageGiven(TargetInstance);
-                    SaveValue -= physicalDamage;
-                    finisher.Health += SaveValue;
-                }
-                if (TargetTemplateid == 4)
-                {
-                    MageTemplate finisher = (MageTemplate)TargetInstance;
-                    SaveValue = finisher.Armour;
-                    physicalDamage = starter.DamageGiven(TargetInstance);
-                    SaveValue -= physicalDamage;
-                    finisher.Health += SaveValue;
-                }
-                if (TargetTemplateid == 5)
-                {
-                    ControllerTemplate finisher = (ControllerTemplate)TargetInstance;
-                    SaveValue = finisher.Armour;
-                    physicalDamage = starter.DamageGiven(TargetInstance);
-                    SaveValue -= physicalDamage;
-                    finisher.Health += SaveValue;
-                }
-                if (TargetTemplateid == 6)
-                {
-                    AssasinTemplate finisher = (AssasinTemplate)TargetInstance;
-                    SaveValue = finisher.Armour;
-                    physicalDamage = starter.DamageGiven(TargetInstance);
-                    SaveValue -= physicalDamage;
-                    finisher.Health += SaveValue;
-                }
-                #endregion
+                physicalDamage = ControllerCBase.DamageGiven(TargetInstance);
             }
-            if (CharacterTemplateid == 6)
+            if (characterNumber == 6)
             {
-                CharacterPersona.AssasinTemplate starter = (CharacterPersona.AssasinTemplate)CharacterInstance;
-                #region Target
-                int TargetTemplateid = TemplateIdentificationNumber(TargetInstance);
-                if (TargetTemplateid == 1)
-                {
-                    WarriorTemplate finisher = (WarriorTemplate)TargetInstance;
-                    SaveValue = finisher.Armour;
-                    physicalDamage = starter.DamageGiven(TargetInstance);
-                    SaveValue -= physicalDamage;
-                    finisher.Health += SaveValue;
-                }
-                if (TargetTemplateid == 2)
-                {
-                    TankWarriorTemplate finisher = (TankWarriorTemplate)TargetInstance;
-                    SaveValue = finisher.Armour;
-                    physicalDamage = starter.DamageGiven(TargetInstance);
-                    SaveValue -= physicalDamage;
-                    finisher.Health += SaveValue;
-                }
-                if (TargetTemplateid == 3)
-                {
-                    RangeTemplate finisher = (RangeTemplate)TargetInstance;
-                    SaveValue = finisher.Armour;
-                    physicalDamage = starter.DamageGiven(TargetInstance);
-                    SaveValue -= physicalDamage;
-                    finisher.Health += SaveValue;
-                }
-                if (TargetTemplateid == 4)
-                {
-                    MageTemplate finisher = (MageTemplate)TargetInstance;
-                    SaveValue = finisher.Armour;
-                    physicalDamage = starter.DamageGiven(TargetInstance);
-                    SaveValue -= physicalDamage;
-                    finisher.Health += SaveValue;
-                }
-                if (TargetTemplateid == 5)
-                {
-                    ControllerTemplate finisher = (ControllerTemplate)TargetInstance;
-                    SaveValue = finisher.Armour;
-                    physicalDamage = starter.DamageGiven(TargetInstance);
-                    SaveValue -= physicalDamage;
-                    finisher.Health += SaveValue;
-                }
-                if (TargetTemplateid == 6)
-                {
-                    AssasinTemplate finisher = (AssasinTemplate)TargetInstance;
-                    SaveValue = finisher.Armour;
-                    physicalDamage = starter.DamageGiven(TargetInstance);
-                    SaveValue -= physicalDamage;
-                    finisher.Health += SaveValue;
-                }
-                #endregion
+                physicalDamage = AssasinCBase.DamageGiven(TargetInstance);
             }
             #endregion
+            #region TargetInstance template logic
 
+            string TargetLetter = TemplateTarget(TargetInstance);
+            if (TargetLetter == "a")
+            {
+                shieldcache = WarriorTarBase.shield;
+                armourcahe = WarriorTarBase.Armour;
+                shieldcache -= physicalDamage; WarriorTarBase.shield -= physicalDamage;
+                //the code below ensures that the sheild is removed first
+                if (shieldcache < 0)//this asks if there is no more sheild left
+                { 
+                    armourcahe += shieldcache;// here the negative value adds with the positive- following negative number addition laws i hope
+                    if (armourcahe<0)//this asks if there is no more armour left
+                    {
+                        WarriorTarBase.Armour = 0;// this makes sure armour is zero
+                        //remember we don't put healthloss() here because it was already fired so all we do is remove the armour and shield but leave the health
+                        //SaveValue will not be changed because there is no point removing the health with a negative value.
+                    }
+                    else { WarriorTarBase.Armour = armourcahe; }
+                }
+                else
+                {
+                    WarriorTarBase.shield = shieldcache;
+                }
+                WarriorTarBase.Health += SaveValue;//This was put here because healthloss was still fired and the value needs to be put back
+            }
+            if (TargetLetter == "b")
+            {
+                shieldcache = TankTarBase.shield;
+                armourcahe = TankTarBase.Armour;
+                shieldcache -= physicalDamage; TankTarBase.shield -= physicalDamage;
+                if (shieldcache < 0)//this asks if there is no more sheild left
+                {
+                    armourcahe += shieldcache;// here the negative value adds with the positive- following negative number addition laws i hope
+                    if (armourcahe < 0)//this asks if there is no more armour left
+                    {
+                        TankTarBase.Armour = 0;
+                    }
+                    else { TankTarBase.Armour = armourcahe; }
+                }
+                else
+                {
+                    TankTarBase.shield = shieldcache;
+                }
+                TankTarBase.Health += SaveValue;//This was put here because healthloss was still fired and the value needs to be put back
+            }
+            if (TargetLetter == "c")
+            {
+                shieldcache = RangeTarBase.shield;
+                armourcahe = RangeTarBase.Armour;
+                shieldcache -= physicalDamage; RangeTarBase.shield -= physicalDamage;
+                if (shieldcache < 0)//this asks if there is no more sheild left
+                {
+                    armourcahe += shieldcache;// here the negative value adds with the positive- following negative number addition laws i hope
+                    if (armourcahe < 0)//this asks if there is no more armour left
+                    {
+                        RangeTarBase.Armour = 0;
+                    }
+                    else { RangeTarBase.Armour = armourcahe; }
+                }
+                else
+                {
+                    RangeTarBase.shield = shieldcache;
+                }
+                RangeTarBase.Health += SaveValue;//This was put here because healthloss was still fired and the value needs to be put back
+            }
+            if (TargetLetter == "d")
+            {
+                shieldcache = MageTarBase.shield;
+                armourcahe = MageTarBase.Armour;
+                shieldcache -= physicalDamage; MageTarBase.shield -= physicalDamage;
+                if (shieldcache < 0)//this asks if there is no more sheild left
+                {
+                    armourcahe += shieldcache;// here the negative value adds with the positive- following negative number addition laws i hope
+                    if (armourcahe < 0)//this asks if there is no more armour left
+                    {
+                        MageTarBase.Armour = 0;
+                    }
+                    else { MageTarBase.Armour = armourcahe; }
+                }
+                else
+                {
+                    MageTarBase.shield = shieldcache;
+                }
+                MageTarBase.Health += SaveValue;
+            }
+            if (TargetLetter == "e")
+            {
+                shieldcache = ControllerTarBase.shield;
+                armourcahe = ControllerTarBase.Armour;
+                shieldcache -= physicalDamage; ControllerTarBase.shield -= physicalDamage;
+                if (shieldcache < 0)//this asks if there is no more sheild left
+                {
+                    armourcahe += shieldcache;// here the negative value adds with the positive- following negative number addition laws i hope
+                    if (armourcahe < 0)//this asks if there is no more armour left
+                    {
+                        ControllerTarBase.Armour = 0;
+                    }
+                    else { ControllerTarBase.Armour = armourcahe; }
+                }
+                else
+                {
+                    ControllerTarBase.shield = shieldcache;
+                }
+                ControllerTarBase.Health += SaveValue;
+            }
+            if (TargetLetter == "f")
+            {
+                shieldcache = AssasinTarBase.shield;
+                armourcahe = AssasinTarBase.Armour;
+                shieldcache -= physicalDamage; AssasinTarBase.shield -= physicalDamage;
+                if (shieldcache < 0)//this asks if there is no more sheild left
+                {
+                    armourcahe += shieldcache;// here the negative value adds with the positive- following negative number addition laws i hope
+                    if (armourcahe < 0)//this asks if there is no more armour left
+                    {
+                        AssasinTarBase.Armour = 0;
+                    }
+                    else { AssasinTarBase.Armour = armourcahe; }
+                }
+                else
+                {
+                    AssasinTarBase.shield = shieldcache;
+                }
+                AssasinTarBase.Health += SaveValue;
+            }
+            #endregion
+            return false;//I made this false because the instance isn't getting the effect, but the enemyInstance
+        }
+        public bool MagicalDamage(object CharacterInstance, object TargetInstance)
+        {
+            int magicalDamage = 0;
+            int SaveValue = 0;
+            int shieldcache = 0;
+            int magrescache = 0;
+            #region CharacterInstance template logic
+
+            int characterNumber = TemplateCharacter(CharacterInstance);
+            //the method DamageGiven needs to be done but the value also needs to be stored. I don't do them separate cause healthlos will still get fired
+            if (characterNumber == 1)
+            {
+                magicalDamage = WarriorCBase.DamageGiven(TargetInstance);
+            }
+            if (characterNumber == 2)
+            {
+                magicalDamage = TankCBase.DamageGiven(TargetInstance);
+            }
+            if (characterNumber == 3)
+            {
+                magicalDamage = RangeCBase.DamageGiven(TargetInstance);
+            }
+            if (characterNumber == 4)
+            {
+                magicalDamage = MageCBase.DamageGiven(TargetInstance);
+            }
+            if (characterNumber == 5)
+            {
+                magicalDamage = ControllerCBase.DamageGiven(TargetInstance);
+            }
+            if (characterNumber == 6)
+            {
+                magicalDamage = AssasinCBase.DamageGiven(TargetInstance);
+            }
+            #endregion
+            #region TargetInstance template logic
+
+            string TargetLetter = TemplateTarget(TargetInstance);
+            if (TargetLetter == "a")
+            {
+                shieldcache = WarriorTarBase.shield;
+                magrescache = WarriorTarBase.Armour;
+                shieldcache -= magicalDamage; WarriorTarBase.shield -= magicalDamage;
+                if (shieldcache < 0)//this asks if there is no more sheild left
+                {
+                    magrescache += shieldcache;// here the negative value adds with the positive- following negative number addition laws i hope
+                    if (magrescache < 0)//this asks if there is no more armour left
+                    {
+                        WarriorTarBase.Armour = 0;
+                    }
+                    else { WarriorTarBase.Armour = magrescache; }
+                }
+                else
+                {
+                    WarriorTarBase.shield = shieldcache;
+                }
+                WarriorTarBase.Health += SaveValue;
+            }
+            if (TargetLetter == "b")
+            {
+                shieldcache = TankTarBase.shield;
+                magrescache = TankTarBase.Armour;
+                shieldcache -= magicalDamage; TankTarBase.shield -= magicalDamage;
+                if (shieldcache < 0)//this asks if there is no more sheild left
+                {
+                    magrescache += shieldcache;// here the negative value adds with the positive- following negative number addition laws i hope
+                    if (magrescache < 0)//this asks if there is no more armour left
+                    {
+                        TankTarBase.Armour = 0;
+                    }
+                    else { TankTarBase.Armour = magrescache; }
+                }
+                else
+                {
+                    TankTarBase.shield = shieldcache;
+                }
+                TankTarBase.Health += SaveValue;
+            }
+            if (TargetLetter == "c")
+            {
+                shieldcache = RangeTarBase.shield;
+                magrescache = RangeTarBase.Armour;
+                shieldcache -= magicalDamage; RangeTarBase.shield -= magicalDamage;
+                if (shieldcache < 0)//this asks if there is no more sheild left
+                {
+                    magrescache += shieldcache;// here the negative value adds with the positive- following negative number addition laws i hope
+                    if (magrescache < 0)//this asks if there is no more armour left
+                    {
+                        RangeTarBase.Armour = 0;
+                    }
+                    else { RangeTarBase.Armour = magrescache; }
+                }
+                else
+                {
+                    RangeTarBase.shield = shieldcache;
+                }
+                RangeTarBase.Health += SaveValue;
+            }
+            if (TargetLetter == "d")
+            {
+                shieldcache = MageTarBase.shield;
+                magrescache = MageTarBase.Armour;
+                shieldcache -= magicalDamage; MageTarBase.shield -= magicalDamage;
+                if (shieldcache < 0)//this asks if there is no more sheild left
+                {
+                    magrescache += shieldcache;// here the negative value adds with the positive- following negative number addition laws i hope
+                    if (magrescache < 0)//this asks if there is no more armour left
+                    {
+                        MageTarBase.Armour = 0;
+                    }
+                    else { MageTarBase.Armour = magrescache; }
+                }
+                else
+                {
+                    MageTarBase.shield = shieldcache;
+                }
+                MageTarBase.Health += SaveValue;
+            }
+            if (TargetLetter == "e")
+            {
+                shieldcache = ControllerTarBase.shield;
+                magrescache = ControllerTarBase.Armour;
+                shieldcache -= magicalDamage; ControllerTarBase.shield -= magicalDamage;
+                if (shieldcache < 0)//this asks if there is no more sheild left
+                {
+                    magrescache += shieldcache;// here the negative value adds with the positive- following negative number addition laws i hope
+                    if (magrescache < 0)//this asks if there is no more armour left
+                    {
+                        ControllerTarBase.Armour = 0;
+                    }
+                    else { ControllerTarBase.Armour = magrescache; }
+                }
+                else
+                {
+                    ControllerTarBase.shield = shieldcache;
+                }
+                ControllerTarBase.Health += SaveValue;
+            }
+            if (TargetLetter == "f")
+            {
+                shieldcache = AssasinTarBase.shield;
+                magrescache = AssasinTarBase.Armour;
+                shieldcache -= magicalDamage; AssasinTarBase.shield -= magicalDamage;
+                if (shieldcache < 0)//this asks if there is no more sheild left
+                {
+                    magrescache += shieldcache;// here the negative value adds with the positive- following negative number addition laws i hope
+                    if (magrescache < 0)//this asks if there is no more armour left
+                    {
+                        AssasinTarBase.Armour = 0;
+                    }
+                    else { AssasinTarBase.Armour = magrescache; }
+                }
+                else
+                {
+                    AssasinTarBase.shield = shieldcache;
+                }
+                AssasinTarBase.Health += SaveValue;
+            }
             #endregion
             return false;//I made this false because the instance isn't getting the effect, but the enemyInstance
         }
 
-        public bool MagicalDamage(object CharacterInstance, object TargetInstance)
-        {
-            throw new NotImplementedException();
-        }
-
         public bool Drain(object CharacterInstance, object TargetInstance)
         {
-            throw new NotImplementedException();
+            return false;//I made this false because the instance isn't getting the effect, but the enemyInstance
         }
 
         public bool Ignite(object CharacterInstance, object TargetInstance)
