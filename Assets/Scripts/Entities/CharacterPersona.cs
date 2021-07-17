@@ -57,6 +57,7 @@ namespace Assets.Entities
         };
         internal int ExperienceLevel { get { return ExperienceLevel;  } set { if (ExperienceLevel < 0) ExperienceLevel = 0; } }
         int shield { get { return shield; } set { if (shield < 0) shield = 0; shield = 0; } } //We are defining it (not ICharacterTraits) here cause it isn't used by everyone often but can be, and its 0 for everyone starting off
+        bool BattleCalculate { get; set; }
 
         #region Template Logic
         //The code below was created because i was tired of writting the template code over and over
@@ -415,6 +416,7 @@ namespace Assets.Entities
         {
             #region CharacterInstance template logic
 
+            //battleCalculate has to remain false or null.
             int characterNumber = TemplateCharacter(CharacterInstance);
             if (characterNumber == 1)
             {
@@ -445,8 +447,9 @@ namespace Assets.Entities
         }
         public bool PhysicalDamage(object CharacterInstance, object TargetInstance)
         {
+            BattleCalculate = true; //This true so all the int DamageGiven() can be done without firing Healthloss
+
             int physicalDamage = 0;
-            int SaveValue = 0;
             int shieldcache=0;
             int armourcahe=0;
             #region CharacterInstance template logic
@@ -492,9 +495,8 @@ namespace Assets.Entities
                     armourcahe += shieldcache;// here the negative value adds with the positive- following negative number addition laws i hope
                     if (armourcahe<0)//this asks if there is no more armour left
                     {
-                        WarriorTarBase.Armour = 0;// this makes sure armour is zero
-                        //remember we don't put healthloss() here because it was already fired so all we do is remove the armour and shield but leave the health
-                        //SaveValue will not be changed because there is no point removing the health with a negative value.
+                        WarriorTarBase.Armour = 0; // this makes sure armour is zero
+                        WarriorTarBase.Health += armourcahe; //This removes the health of the target
                     }
                     else { WarriorTarBase.Armour = armourcahe; }
                 }
@@ -502,7 +504,6 @@ namespace Assets.Entities
                 {
                     WarriorTarBase.shield = shieldcache;
                 }
-                WarriorTarBase.Health += SaveValue;//This was put here because healthloss was still fired and the value needs to be put back
             }
             if (TargetLetter == "b")
             {
@@ -515,6 +516,7 @@ namespace Assets.Entities
                     if (armourcahe < 0)//this asks if there is no more armour left
                     {
                         TankTarBase.Armour = 0;
+                        TankTarBase.Health += armourcahe; //This removes the health of the target
                     }
                     else { TankTarBase.Armour = armourcahe; }
                 }
@@ -522,7 +524,6 @@ namespace Assets.Entities
                 {
                     TankTarBase.shield = shieldcache;
                 }
-                TankTarBase.Health += SaveValue;//This was put here because healthloss was still fired and the value needs to be put back
             }
             if (TargetLetter == "c")
             {
@@ -535,6 +536,7 @@ namespace Assets.Entities
                     if (armourcahe < 0)//this asks if there is no more armour left
                     {
                         RangeTarBase.Armour = 0;
+                        RangeTarBase.Health += armourcahe; //This removes the health of the target
                     }
                     else { RangeTarBase.Armour = armourcahe; }
                 }
@@ -542,7 +544,6 @@ namespace Assets.Entities
                 {
                     RangeTarBase.shield = shieldcache;
                 }
-                RangeTarBase.Health += SaveValue;//This was put here because healthloss was still fired and the value needs to be put back
             }
             if (TargetLetter == "d")
             {
@@ -555,6 +556,7 @@ namespace Assets.Entities
                     if (armourcahe < 0)//this asks if there is no more armour left
                     {
                         MageTarBase.Armour = 0;
+                        MageTarBase.Health += armourcahe; //This removes the health of the target
                     }
                     else { MageTarBase.Armour = armourcahe; }
                 }
@@ -562,7 +564,6 @@ namespace Assets.Entities
                 {
                     MageTarBase.shield = shieldcache;
                 }
-                MageTarBase.Health += SaveValue;
             }
             if (TargetLetter == "e")
             {
@@ -575,6 +576,7 @@ namespace Assets.Entities
                     if (armourcahe < 0)//this asks if there is no more armour left
                     {
                         ControllerTarBase.Armour = 0;
+                        ControllerTarBase.Health += armourcahe; //This removes the health of the target
                     }
                     else { ControllerTarBase.Armour = armourcahe; }
                 }
@@ -582,7 +584,6 @@ namespace Assets.Entities
                 {
                     ControllerTarBase.shield = shieldcache;
                 }
-                ControllerTarBase.Health += SaveValue;
             }
             if (TargetLetter == "f")
             {
@@ -595,6 +596,7 @@ namespace Assets.Entities
                     if (armourcahe < 0)//this asks if there is no more armour left
                     {
                         AssasinTarBase.Armour = 0;
+                        AssasinTarBase.Health += armourcahe; //This removes the health of the target
                     }
                     else { AssasinTarBase.Armour = armourcahe; }
                 }
@@ -602,7 +604,6 @@ namespace Assets.Entities
                 {
                     AssasinTarBase.shield = shieldcache;
                 }
-                AssasinTarBase.Health += SaveValue;
             }
             #endregion
             return false;//I made this false because the instance isn't getting the effect, but the enemyInstance
@@ -610,7 +611,6 @@ namespace Assets.Entities
         public bool MagicalDamage(object CharacterInstance, object TargetInstance)
         {
             int magicalDamage = 0;
-            int SaveValue = 0;
             int shieldcache = 0;
             int magrescache = 0;
             #region CharacterInstance template logic
@@ -656,6 +656,7 @@ namespace Assets.Entities
                     if (magrescache < 0)//this asks if there is no more armour left
                     {
                         WarriorTarBase.Armour = 0;
+                        WarriorTarBase.Health += magrescache; //This removes the health of the target
                     }
                     else { WarriorTarBase.Armour = magrescache; }
                 }
@@ -663,7 +664,6 @@ namespace Assets.Entities
                 {
                     WarriorTarBase.shield = shieldcache;
                 }
-                WarriorTarBase.Health += SaveValue;
             }
             if (TargetLetter == "b")
             {
@@ -676,6 +676,7 @@ namespace Assets.Entities
                     if (magrescache < 0)//this asks if there is no more armour left
                     {
                         TankTarBase.Armour = 0;
+                        TankTarBase.Health += magrescache; //This removes the health of the target
                     }
                     else { TankTarBase.Armour = magrescache; }
                 }
@@ -683,7 +684,6 @@ namespace Assets.Entities
                 {
                     TankTarBase.shield = shieldcache;
                 }
-                TankTarBase.Health += SaveValue;
             }
             if (TargetLetter == "c")
             {
@@ -696,6 +696,7 @@ namespace Assets.Entities
                     if (magrescache < 0)//this asks if there is no more armour left
                     {
                         RangeTarBase.Armour = 0;
+                        RangeTarBase.Health += magrescache; //This removes the health of the target
                     }
                     else { RangeTarBase.Armour = magrescache; }
                 }
@@ -703,7 +704,6 @@ namespace Assets.Entities
                 {
                     RangeTarBase.shield = shieldcache;
                 }
-                RangeTarBase.Health += SaveValue;
             }
             if (TargetLetter == "d")
             {
@@ -716,6 +716,7 @@ namespace Assets.Entities
                     if (magrescache < 0)//this asks if there is no more armour left
                     {
                         MageTarBase.Armour = 0;
+                        MageTarBase.Health += magrescache; //This removes the health of the target
                     }
                     else { MageTarBase.Armour = magrescache; }
                 }
@@ -723,7 +724,6 @@ namespace Assets.Entities
                 {
                     MageTarBase.shield = shieldcache;
                 }
-                MageTarBase.Health += SaveValue;
             }
             if (TargetLetter == "e")
             {
@@ -736,6 +736,7 @@ namespace Assets.Entities
                     if (magrescache < 0)//this asks if there is no more armour left
                     {
                         ControllerTarBase.Armour = 0;
+                        ControllerTarBase.Health += magrescache; //This removes the health of the target
                     }
                     else { ControllerTarBase.Armour = magrescache; }
                 }
@@ -743,7 +744,6 @@ namespace Assets.Entities
                 {
                     ControllerTarBase.shield = shieldcache;
                 }
-                ControllerTarBase.Health += SaveValue;
             }
             if (TargetLetter == "f")
             {
@@ -756,6 +756,7 @@ namespace Assets.Entities
                     if (magrescache < 0)//this asks if there is no more armour left
                     {
                         AssasinTarBase.Armour = 0;
+                        AssasinTarBase.Health += magrescache; //This removes the health of the target
                     }
                     else { AssasinTarBase.Armour = magrescache; }
                 }
@@ -763,7 +764,6 @@ namespace Assets.Entities
                 {
                     AssasinTarBase.shield = shieldcache;
                 }
-                AssasinTarBase.Health += SaveValue;
             }
             #endregion
             return false;//I made this false because the instance isn't getting the effect, but the enemyInstance
@@ -1354,6 +1354,7 @@ namespace Assets.Entities
 
             public int DamageGiven(object CharacterInstance)
             {
+                
                 int damageGiven = 0;
                 if (Foe == false)
                 {
@@ -1365,11 +1366,15 @@ namespace Assets.Entities
                     Random r = new Random();
                     damageGiven = r.Next(3, 7);
                 }
+                if (BattleCalculate == true)
+                {
+                    return damageGiven; //This was put here so that it escapes the method all together if an action is still in calculation
+                }
 
-                //The code below doesn't need to be here because its already in true damage but ill leaving it here just in case
+                //The code below needs to be here because true damage doesn't have any logic 
                 #region template logic
-                
-                 
+
+
                 if (CharacterInstance.GetType() == typeof(CharacterPersona.WarriorTemplate))
                 {
                     CharacterPersona.WarriorTemplate starter = (CharacterPersona.WarriorTemplate)CharacterInstance;
@@ -1760,6 +1765,10 @@ namespace Assets.Entities
                     Random r = new Random();
                     damageGiven = r.Next(2, 5);
                 }
+                if (BattleCalculate == true)
+                {
+                    return damageGiven; //This was put here so that it escapes the method all together if an action is still in calculation
+                }
 
                 #region template logic
 
@@ -2128,6 +2137,10 @@ namespace Assets.Entities
                 {
                     Random r = new Random();
                     damageGiven = r.Next(2, 7);
+                }
+                if (BattleCalculate == true)
+                {
+                    return damageGiven; //This was put here so that it escapes the method all together if an action is still in calculation
                 }
 
                 #region template logic
@@ -2597,6 +2610,10 @@ namespace Assets.Entities
                     Random r = new Random();
                     damageGiven = r.Next(5, 11);
                 }
+                if (BattleCalculate == true)
+                {
+                    return damageGiven; //This was put here so that it escapes the method all together if an action is still in calculation
+                }
 
                 #region template logic
 
@@ -2972,6 +2989,10 @@ namespace Assets.Entities
                     Random r = new Random();
                     damageGiven = r.Next(1, 3);
                 }
+                if (BattleCalculate == true)
+                {
+                    return damageGiven; //This was put here so that it escapes the method all together if an action is still in calculation
+                }
 
                 #region template logic
 
@@ -3342,6 +3363,10 @@ namespace Assets.Entities
                 {
                     Random r = new Random();
                     damageGiven = r.Next(1, 11);
+                }
+                if (BattleCalculate == true)
+                {
+                    return damageGiven; //This was put here so that it escapes the method all together if an action is still in calculation
                 }
 
                 #region template logic
