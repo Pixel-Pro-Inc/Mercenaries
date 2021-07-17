@@ -57,7 +57,7 @@ namespace Assets.Entities
         };
         internal int ExperienceLevel { get { return ExperienceLevel;  } set { if (ExperienceLevel < 0) ExperienceLevel = 0; } }
         int shield { get { return shield; } set { if (shield < 0) shield = 0; shield = 0; } } //We are defining it (not ICharacterTraits) here cause it isn't used by everyone often but can be, and its 0 for everyone starting off
-        bool BattleCalculate { get; set; }
+        public static bool BattleCalculate { get; set; }
 
         #region Template Logic
         //The code below was created because i was tired of writting the template code over and over
@@ -414,6 +414,7 @@ namespace Assets.Entities
 
         public bool TrueDamage(object CharacterInstance, object TargetInstance)
         {
+            //Note that battleCalculate is never set true here
             #region CharacterInstance template logic
 
             //battleCalculate has to remain false or null.
@@ -496,7 +497,7 @@ namespace Assets.Entities
                     if (armourcahe<0)//this asks if there is no more armour left
                     {
                         WarriorTarBase.Armour = 0; // this makes sure armour is zero
-                        WarriorTarBase.Health += armourcahe; //This removes the health of the target
+                        WarriorTarBase.HealthLoss(Math.Abs(armourcahe)); //This removes the health of the target
                     }
                     else { WarriorTarBase.Armour = armourcahe; }
                 }
@@ -516,7 +517,7 @@ namespace Assets.Entities
                     if (armourcahe < 0)//this asks if there is no more armour left
                     {
                         TankTarBase.Armour = 0;
-                        TankTarBase.Health += armourcahe; //This removes the health of the target
+                        TankTarBase.HealthLoss(Math.Abs(armourcahe)); //This removes the health of the target
                     }
                     else { TankTarBase.Armour = armourcahe; }
                 }
@@ -536,7 +537,7 @@ namespace Assets.Entities
                     if (armourcahe < 0)//this asks if there is no more armour left
                     {
                         RangeTarBase.Armour = 0;
-                        RangeTarBase.Health += armourcahe; //This removes the health of the target
+                        RangeTarBase.HealthLoss(Math.Abs(armourcahe)); //This removes the health of the target
                     }
                     else { RangeTarBase.Armour = armourcahe; }
                 }
@@ -556,7 +557,7 @@ namespace Assets.Entities
                     if (armourcahe < 0)//this asks if there is no more armour left
                     {
                         MageTarBase.Armour = 0;
-                        MageTarBase.Health += armourcahe; //This removes the health of the target
+                        MageTarBase.HealthLoss(Math.Abs(armourcahe)); //This removes the health of the target
                     }
                     else { MageTarBase.Armour = armourcahe; }
                 }
@@ -576,7 +577,7 @@ namespace Assets.Entities
                     if (armourcahe < 0)//this asks if there is no more armour left
                     {
                         ControllerTarBase.Armour = 0;
-                        ControllerTarBase.Health += armourcahe; //This removes the health of the target
+                        ControllerTarBase.HealthLoss(Math.Abs(armourcahe)); //This removes the health of the target
                     }
                     else { ControllerTarBase.Armour = armourcahe; }
                 }
@@ -596,7 +597,7 @@ namespace Assets.Entities
                     if (armourcahe < 0)//this asks if there is no more armour left
                     {
                         AssasinTarBase.Armour = 0;
-                        AssasinTarBase.Health += armourcahe; //This removes the health of the target
+                        AssasinTarBase.HealthLoss(Math.Abs(armourcahe)); //This removes the health of the target
                     }
                     else { AssasinTarBase.Armour = armourcahe; }
                 }
@@ -606,10 +607,15 @@ namespace Assets.Entities
                 }
             }
             #endregion
+
+            BattleCalculate = false; //This false to return it to normal
+
             return false;//I made this false because the instance isn't getting the effect, but the enemyInstance
         }
         public bool MagicalDamage(object CharacterInstance, object TargetInstance)
         {
+            BattleCalculate = true; //This true so all the int DamageGiven() can be done without firing Healthloss
+
             int magicalDamage = 0;
             int shieldcache = 0;
             int magrescache = 0;
@@ -648,17 +654,17 @@ namespace Assets.Entities
             if (TargetLetter == "a")
             {
                 shieldcache = WarriorTarBase.shield;
-                magrescache = WarriorTarBase.Armour;
+                magrescache = WarriorTarBase.MagicRes;
                 shieldcache -= magicalDamage; WarriorTarBase.shield -= magicalDamage;
                 if (shieldcache < 0)//this asks if there is no more sheild left
                 {
                     magrescache += shieldcache;// here the negative value adds with the positive- following negative number addition laws i hope
                     if (magrescache < 0)//this asks if there is no more armour left
                     {
-                        WarriorTarBase.Armour = 0;
-                        WarriorTarBase.Health += magrescache; //This removes the health of the target
+                        WarriorTarBase.MagicRes = 0;
+                        WarriorTarBase.HealthLoss(Math.Abs(magrescache)); //This removes the health of the target
                     }
-                    else { WarriorTarBase.Armour = magrescache; }
+                    else { WarriorTarBase.MagicRes = magrescache; }
                 }
                 else
                 {
@@ -668,17 +674,17 @@ namespace Assets.Entities
             if (TargetLetter == "b")
             {
                 shieldcache = TankTarBase.shield;
-                magrescache = TankTarBase.Armour;
+                magrescache = TankTarBase.MagicRes;
                 shieldcache -= magicalDamage; TankTarBase.shield -= magicalDamage;
                 if (shieldcache < 0)//this asks if there is no more sheild left
                 {
                     magrescache += shieldcache;// here the negative value adds with the positive- following negative number addition laws i hope
                     if (magrescache < 0)//this asks if there is no more armour left
                     {
-                        TankTarBase.Armour = 0;
-                        TankTarBase.Health += magrescache; //This removes the health of the target
+                        TankTarBase.MagicRes = 0;
+                        TankTarBase.HealthLoss(Math.Abs(magrescache)); //This removes the health of the target
                     }
-                    else { TankTarBase.Armour = magrescache; }
+                    else { TankTarBase.MagicRes = magrescache; }
                 }
                 else
                 {
@@ -688,17 +694,17 @@ namespace Assets.Entities
             if (TargetLetter == "c")
             {
                 shieldcache = RangeTarBase.shield;
-                magrescache = RangeTarBase.Armour;
+                magrescache = RangeTarBase.MagicRes;
                 shieldcache -= magicalDamage; RangeTarBase.shield -= magicalDamage;
                 if (shieldcache < 0)//this asks if there is no more sheild left
                 {
                     magrescache += shieldcache;// here the negative value adds with the positive- following negative number addition laws i hope
                     if (magrescache < 0)//this asks if there is no more armour left
                     {
-                        RangeTarBase.Armour = 0;
-                        RangeTarBase.Health += magrescache; //This removes the health of the target
+                        RangeTarBase.MagicRes = 0;
+                        RangeTarBase.HealthLoss(Math.Abs(magrescache)); //This removes the health of the target
                     }
-                    else { RangeTarBase.Armour = magrescache; }
+                    else { RangeTarBase.MagicRes = magrescache; }
                 }
                 else
                 {
@@ -708,17 +714,17 @@ namespace Assets.Entities
             if (TargetLetter == "d")
             {
                 shieldcache = MageTarBase.shield;
-                magrescache = MageTarBase.Armour;
+                magrescache = MageTarBase.MagicRes;
                 shieldcache -= magicalDamage; MageTarBase.shield -= magicalDamage;
                 if (shieldcache < 0)//this asks if there is no more sheild left
                 {
                     magrescache += shieldcache;// here the negative value adds with the positive- following negative number addition laws i hope
                     if (magrescache < 0)//this asks if there is no more armour left
                     {
-                        MageTarBase.Armour = 0;
-                        MageTarBase.Health += magrescache; //This removes the health of the target
+                        MageTarBase.MagicRes = 0;
+                        MageTarBase.HealthLoss(Math.Abs(magrescache)); //This removes the health of the target
                     }
-                    else { MageTarBase.Armour = magrescache; }
+                    else { MageTarBase.MagicRes = magrescache; }
                 }
                 else
                 {
@@ -728,17 +734,17 @@ namespace Assets.Entities
             if (TargetLetter == "e")
             {
                 shieldcache = ControllerTarBase.shield;
-                magrescache = ControllerTarBase.Armour;
+                magrescache = ControllerTarBase.MagicRes;
                 shieldcache -= magicalDamage; ControllerTarBase.shield -= magicalDamage;
                 if (shieldcache < 0)//this asks if there is no more sheild left
                 {
                     magrescache += shieldcache;// here the negative value adds with the positive- following negative number addition laws i hope
                     if (magrescache < 0)//this asks if there is no more armour left
                     {
-                        ControllerTarBase.Armour = 0;
-                        ControllerTarBase.Health += magrescache; //This removes the health of the target
+                        ControllerTarBase.MagicRes = 0;
+                        ControllerTarBase.HealthLoss(Math.Abs(magrescache)); //This removes the health of the target
                     }
-                    else { ControllerTarBase.Armour = magrescache; }
+                    else { ControllerTarBase.MagicRes = magrescache; }
                 }
                 else
                 {
@@ -748,17 +754,17 @@ namespace Assets.Entities
             if (TargetLetter == "f")
             {
                 shieldcache = AssasinTarBase.shield;
-                magrescache = AssasinTarBase.Armour;
+                magrescache = AssasinTarBase.MagicRes;
                 shieldcache -= magicalDamage; AssasinTarBase.shield -= magicalDamage;
                 if (shieldcache < 0)//this asks if there is no more sheild left
                 {
                     magrescache += shieldcache;// here the negative value adds with the positive- following negative number addition laws i hope
                     if (magrescache < 0)//this asks if there is no more armour left
                     {
-                        AssasinTarBase.Armour = 0;
-                        AssasinTarBase.Health += magrescache; //This removes the health of the target
+                        AssasinTarBase.MagicRes = 0;
+                        AssasinTarBase.HealthLoss(Math.Abs(magrescache)); //This removes the health of the target
                     }
-                    else { AssasinTarBase.Armour = magrescache; }
+                    else { AssasinTarBase.MagicRes = magrescache; }
                 }
                 else
                 {
@@ -766,11 +772,50 @@ namespace Assets.Entities
                 }
             }
             #endregion
+
+            BattleCalculate = false; //This is false to return it to normal
+
             return false;//I made this false because the instance isn't getting the effect, but the enemyInstance
         }
 
         public bool Drain(object CharacterInstance, object TargetInstance)
         {
+            BattleCalculate = true; //This true so all the int DamageGiven() can be done without firing Healthloss
+
+            float drainPercent = 0; // I have set this to be a random % instead of a damage per instance as asked by Alex
+            Random r = new Random();
+            drainPercent=(r.Next(1, 26)/100); //Maximum it willtake only a quarter
+            #region TargetInstance template logic
+
+            string TargetLetter = TemplateTarget(TargetInstance);
+            if (TargetLetter == "a")
+            {
+                WarriorTarBase.HealthLoss((int)(WarriorTarBase.Health * drainPercent));
+            }
+            if (TargetLetter == "b")
+            {
+                TankTarBase.HealthLoss((int)(TankTarBase.Health * drainPercent));
+            }
+            if (TargetLetter == "c")
+            {
+                RangeTarBase.HealthLoss((int)(RangeTarBase.Health * drainPercent));
+            }
+            if (TargetLetter == "d")
+            {
+                MageTarBase.HealthLoss((int)(MageTarBase.Health * drainPercent));
+            }
+            if (TargetLetter == "e")
+            {
+                ControllerTarBase.HealthLoss((int)(ControllerTarBase.Health * drainPercent));
+            }
+            if (TargetLetter == "f")
+            {
+                AssasinTarBase.HealthLoss((int)(AssasinTarBase.Health * drainPercent));
+            }
+            #endregion
+
+            BattleCalculate = false; 
+
             return false;//I made this false because the instance isn't getting the effect, but the enemyInstance
         }
 
