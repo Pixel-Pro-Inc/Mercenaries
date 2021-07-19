@@ -1139,19 +1139,86 @@ namespace Assets.Entities
 
         #region Buff
 
-        public bool Agile(object CharacterInstance, object TargetInstance)
+        public bool Agile(object CharacterInstance)
         {
-            throw new NotImplementedException();
+            int agileCache = 10;
+            #region CharacterInstance template logic
+
+            //battleCalculate has to remain false or null.
+            int characterNumber = TemplateCharacter(CharacterInstance);
+            if (characterNumber == 1)
+            {
+                WarriorCBase.dodge += agileCache;
+            }
+            if (characterNumber == 2)
+            {
+                TankCBase.dodge += agileCache;
+            }
+            if (characterNumber == 3)
+            {
+                RangeCBase.dodge += agileCache;
+            }
+            if (characterNumber == 4)
+            {
+                MageCBase.dodge += agileCache;
+            }
+            if (characterNumber == 5)
+            {
+                ControllerCBase.dodge += agileCache;
+            }
+            if (characterNumber == 6)
+            {
+                AssasinCBase.dodge += agileCache;
+            }
+            #endregion
+            if (true/*Round over*/)
+            { 
+                agileCache = -agileCache; //this reverses the sign so that it simply undoes the added value
+                if (characterNumber == 1)
+                {
+                    WarriorCBase.dodge += agileCache;
+                }
+                if (characterNumber == 2)
+                {
+                    TankCBase.dodge += agileCache;
+                }
+                if (characterNumber == 3)
+                {
+                    RangeCBase.dodge += agileCache;
+                }
+                if (characterNumber == 4)
+                {
+                    MageCBase.dodge += agileCache;
+                }
+                if (characterNumber == 5)
+                {
+                    ControllerCBase.dodge += agileCache;
+                }
+                if (characterNumber == 6)
+                {
+                    AssasinCBase.dodge += agileCache;
+                }
+            }
+            
+            return true;
         }
 
-        public bool PolishWeapon(object CharacterInstance, object TargetInstance)
+        public bool PolishWeapon()
         {
-            throw new NotImplementedException();
+            bool polishWeapon;
+            if (BattleCalculate== false/*turntimes over, this shouldn't be battleCalculate but as mentioned turntimes*/) polishWeapon= false; 
+            else { polishWeapon = true; }
+
+            return polishWeapon;
         }
 
-        public bool Chosen(object CharacterInstance, object TargetInstance)
+        public bool Chosen()
         {
-            throw new NotImplementedException();
+            bool chosen;
+            if (BattleCalculate == false/*turntimes over, this shouldn't be battleCalculate but as mentioned turntimes*/) chosen = false;
+            else { chosen = true; }
+
+            return chosen;
         }
 
         public bool Aware(object CharacterInstance, object TargetInstance)
@@ -1552,6 +1619,7 @@ namespace Assets.Entities
             public int MagicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); /*if (MagicalDama < 0) MagicalDa = 0;*/}
             public int PhysicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); /*if (PhysicalDama < 0) PhyscialDama = 0;*/}
             public int HitCount { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public double PowerBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
 
 
@@ -1664,6 +1732,9 @@ namespace Assets.Entities
                     Random r = new Random();
                     damageGiven = r.Next(3, 7);
                 }
+
+                if (Instance.PolishWeapon() == true) damageGiven = (int)(damageGiven * Instance.PowerBuffPercent);// this is to work the polish buff
+
                 if (BattleCalculate == true)
                 {
                     return damageGiven; //This was put here so that it escapes the method all together if an action is still in calculation
@@ -1958,6 +2029,7 @@ namespace Assets.Entities
             public int MagicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public int PhysicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public int HitCount { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public double PowerBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
 
             #endregion
@@ -2063,6 +2135,9 @@ namespace Assets.Entities
                     Random r = new Random();
                     damageGiven = r.Next(2, 5);
                 }
+
+                if (Instance.PolishWeapon() == true) damageGiven = (int)(damageGiven * Instance.PowerBuffPercent);// this is to work the polish buff
+
                 if (BattleCalculate == true)
                 {
                     return damageGiven; //This was put here so that it escapes the method all together if an action is still in calculation
@@ -2358,6 +2433,7 @@ namespace Assets.Entities
             public int MagicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public int PhysicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public int HitCount { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public double PowerBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
             #endregion
             #region Character Methods
@@ -2436,6 +2512,9 @@ namespace Assets.Entities
                     Random r = new Random();
                     damageGiven = r.Next(2, 7);
                 }
+
+                if (Instance.PolishWeapon() == true) damageGiven = (int)(damageGiven * Instance.PowerBuffPercent);// this is to work the polish buff
+
                 if (BattleCalculate == true)
                 {
                     return damageGiven; //This was put here so that it escapes the method all together if an action is still in calculation
@@ -2791,6 +2870,7 @@ namespace Assets.Entities
             public int MagicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public int PhysicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public int HitCount { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public double PowerBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
             #endregion
             #region Character Methods
@@ -2908,6 +2988,10 @@ namespace Assets.Entities
                     Random r = new Random();
                     damageGiven = r.Next(5, 11);
                 }
+
+                if (Instance.Chosen() == true) damageGiven = (int)(damageGiven * Instance.PowerBuffPercent);// this is to work the Chosen buff Controllers dont get a physical buff
+
+
                 if (BattleCalculate == true)
                 {
                     return damageGiven; //This was put here so that it escapes the method all together if an action is still in calculation
@@ -3205,6 +3289,7 @@ namespace Assets.Entities
             public int MagicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public int PhysicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public int HitCount { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public double PowerBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
             #endregion
             #region Character Methods
@@ -3287,6 +3372,9 @@ namespace Assets.Entities
                     Random r = new Random();
                     damageGiven = r.Next(1, 3);
                 }
+
+                if (Instance.Chosen() == true) damageGiven = (int)(damageGiven * Instance.PowerBuffPercent);// this is to work the Chosen buff Controllers dont get a physical buff
+
                 if (BattleCalculate == true)
                 {
                     return damageGiven; //This was put here so that it escapes the method all together if an action is still in calculation
@@ -3584,6 +3672,7 @@ namespace Assets.Entities
             public int MagicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public int PhysicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public int HitCount { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public double PowerBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             #endregion
             #region Character Methods
 
@@ -3662,6 +3751,9 @@ namespace Assets.Entities
                     Random r = new Random();
                     damageGiven = r.Next(1, 11);
                 }
+
+                if (Instance.PolishWeapon() == true) damageGiven = (int)(damageGiven * Instance.PowerBuffPercent);// this is to work the polish buff
+
                 if (BattleCalculate == true)
                 {
                     return damageGiven; //This was put here so that it escapes the method all together if an action is still in calculation

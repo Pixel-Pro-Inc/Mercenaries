@@ -54,9 +54,9 @@ namespace Assets.Scripts.TraitInterface
 
         #region Buff
 
-        bool Agile(object CharacterInstance, object TargetInstance);
-        bool PolishWeapon(object CharacterInstance, object TargetInstance);
-        bool Chosen(object CharacterInstance, object TargetInstance);
+        bool Agile(object CharacterInstance);
+        bool PolishWeapon();
+        bool Chosen();
         bool Aware(object CharacterInstance, object TargetInstance);
         bool OnGuard(object CharacterInstance, object TargetInstance);
         bool Provoking(object CharacterInstance, object TargetInstance); //this will be difficult
