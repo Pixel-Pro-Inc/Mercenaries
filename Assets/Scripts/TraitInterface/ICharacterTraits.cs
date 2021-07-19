@@ -18,7 +18,7 @@ namespace Assets.TraitInterface
         string CharacterName { get; set; }
         string CharacterDescription { get; set; } //Here the personality and backstory of a unique character will be defined
 
-       
+
         #region Stats
 
         bool DefaultValue { get; set; }
@@ -47,6 +47,8 @@ namespace Assets.TraitInterface
 
         double PowerBuffPercent { get; set; } //Each character has their own percent buff and even this can be improved so yeah
         double EvadeBuffPercent { get; set; } //This is here for aware
+        double AgileBUffPercent {get; set;}
+        double HealBuffPercent { get; set; }
         object ProtectionSponser { get; set; }
 
         int MagicalDamageTaken { get; set; }

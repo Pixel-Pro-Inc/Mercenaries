@@ -42,9 +42,9 @@ namespace Assets.Entities
 
         public enum Kingdom { FarWest, MiddleEarth, DarkSyde };
         
-        public List<string> Master { get; set; }
-        public List<string> Allies { get; set; }
-        public List<string> Enemies { get; set; }
+        public List<object> Master { get; set; }
+        public List<object> Allies { get; set; }
+        public List<object> Enemies { get; set; }
         public enum SpeciesType
         {
             Lion,
@@ -1141,33 +1141,39 @@ namespace Assets.Entities
 
         public bool Agile(object CharacterInstance)
         {
-            int agileCache = 10;
+            int agileCache=0;
             #region CharacterInstance template logic
 
             //battleCalculate has to remain false or null.
             int characterNumber = TemplateCharacter(CharacterInstance);
             if (characterNumber == 1)
             {
+                agileCache = (int)(WarriorCBase.dodge * WarriorCBase.AgileBUffPercent);
                 WarriorCBase.dodge += agileCache;
             }
             if (characterNumber == 2)
             {
+                agileCache = (int)(TankCBase.dodge * TankCBase.AgileBUffPercent);
                 TankCBase.dodge += agileCache;
             }
             if (characterNumber == 3)
             {
+                agileCache = (int)(RangeCBase.dodge * RangeCBase.AgileBUffPercent);
                 RangeCBase.dodge += agileCache;
             }
             if (characterNumber == 4)
             {
+                agileCache = (int)(MageCBase.dodge * MageCBase.AgileBUffPercent);
                 MageCBase.dodge += agileCache;
             }
             if (characterNumber == 5)
             {
+                agileCache = (int)(ControllerCBase.dodge * ControllerCBase.AgileBUffPercent);
                 ControllerCBase.dodge += agileCache;
             }
             if (characterNumber == 6)
             {
+                agileCache = (int)(AssasinCBase.dodge * AssasinCBase.AgileBUffPercent);
                 AssasinCBase.dodge += agileCache;
             }
             #endregion
@@ -1310,6 +1316,73 @@ namespace Assets.Entities
             throw new NotImplementedException();
         }
 
+        public void HealVictim(object TargetInstance)
+        {
+            int HealingCache = 0;
+            #region CharacterInstance template logic
+
+            //battleCalculate has to remain false or null.
+            int characterNumber = TemplateCharacter(TargetInstance);
+            if (characterNumber == 1)
+            {
+                HealingCache = (int)(WarriorCBase.Health * WarriorCBase.HealBuffPercent);
+                WarriorCBase.Health += HealingCache;
+            }
+            if (characterNumber == 2)
+            {
+                HealingCache = (int)(TankCBase.Health * TankCBase.HealBuffPercent);
+                TankCBase.Health += HealingCache;
+            }
+            if (characterNumber == 3)
+            {
+                HealingCache = (int)(RangeCBase.Health * RangeCBase.HealBuffPercent);
+                RangeCBase.Health += HealingCache;
+            }
+            if (characterNumber == 4)
+            {
+                HealingCache = (int)(MageCBase.Health * MageCBase.HealBuffPercent);
+                MageCBase.Health += HealingCache;
+            }
+            if (characterNumber == 5)
+            {
+                HealingCache = (int)(ControllerCBase.Health * ControllerCBase.HealBuffPercent);
+                ControllerCBase.Health += HealingCache;
+            }
+            if (characterNumber == 6)
+            {
+                HealingCache = (int)(AssasinCBase.Health * AssasinCBase.HealBuffPercent);
+                AssasinCBase.Health += HealingCache;
+            }
+            #endregion
+            if (true/*Round over*/)
+            {
+                HealingCache = -HealingCache; //this reverses the sign so that it simply undoes the added value
+                if (characterNumber == 1)
+                {
+                    WarriorCBase.Health += HealingCache;
+                }
+                if (characterNumber == 2)
+                {
+                    TankCBase.Health += HealingCache;
+                }
+                if (characterNumber == 3)
+                {
+                    RangeCBase.Health += HealingCache;
+                }
+                if (characterNumber == 4)
+                {
+                    MageCBase.Health += HealingCache;
+                }
+                if (characterNumber == 5)
+                {
+                    ControllerCBase.Health += HealingCache;
+                }
+                if (characterNumber == 6)
+                {
+                    AssasinCBase.Health += HealingCache;
+                }
+            }
+        }
         public bool GodsBlessing(object CharacterInstance, List<string> Allies)
         {
             throw new NotImplementedException();
@@ -1427,6 +1500,7 @@ namespace Assets.Entities
                 GaiaShieldTemplate.ActivationRequireMent(CharacterInstance);
             }
         }
+        
 
         #endregion
 
@@ -1681,6 +1755,8 @@ namespace Assets.Entities
             public double PowerBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public double EvadeBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public object ProtectionSponser { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public double AgileBUffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public double HealBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
 
 
@@ -2139,6 +2215,8 @@ namespace Assets.Entities
             public double PowerBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public double EvadeBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public object ProtectionSponser { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public double AgileBUffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public double HealBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
 
             #endregion
@@ -2592,6 +2670,8 @@ namespace Assets.Entities
             public double PowerBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public double EvadeBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public object ProtectionSponser { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public double AgileBUffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public double HealBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
             #endregion
             #region Character Methods
@@ -3078,6 +3158,8 @@ namespace Assets.Entities
             public double PowerBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public double EvadeBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public object ProtectionSponser { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public double AgileBUffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public double HealBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
             #endregion
             #region Character Methods
@@ -3543,6 +3625,8 @@ namespace Assets.Entities
             public double PowerBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public double EvadeBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public object ProtectionSponser { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public double AgileBUffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public double HealBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
             #endregion
             #region Character Methods
@@ -3975,6 +4059,8 @@ namespace Assets.Entities
             public double PowerBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public double EvadeBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public object ProtectionSponser { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public double AgileBUffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public double HealBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             #endregion
             #region Character Methods
 

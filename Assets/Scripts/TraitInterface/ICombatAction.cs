@@ -61,8 +61,9 @@ namespace Assets.Scripts.TraitInterface
         bool OnGuard(object CharacterInstance, object TargetInstance);
         bool Provoking(object CharacterInstance, object TargetInstance); //this will be difficult
         bool Protector(object OwnerInstance, object TargetInstance); //this asks like a contract. The person who will protectand the protected. eg Protector( instance,Mister Froggo)
-        object Protected(object TargetInstance);//If hit, protector will take damage instead
+        object Protected(object TargetInstance);//If hit, protector will take damage instead. but this isn't really given how damagegiven works. needs to be changed
         bool Revigorate(object CharacterInstance, object TargetInstance);
+        void HealVictim(object TargetInstance); //this works on anyone, not just allies
         bool GodsBlessing(object CharacterInstance, List<string> Allies);// I left it as allies so that its easier to deal with
 
         #endregion
