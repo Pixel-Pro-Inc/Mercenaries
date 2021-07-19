@@ -14,7 +14,7 @@ namespace Assets.TraitInterface.CombantantType
         string BriefDescription { get; set; }
         List<string> NaturalAllies { get; set; }
         List<string> NaturalEnemies { get; set; }
-        public bool Foe { get; set; }
+        bool Foe { get; set; }
         bool PassiveAssasinTraits { get; set; }
         bool LowDamageAssasin { get; set; }
 

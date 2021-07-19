@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Assets.Entities
 {
-    class Items: Cards
+    public class Items: Cards
     {
         //Here we will have items of all sorts.
         //Since it already inherts from cards it has passive traits already declared as well as cost.
@@ -360,11 +360,7 @@ namespace Assets.Entities
             #region Item Variables
 
             public string ItemName { get { return ItemName; } set { ItemName = "Gaia's Shield"; } }
-<<<<<<< HEAD
             public string ItemDescription { get { return ItemDescription; } set { ItemDescription = "+10% armour/Magic Resistance on user"; } }
-=======
-            public string ItemDescription { get { return ItemDescription; } set { ItemDescription = "+10% armour on user"; } }
->>>>>>> master
             public int Owner { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public object Ownertype { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public bool Relic { get { return Relic; } set { Relic = true; } }
