@@ -60,7 +60,8 @@ namespace Assets.Entities
         public static bool BattleCalculate { get; set; }
 
         #region Template Logic
-        //The code below was created because i was tired of writting the template code over and over
+        //The code below was created because i was tired of writting the template code over and over. Itworks much more effeciently. Make sure these arent set 
+        //as static cause any methods might be using them at the same time.
         WarriorTemplate WarriorCBase;
         WarriorTemplate WarriorTarBase;
 
@@ -158,45 +159,45 @@ namespace Assets.Entities
 
         public void UniqueSkill(object CharacterInstance, object TargetInstance)
         {
-            #region Unique template logic
+            #region Unique Character template logic
 
-            string name = "";
+            string Charactername = "";
             if (CharacterInstance.GetType() == typeof(CharacterPersona.WarriorTemplate))
             {
                 CharacterPersona.WarriorTemplate starter = (CharacterPersona.WarriorTemplate)CharacterInstance;
-                name = starter.CharacterName;
+                Charactername = starter.CharacterName;
             }
             if (CharacterInstance.GetType() == typeof(CharacterPersona.TankWarriorTemplate))
             {
                 CharacterPersona.TankWarriorTemplate starter = (CharacterPersona.TankWarriorTemplate)CharacterInstance;
-                name = starter.CharacterName;
+                Charactername = starter.CharacterName;
             }
             if (CharacterInstance.GetType() == typeof(CharacterPersona.RangeTemplate))
             {
                 CharacterPersona.RangeTemplate starter = (CharacterPersona.RangeTemplate)CharacterInstance;
-                name = starter.CharacterName;
+                Charactername = starter.CharacterName;
             }
             if (CharacterInstance.GetType() == typeof(CharacterPersona.MageTemplate))
             {
                 CharacterPersona.MageTemplate starter = (CharacterPersona.MageTemplate)CharacterInstance;
-                name = starter.CharacterName;
+                Charactername = starter.CharacterName;
             }
             if (CharacterInstance.GetType() == typeof(CharacterPersona.ControllerTemplate))
             {
                 CharacterPersona.ControllerTemplate starter = (CharacterPersona.ControllerTemplate)CharacterInstance;
-                name = starter.CharacterName;
+                Charactername = starter.CharacterName;
             }
             if (CharacterInstance.GetType() == typeof(CharacterPersona.AssasinTemplate))
             {
                 CharacterPersona.AssasinTemplate starter = (CharacterPersona.AssasinTemplate)CharacterInstance;
-                name = starter.CharacterName;
+                Charactername = starter.CharacterName;
             }
             #endregion
             #region Unique Character logic
 
-            switch (name)
+            switch (Charactername)
             {
-                case "Peter":
+                case "Peter":  //here a function will be defined on a object eg, firebreathing(obj target){ breathfire(target);}
                     break;
                 case "Mister GlubGlub":
                     break;
@@ -237,6 +238,17 @@ namespace Assets.Entities
 
             }
 
+            #endregion
+            #region TargetInstance template logic
+
+            string TargetLetter = TemplateTarget(TargetInstance);
+            string Targetname = "";
+            if (TargetLetter == "a") Targetname = WarriorTarBase.CharacterName; //here after, the actual value change (unquiskilol function method) will happen here on the target 
+            if (TargetLetter == "b") Targetname = TankTarBase.CharacterName;
+            if (TargetLetter == "c") Targetname = RangeTarBase.CharacterName;
+            if (TargetLetter == "d") Targetname = MageTarBase.CharacterName;
+            if (TargetLetter == "e") Targetname = ControllerTarBase.CharacterName;
+            if (TargetLetter == "f") Targetname = AssasinTarBase.CharacterName;
             #endregion
         }
         public void UniqueActiveBuff(object CharacterInstance, object TargetInstance)
@@ -505,6 +517,7 @@ namespace Assets.Entities
                 {
                     WarriorTarBase.shield = shieldcache;
                 }
+                TargetInstance = WarriorTarBase;
             }
             if (TargetLetter == "b")
             {
@@ -525,6 +538,7 @@ namespace Assets.Entities
                 {
                     TankTarBase.shield = shieldcache;
                 }
+                TargetInstance = TankTarBase;
             }
             if (TargetLetter == "c")
             {
@@ -545,6 +559,7 @@ namespace Assets.Entities
                 {
                     RangeTarBase.shield = shieldcache;
                 }
+                TargetInstance = RangeTarBase;
             }
             if (TargetLetter == "d")
             {
@@ -565,6 +580,7 @@ namespace Assets.Entities
                 {
                     MageTarBase.shield = shieldcache;
                 }
+                TargetInstance = MageTarBase;
             }
             if (TargetLetter == "e")
             {
@@ -585,6 +601,7 @@ namespace Assets.Entities
                 {
                     ControllerTarBase.shield = shieldcache;
                 }
+                TargetInstance = ControllerTarBase;
             }
             if (TargetLetter == "f")
             {
@@ -605,6 +622,7 @@ namespace Assets.Entities
                 {
                     AssasinTarBase.shield = shieldcache;
                 }
+                TargetInstance = AssasinTarBase;
             }
             #endregion
 
@@ -670,6 +688,7 @@ namespace Assets.Entities
                 {
                     WarriorTarBase.shield = shieldcache;
                 }
+                TargetInstance = WarriorTarBase;
             }
             if (TargetLetter == "b")
             {
@@ -690,6 +709,7 @@ namespace Assets.Entities
                 {
                     TankTarBase.shield = shieldcache;
                 }
+                TargetInstance = TankTarBase;
             }
             if (TargetLetter == "c")
             {
@@ -710,6 +730,7 @@ namespace Assets.Entities
                 {
                     RangeTarBase.shield = shieldcache;
                 }
+                TargetInstance = RangeTarBase;
             }
             if (TargetLetter == "d")
             {
@@ -730,6 +751,7 @@ namespace Assets.Entities
                 {
                     MageTarBase.shield = shieldcache;
                 }
+                TargetInstance = MageTarBase;
             }
             if (TargetLetter == "e")
             {
@@ -750,6 +772,7 @@ namespace Assets.Entities
                 {
                     ControllerTarBase.shield = shieldcache;
                 }
+                TargetInstance = ControllerTarBase;
             }
             if (TargetLetter == "f")
             {
@@ -770,6 +793,7 @@ namespace Assets.Entities
                 {
                     AssasinTarBase.shield = shieldcache;
                 }
+                TargetInstance = AssasinTarBase;
             }
             #endregion
 
@@ -790,26 +814,32 @@ namespace Assets.Entities
             if (TargetLetter == "a")
             {
                 WarriorTarBase.HealthLoss((int)(WarriorTarBase.Health * drainPercent));
+                TargetInstance = WarriorTarBase; //This is so tthe actual instance gets changed instead of the lueprint base only.
             }
             if (TargetLetter == "b")
             {
                 TankTarBase.HealthLoss((int)(TankTarBase.Health * drainPercent));
+                TargetInstance = TankTarBase;
             }
             if (TargetLetter == "c")
             {
                 RangeTarBase.HealthLoss((int)(RangeTarBase.Health * drainPercent));
+                TargetInstance = RangeTarBase;
             }
             if (TargetLetter == "d")
             {
                 MageTarBase.HealthLoss((int)(MageTarBase.Health * drainPercent));
+                TargetInstance = MageTarBase;
             }
             if (TargetLetter == "e")
             {
                 ControllerTarBase.HealthLoss((int)(ControllerTarBase.Health * drainPercent));
+                TargetInstance = ControllerTarBase;
             }
             if (TargetLetter == "f")
             {
                 AssasinTarBase.HealthLoss((int)(AssasinTarBase.Health * drainPercent));
+                TargetInstance = AssasinTarBase;
             }
             #endregion
 
@@ -835,7 +865,230 @@ namespace Assets.Entities
 
         public bool BalancedDamage(object CharacterInstance, object TargetInstance)
         {
-            throw new NotImplementedException();
+            BattleCalculate = true; //This true so all the int DamageGiven() can be done without firing Healthloss
+
+            int physicalDamage = 0;
+            int shieldcache = 0;
+            int armourcahe = 0;
+            int magrescache = 0;
+            #region CharacterInstance template logic
+
+            int characterNumber = TemplateCharacter(CharacterInstance);
+            //the method DamageGiven needs to be done but the value also needs to be stored. I don't do them separate cause healthlos will still get fired
+            if (characterNumber == 1)
+            {
+                physicalDamage = WarriorCBase.DamageGiven(TargetInstance);
+            }
+            if (characterNumber == 2)
+            {
+                physicalDamage = TankCBase.DamageGiven(TargetInstance);
+            }
+            if (characterNumber == 3)
+            {
+                physicalDamage = RangeCBase.DamageGiven(TargetInstance);
+            }
+            if (characterNumber == 4)
+            {
+                physicalDamage = MageCBase.DamageGiven(TargetInstance);
+            }
+            if (characterNumber == 5)
+            {
+                physicalDamage = ControllerCBase.DamageGiven(TargetInstance);
+            }
+            if (characterNumber == 6)
+            {
+                physicalDamage = AssasinCBase.DamageGiven(TargetInstance);
+            }
+            #endregion
+            #region TargetInstance template logic
+
+            string TargetLetter = TemplateTarget(TargetInstance);
+            if (TargetLetter == "a")
+            {
+                shieldcache = WarriorTarBase.shield;
+                armourcahe = WarriorTarBase.Armour;
+                magrescache = WarriorTarBase.MagicRes;
+                shieldcache -= physicalDamage; WarriorTarBase.shield -= physicalDamage;
+                //the code below ensures that the sheild is removed first
+                if (shieldcache < 0)//this asks if there is no more sheild left
+                {
+                    armourcahe += shieldcache/2;// here the negative value adds with the positive- following negative number addition laws i hope
+                    if (armourcahe < 0)//this asks if there is no more armour left
+                    {
+                        WarriorTarBase.Armour = 0; // this makes sure armour is zero
+                        WarriorTarBase.HealthLoss(Math.Abs(armourcahe)); //This removes the health of the target
+                    }
+                    else { WarriorTarBase.Armour = armourcahe; }
+
+                    magrescache += shieldcache/2;// here the negative value adds with the positive- following negative number addition laws i hope
+                    if (magrescache < 0)//this asks if there is no more armour left
+                    {
+                        WarriorTarBase.MagicRes = 0;
+                        WarriorTarBase.HealthLoss(Math.Abs(magrescache)); //This removes the health of the target
+                    }
+                    else { WarriorTarBase.MagicRes = magrescache; }
+                }
+                else
+                {
+                    WarriorTarBase.shield = shieldcache; //this shouldn't be here at all but imleaving it here just in case
+                }
+                TargetInstance = WarriorTarBase; //This is so tthe actual instance gets changed instead of the lueprint base only.
+            }
+            if (TargetLetter == "b")
+            {
+                shieldcache = TankTarBase.shield;
+                armourcahe = TankTarBase.Armour;
+                magrescache = TankTarBase.MagicRes;
+                shieldcache -= physicalDamage; TankTarBase.shield -= physicalDamage;
+                if (shieldcache < 0)//this asks if there is no more sheild left
+                {
+                    armourcahe += shieldcache/2;// here the negative value adds with the positive- following negative number addition laws i hope
+                    if (armourcahe < 0)//this asks if there is no more armour left
+                    {
+                        TankTarBase.Armour = 0;
+                        TankTarBase.HealthLoss(Math.Abs(armourcahe)); //This removes the health of the target
+                    }
+                    else { TankTarBase.Armour = armourcahe; }
+
+                    magrescache += shieldcache / 2;// here the negative value adds with the positive- following negative number addition laws i hope
+                    if (magrescache < 0)//this asks if there is no more armour left
+                    {
+                        TankTarBase.MagicRes = 0;
+                        TankTarBase.HealthLoss(Math.Abs(magrescache)); //This removes the health of the target
+                    }
+                    else { TankTarBase.MagicRes = magrescache; }
+                }
+                else
+                {
+                    TankTarBase.shield = shieldcache;
+                }
+                TargetInstance = TankTarBase;
+            }
+            if (TargetLetter == "c")
+            {
+                shieldcache = RangeTarBase.shield;
+                armourcahe = RangeTarBase.Armour;
+                magrescache = RangeTarBase.MagicRes;
+                shieldcache -= physicalDamage; RangeTarBase.shield -= physicalDamage;
+                if (shieldcache < 0)//this asks if there is no more sheild left
+                {
+                    armourcahe += shieldcache / 2;// here the negative value adds with the positive- following negative number addition laws i hope
+                    if (armourcahe < 0)//this asks if there is no more armour left
+                    {
+                        RangeTarBase.Armour = 0;
+                        RangeTarBase.HealthLoss(Math.Abs(armourcahe)); //This removes the health of the target
+                    }
+                    else { RangeTarBase.Armour = armourcahe; }
+
+                    magrescache += shieldcache / 2;// here the negative value adds with the positive- following negative number addition laws i hope
+                    if (magrescache < 0)//this asks if there is no more armour left
+                    {
+                        RangeTarBase.MagicRes = 0;
+                        RangeTarBase.HealthLoss(Math.Abs(magrescache)); //This removes the health of the target
+                    }
+                    else { RangeTarBase.MagicRes = magrescache; }
+                }
+                else
+                {
+                    RangeTarBase.shield = shieldcache;
+                }
+                TargetInstance = RangeTarBase;
+            }
+            if (TargetLetter == "d")
+            {
+                shieldcache = MageTarBase.shield;
+                armourcahe = MageTarBase.Armour;
+                magrescache = MageTarBase.MagicRes;
+                shieldcache -= physicalDamage; MageTarBase.shield -= physicalDamage;
+                if (shieldcache < 0)//this asks if there is no more sheild left
+                {
+                    armourcahe += shieldcache / 2;// here the negative value adds with the positive- following negative number addition laws i hope
+                    if (armourcahe < 0)//this asks if there is no more armour left
+                    {
+                        MageTarBase.Armour = 0;
+                        MageTarBase.HealthLoss(Math.Abs(armourcahe)); //This removes the health of the target
+                    }
+                    else { MageTarBase.Armour = armourcahe; }
+
+                    magrescache += shieldcache / 2;// here the negative value adds with the positive- following negative number addition laws i hope
+                    if (magrescache < 0)//this asks if there is no more armour left
+                    {
+                        MageTarBase.MagicRes = 0;
+                        MageTarBase.HealthLoss(Math.Abs(magrescache)); //This removes the health of the target
+                    }
+                    else { MageTarBase.MagicRes = magrescache; }
+                }
+                else
+                {
+                    MageTarBase.shield = shieldcache;
+                }
+                TargetInstance = MageTarBase;
+            }
+            if (TargetLetter == "e")
+            {
+                shieldcache = ControllerTarBase.shield;
+                armourcahe = ControllerTarBase.Armour;
+                magrescache = MageTarBase.MagicRes;
+                shieldcache -= physicalDamage; ControllerTarBase.shield -= physicalDamage;
+                if (shieldcache < 0)//this asks if there is no more sheild left
+                {
+                    armourcahe += shieldcache / 2;// here the negative value adds with the positive- following negative number addition laws i hope
+                    if (armourcahe < 0)//this asks if there is no more armour left
+                    {
+                        ControllerTarBase.Armour = 0;
+                        ControllerTarBase.HealthLoss(Math.Abs(armourcahe)); //This removes the health of the target
+                    }
+                    else { ControllerTarBase.Armour = armourcahe; }
+
+                    magrescache += shieldcache / 2;// here the negative value adds with the positive- following negative number addition laws i hope
+                    if (magrescache < 0)//this asks if there is no more armour left
+                    {
+                        ControllerTarBase.MagicRes = 0;
+                        ControllerTarBase.HealthLoss(Math.Abs(magrescache)); //This removes the health of the target
+                    }
+                    else { ControllerTarBase.MagicRes = magrescache; }
+                }
+                else
+                {
+                    ControllerTarBase.shield = shieldcache;
+                }
+                TargetInstance = ControllerTarBase;
+            }
+            if (TargetLetter == "f")
+            {
+                shieldcache = AssasinTarBase.shield;
+                armourcahe = AssasinTarBase.Armour;
+                magrescache = AssasinTarBase.MagicRes;
+                shieldcache -= physicalDamage; AssasinTarBase.shield -= physicalDamage;
+                if (shieldcache < 0)//this asks if there is no more sheild left
+                {
+                    armourcahe += shieldcache / 2;// here the negative value adds with the positive- following negative number addition laws i hope
+                    if (armourcahe < 0)//this asks if there is no more armour left
+                    {
+                        AssasinTarBase.Armour = 0;
+                        AssasinTarBase.HealthLoss(Math.Abs(armourcahe)); //This removes the health of the target
+                    }
+                    else { AssasinTarBase.Armour = armourcahe; }
+
+                    magrescache += shieldcache / 2;// here the negative value adds with the positive- following negative number addition laws i hope
+                    if (magrescache < 0)//this asks if there is no more armour left
+                    {
+                        AssasinTarBase.MagicRes = 0;
+                        AssasinTarBase.HealthLoss(Math.Abs(magrescache)); //This removes the health of the target
+                    }
+                    else { AssasinTarBase.MagicRes = magrescache; }
+                }
+                else
+                {
+                    AssasinTarBase.shield = shieldcache;
+                }
+                TargetInstance = AssasinTarBase;
+            }
+            #endregion
+
+            BattleCalculate = false; //This false to return it to normal
+
+            return false;//I made this false because the instance isn't getting the effect, but the enemyInstance
         }
 
         public bool Curse(object CharacterInstance, object TargetInstance)
@@ -846,6 +1099,7 @@ namespace Assets.Entities
         public bool Feign(object CharacterInstance, object TargetInstance)
         {
             throw new NotImplementedException();
+            //hitcount will go up but the health and armour and sheild wont be touched
         }
 
         #endregion
