@@ -15,7 +15,7 @@ namespace Assets.TraitInterface
         string ItemName { get; set; }
         string ItemDescription { get; set; }//A Brief description of what the item does and what its worth in a desired currency
         int Owner { get; set; }
-
+        object Ownertype { get; set; }
         bool Relic { get; set; } // this will be set true if relic and so will be nonconsumbalable 
         bool BeingUsed { get; set; }
 

@@ -40,13 +40,15 @@ namespace Assets.Entities
                 }//This here is used to clear the cache of effects if relic is not in use
             }
 
+
             #region Item Variables
 
             public string ItemName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public string ItemDescription { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-            public bool Relic { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public bool Relic { get { return Relic; } set { Relic = true; } }
             public bool BeingUsed { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public int Owner { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public object Ownertype { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
             #endregion
             #region Item Methods
@@ -54,31 +56,34 @@ namespace Assets.Entities
             public bool ActivationRequireMent(object CharacterInstance)
             {
                 #region MakeShift Switch for instances
-                if (CharacterInstance == CharacterPersona.WarriorTemplate.Instance)
+
+                if (CharacterInstance.GetType() == typeof(CharacterPersona.WarriorTemplate))
                 {
+                    Ownertype= (CharacterPersona.WarriorTemplate)CharacterInstance;
                     Instance.Owner = 1;
                 }
-                if (CharacterInstance == CharacterPersona.TankWarriorTemplate.Instance)
+                if (CharacterInstance.GetType() == typeof(CharacterPersona.TankWarriorTemplate))
                 {
                     Instance.Owner = 2;
                 }
-                if (CharacterInstance == CharacterPersona.RangeTemplate.Instance)
+                if (CharacterInstance.GetType() == typeof(CharacterPersona.RangeTemplate))
                 {
                     Instance.Owner = 3;
                 }
-                if (CharacterInstance == CharacterPersona.MageTemplate.Instance)
+                if (CharacterInstance.GetType() == typeof(CharacterPersona.MageTemplate))
                 {
                     Instance.Owner = 4;
                 }
-                if (CharacterInstance == CharacterPersona.ControllerTemplate.Instance)
+                if (CharacterInstance.GetType() == typeof(CharacterPersona.ControllerTemplate))
                 {
                     Instance.Owner = 5;
                 }
-                if (CharacterInstance == CharacterPersona.AssasinTemplate.Instance)
+                if (CharacterInstance.GetType() == typeof(CharacterPersona.AssasinTemplate))
                 {
                     Instance.Owner = 6;
                 }
                 #endregion
+
 
                 Instance.Equip();
                 return BeingUsed;
@@ -198,6 +203,7 @@ namespace Assets.Entities
             public bool Relic { get { return Relic; } set { Relic= true; } }
             public bool BeingUsed { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public int Owner { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public object Ownertype { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
             #endregion
             #region Item Methods
@@ -211,27 +217,29 @@ namespace Assets.Entities
             {
                 //here we put the logic to check if the conditions to use relics are met
                 #region MakeShift Switch for instances
-                if (CharacterInstance == CharacterPersona.WarriorTemplate.Instance)
+
+                if (CharacterInstance.GetType() == typeof(CharacterPersona.WarriorTemplate))
                 {
+                    Ownertype = (CharacterPersona.WarriorTemplate)CharacterInstance;
                     Instance.Owner = 1;
                 }
-                if (CharacterInstance==CharacterPersona.TankWarriorTemplate.Instance)
+                if (CharacterInstance.GetType() == typeof(CharacterPersona.TankWarriorTemplate))
                 {
                     Instance.Owner = 2;
                 }
-                if (CharacterInstance==CharacterPersona.RangeTemplate.Instance)
+                if (CharacterInstance.GetType() == typeof(CharacterPersona.RangeTemplate))
                 {
                     Instance.Owner = 3;
                 }
-                if (CharacterInstance==CharacterPersona.MageTemplate.Instance)
+                if (CharacterInstance.GetType() == typeof(CharacterPersona.MageTemplate))
                 {
                     Instance.Owner = 4;
                 }
-                if (CharacterInstance==CharacterPersona.ControllerTemplate.Instance)
+                if (CharacterInstance.GetType() == typeof(CharacterPersona.ControllerTemplate))
                 {
                     Instance.Owner = 5;
                 }
-                if (CharacterInstance==CharacterPersona.AssasinTemplate.Instance)
+                if (CharacterInstance.GetType() == typeof(CharacterPersona.AssasinTemplate))
                 {
                     Instance.Owner = 6;
                 }
@@ -328,6 +336,188 @@ namespace Assets.Entities
             #endregion
 
         }
+        #endregion
+        #region GaiaShield template
+
+        public class GaiaShieldTemplate:Items, ICardTraits,IItemTraits
+        {
+            public static GaiaShieldTemplate Instance { get; set; }
+            public GaiaShieldTemplate()
+            {
+                Instance = this;
+                if (BeingUsed == false)
+                {
+                    Instance.healthICache = 0; Instance.manaICache = 0;
+                    Instance.staminaICache = 0; Instance.dodgeICache = 0;
+                    Instance.speedICache = 0; Instance.critCICache = 0;
+                    Instance.magresICache = 0; Instance.armourICache = 0;
+                    Instance.damageICache = 0; Instance.accuracyICache = 0;
+                }//This here is used to clear the cache of effects if relic is not in use
+            }
+
+
+
+            #region Item Variables
+
+            public string ItemName { get { return ItemName; } set { ItemName = "Gaia's Shield"; } }
+<<<<<<< HEAD
+            public string ItemDescription { get { return ItemDescription; } set { ItemDescription = "+10% armour/Magic Resistance on user"; } }
+=======
+            public string ItemDescription { get { return ItemDescription; } set { ItemDescription = "+10% armour on user"; } }
+>>>>>>> master
+            public int Owner { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public object Ownertype { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public bool Relic { get { return Relic; } set { Relic = true; } }
+            public bool BeingUsed { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+            #endregion
+            #region Item Methods
+
+            public void passiveTraits()
+            {
+                
+            }
+
+            public void Equip()
+            {
+                BeingUsed = true;// This has to be first otherwise the values wont change
+                Instance.UniqueActiveBuff();
+                Instance.UniqueActiveDeBuff();
+                Instance.passiveTraits();
+            }
+
+            public void Remove()
+            {
+                if (Owner == 1) CharacterPersona.WarriorTemplate.Instance.Health -= Instance.healthICache;
+                if (Owner == 2) CharacterPersona.TankWarriorTemplate.Instance.Health -= Instance.healthICache;
+                if (Owner == 3) CharacterPersona.RangeTemplate.Instance.Health -= Instance.healthICache;
+                if (Owner == 4) CharacterPersona.MageTemplate.Instance.Health -= Instance.healthICache;
+                if (Owner == 5) CharacterPersona.ControllerTemplate.Instance.Health -= Instance.healthICache;
+                if (Owner == 6) CharacterPersona.AssasinTemplate.Instance.Health -= Instance.healthICache;
+
+
+                BeingUsed = false;
+            }
+
+            public bool ActivationRequireMent(object CharacterInstance)
+            {
+                //here we put the logic to check if the conditions to use relics are met
+                #region MakeShift Switch for instances
+
+                if (CharacterInstance.GetType() == typeof(CharacterPersona.WarriorTemplate))
+                {
+                    Ownertype = (CharacterPersona.WarriorTemplate)CharacterInstance;
+                    Instance.Owner = 1;
+                }
+                if (CharacterInstance.GetType() == typeof(CharacterPersona.TankWarriorTemplate))
+                {
+                    Instance.Owner = 2;
+                }
+                if (CharacterInstance.GetType() == typeof(CharacterPersona.RangeTemplate))
+                {
+                    Instance.Owner = 3;
+                }
+                if (CharacterInstance.GetType() == typeof(CharacterPersona.MageTemplate))
+                {
+                    Instance.Owner = 4;
+                }
+                if (CharacterInstance.GetType() == typeof(CharacterPersona.ControllerTemplate))
+                {
+                    Instance.Owner = 5;
+                }
+                if (CharacterInstance.GetType() == typeof(CharacterPersona.AssasinTemplate))
+                {
+                    Instance.Owner = 6;
+                }
+                #endregion
+
+                Instance.Equip();
+                return BeingUsed;
+            }
+
+            public void UniqueActiveBuff()
+            {
+                #region effect on Warrior 
+
+                if (Owner == 1)
+                {
+                    CharacterPersona.WarriorTemplate.Instance.Armour+= (int)(CharacterPersona.WarriorTemplate.Instance.Armour * 0.1);
+                    Instance.armourICache += (int)(CharacterPersona.WarriorTemplate.Instance.Armour * 0.1);
+
+                    CharacterPersona.WarriorTemplate.Instance.MagicRes += (int)(CharacterPersona.WarriorTemplate.Instance.MagicRes * 0.1);
+                    Instance.magresICache += (int)(CharacterPersona.WarriorTemplate.Instance.MagicRes * 0.1);
+                }
+
+                #endregion
+                #region Effect on Tank
+
+                if (Owner == 2)
+                {
+                    CharacterPersona.TankWarriorTemplate.Instance.Armour += (int)(CharacterPersona.TankWarriorTemplate.Instance.Armour * 0.1);
+                    Instance.armourICache += (int)(CharacterPersona.TankWarriorTemplate.Instance.Armour * 0.1);
+
+                    CharacterPersona.TankWarriorTemplate.Instance.MagicRes += (int)(CharacterPersona.TankWarriorTemplate.Instance.MagicRes * 0.1);
+                    Instance.magresICache += (int)(CharacterPersona.TankWarriorTemplate.Instance.MagicRes * 0.1);
+                }
+                #endregion
+                #region Effect on Range
+
+                if (Owner == 3)
+                {
+                    CharacterPersona.RangeTemplate.Instance.Armour += (int)(CharacterPersona.RangeTemplate.Instance.Armour * 0.1);
+                    Instance.armourICache += (int)(CharacterPersona.RangeTemplate.Instance.Armour * 0.1);
+
+                    CharacterPersona.RangeTemplate.Instance.MagicRes += (int)(CharacterPersona.RangeTemplate.Instance.MagicRes * 0.1);
+                    Instance.magresICache += (int)(CharacterPersona.RangeTemplate.Instance.MagicRes * 0.1);
+                }
+
+                #endregion
+                #region Effect on Mage
+
+                if (Owner == 4)
+                {
+                    CharacterPersona.MageTemplate.Instance.Armour += (int)(CharacterPersona.MageTemplate.Instance.Armour * 0.1);
+                    Instance.armourICache += (int)(CharacterPersona.MageTemplate.Instance.Armour * 0.1);
+
+                    CharacterPersona.MageTemplate.Instance.MagicRes += (int)(CharacterPersona.MageTemplate.Instance.MagicRes * 0.1);
+                    Instance.magresICache += (int)(CharacterPersona.MageTemplate.Instance.MagicRes * 0.1);
+                }
+
+                #endregion
+                #region Effect on Controller
+
+                if (Owner == 5)
+                {
+                    CharacterPersona.ControllerTemplate.Instance.Armour += (int)(CharacterPersona.ControllerTemplate.Instance.Armour * 0.1);
+                    Instance.armourICache += (int)(CharacterPersona.ControllerTemplate.Instance.Armour * 0.1);
+
+                    CharacterPersona.ControllerTemplate.Instance.MagicRes += (int)(CharacterPersona.ControllerTemplate.Instance.MagicRes * 0.1);
+                    Instance.magresICache += (int)(CharacterPersona.ControllerTemplate.Instance.MagicRes * 0.1);
+                }
+
+                #endregion
+                #region Effect on Assasin
+
+                if (Owner == 6)
+                {
+                    CharacterPersona.AssasinTemplate.Instance.Armour += (int)(CharacterPersona.AssasinTemplate.Instance.Armour * 0.1);
+                    Instance.armourICache += (int)(CharacterPersona.AssasinTemplate.Instance.Armour * 0.1);
+
+                    CharacterPersona.AssasinTemplate.Instance.MagicRes += (int)(CharacterPersona.AssasinTemplate.Instance.MagicRes * 0.1);
+                    Instance.magresICache += (int)(CharacterPersona.AssasinTemplate.Instance.MagicRes * 0.1);
+                }
+
+                #endregion
+            }
+
+            public void UniqueActiveDeBuff()
+            {
+                throw new NotImplementedException();
+            }
+
+            #endregion
+        }
+
         #endregion
 
 

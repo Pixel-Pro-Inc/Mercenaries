@@ -11,17 +11,14 @@ namespace Assets.TraitInterface
     {
         /*
          Here we declare all the traits expected of anything (Anyone) that can be described as a character (For both playable and NPC)
+
+        The reason we did it here instead of just defining it in CharacterPersona is that each class that will implement this interface will have 
+        different values of individual properties
          */
         string CharacterName { get; set; }
         string CharacterDescription { get; set; } //Here the personality and backstory of a unique character will be defined
 
-        #region Abilities
-
-        void UniqueActiveBuff();
-        void UniqueActiveDeBuff();
-
-
-        #endregion
+       
         #region Stats
 
         bool DefaultValue { get; set; }
@@ -33,7 +30,9 @@ namespace Assets.TraitInterface
         int MagicRes { get; set; }
         int Armour { get; set; }
         int Damage { get; set; }
-        int DamageGiven();
+        int HitCount { get; set; }
+        int DamageGiven(object CharacterInstance);
+        int HealthLoss(int damageGiven);
         int Accuracy { get; set; }
 
 
@@ -45,10 +44,10 @@ namespace Assets.TraitInterface
             //character has currently
         }
         int Stamina { get; set; }//I assume the hunger method will affect this trait
+        double PowerBuffPercent { get; set; } //Each character has their own percent buff and even this can be improved so yeah
 
         int MagicalDamageTaken { get; set; }
         int PhysicalDamageTaken { get; set; }
-        int HealthLoss();
 
 
         int ExpPoints { get; set; }
