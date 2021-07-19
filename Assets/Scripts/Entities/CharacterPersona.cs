@@ -1202,7 +1202,6 @@ namespace Assets.Entities
             
             return true;
         }
-
         public bool PolishWeapon()
         {
             bool polishWeapon;
@@ -1211,7 +1210,6 @@ namespace Assets.Entities
 
             return polishWeapon;
         }
-
         public bool Chosen()
         {
             bool chosen;
@@ -1220,10 +1218,13 @@ namespace Assets.Entities
 
             return chosen;
         }
-
-        public bool Aware(object CharacterInstance, object TargetInstance)
+        public bool Aware()
         {
-            throw new NotImplementedException();
+            bool Aware;
+            if (BattleCalculate == false/*turntimes over, this shouldn't be battleCalculate but as mentioned turntimes*/) Aware = false;
+            else { Aware = true; }
+
+            return Aware;
         }
 
         public bool OnGuard(object CharacterInstance, object TargetInstance)
@@ -1236,14 +1237,73 @@ namespace Assets.Entities
             throw new NotImplementedException();
         }
 
-        public bool Protector(object OwnerInstance, object CharacterInstance)
+        public bool Protector(object OwnerInstance, object TargetInstance)
         {
-            throw new NotImplementedException();
+            //this must assign themselves as the targets protector
+            #region TargetInstance template logic
+
+            string TargetLetter = TemplateTarget(TargetInstance);
+            if (TargetLetter == "a")
+            {
+                WarriorTarBase.ProtectionSponser= OwnerInstance;
+            }
+            if (TargetLetter == "b")
+            {
+                TankTarBase.ProtectionSponser = OwnerInstance; ;
+            }
+            if (TargetLetter == "c")
+            {
+               RangeTarBase.ProtectionSponser = OwnerInstance; ;
+            }
+            if (TargetLetter == "d")
+            {
+                MageTarBase.ProtectionSponser = OwnerInstance; ;
+            }
+            if (TargetLetter == "e")
+            {
+                ControllerTarBase.ProtectionSponser = OwnerInstance; ;
+            }
+            if (TargetLetter == "f")
+            {
+                AssasinTarBase.ProtectionSponser = OwnerInstance; ;
+            }
+            #endregion
+            return false;
         }
 
-        public bool Protected(object CharacterInstance, object TargetInstance)
+        public object Protected(object TargetInstance) //this must return the protector
         {
-            throw new NotImplementedException();
+            object sponser=WarriorTarBase;
+            //here logic must ask who is the persons proctector
+            #region TargetInstance template logic
+
+            string TargetLetter = TemplateTarget(TargetInstance);
+            if (TargetLetter == "a")
+            {
+                sponser = WarriorTarBase.ProtectionSponser;
+            }
+            if (TargetLetter == "b")
+            {
+                sponser = TankTarBase.ProtectionSponser;
+            }
+            if (TargetLetter == "c")
+            {
+                sponser = RangeTarBase.ProtectionSponser;
+            }
+            if (TargetLetter == "d")
+            {
+                sponser = MageTarBase.ProtectionSponser;
+            }
+            if (TargetLetter == "e")
+            {
+                sponser = ControllerTarBase.ProtectionSponser;
+            }
+            if (TargetLetter == "f")
+            {
+                sponser = AssasinTarBase.ProtectionSponser;
+            }
+            #endregion
+            return sponser;
         }
 
         public bool Revigorate(object CharacterInstance, object TargetInstance)
@@ -1620,6 +1680,8 @@ namespace Assets.Entities
             public int PhysicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); /*if (PhysicalDama < 0) PhyscialDama = 0;*/}
             public int HitCount { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public double PowerBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public double EvadeBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public object ProtectionSponser { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
 
 
@@ -1732,13 +1794,12 @@ namespace Assets.Entities
                     Random r = new Random();
                     damageGiven = r.Next(3, 7);
                 }
-
-                if (Instance.PolishWeapon() == true) damageGiven = (int)(damageGiven * Instance.PowerBuffPercent);// this is to work the polish buff
-
                 if (BattleCalculate == true)
                 {
                     return damageGiven; //This was put here so that it escapes the method all together if an action is still in calculation
                 }
+
+                if (Instance.PolishWeapon() == true) damageGiven = (int)(damageGiven * Instance.PowerBuffPercent);// this is to work the polish buff
 
                 //The code below needs to be here because true damage doesn't have any logic 
                 #region template logic
@@ -1782,6 +1843,7 @@ namespace Assets.Entities
 
             public int HealthLoss(int damageGiven)
             {
+                if (Instance.Aware() == true) damageGiven -= (int)(damageGiven * Instance.EvadeBuffPercent);
                 Instance.Health -= damageGiven;
                 return damageGiven;
             }
@@ -2030,6 +2092,8 @@ namespace Assets.Entities
             public int PhysicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public int HitCount { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public double PowerBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public double EvadeBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public object ProtectionSponser { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
 
             #endregion
@@ -2182,6 +2246,7 @@ namespace Assets.Entities
             }
             public int HealthLoss(int damageGiven)
             {
+                if (Instance.Aware() == true) damageGiven -= (int)(damageGiven * Instance.EvadeBuffPercent);
                 Instance.Health -= damageGiven;
                 return damageGiven;
             }
@@ -2434,6 +2499,8 @@ namespace Assets.Entities
             public int PhysicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public int HitCount { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public double PowerBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public double EvadeBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public object ProtectionSponser { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
             #endregion
             #region Character Methods
@@ -2560,6 +2627,7 @@ namespace Assets.Entities
 
             public int HealthLoss(int damageGiven)
             {
+                if (Instance.Aware() == true) damageGiven -= (int)(damageGiven * Instance.EvadeBuffPercent);
                 Instance.Health -= damageGiven;
                 return damageGiven;
             }
@@ -2871,6 +2939,8 @@ namespace Assets.Entities
             public int PhysicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public int HitCount { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public double PowerBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public double EvadeBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public object ProtectionSponser { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
             #endregion
             #region Character Methods
@@ -3036,11 +3106,9 @@ namespace Assets.Entities
             }
             public int HealthLoss(int damageGiven)
             {
-                Instance.PhysicalDamageTaken -= Instance.Armour;
-                Instance.MagicalDamageTaken -= Instance.MagicRes;
-                int damageTaken = Instance.MagicalDamageTaken + Instance.PhysicalDamageTaken;
-                Instance.Health -= damageTaken;
-                return damageTaken;
+                if (Instance.Aware() == true) damageGiven -= (int)(damageGiven * Instance.EvadeBuffPercent);
+                Instance.Health -= damageGiven;
+                return damageGiven;
             }
 
 
@@ -3290,6 +3358,8 @@ namespace Assets.Entities
             public int PhysicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public int HitCount { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public double PowerBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public double EvadeBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public object ProtectionSponser { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
             #endregion
             #region Character Methods
@@ -3420,6 +3490,7 @@ namespace Assets.Entities
 
             public int HealthLoss(int damageGiven)
             {
+                if (Instance.Aware() == true) damageGiven -= (int)(damageGiven * Instance.EvadeBuffPercent);
                 Instance.Health -= damageGiven;
                 return damageGiven;
             }
@@ -3673,6 +3744,8 @@ namespace Assets.Entities
             public int PhysicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public int HitCount { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public double PowerBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public double EvadeBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public object ProtectionSponser { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             #endregion
             #region Character Methods
 
@@ -3799,6 +3872,7 @@ namespace Assets.Entities
 
             public int HealthLoss(int damageGiven)
             {
+                if (Instance.Aware() == true) damageGiven -= (int)(damageGiven * Instance.EvadeBuffPercent);
                 Instance.Health -= damageGiven;
                 return damageGiven;
             }

@@ -57,11 +57,11 @@ namespace Assets.Scripts.TraitInterface
         bool Agile(object CharacterInstance);
         bool PolishWeapon();
         bool Chosen();
-        bool Aware(object CharacterInstance, object TargetInstance);
+        bool Aware();
         bool OnGuard(object CharacterInstance, object TargetInstance);
         bool Provoking(object CharacterInstance, object TargetInstance); //this will be difficult
-        bool Protector(object OwnerInstance, object CharacterInstance);
-        bool Protected(object CharacterInstance, object TargetInstance);//If hit, protector will take damage instead
+        bool Protector(object OwnerInstance, object TargetInstance); //this asks like a contract. The person who will protectand the protected. eg Protector( instance,Mister Froggo)
+        object Protected(object TargetInstance);//If hit, protector will take damage instead
         bool Revigorate(object CharacterInstance, object TargetInstance);
         bool GodsBlessing(object CharacterInstance, List<string> Allies);// I left it as allies so that its easier to deal with
 
