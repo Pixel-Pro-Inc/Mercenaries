@@ -1270,7 +1270,6 @@ namespace Assets.Entities
             #endregion
             return false;
         }
-
         public object Protected(object TargetInstance) //this must return the protector
         {
             object sponser=WarriorTarBase;
@@ -1803,37 +1802,83 @@ namespace Assets.Entities
 
                 //The code below needs to be here because true damage doesn't have any logic 
                 #region template logic
-
+                object finisher = WarriorTarBase;
 
                 if (CharacterInstance.GetType() == typeof(CharacterPersona.WarriorTemplate))
                 {
                     CharacterPersona.WarriorTemplate starter = (CharacterPersona.WarriorTemplate)CharacterInstance;
-                    starter.HealthLoss(damageGiven);
+                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
+                    else starter.HealthLoss(damageGiven);
+                    CharacterInstance = starter;
                 }
                 if (CharacterInstance.GetType() == typeof(CharacterPersona.TankWarriorTemplate))
                 {
                     CharacterPersona.TankWarriorTemplate starter = (CharacterPersona.TankWarriorTemplate)CharacterInstance;
-                    starter.HealthLoss(damageGiven);
+                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
+                    else starter.HealthLoss(damageGiven);
+                    CharacterInstance = starter;
                 }
                 if (CharacterInstance.GetType() == typeof(CharacterPersona.RangeTemplate))
                 {
                     CharacterPersona.RangeTemplate starter = (CharacterPersona.RangeTemplate)CharacterInstance;
-                    starter.HealthLoss(damageGiven);
+                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
+                    else starter.HealthLoss(damageGiven);
+                    CharacterInstance = starter;
                 }
                 if (CharacterInstance.GetType() == typeof(CharacterPersona.MageTemplate))
                 {
                     CharacterPersona.MageTemplate starter = (CharacterPersona.MageTemplate)CharacterInstance;
-                    starter.HealthLoss(damageGiven);
+                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
+                    else starter.HealthLoss(damageGiven);
+                    CharacterInstance = starter;
                 }
                 if (CharacterInstance.GetType() == typeof(CharacterPersona.ControllerTemplate))
                 {
                     CharacterPersona.ControllerTemplate starter = (CharacterPersona.ControllerTemplate)CharacterInstance;
-                    starter.HealthLoss(damageGiven);
+                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
+                    else starter.HealthLoss(damageGiven);
+                    CharacterInstance = starter;
                 }
                 if (CharacterInstance.GetType() == typeof(CharacterPersona.AssasinTemplate))
                 {
                     CharacterPersona.AssasinTemplate starter = (CharacterPersona.AssasinTemplate)CharacterInstance;
-                    starter.HealthLoss(damageGiven);
+                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
+                    else starter.HealthLoss(damageGiven);
+                    CharacterInstance = starter;
+                }
+                #endregion
+                #region TargetInstance template logic
+
+                string TargetLetter = TemplateTarget(finisher);
+                if (TargetLetter == "a")
+                {
+                    WarriorTarBase.HealthLoss(damageGiven);
+                    CharacterInstance = WarriorTarBase;
+                }
+                if (TargetLetter == "b")
+                {
+                    TankTarBase.HealthLoss(damageGiven);
+                    CharacterInstance = TankTarBase;
+                }
+                if (TargetLetter == "c")
+                {
+                    RangeTarBase.HealthLoss(damageGiven);
+                    CharacterInstance = RangeTarBase;
+                }
+                if (TargetLetter == "d")
+                {
+                    MageTarBase.HealthLoss(damageGiven);
+                    CharacterInstance = MageTarBase;
+                }
+                if (TargetLetter == "e")
+                {
+                    ControllerTarBase.HealthLoss(damageGiven);
+                    CharacterInstance = ControllerTarBase;
+                }
+                if (TargetLetter == "f")
+                {
+                    AssasinTarBase.HealthLoss(damageGiven);
+                    CharacterInstance = AssasinTarBase;
                 }
                 #endregion
 
@@ -2208,37 +2253,83 @@ namespace Assets.Entities
                 }
 
                 #region template logic
-
+                object finisher = WarriorTarBase;
 
                 if (CharacterInstance.GetType() == typeof(CharacterPersona.WarriorTemplate))
                 {
                     CharacterPersona.WarriorTemplate starter = (CharacterPersona.WarriorTemplate)CharacterInstance;
-                    starter.HealthLoss(damageGiven);
+                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
+                    else starter.HealthLoss(damageGiven);
+                    CharacterInstance = starter;
                 }
                 if (CharacterInstance.GetType() == typeof(CharacterPersona.TankWarriorTemplate))
                 {
                     CharacterPersona.TankWarriorTemplate starter = (CharacterPersona.TankWarriorTemplate)CharacterInstance;
-                    starter.HealthLoss(damageGiven);
+                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
+                    else starter.HealthLoss(damageGiven);
+                    CharacterInstance = starter;
                 }
                 if (CharacterInstance.GetType() == typeof(CharacterPersona.RangeTemplate))
                 {
                     CharacterPersona.RangeTemplate starter = (CharacterPersona.RangeTemplate)CharacterInstance;
-                    starter.HealthLoss(damageGiven);
+                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
+                    else starter.HealthLoss(damageGiven);
+                    CharacterInstance = starter;
                 }
                 if (CharacterInstance.GetType() == typeof(CharacterPersona.MageTemplate))
                 {
                     CharacterPersona.MageTemplate starter = (CharacterPersona.MageTemplate)CharacterInstance;
-                    starter.HealthLoss(damageGiven);
+                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
+                    else starter.HealthLoss(damageGiven);
+                    CharacterInstance = starter;
                 }
                 if (CharacterInstance.GetType() == typeof(CharacterPersona.ControllerTemplate))
                 {
                     CharacterPersona.ControllerTemplate starter = (CharacterPersona.ControllerTemplate)CharacterInstance;
-                    starter.HealthLoss(damageGiven);
+                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
+                    else starter.HealthLoss(damageGiven);
+                    CharacterInstance = starter;
                 }
                 if (CharacterInstance.GetType() == typeof(CharacterPersona.AssasinTemplate))
                 {
                     CharacterPersona.AssasinTemplate starter = (CharacterPersona.AssasinTemplate)CharacterInstance;
-                    starter.HealthLoss(damageGiven);
+                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
+                    else starter.HealthLoss(damageGiven);
+                    CharacterInstance = starter;
+                }
+                #endregion
+                #region TargetInstance template logic
+
+                string TargetLetter = TemplateTarget(finisher);
+                if (TargetLetter == "a")
+                {
+                    WarriorTarBase.HealthLoss(damageGiven);
+                    CharacterInstance = WarriorTarBase;
+                }
+                if (TargetLetter == "b")
+                {
+                    TankTarBase.HealthLoss(damageGiven);
+                    CharacterInstance = TankTarBase;
+                }
+                if (TargetLetter == "c")
+                {
+                    RangeTarBase.HealthLoss(damageGiven);
+                    CharacterInstance = RangeTarBase;
+                }
+                if (TargetLetter == "d")
+                {
+                    MageTarBase.HealthLoss(damageGiven);
+                    CharacterInstance = MageTarBase;
+                }
+                if (TargetLetter == "e")
+                {
+                    ControllerTarBase.HealthLoss(damageGiven);
+                    CharacterInstance = ControllerTarBase;
+                }
+                if (TargetLetter == "f")
+                {
+                    AssasinTarBase.HealthLoss(damageGiven);
+                    CharacterInstance = AssasinTarBase;
                 }
                 #endregion
 
@@ -2588,37 +2679,83 @@ namespace Assets.Entities
                 }
 
                 #region template logic
-
+                object finisher = WarriorTarBase;
 
                 if (CharacterInstance.GetType() == typeof(CharacterPersona.WarriorTemplate))
                 {
                     CharacterPersona.WarriorTemplate starter = (CharacterPersona.WarriorTemplate)CharacterInstance;
-                    starter.HealthLoss(damageGiven);
+                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
+                    else starter.HealthLoss(damageGiven);
+                    CharacterInstance = starter;
                 }
                 if (CharacterInstance.GetType() == typeof(CharacterPersona.TankWarriorTemplate))
                 {
                     CharacterPersona.TankWarriorTemplate starter = (CharacterPersona.TankWarriorTemplate)CharacterInstance;
-                    starter.HealthLoss(damageGiven);
+                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
+                    else starter.HealthLoss(damageGiven);
+                    CharacterInstance = starter;
                 }
                 if (CharacterInstance.GetType() == typeof(CharacterPersona.RangeTemplate))
                 {
                     CharacterPersona.RangeTemplate starter = (CharacterPersona.RangeTemplate)CharacterInstance;
-                    starter.HealthLoss(damageGiven);
+                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
+                    else starter.HealthLoss(damageGiven);
+                    CharacterInstance = starter;
                 }
                 if (CharacterInstance.GetType() == typeof(CharacterPersona.MageTemplate))
                 {
                     CharacterPersona.MageTemplate starter = (CharacterPersona.MageTemplate)CharacterInstance;
-                    starter.HealthLoss(damageGiven);
+                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
+                    else starter.HealthLoss(damageGiven);
+                    CharacterInstance = starter;
                 }
                 if (CharacterInstance.GetType() == typeof(CharacterPersona.ControllerTemplate))
                 {
                     CharacterPersona.ControllerTemplate starter = (CharacterPersona.ControllerTemplate)CharacterInstance;
-                    starter.HealthLoss(damageGiven);
+                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
+                    else starter.HealthLoss(damageGiven);
+                    CharacterInstance = starter;
                 }
                 if (CharacterInstance.GetType() == typeof(CharacterPersona.AssasinTemplate))
                 {
                     CharacterPersona.AssasinTemplate starter = (CharacterPersona.AssasinTemplate)CharacterInstance;
-                    starter.HealthLoss(damageGiven);
+                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
+                    else starter.HealthLoss(damageGiven);
+                    CharacterInstance = starter;
+                }
+                #endregion
+                #region TargetInstance template logic
+
+                string TargetLetter = TemplateTarget(finisher);
+                if (TargetLetter == "a")
+                {
+                    WarriorTarBase.HealthLoss(damageGiven);
+                    CharacterInstance = WarriorTarBase;
+                }
+                if (TargetLetter == "b")
+                {
+                    TankTarBase.HealthLoss(damageGiven);
+                    CharacterInstance = TankTarBase;
+                }
+                if (TargetLetter == "c")
+                {
+                    RangeTarBase.HealthLoss(damageGiven);
+                    CharacterInstance = RangeTarBase;
+                }
+                if (TargetLetter == "d")
+                {
+                    MageTarBase.HealthLoss(damageGiven);
+                    CharacterInstance = MageTarBase;
+                }
+                if (TargetLetter == "e")
+                {
+                    ControllerTarBase.HealthLoss(damageGiven);
+                    CharacterInstance = ControllerTarBase;
+                }
+                if (TargetLetter == "f")
+                {
+                    AssasinTarBase.HealthLoss(damageGiven);
+                    CharacterInstance = AssasinTarBase;
                 }
                 #endregion
 
@@ -3068,37 +3205,83 @@ namespace Assets.Entities
                 }
 
                 #region template logic
-
+                object finisher = WarriorTarBase;
 
                 if (CharacterInstance.GetType() == typeof(CharacterPersona.WarriorTemplate))
                 {
                     CharacterPersona.WarriorTemplate starter = (CharacterPersona.WarriorTemplate)CharacterInstance;
-                    starter.HealthLoss(damageGiven);
+                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
+                    else starter.HealthLoss(damageGiven);
+                    CharacterInstance = starter;
                 }
                 if (CharacterInstance.GetType() == typeof(CharacterPersona.TankWarriorTemplate))
                 {
                     CharacterPersona.TankWarriorTemplate starter = (CharacterPersona.TankWarriorTemplate)CharacterInstance;
-                    starter.HealthLoss(damageGiven);
+                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
+                    else starter.HealthLoss(damageGiven);
+                    CharacterInstance = starter;
                 }
                 if (CharacterInstance.GetType() == typeof(CharacterPersona.RangeTemplate))
                 {
                     CharacterPersona.RangeTemplate starter = (CharacterPersona.RangeTemplate)CharacterInstance;
-                    starter.HealthLoss(damageGiven);
+                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
+                    else starter.HealthLoss(damageGiven);
+                    CharacterInstance = starter;
                 }
                 if (CharacterInstance.GetType() == typeof(CharacterPersona.MageTemplate))
                 {
                     CharacterPersona.MageTemplate starter = (CharacterPersona.MageTemplate)CharacterInstance;
-                    starter.HealthLoss(damageGiven);
+                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
+                    else starter.HealthLoss(damageGiven);
+                    CharacterInstance = starter;
                 }
                 if (CharacterInstance.GetType() == typeof(CharacterPersona.ControllerTemplate))
                 {
                     CharacterPersona.ControllerTemplate starter = (CharacterPersona.ControllerTemplate)CharacterInstance;
-                    starter.HealthLoss(damageGiven);
+                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
+                    else starter.HealthLoss(damageGiven);
+                    CharacterInstance = starter;
                 }
                 if (CharacterInstance.GetType() == typeof(CharacterPersona.AssasinTemplate))
                 {
                     CharacterPersona.AssasinTemplate starter = (CharacterPersona.AssasinTemplate)CharacterInstance;
-                    starter.HealthLoss(damageGiven);
+                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
+                    else starter.HealthLoss(damageGiven);
+                    CharacterInstance = starter;
+                }
+                #endregion
+                #region TargetInstance template logic
+
+                string TargetLetter = TemplateTarget(finisher);
+                if (TargetLetter == "a")
+                {
+                    WarriorTarBase.HealthLoss(damageGiven);
+                    CharacterInstance = WarriorTarBase;
+                }
+                if (TargetLetter == "b")
+                {
+                    TankTarBase.HealthLoss(damageGiven);
+                    CharacterInstance = TankTarBase;
+                }
+                if (TargetLetter == "c")
+                {
+                    RangeTarBase.HealthLoss(damageGiven);
+                    CharacterInstance = RangeTarBase;
+                }
+                if (TargetLetter == "d")
+                {
+                    MageTarBase.HealthLoss(damageGiven);
+                    CharacterInstance = MageTarBase;
+                }
+                if (TargetLetter == "e")
+                {
+                    ControllerTarBase.HealthLoss(damageGiven);
+                    CharacterInstance = ControllerTarBase;
+                }
+                if (TargetLetter == "f")
+                {
+                    AssasinTarBase.HealthLoss(damageGiven);
+                    CharacterInstance = AssasinTarBase;
                 }
                 #endregion
 
@@ -3451,37 +3634,83 @@ namespace Assets.Entities
                 }
 
                 #region template logic
-
+                object finisher = WarriorTarBase;
 
                 if (CharacterInstance.GetType() == typeof(CharacterPersona.WarriorTemplate))
                 {
                     CharacterPersona.WarriorTemplate starter = (CharacterPersona.WarriorTemplate)CharacterInstance;
-                    starter.HealthLoss(damageGiven);
+                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
+                    else starter.HealthLoss(damageGiven);
+                    CharacterInstance = starter;
                 }
                 if (CharacterInstance.GetType() == typeof(CharacterPersona.TankWarriorTemplate))
                 {
                     CharacterPersona.TankWarriorTemplate starter = (CharacterPersona.TankWarriorTemplate)CharacterInstance;
-                    starter.HealthLoss(damageGiven);
+                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
+                    else starter.HealthLoss(damageGiven);
+                    CharacterInstance = starter;
                 }
                 if (CharacterInstance.GetType() == typeof(CharacterPersona.RangeTemplate))
                 {
                     CharacterPersona.RangeTemplate starter = (CharacterPersona.RangeTemplate)CharacterInstance;
-                    starter.HealthLoss(damageGiven);
+                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
+                    else starter.HealthLoss(damageGiven);
+                    CharacterInstance = starter;
                 }
                 if (CharacterInstance.GetType() == typeof(CharacterPersona.MageTemplate))
                 {
                     CharacterPersona.MageTemplate starter = (CharacterPersona.MageTemplate)CharacterInstance;
-                    starter.HealthLoss(damageGiven);
+                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
+                    else starter.HealthLoss(damageGiven);
+                    CharacterInstance = starter;
                 }
                 if (CharacterInstance.GetType() == typeof(CharacterPersona.ControllerTemplate))
                 {
                     CharacterPersona.ControllerTemplate starter = (CharacterPersona.ControllerTemplate)CharacterInstance;
-                    starter.HealthLoss(damageGiven);
+                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
+                    else starter.HealthLoss(damageGiven);
+                    CharacterInstance = starter;
                 }
                 if (CharacterInstance.GetType() == typeof(CharacterPersona.AssasinTemplate))
                 {
                     CharacterPersona.AssasinTemplate starter = (CharacterPersona.AssasinTemplate)CharacterInstance;
-                    starter.HealthLoss(damageGiven);
+                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
+                    else starter.HealthLoss(damageGiven);
+                    CharacterInstance = starter;
+                }
+                #endregion
+                #region TargetInstance template logic
+
+                string TargetLetter = TemplateTarget(finisher);
+                if (TargetLetter == "a")
+                {
+                    WarriorTarBase.HealthLoss(damageGiven);
+                    CharacterInstance = WarriorTarBase;
+                }
+                if (TargetLetter == "b")
+                {
+                    TankTarBase.HealthLoss(damageGiven);
+                    CharacterInstance = TankTarBase;
+                }
+                if (TargetLetter == "c")
+                {
+                    RangeTarBase.HealthLoss(damageGiven);
+                    CharacterInstance = RangeTarBase;
+                }
+                if (TargetLetter == "d")
+                {
+                    MageTarBase.HealthLoss(damageGiven);
+                    CharacterInstance = MageTarBase;
+                }
+                if (TargetLetter == "e")
+                {
+                    ControllerTarBase.HealthLoss(damageGiven);
+                    CharacterInstance = ControllerTarBase;
+                }
+                if (TargetLetter == "f")
+                {
+                    AssasinTarBase.HealthLoss(damageGiven);
+                    CharacterInstance = AssasinTarBase;
                 }
                 #endregion
 
@@ -3833,37 +4062,83 @@ namespace Assets.Entities
                 }
 
                 #region template logic
-
+                object finisher = WarriorTarBase;
 
                 if (CharacterInstance.GetType() == typeof(CharacterPersona.WarriorTemplate))
                 {
                     CharacterPersona.WarriorTemplate starter = (CharacterPersona.WarriorTemplate)CharacterInstance;
-                    starter.HealthLoss(damageGiven);
+                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
+                    else starter.HealthLoss(damageGiven);
+                    CharacterInstance = starter;
                 }
                 if (CharacterInstance.GetType() == typeof(CharacterPersona.TankWarriorTemplate))
                 {
                     CharacterPersona.TankWarriorTemplate starter = (CharacterPersona.TankWarriorTemplate)CharacterInstance;
-                    starter.HealthLoss(damageGiven);
+                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
+                    else starter.HealthLoss(damageGiven);
+                    CharacterInstance = starter;
                 }
                 if (CharacterInstance.GetType() == typeof(CharacterPersona.RangeTemplate))
                 {
                     CharacterPersona.RangeTemplate starter = (CharacterPersona.RangeTemplate)CharacterInstance;
-                    starter.HealthLoss(damageGiven);
+                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
+                    else starter.HealthLoss(damageGiven);
+                    CharacterInstance = starter;
                 }
                 if (CharacterInstance.GetType() == typeof(CharacterPersona.MageTemplate))
                 {
                     CharacterPersona.MageTemplate starter = (CharacterPersona.MageTemplate)CharacterInstance;
-                    starter.HealthLoss(damageGiven);
+                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
+                    else starter.HealthLoss(damageGiven);
+                    CharacterInstance = starter;
                 }
                 if (CharacterInstance.GetType() == typeof(CharacterPersona.ControllerTemplate))
                 {
                     CharacterPersona.ControllerTemplate starter = (CharacterPersona.ControllerTemplate)CharacterInstance;
-                    starter.HealthLoss(damageGiven);
+                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
+                    else starter.HealthLoss(damageGiven);
+                    CharacterInstance = starter;
                 }
                 if (CharacterInstance.GetType() == typeof(CharacterPersona.AssasinTemplate))
                 {
                     CharacterPersona.AssasinTemplate starter = (CharacterPersona.AssasinTemplate)CharacterInstance;
-                    starter.HealthLoss(damageGiven);
+                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
+                    else starter.HealthLoss(damageGiven);
+                    CharacterInstance = starter;
+                }
+                #endregion
+                #region TargetInstance template logic
+
+                string TargetLetter = TemplateTarget(finisher);
+                if (TargetLetter == "a")
+                {
+                    WarriorTarBase.HealthLoss(damageGiven);
+                    CharacterInstance = WarriorTarBase;
+                }
+                if (TargetLetter == "b")
+                {
+                    TankTarBase.HealthLoss(damageGiven);
+                    CharacterInstance = TankTarBase;
+                }
+                if (TargetLetter == "c")
+                {
+                    RangeTarBase.HealthLoss(damageGiven);
+                    CharacterInstance = RangeTarBase;
+                }
+                if (TargetLetter == "d")
+                {
+                    MageTarBase.HealthLoss(damageGiven);
+                    CharacterInstance = MageTarBase;
+                }
+                if (TargetLetter == "e")
+                {
+                    ControllerTarBase.HealthLoss(damageGiven);
+                    CharacterInstance = ControllerTarBase;
+                }
+                if (TargetLetter == "f")
+                {
+                    AssasinTarBase.HealthLoss(damageGiven);
+                    CharacterInstance = AssasinTarBase;
                 }
                 #endregion
 
