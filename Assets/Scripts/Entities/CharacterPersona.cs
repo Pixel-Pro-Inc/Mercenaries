@@ -57,7 +57,7 @@ namespace Assets.Entities
         };
         internal int ExperienceLevel { get { return ExperienceLevel;  } set { if (ExperienceLevel < 0) ExperienceLevel = 0; } }
         int shield { get { return shield; } set { if (shield < 0) shield = 0; shield = 0; } } //We are defining it (not ICharacterTraits) here cause it isn't used by everyone often but can be, and its 0 for everyone starting off
-        public static bool BattleCalculate { get; set; }
+        public static bool RoundOver { get; set; }
         bool RemoveDebuffEffects { get; set; }
 
         #region Template Logic
@@ -425,43 +425,138 @@ namespace Assets.Entities
 
         #region Attack
 
-        public bool TrueDamage(object CharacterInstance, object TargetInstance)
+        public void TrueDamage(object CharacterInstance, object TargetInstance)
         {
+            int Damage=0;
             //Note that battleCalculate is never set true here
-            #region CharacterInstance template logic
+
+            #region CharacterInstance template logic giving Damage
 
             //battleCalculate has to remain false or null.
             int characterNumber = TemplateCharacter(CharacterInstance);
             if (characterNumber == 1)
             {
-                WarriorCBase.DamageGiven(TargetInstance);
+                Damage = WarriorCBase.DamageGiven();
+                if (WarriorCBase.PolishWeapon() == true) Damage = (int)(Damage * WarriorCBase.PowerBuffPercent);// this is to work the polish buff
             }
             if (characterNumber == 2)
             {
-                TankCBase.DamageGiven(TargetInstance);
+                Damage=TankCBase.DamageGiven();
+                if (TankCBase.PolishWeapon() == true) Damage = (int)(Damage * TankCBase.PowerBuffPercent);// this is to work the polish buff
             }
             if (characterNumber == 3)
             {
-                RangeCBase.DamageGiven(TargetInstance);
+                Damage=RangeCBase.DamageGiven();
+                if (RangeCBase.PolishWeapon() == true) Damage = (int)(Damage * RangeCBase.PowerBuffPercent);// this is to work the polish buff
             }
             if (characterNumber == 4)
             {
-                MageCBase.DamageGiven(TargetInstance);
+                Damage=MageCBase.DamageGiven();
+                if (MageCBase.PolishWeapon() == true) Damage = (int)(Damage * MageCBase.PowerBuffPercent);// this is to work the polish buff
             }
             if (characterNumber == 5)
             {
-                ControllerCBase.DamageGiven(TargetInstance);
+                Damage=ControllerCBase.DamageGiven();
+                if (ControllerCBase.PolishWeapon() == true) Damage = (int)(Damage * ControllerCBase.PowerBuffPercent);// this is to work the polish buff
             }
             if (characterNumber == 6)
             {
-                AssasinCBase.DamageGiven(TargetInstance);
+                Damage=AssasinCBase.DamageGiven();
+                if (AssasinCBase.PolishWeapon() == true) Damage = (int)(Damage * AssasinCBase.PowerBuffPercent);// this is to work the polish buff
             }
             #endregion
-            return false;//This method should be void
+            #region template logic
+            object finisher = WarriorTarBase;
+
+            if (TargetInstance.GetType() == typeof(CharacterPersona.WarriorTemplate))
+            {
+                CharacterPersona.WarriorTemplate starter = (CharacterPersona.WarriorTemplate)TargetInstance;
+                if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
+                else starter.HealthLoss(Damage);
+                TargetInstance = starter;
+            }
+            if (TargetInstance.GetType() == typeof(CharacterPersona.TankWarriorTemplate))
+            {
+                CharacterPersona.TankWarriorTemplate starter = (CharacterPersona.TankWarriorTemplate)TargetInstance;
+                if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
+                else starter.HealthLoss(Damage);
+                TargetInstance = starter;
+            }
+            if (TargetInstance.GetType() == typeof(CharacterPersona.RangeTemplate))
+            {
+                CharacterPersona.RangeTemplate starter = (CharacterPersona.RangeTemplate)TargetInstance;
+                if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
+                else starter.HealthLoss(Damage);
+                TargetInstance = starter;
+            }
+            if (TargetInstance.GetType() == typeof(CharacterPersona.MageTemplate))
+            {
+                CharacterPersona.MageTemplate starter = (CharacterPersona.MageTemplate)TargetInstance;
+                if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
+                else starter.HealthLoss(Damage);
+                TargetInstance = starter;
+            }
+            if (TargetInstance.GetType() == typeof(CharacterPersona.ControllerTemplate))
+            {
+                CharacterPersona.ControllerTemplate starter = (CharacterPersona.ControllerTemplate)TargetInstance;
+                if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
+                else starter.HealthLoss(Damage);
+                TargetInstance = starter;
+            }
+            if (TargetInstance.GetType() == typeof(CharacterPersona.AssasinTemplate))
+            {
+                CharacterPersona.AssasinTemplate starter = (CharacterPersona.AssasinTemplate)TargetInstance;
+                if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
+                else starter.HealthLoss(Damage);
+                TargetInstance = starter;
+            }
+            #endregion
+            #region TargetInstance template logic
+
+            string TargetLetter = TemplateTarget(finisher);
+            if (TargetLetter == "a")
+            {
+                WarriorTarBase.HealthLoss(Damage);
+                TargetInstance = WarriorTarBase;
+            }
+            if (TargetLetter == "b")
+            {
+                TankTarBase.HealthLoss(Damage);
+                TargetInstance = TankTarBase;
+            }
+            if (TargetLetter == "c")
+            {
+                RangeTarBase.HealthLoss(Damage);
+                TargetInstance = RangeTarBase;
+            }
+            if (TargetLetter == "d")
+            {
+                MageTarBase.HealthLoss(Damage);
+                TargetInstance = MageTarBase;
+            }
+            if (TargetLetter == "e")
+            {
+                ControllerTarBase.HealthLoss(Damage);
+                TargetInstance = ControllerTarBase;
+            }
+            if (TargetLetter == "f")
+            {
+                AssasinTarBase.HealthLoss(Damage);
+                TargetInstance = AssasinTarBase;
+            }
+            #endregion
+
+            #region Clean base templates //This is unnecessary cause the templates are changed everytime you use them
+            WarriorTarBase = null; 
+            TankTarBase = null;
+            RangeTarBase = null;
+            MageTarBase = null;
+            ControllerTarBase = null;
+            AssasinTarBase = null;
+            #endregion
         }
-        public bool PhysicalDamage(object CharacterInstance, object TargetInstance)
+        public void PhysicalDamage(object CharacterInstance, object TargetInstance)
         {
-            BattleCalculate = true; //This true so all the int DamageGiven() can be done without firing Healthloss
 
             int physicalDamage = 0;
             int shieldcache=0;
@@ -472,27 +567,27 @@ namespace Assets.Entities
             //the method DamageGiven needs to be done but the value also needs to be stored. I don't do them separate cause healthlos will still get fired
             if (characterNumber == 1)
             {
-                physicalDamage = WarriorCBase.DamageGiven(TargetInstance);
+                physicalDamage = WarriorCBase.DamageGiven();
             }
             if (characterNumber == 2)
             {
-                physicalDamage = TankCBase.DamageGiven(TargetInstance);
+                physicalDamage = TankCBase.DamageGiven();
             }
             if (characterNumber == 3)
             {
-                physicalDamage = RangeCBase.DamageGiven(TargetInstance);
+                physicalDamage = RangeCBase.DamageGiven();
             }
             if (characterNumber == 4)
             {
-                physicalDamage = MageCBase.DamageGiven(TargetInstance);
+                physicalDamage = MageCBase.DamageGiven();
             }
             if (characterNumber == 5)
             {
-                physicalDamage = ControllerCBase.DamageGiven(TargetInstance);
+                physicalDamage = ControllerCBase.DamageGiven();
             }
             if (characterNumber == 6)
             {
-                physicalDamage = AssasinCBase.DamageGiven(TargetInstance);
+                physicalDamage = AssasinCBase.DamageGiven();
             }
             #endregion
             #region TargetInstance template logic
@@ -648,23 +743,9 @@ namespace Assets.Entities
             }
             #endregion
 
-            #region Clean base templates
-            WarriorTarBase = null; //This is made null so that other can reuse it. Notice this should happen whenever the base templates change
-            TankTarBase = null;
-            RangeTarBase = null;
-            MageTarBase = null;
-            ControllerTarBase = null;
-            AssasinTarBase = null;
-            #endregion
-
-            BattleCalculate = false; //This false to return it to normal
-
-            return false;//I made this false because the instance isn't getting the effect, but the enemyInstance
         }
-        public bool MagicalDamage(object CharacterInstance, object TargetInstance)
+        public void MagicalDamage(object CharacterInstance, object TargetInstance)
         {
-            BattleCalculate = true; //This true so all the int DamageGiven() can be done without firing Healthloss
-
             int magicalDamage = 0;
             int shieldcache = 0;
             int magrescache = 0;
@@ -674,27 +755,27 @@ namespace Assets.Entities
             //the method DamageGiven needs to be done but the value also needs to be stored. I don't do them separate cause healthlos will still get fired
             if (characterNumber == 1)
             {
-                magicalDamage = WarriorCBase.DamageGiven(TargetInstance);
+                magicalDamage = WarriorCBase.DamageGiven();
             }
             if (characterNumber == 2)
             {
-                magicalDamage = TankCBase.DamageGiven(TargetInstance);
+                magicalDamage = TankCBase.DamageGiven();
             }
             if (characterNumber == 3)
             {
-                magicalDamage = RangeCBase.DamageGiven(TargetInstance);
+                magicalDamage = RangeCBase.DamageGiven();
             }
             if (characterNumber == 4)
             {
-                magicalDamage = MageCBase.DamageGiven(TargetInstance);
+                magicalDamage = MageCBase.DamageGiven();
             }
             if (characterNumber == 5)
             {
-                magicalDamage = ControllerCBase.DamageGiven(TargetInstance);
+                magicalDamage = ControllerCBase.DamageGiven();
             }
             if (characterNumber == 6)
             {
-                magicalDamage = AssasinCBase.DamageGiven(TargetInstance);
+                magicalDamage = AssasinCBase.DamageGiven();
             }
             #endregion
             #region TargetInstance template logic
@@ -828,23 +909,9 @@ namespace Assets.Entities
             }
             #endregion
 
-            #region Clean base templates
-            WarriorTarBase = null; //This is made null so that other can reuse it. Notice this should happen whenever the base templates change
-            TankTarBase = null;
-            RangeTarBase = null;
-            MageTarBase = null;
-            ControllerTarBase = null;
-            AssasinTarBase = null;
-            #endregion
-
-            BattleCalculate = false; //This is false to return it to normal
-
-            return false;//I made this false because the instance isn't getting the effect, but the enemyInstance
         }
-        public bool Drain(object CharacterInstance, object TargetInstance)
+        public void Drain(object CharacterInstance, object TargetInstance)
         {
-            BattleCalculate = true; //This true so all the int DamageGiven() can be done without firing Healthloss
-
             float drainPercent = 0; // I have set this to be a random % instead of a damage per instance as asked by Alex
             Random r = new Random();
             drainPercent=(r.Next(1, 26)/100); //Maximum it willtake only a quarter
@@ -883,18 +950,6 @@ namespace Assets.Entities
             }
             #endregion
 
-            #region Clean base templates
-            WarriorTarBase = null; //This is made null so that other can reuse it. Notice this should happen whenever the base templates change
-            TankTarBase = null;
-            RangeTarBase = null;
-            MageTarBase = null;
-            ControllerTarBase = null;
-            AssasinTarBase = null;
-            #endregion
-
-            BattleCalculate = false; 
-
-            return false;//I made this false because the instance isn't getting the effect, but the enemyInstance
         }
 
         public bool Ignite(object CharacterInstance, object TargetInstance)
@@ -914,8 +969,6 @@ namespace Assets.Entities
 
         public bool BalancedDamage(object CharacterInstance, object TargetInstance)
         {
-            BattleCalculate = true; //This true so all the int DamageGiven() can be done without firing Healthloss
-
             int physicalDamage = 0;
             int shieldcache = 0;
             int armourcahe = 0;
@@ -926,27 +979,27 @@ namespace Assets.Entities
             //the method DamageGiven needs to be done but the value also needs to be stored. I don't do them separate cause healthlos will still get fired
             if (characterNumber == 1)
             {
-                physicalDamage = WarriorCBase.DamageGiven(TargetInstance);
+                physicalDamage = WarriorCBase.DamageGiven();
             }
             if (characterNumber == 2)
             {
-                physicalDamage = TankCBase.DamageGiven(TargetInstance);
+                physicalDamage = TankCBase.DamageGiven();
             }
             if (characterNumber == 3)
             {
-                physicalDamage = RangeCBase.DamageGiven(TargetInstance);
+                physicalDamage = RangeCBase.DamageGiven();
             }
             if (characterNumber == 4)
             {
-                physicalDamage = MageCBase.DamageGiven(TargetInstance);
+                physicalDamage = MageCBase.DamageGiven();
             }
             if (characterNumber == 5)
             {
-                physicalDamage = ControllerCBase.DamageGiven(TargetInstance);
+                physicalDamage = ControllerCBase.DamageGiven();
             }
             if (characterNumber == 6)
             {
-                physicalDamage = AssasinCBase.DamageGiven(TargetInstance);
+                physicalDamage = AssasinCBase.DamageGiven();
             }
             #endregion
             #region TargetInstance template logic
@@ -1135,17 +1188,6 @@ namespace Assets.Entities
             }
             #endregion
 
-            #region Clean base templates
-            WarriorTarBase = null; //This is made null so that other can reuse it. Notice this should happen whenever the base templates change
-            TankTarBase = null;
-            RangeTarBase = null;
-            MageTarBase = null;
-            ControllerTarBase = null;
-            AssasinTarBase = null;
-            #endregion
-
-            BattleCalculate = false; //This false to return it to normal
-
             return false;//I made this false because the instance isn't getting the effect, but the enemyInstance
         }
 
@@ -1197,7 +1239,7 @@ namespace Assets.Entities
 
         #region Buff
 
-        public bool Agile(object CharacterInstance)
+        public void Agile(object CharacterInstance)
         {
             int agileCache=0;
             #region CharacterInstance template logic
@@ -1208,77 +1250,78 @@ namespace Assets.Entities
             {
                 agileCache = (int)(WarriorCBase.dodge * WarriorCBase.AgileBUffPercent);
                 WarriorCBase.dodge += agileCache;
+                CharacterInstance = WarriorCBase;
             }
             if (characterNumber == 2)
             {
                 agileCache = (int)(TankCBase.dodge * TankCBase.AgileBUffPercent);
                 TankCBase.dodge += agileCache;
+                CharacterInstance = TankCBase;
             }
             if (characterNumber == 3)
             {
                 agileCache = (int)(RangeCBase.dodge * RangeCBase.AgileBUffPercent);
                 RangeCBase.dodge += agileCache;
+                CharacterInstance = RangeCBase;
             }
             if (characterNumber == 4)
             {
                 agileCache = (int)(MageCBase.dodge * MageCBase.AgileBUffPercent);
                 MageCBase.dodge += agileCache;
+                CharacterInstance = MageCBase;
             }
             if (characterNumber == 5)
             {
                 agileCache = (int)(ControllerCBase.dodge * ControllerCBase.AgileBUffPercent);
                 ControllerCBase.dodge += agileCache;
+                CharacterInstance = ControllerCBase;
             }
             if (characterNumber == 6)
             {
                 agileCache = (int)(AssasinCBase.dodge * AssasinCBase.AgileBUffPercent);
                 AssasinCBase.dodge += agileCache;
+                CharacterInstance = AssasinCBase;
             }
             #endregion
-            if (true/*Round over*/)
+            if (RoundOver==true)
             { 
                 agileCache = -agileCache; //this reverses the sign so that it simply undoes the added value
                 if (characterNumber == 1)
                 {
                     WarriorCBase.dodge += agileCache;
+                    CharacterInstance = WarriorCBase;
                 }
                 if (characterNumber == 2)
                 {
                     TankCBase.dodge += agileCache;
+                    CharacterInstance = TankCBase;
                 }
                 if (characterNumber == 3)
                 {
                     RangeCBase.dodge += agileCache;
+                    CharacterInstance = RangeCBase;
                 }
                 if (characterNumber == 4)
                 {
                     MageCBase.dodge += agileCache;
+                    CharacterInstance = MageCBase;
                 }
                 if (characterNumber == 5)
                 {
                     ControllerCBase.dodge += agileCache;
+                    CharacterInstance = ControllerCBase;
                 }
                 if (characterNumber == 6)
                 {
                     AssasinCBase.dodge += agileCache;
+                    CharacterInstance = AssasinCBase;
                 }
             }
-
-            #region Clean base templates
-            WarriorTarBase = null; //This is made null so that other can reuse it. Notice this should happen whenever the base templates change
-            TankTarBase = null;
-            RangeTarBase = null;
-            MageTarBase = null;
-            ControllerTarBase = null;
-            AssasinTarBase = null;
-            #endregion
-
-            return true;
         }
         public bool PolishWeapon()
         {
             bool polishWeapon;
-            if (BattleCalculate== false/*turntimes over, this shouldn't be battleCalculate but as mentioned turntimes*/) polishWeapon= false; 
+            if (RoundOver== true) polishWeapon= false; 
             else { polishWeapon = true; }
 
             return polishWeapon;
@@ -1286,7 +1329,7 @@ namespace Assets.Entities
         public bool Chosen()
         {
             bool chosen;
-            if (BattleCalculate == false/*turntimes over, this shouldn't be battleCalculate but as mentioned turntimes*/) chosen = false;
+            if (RoundOver == true) chosen = false;
             else { chosen = true; }
 
             return chosen;
@@ -1294,18 +1337,18 @@ namespace Assets.Entities
         public bool Aware()
         {
             bool Aware;
-            if (BattleCalculate == false/*turntimes over, this shouldn't be battleCalculate but as mentioned turntimes*/) Aware = false;
+            if (RoundOver == true) Aware = false;
             else { Aware = true; }
 
             return Aware;
         }
 
-        public bool OnGuard(object CharacterInstance, object TargetInstance)
+        public void OnGuard(object CharacterInstance, object TargetInstance)
         {
             throw new NotImplementedException();
         }
 
-        public bool Provoking(object CharacterInstance)
+        public void Provoking(object CharacterInstance)
         {
             object scapegoat = WarriorCBase;
             #region CharacterInstance template logic
@@ -1336,19 +1379,14 @@ namespace Assets.Entities
                 scapegoat= AssasinCBase.Allies.Any();
             }
             #endregion
-            Protector(CharacterInstance, scapegoat);
-
-            #region Clean base templates
-            WarriorTarBase = null; //This is made null so that other can reuse it
-            TankTarBase = null;
-            RangeTarBase = null;
-            MageTarBase = null;
-            ControllerTarBase = null;
-            AssasinTarBase = null;
-            #endregion
-            return false;
+            Random r = new Random();
+            double chanceDa = r.Next(1, 101)/100;
+            if (chanceDa>=50)
+            {
+                Protector(CharacterInstance, scapegoat);
+            }
         }
-        public bool Protector(object OwnerInstance, object TargetInstance)
+        public void Protector(object OwnerInstance, object TargetInstance)
         {
             //this must assign themselves as the targets protector
             #region TargetInstance template logic
@@ -1357,7 +1395,6 @@ namespace Assets.Entities
             if (TargetLetter == "a")
             {
                 WarriorTarBase.ProtectionSponser= OwnerInstance;
-
             }
             if (TargetLetter == "b")
             {
@@ -1380,16 +1417,33 @@ namespace Assets.Entities
                 AssasinTarBase.ProtectionSponser = OwnerInstance; ;
             }
             #endregion
-            #region Clean base templates
-            WarriorTarBase = null; //This is made null so that other can reuse it
-            TankTarBase = null;
-            RangeTarBase = null;
-            MageTarBase = null;
-            ControllerTarBase = null;
-            AssasinTarBase = null;
-            #endregion
-
-            return false;
+            if (RoundOver == true)
+            {
+                if (TargetLetter == "a")
+                {
+                    WarriorTarBase.ProtectionSponser = null;
+                }
+                if (TargetLetter == "b")
+                {
+                    TankTarBase.ProtectionSponser = null; 
+                }
+                if (TargetLetter == "c")
+                {
+                    RangeTarBase.ProtectionSponser = null; 
+                }
+                if (TargetLetter == "d")
+                {
+                    MageTarBase.ProtectionSponser = null; 
+                }
+                if (TargetLetter == "e")
+                {
+                    ControllerTarBase.ProtectionSponser = null;
+                }
+                if (TargetLetter == "f")
+                {
+                    AssasinTarBase.ProtectionSponser = null;
+                }
+            }
         }
         public object Protected(object TargetInstance) //this must return the protector
         {
@@ -1423,17 +1477,9 @@ namespace Assets.Entities
                 sponser = AssasinTarBase.ProtectionSponser;
             }
             #endregion
-            #region Clean base templates
-            WarriorTarBase = null; //This is made null so that other can reuse it
-            TankTarBase = null;
-            RangeTarBase = null;
-            MageTarBase = null;
-            ControllerTarBase = null;
-            AssasinTarBase = null;
-            #endregion
             return sponser;
         }
-        public bool Revigorate(object CharacterInstance, object TargetInstance)
+        public void Revigorate(object CharacterInstance, object TargetInstance)
         {
             #region TargetInstance template logic
 
@@ -1469,15 +1515,6 @@ namespace Assets.Entities
                 TargetInstance = AssasinTarBase;
             }
             #endregion
-            #region Clean base templates
-            WarriorTarBase = null; //This is made null so that other can reuse it
-            TankTarBase = null;
-            RangeTarBase = null;
-            MageTarBase = null;
-            ControllerTarBase = null;
-            AssasinTarBase = null;
-            #endregion
-            return false;
         }
         public void HealVictim(object TargetInstance)
         {
@@ -1523,14 +1560,6 @@ namespace Assets.Entities
                 TargetInstance = AssasinCBase;
             }
             #endregion
-            #region Clean base templates
-            WarriorTarBase = null; //This is made null so that other can reuse it
-            TankTarBase = null;
-            RangeTarBase = null;
-            MageTarBase = null;
-            ControllerTarBase = null;
-            AssasinTarBase = null;
-            #endregion
 
             if (true/*Round over*/)
             {
@@ -1561,7 +1590,7 @@ namespace Assets.Entities
                 }
             }
         }
-        public bool GodsBlessing(object CharacterInstance, List<string> Allies)
+        public void GodsBlessing(object CharacterInstance, List<string> Allies)
         {
             throw new NotImplementedException();
         }
@@ -1888,7 +1917,7 @@ namespace Assets.Entities
                 set
                 {
                     if (ExpPoints < 0) ExpPoints = 0;
-                    if (BattleCalculate == true/*This means characters can level up durning battle*/)
+                    if (RoundOver == true/*This means characters can level up durning battle*/)
                     {
                         Instance.ExpPoints += NewEarnedXp;
                     }
@@ -1920,7 +1949,7 @@ namespace Assets.Entities
                 get { return EarnedXp; }
                 set
                 {
-                    if (BattleCalculate == false/*This means characters can level up durning battle*/)
+                    if (RoundOver == false/*This means characters can level up durning battle*/)
                     {
                         EarnedXp=false;
                     }
@@ -2033,7 +2062,7 @@ namespace Assets.Entities
             }
 
 
-            public int DamageGiven(object CharacterInstance)
+            public int DamageGiven()
             {
                 
                 int damageGiven = 0;
@@ -2047,94 +2076,6 @@ namespace Assets.Entities
                     Random r = new Random();
                     damageGiven = r.Next(3, 7);
                 }
-                if (BattleCalculate == true)
-                {
-                    return damageGiven; //This was put here so that it escapes the method all together if an action is still in calculation
-                }
-
-                if (Instance.PolishWeapon() == true) damageGiven = (int)(damageGiven * Instance.PowerBuffPercent);// this is to work the polish buff
-
-                //The code below needs to be here because true damage doesn't have any logic 
-                #region template logic
-                object finisher = WarriorTarBase;
-
-                if (CharacterInstance.GetType() == typeof(CharacterPersona.WarriorTemplate))
-                {
-                    CharacterPersona.WarriorTemplate starter = (CharacterPersona.WarriorTemplate)CharacterInstance;
-                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
-                    else starter.HealthLoss(damageGiven);
-                    CharacterInstance = starter;
-                }
-                if (CharacterInstance.GetType() == typeof(CharacterPersona.TankWarriorTemplate))
-                {
-                    CharacterPersona.TankWarriorTemplate starter = (CharacterPersona.TankWarriorTemplate)CharacterInstance;
-                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
-                    else starter.HealthLoss(damageGiven);
-                    CharacterInstance = starter;
-                }
-                if (CharacterInstance.GetType() == typeof(CharacterPersona.RangeTemplate))
-                {
-                    CharacterPersona.RangeTemplate starter = (CharacterPersona.RangeTemplate)CharacterInstance;
-                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
-                    else starter.HealthLoss(damageGiven);
-                    CharacterInstance = starter;
-                }
-                if (CharacterInstance.GetType() == typeof(CharacterPersona.MageTemplate))
-                {
-                    CharacterPersona.MageTemplate starter = (CharacterPersona.MageTemplate)CharacterInstance;
-                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
-                    else starter.HealthLoss(damageGiven);
-                    CharacterInstance = starter;
-                }
-                if (CharacterInstance.GetType() == typeof(CharacterPersona.ControllerTemplate))
-                {
-                    CharacterPersona.ControllerTemplate starter = (CharacterPersona.ControllerTemplate)CharacterInstance;
-                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
-                    else starter.HealthLoss(damageGiven);
-                    CharacterInstance = starter;
-                }
-                if (CharacterInstance.GetType() == typeof(CharacterPersona.AssasinTemplate))
-                {
-                    CharacterPersona.AssasinTemplate starter = (CharacterPersona.AssasinTemplate)CharacterInstance;
-                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
-                    else starter.HealthLoss(damageGiven);
-                    CharacterInstance = starter;
-                }
-                #endregion
-                #region TargetInstance template logic
-
-                string TargetLetter = TemplateTarget(finisher);
-                if (TargetLetter == "a")
-                {
-                    WarriorTarBase.HealthLoss(damageGiven);
-                    CharacterInstance = WarriorTarBase;
-                }
-                if (TargetLetter == "b")
-                {
-                    TankTarBase.HealthLoss(damageGiven);
-                    CharacterInstance = TankTarBase;
-                }
-                if (TargetLetter == "c")
-                {
-                    RangeTarBase.HealthLoss(damageGiven);
-                    CharacterInstance = RangeTarBase;
-                }
-                if (TargetLetter == "d")
-                {
-                    MageTarBase.HealthLoss(damageGiven);
-                    CharacterInstance = MageTarBase;
-                }
-                if (TargetLetter == "e")
-                {
-                    ControllerTarBase.HealthLoss(damageGiven);
-                    CharacterInstance = ControllerTarBase;
-                }
-                if (TargetLetter == "f")
-                {
-                    AssasinTarBase.HealthLoss(damageGiven);
-                    CharacterInstance = AssasinTarBase;
-                }
-                #endregion
 
                 return damageGiven;
 
@@ -2343,7 +2284,7 @@ namespace Assets.Entities
                 get { return ExpPoints; }
                 set
                 {
-                    if (BattleCalculate == true/*This means characters can level up durning battle*/)
+                    if (RoundOver == true/*This means characters can level up durning battle*/)
                     {
                         Instance.ExpPoints += NewEarnedXp;
                     }
@@ -2374,7 +2315,7 @@ namespace Assets.Entities
                 get { return EarnedXp; }
                 set
                 {
-                    if (BattleCalculate == false)
+                    if (RoundOver == false)
                     {
                         EarnedXp=false;
                     }
@@ -2487,7 +2428,7 @@ namespace Assets.Entities
                 throw new NotImplementedException();
             }
 
-            public int DamageGiven(object CharacterInstance)
+            public int DamageGiven()
             {
                 int damageGiven = 0;
                 if (Foe == false)
@@ -2500,94 +2441,6 @@ namespace Assets.Entities
                     Random r = new Random();
                     damageGiven = r.Next(2, 5);
                 }
-
-                if (Instance.PolishWeapon() == true) damageGiven = (int)(damageGiven * Instance.PowerBuffPercent);// this is to work the polish buff
-
-                if (BattleCalculate == true)
-                {
-                    return damageGiven; //This was put here so that it escapes the method all together if an action is still in calculation
-                }
-
-                #region template logic
-                object finisher = WarriorTarBase;
-
-                if (CharacterInstance.GetType() == typeof(CharacterPersona.WarriorTemplate))
-                {
-                    CharacterPersona.WarriorTemplate starter = (CharacterPersona.WarriorTemplate)CharacterInstance;
-                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
-                    else starter.HealthLoss(damageGiven);
-                    CharacterInstance = starter;
-                }
-                if (CharacterInstance.GetType() == typeof(CharacterPersona.TankWarriorTemplate))
-                {
-                    CharacterPersona.TankWarriorTemplate starter = (CharacterPersona.TankWarriorTemplate)CharacterInstance;
-                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
-                    else starter.HealthLoss(damageGiven);
-                    CharacterInstance = starter;
-                }
-                if (CharacterInstance.GetType() == typeof(CharacterPersona.RangeTemplate))
-                {
-                    CharacterPersona.RangeTemplate starter = (CharacterPersona.RangeTemplate)CharacterInstance;
-                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
-                    else starter.HealthLoss(damageGiven);
-                    CharacterInstance = starter;
-                }
-                if (CharacterInstance.GetType() == typeof(CharacterPersona.MageTemplate))
-                {
-                    CharacterPersona.MageTemplate starter = (CharacterPersona.MageTemplate)CharacterInstance;
-                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
-                    else starter.HealthLoss(damageGiven);
-                    CharacterInstance = starter;
-                }
-                if (CharacterInstance.GetType() == typeof(CharacterPersona.ControllerTemplate))
-                {
-                    CharacterPersona.ControllerTemplate starter = (CharacterPersona.ControllerTemplate)CharacterInstance;
-                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
-                    else starter.HealthLoss(damageGiven);
-                    CharacterInstance = starter;
-                }
-                if (CharacterInstance.GetType() == typeof(CharacterPersona.AssasinTemplate))
-                {
-                    CharacterPersona.AssasinTemplate starter = (CharacterPersona.AssasinTemplate)CharacterInstance;
-                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
-                    else starter.HealthLoss(damageGiven);
-                    CharacterInstance = starter;
-                }
-                #endregion
-                #region TargetInstance template logic
-
-                string TargetLetter = TemplateTarget(finisher);
-                if (TargetLetter == "a")
-                {
-                    WarriorTarBase.HealthLoss(damageGiven);
-                    CharacterInstance = WarriorTarBase;
-                }
-                if (TargetLetter == "b")
-                {
-                    TankTarBase.HealthLoss(damageGiven);
-                    CharacterInstance = TankTarBase;
-                }
-                if (TargetLetter == "c")
-                {
-                    RangeTarBase.HealthLoss(damageGiven);
-                    CharacterInstance = RangeTarBase;
-                }
-                if (TargetLetter == "d")
-                {
-                    MageTarBase.HealthLoss(damageGiven);
-                    CharacterInstance = MageTarBase;
-                }
-                if (TargetLetter == "e")
-                {
-                    ControllerTarBase.HealthLoss(damageGiven);
-                    CharacterInstance = ControllerTarBase;
-                }
-                if (TargetLetter == "f")
-                {
-                    AssasinTarBase.HealthLoss(damageGiven);
-                    CharacterInstance = AssasinTarBase;
-                }
-                #endregion
 
                 return damageGiven;
             }
@@ -2798,7 +2651,7 @@ namespace Assets.Entities
                 get { return ExpPoints; }
                 set
                 {
-                    if (BattleCalculate == true/*This means characters can level up durning battle*/)
+                    if (RoundOver == true/*This means characters can level up durning battle*/)
                     {
                         Instance.ExpPoints += NewEarnedXp;
                     }
@@ -2829,7 +2682,7 @@ namespace Assets.Entities
                 get { return EarnedXp; }
                 set
                 {
-                    if (BattleCalculate == false)
+                    if (RoundOver == false)
                     {
                         EarnedXp=false;
                     }
@@ -2915,7 +2768,7 @@ namespace Assets.Entities
                 throw new NotImplementedException();
             }
 
-            public int DamageGiven(object CharacterInstance)
+            public int DamageGiven()
             {
                 int damageGiven = 0;
                 if (Foe == false)
@@ -2928,95 +2781,6 @@ namespace Assets.Entities
                     Random r = new Random();
                     damageGiven = r.Next(2, 7);
                 }
-
-                if (Instance.PolishWeapon() == true) damageGiven = (int)(damageGiven * Instance.PowerBuffPercent);// this is to work the polish buff
-
-                if (BattleCalculate == true)
-                {
-                    return damageGiven; //This was put here so that it escapes the method all together if an action is still in calculation
-                }
-
-                #region template logic
-                object finisher = WarriorTarBase;
-
-                if (CharacterInstance.GetType() == typeof(CharacterPersona.WarriorTemplate))
-                {
-                    CharacterPersona.WarriorTemplate starter = (CharacterPersona.WarriorTemplate)CharacterInstance;
-                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
-                    else starter.HealthLoss(damageGiven);
-                    CharacterInstance = starter;
-                }
-                if (CharacterInstance.GetType() == typeof(CharacterPersona.TankWarriorTemplate))
-                {
-                    CharacterPersona.TankWarriorTemplate starter = (CharacterPersona.TankWarriorTemplate)CharacterInstance;
-                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
-                    else starter.HealthLoss(damageGiven);
-                    CharacterInstance = starter;
-                }
-                if (CharacterInstance.GetType() == typeof(CharacterPersona.RangeTemplate))
-                {
-                    CharacterPersona.RangeTemplate starter = (CharacterPersona.RangeTemplate)CharacterInstance;
-                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
-                    else starter.HealthLoss(damageGiven);
-                    CharacterInstance = starter;
-                }
-                if (CharacterInstance.GetType() == typeof(CharacterPersona.MageTemplate))
-                {
-                    CharacterPersona.MageTemplate starter = (CharacterPersona.MageTemplate)CharacterInstance;
-                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
-                    else starter.HealthLoss(damageGiven);
-                    CharacterInstance = starter;
-                }
-                if (CharacterInstance.GetType() == typeof(CharacterPersona.ControllerTemplate))
-                {
-                    CharacterPersona.ControllerTemplate starter = (CharacterPersona.ControllerTemplate)CharacterInstance;
-                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
-                    else starter.HealthLoss(damageGiven);
-                    CharacterInstance = starter;
-                }
-                if (CharacterInstance.GetType() == typeof(CharacterPersona.AssasinTemplate))
-                {
-                    CharacterPersona.AssasinTemplate starter = (CharacterPersona.AssasinTemplate)CharacterInstance;
-                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
-                    else starter.HealthLoss(damageGiven);
-                    CharacterInstance = starter;
-                }
-                #endregion
-                #region TargetInstance template logic
-
-                string TargetLetter = TemplateTarget(finisher);
-                if (TargetLetter == "a")
-                {
-                    WarriorTarBase.HealthLoss(damageGiven);
-                    CharacterInstance = WarriorTarBase;
-                }
-                if (TargetLetter == "b")
-                {
-                    TankTarBase.HealthLoss(damageGiven);
-                    CharacterInstance = TankTarBase;
-                }
-                if (TargetLetter == "c")
-                {
-                    RangeTarBase.HealthLoss(damageGiven);
-                    CharacterInstance = RangeTarBase;
-                }
-                if (TargetLetter == "d")
-                {
-                    MageTarBase.HealthLoss(damageGiven);
-                    CharacterInstance = MageTarBase;
-                }
-                if (TargetLetter == "e")
-                {
-                    ControllerTarBase.HealthLoss(damageGiven);
-                    CharacterInstance = ControllerTarBase;
-                }
-                if (TargetLetter == "f")
-                {
-                    AssasinTarBase.HealthLoss(damageGiven);
-                    CharacterInstance = AssasinTarBase;
-                }
-                #endregion
-
                 return damageGiven;
             }
 
@@ -3285,7 +3049,7 @@ namespace Assets.Entities
                 get { return ExpPoints; }
                 set
                 {
-                    if ( BattleCalculate== true/*This means characters can level up durning battle*/)
+                    if ( RoundOver== true/*This means characters can level up durning battle*/)
                     {
                         Instance.ExpPoints += NewEarnedXp;
                     }
@@ -3316,7 +3080,7 @@ namespace Assets.Entities
                 get { return EarnedXp; }
                 set
                 {
-                    if (BattleCalculate == false/*This means characters can level up durning battle*/)
+                    if (RoundOver == false/*This means characters can level up durning battle*/)
                     {
                         EarnedXp=false;
                     }
@@ -3442,7 +3206,7 @@ namespace Assets.Entities
                 throw new NotImplementedException();
             }
 
-            public int DamageGiven(object CharacterInstance)
+            public int DamageGiven()
             {
                 int damageGiven = 0;
                 if (Foe == false)
@@ -3455,95 +3219,6 @@ namespace Assets.Entities
                     Random r = new Random();
                     damageGiven = r.Next(5, 11);
                 }
-
-                if (Instance.Chosen() == true) damageGiven = (int)(damageGiven * Instance.PowerBuffPercent);// this is to work the Chosen buff Controllers dont get a physical buff
-
-
-                if (BattleCalculate == true)
-                {
-                    return damageGiven; //This was put here so that it escapes the method all together if an action is still in calculation
-                }
-
-                #region template logic
-                object finisher = WarriorTarBase;
-
-                if (CharacterInstance.GetType() == typeof(CharacterPersona.WarriorTemplate))
-                {
-                    CharacterPersona.WarriorTemplate starter = (CharacterPersona.WarriorTemplate)CharacterInstance;
-                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
-                    else starter.HealthLoss(damageGiven);
-                    CharacterInstance = starter;
-                }
-                if (CharacterInstance.GetType() == typeof(CharacterPersona.TankWarriorTemplate))
-                {
-                    CharacterPersona.TankWarriorTemplate starter = (CharacterPersona.TankWarriorTemplate)CharacterInstance;
-                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
-                    else starter.HealthLoss(damageGiven);
-                    CharacterInstance = starter;
-                }
-                if (CharacterInstance.GetType() == typeof(CharacterPersona.RangeTemplate))
-                {
-                    CharacterPersona.RangeTemplate starter = (CharacterPersona.RangeTemplate)CharacterInstance;
-                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
-                    else starter.HealthLoss(damageGiven);
-                    CharacterInstance = starter;
-                }
-                if (CharacterInstance.GetType() == typeof(CharacterPersona.MageTemplate))
-                {
-                    CharacterPersona.MageTemplate starter = (CharacterPersona.MageTemplate)CharacterInstance;
-                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
-                    else starter.HealthLoss(damageGiven);
-                    CharacterInstance = starter;
-                }
-                if (CharacterInstance.GetType() == typeof(CharacterPersona.ControllerTemplate))
-                {
-                    CharacterPersona.ControllerTemplate starter = (CharacterPersona.ControllerTemplate)CharacterInstance;
-                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
-                    else starter.HealthLoss(damageGiven);
-                    CharacterInstance = starter;
-                }
-                if (CharacterInstance.GetType() == typeof(CharacterPersona.AssasinTemplate))
-                {
-                    CharacterPersona.AssasinTemplate starter = (CharacterPersona.AssasinTemplate)CharacterInstance;
-                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
-                    else starter.HealthLoss(damageGiven);
-                    CharacterInstance = starter;
-                }
-                #endregion
-                #region TargetInstance template logic
-
-                string TargetLetter = TemplateTarget(finisher);
-                if (TargetLetter == "a")
-                {
-                    WarriorTarBase.HealthLoss(damageGiven);
-                    CharacterInstance = WarriorTarBase;
-                }
-                if (TargetLetter == "b")
-                {
-                    TankTarBase.HealthLoss(damageGiven);
-                    CharacterInstance = TankTarBase;
-                }
-                if (TargetLetter == "c")
-                {
-                    RangeTarBase.HealthLoss(damageGiven);
-                    CharacterInstance = RangeTarBase;
-                }
-                if (TargetLetter == "d")
-                {
-                    MageTarBase.HealthLoss(damageGiven);
-                    CharacterInstance = MageTarBase;
-                }
-                if (TargetLetter == "e")
-                {
-                    ControllerTarBase.HealthLoss(damageGiven);
-                    CharacterInstance = ControllerTarBase;
-                }
-                if (TargetLetter == "f")
-                {
-                    AssasinTarBase.HealthLoss(damageGiven);
-                    CharacterInstance = AssasinTarBase;
-                }
-                #endregion
 
                 return damageGiven;
             }
@@ -3753,7 +3428,7 @@ namespace Assets.Entities
                 get { return ExpPoints; }
                 set
                 {
-                    if (BattleCalculate == true/*This means characters can level up durning battle*/)
+                    if (RoundOver == true/*This means characters can level up durning battle*/)
                     {
                         Instance.ExpPoints += NewEarnedXp;
                     }
@@ -3784,7 +3459,7 @@ namespace Assets.Entities
                 get { return EarnedXp; }
                 set
                 {
-                    if (BattleCalculate == false)
+                    if (RoundOver == false)
                     {
                         EarnedXp=false;
                     }
@@ -3874,7 +3549,7 @@ namespace Assets.Entities
                 throw new NotImplementedException();
             }
 
-            public int DamageGiven(object CharacterInstance)
+            public int DamageGiven()
             {
                 int damageGiven = 0;
                 if (Foe == false)
@@ -3887,94 +3562,6 @@ namespace Assets.Entities
                     Random r = new Random();
                     damageGiven = r.Next(1, 3);
                 }
-
-                if (Instance.Chosen() == true) damageGiven = (int)(damageGiven * Instance.PowerBuffPercent);// this is to work the Chosen buff Controllers dont get a physical buff
-
-                if (BattleCalculate == true)
-                {
-                    return damageGiven; //This was put here so that it escapes the method all together if an action is still in calculation
-                }
-
-                #region template logic
-                object finisher = WarriorTarBase;
-
-                if (CharacterInstance.GetType() == typeof(CharacterPersona.WarriorTemplate))
-                {
-                    CharacterPersona.WarriorTemplate starter = (CharacterPersona.WarriorTemplate)CharacterInstance;
-                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
-                    else starter.HealthLoss(damageGiven);
-                    CharacterInstance = starter;
-                }
-                if (CharacterInstance.GetType() == typeof(CharacterPersona.TankWarriorTemplate))
-                {
-                    CharacterPersona.TankWarriorTemplate starter = (CharacterPersona.TankWarriorTemplate)CharacterInstance;
-                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
-                    else starter.HealthLoss(damageGiven);
-                    CharacterInstance = starter;
-                }
-                if (CharacterInstance.GetType() == typeof(CharacterPersona.RangeTemplate))
-                {
-                    CharacterPersona.RangeTemplate starter = (CharacterPersona.RangeTemplate)CharacterInstance;
-                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
-                    else starter.HealthLoss(damageGiven);
-                    CharacterInstance = starter;
-                }
-                if (CharacterInstance.GetType() == typeof(CharacterPersona.MageTemplate))
-                {
-                    CharacterPersona.MageTemplate starter = (CharacterPersona.MageTemplate)CharacterInstance;
-                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
-                    else starter.HealthLoss(damageGiven);
-                    CharacterInstance = starter;
-                }
-                if (CharacterInstance.GetType() == typeof(CharacterPersona.ControllerTemplate))
-                {
-                    CharacterPersona.ControllerTemplate starter = (CharacterPersona.ControllerTemplate)CharacterInstance;
-                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
-                    else starter.HealthLoss(damageGiven);
-                    CharacterInstance = starter;
-                }
-                if (CharacterInstance.GetType() == typeof(CharacterPersona.AssasinTemplate))
-                {
-                    CharacterPersona.AssasinTemplate starter = (CharacterPersona.AssasinTemplate)CharacterInstance;
-                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
-                    else starter.HealthLoss(damageGiven);
-                    CharacterInstance = starter;
-                }
-                #endregion
-                #region TargetInstance template logic
-
-                string TargetLetter = TemplateTarget(finisher);
-                if (TargetLetter == "a")
-                {
-                    WarriorTarBase.HealthLoss(damageGiven);
-                    CharacterInstance = WarriorTarBase;
-                }
-                if (TargetLetter == "b")
-                {
-                    TankTarBase.HealthLoss(damageGiven);
-                    CharacterInstance = TankTarBase;
-                }
-                if (TargetLetter == "c")
-                {
-                    RangeTarBase.HealthLoss(damageGiven);
-                    CharacterInstance = RangeTarBase;
-                }
-                if (TargetLetter == "d")
-                {
-                    MageTarBase.HealthLoss(damageGiven);
-                    CharacterInstance = MageTarBase;
-                }
-                if (TargetLetter == "e")
-                {
-                    ControllerTarBase.HealthLoss(damageGiven);
-                    CharacterInstance = ControllerTarBase;
-                }
-                if (TargetLetter == "f")
-                {
-                    AssasinTarBase.HealthLoss(damageGiven);
-                    CharacterInstance = AssasinTarBase;
-                }
-                #endregion
 
                 return damageGiven;
             }
@@ -4186,7 +3773,7 @@ namespace Assets.Entities
                 get { return ExpPoints; }
                 set
                 {
-                    if (BattleCalculate == true/*This means characters can level up durning battle*/)
+                    if (RoundOver == true/*This means characters can level up durning battle*/)
                     {
                         Instance.ExpPoints += NewEarnedXp;
                     }
@@ -4217,7 +3804,7 @@ namespace Assets.Entities
                 get { return EarnedXp; }
                 set
                 {
-                    if (BattleCalculate == false)
+                    if (RoundOver == false)
                     {
                         EarnedXp=false;
                     }
@@ -4304,7 +3891,7 @@ namespace Assets.Entities
                 throw new NotImplementedException();
             }
 
-            public int DamageGiven(object CharacterInstance)
+            public int DamageGiven()
             {
                 int damageGiven = 0;
                 if (Foe == false)
@@ -4317,95 +3904,7 @@ namespace Assets.Entities
                     Random r = new Random();
                     damageGiven = r.Next(1, 11);
                 }
-
-                if (Instance.PolishWeapon() == true) damageGiven = (int)(damageGiven * Instance.PowerBuffPercent);// this is to work the polish buff
-
-                if (BattleCalculate == true)
-                {
-                    return damageGiven; //This was put here so that it escapes the method all together if an action is still in calculation
-                }
-
-                #region template logic
-                object finisher = WarriorTarBase;
-
-                if (CharacterInstance.GetType() == typeof(CharacterPersona.WarriorTemplate))
-                {
-                    CharacterPersona.WarriorTemplate starter = (CharacterPersona.WarriorTemplate)CharacterInstance;
-                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
-                    else starter.HealthLoss(damageGiven);
-                    CharacterInstance = starter;
-                }
-                if (CharacterInstance.GetType() == typeof(CharacterPersona.TankWarriorTemplate))
-                {
-                    CharacterPersona.TankWarriorTemplate starter = (CharacterPersona.TankWarriorTemplate)CharacterInstance;
-                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
-                    else starter.HealthLoss(damageGiven);
-                    CharacterInstance = starter;
-                }
-                if (CharacterInstance.GetType() == typeof(CharacterPersona.RangeTemplate))
-                {
-                    CharacterPersona.RangeTemplate starter = (CharacterPersona.RangeTemplate)CharacterInstance;
-                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
-                    else starter.HealthLoss(damageGiven);
-                    CharacterInstance = starter;
-                }
-                if (CharacterInstance.GetType() == typeof(CharacterPersona.MageTemplate))
-                {
-                    CharacterPersona.MageTemplate starter = (CharacterPersona.MageTemplate)CharacterInstance;
-                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
-                    else starter.HealthLoss(damageGiven);
-                    CharacterInstance = starter;
-                }
-                if (CharacterInstance.GetType() == typeof(CharacterPersona.ControllerTemplate))
-                {
-                    CharacterPersona.ControllerTemplate starter = (CharacterPersona.ControllerTemplate)CharacterInstance;
-                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
-                    else starter.HealthLoss(damageGiven);
-                    CharacterInstance = starter;
-                }
-                if (CharacterInstance.GetType() == typeof(CharacterPersona.AssasinTemplate))
-                {
-                    CharacterPersona.AssasinTemplate starter = (CharacterPersona.AssasinTemplate)CharacterInstance;
-                    if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
-                    else starter.HealthLoss(damageGiven);
-                    CharacterInstance = starter;
-                }
-                #endregion
-                #region TargetInstance template logic
-
-                string TargetLetter = TemplateTarget(finisher);
-                if (TargetLetter == "a")
-                {
-                    WarriorTarBase.HealthLoss(damageGiven);
-                    CharacterInstance = WarriorTarBase;
-                }
-                if (TargetLetter == "b")
-                {
-                    TankTarBase.HealthLoss(damageGiven);
-                    CharacterInstance = TankTarBase;
-                }
-                if (TargetLetter == "c")
-                {
-                    RangeTarBase.HealthLoss(damageGiven);
-                    CharacterInstance = RangeTarBase;
-                }
-                if (TargetLetter == "d")
-                {
-                    MageTarBase.HealthLoss(damageGiven);
-                    CharacterInstance = MageTarBase;
-                }
-                if (TargetLetter == "e")
-                {
-                    ControllerTarBase.HealthLoss(damageGiven);
-                    CharacterInstance = ControllerTarBase;
-                }
-                if (TargetLetter == "f")
-                {
-                    AssasinTarBase.HealthLoss(damageGiven);
-                    CharacterInstance = AssasinTarBase;
-                }
-                #endregion
-
+               
                 return damageGiven;
             }
 
