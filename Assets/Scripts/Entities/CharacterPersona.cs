@@ -58,7 +58,7 @@ namespace Assets.Entities
         internal int ExperienceLevel { get { return ExperienceLevel;  } set { if (ExperienceLevel < 0) ExperienceLevel = 0; } }
         int shield { get { return shield; } set { if (shield < 0) shield = 0; shield = 0; } } //We are defining it (not ICharacterTraits) here cause it isn't used by everyone often but can be, and its 0 for everyone starting off
         public static bool BattleCalculate { get; set; }
-        bool RemoveEffects { get; set; }
+        bool RemoveDebuffEffects { get; set; }
 
         #region Template Logic
         //The code below was created because i was tired of writting the template code over and over. Itworks much more effeciently. Make sure these arent set 
@@ -497,12 +497,17 @@ namespace Assets.Entities
             #endregion
             #region TargetInstance template logic
 
+            
             string TargetLetter = TemplateTarget(TargetInstance);
             if (TargetLetter == "a")
             {
                 shieldcache = WarriorTarBase.shield;
                 armourcahe = WarriorTarBase.Armour;
                 shieldcache -= physicalDamage; WarriorTarBase.shield -= physicalDamage;
+
+                if (WarriorTarBase.ProtectionSponser != null) WarriorTarBase = (WarriorTemplate)WarriorTarBase.ProtectionSponser;
+                //The above code is just an arbituary convertion. I didnt want to make a third template since its just one value thats changing
+
                 //the code below ensures that the sheild is removed first
                 if (shieldcache < 0)//this asks if there is no more sheild left
                 { 
@@ -519,12 +524,16 @@ namespace Assets.Entities
                     WarriorTarBase.shield = shieldcache;
                 }
                 TargetInstance = WarriorTarBase;
+               
             }
             if (TargetLetter == "b")
             {
                 shieldcache = TankTarBase.shield;
                 armourcahe = TankTarBase.Armour;
                 shieldcache -= physicalDamage; TankTarBase.shield -= physicalDamage;
+
+                if (TankTarBase.ProtectionSponser != null) TankTarBase = (TankWarriorTemplate)TankTarBase.ProtectionSponser;
+
                 if (shieldcache < 0)//this asks if there is no more sheild left
                 {
                     armourcahe += shieldcache;// here the negative value adds with the positive- following negative number addition laws i hope
@@ -546,6 +555,9 @@ namespace Assets.Entities
                 shieldcache = RangeTarBase.shield;
                 armourcahe = RangeTarBase.Armour;
                 shieldcache -= physicalDamage; RangeTarBase.shield -= physicalDamage;
+
+                if (RangeTarBase.ProtectionSponser != null) RangeTarBase = (RangeTemplate)RangeTarBase.ProtectionSponser;
+
                 if (shieldcache < 0)//this asks if there is no more sheild left
                 {
                     armourcahe += shieldcache;// here the negative value adds with the positive- following negative number addition laws i hope
@@ -567,6 +579,9 @@ namespace Assets.Entities
                 shieldcache = MageTarBase.shield;
                 armourcahe = MageTarBase.Armour;
                 shieldcache -= physicalDamage; MageTarBase.shield -= physicalDamage;
+
+                if (MageTarBase.ProtectionSponser != null) MageTarBase = (MageTemplate)MageTarBase.ProtectionSponser;
+
                 if (shieldcache < 0)//this asks if there is no more sheild left
                 {
                     armourcahe += shieldcache;// here the negative value adds with the positive- following negative number addition laws i hope
@@ -588,6 +603,9 @@ namespace Assets.Entities
                 shieldcache = ControllerTarBase.shield;
                 armourcahe = ControllerTarBase.Armour;
                 shieldcache -= physicalDamage; ControllerTarBase.shield -= physicalDamage;
+
+                if (ControllerTarBase.ProtectionSponser != null) ControllerTarBase = (ControllerTemplate)ControllerTarBase.ProtectionSponser;
+
                 if (shieldcache < 0)//this asks if there is no more sheild left
                 {
                     armourcahe += shieldcache;// here the negative value adds with the positive- following negative number addition laws i hope
@@ -609,6 +627,9 @@ namespace Assets.Entities
                 shieldcache = AssasinTarBase.shield;
                 armourcahe = AssasinTarBase.Armour;
                 shieldcache -= physicalDamage; AssasinTarBase.shield -= physicalDamage;
+
+                if (AssasinTarBase.ProtectionSponser != null) AssasinTarBase = (AssasinTemplate)AssasinTarBase.ProtectionSponser;
+
                 if (shieldcache < 0)//this asks if there is no more sheild left
                 {
                     armourcahe += shieldcache;// here the negative value adds with the positive- following negative number addition laws i hope
@@ -625,6 +646,15 @@ namespace Assets.Entities
                 }
                 TargetInstance = AssasinTarBase;
             }
+            #endregion
+
+            #region Clean base templates
+            WarriorTarBase = null; //This is made null so that other can reuse it. Notice this should happen whenever the base templates change
+            TankTarBase = null;
+            RangeTarBase = null;
+            MageTarBase = null;
+            ControllerTarBase = null;
+            AssasinTarBase = null;
             #endregion
 
             BattleCalculate = false; //This false to return it to normal
@@ -798,6 +828,15 @@ namespace Assets.Entities
             }
             #endregion
 
+            #region Clean base templates
+            WarriorTarBase = null; //This is made null so that other can reuse it. Notice this should happen whenever the base templates change
+            TankTarBase = null;
+            RangeTarBase = null;
+            MageTarBase = null;
+            ControllerTarBase = null;
+            AssasinTarBase = null;
+            #endregion
+
             BattleCalculate = false; //This is false to return it to normal
 
             return false;//I made this false because the instance isn't getting the effect, but the enemyInstance
@@ -842,6 +881,15 @@ namespace Assets.Entities
                 AssasinTarBase.HealthLoss((int)(AssasinTarBase.Health * drainPercent));
                 TargetInstance = AssasinTarBase;
             }
+            #endregion
+
+            #region Clean base templates
+            WarriorTarBase = null; //This is made null so that other can reuse it. Notice this should happen whenever the base templates change
+            TankTarBase = null;
+            RangeTarBase = null;
+            MageTarBase = null;
+            ControllerTarBase = null;
+            AssasinTarBase = null;
             #endregion
 
             BattleCalculate = false; 
@@ -1087,6 +1135,15 @@ namespace Assets.Entities
             }
             #endregion
 
+            #region Clean base templates
+            WarriorTarBase = null; //This is made null so that other can reuse it. Notice this should happen whenever the base templates change
+            TankTarBase = null;
+            RangeTarBase = null;
+            MageTarBase = null;
+            ControllerTarBase = null;
+            AssasinTarBase = null;
+            #endregion
+
             BattleCalculate = false; //This false to return it to normal
 
             return false;//I made this false because the instance isn't getting the effect, but the enemyInstance
@@ -1206,7 +1263,16 @@ namespace Assets.Entities
                     AssasinCBase.dodge += agileCache;
                 }
             }
-            
+
+            #region Clean base templates
+            WarriorTarBase = null; //This is made null so that other can reuse it. Notice this should happen whenever the base templates change
+            TankTarBase = null;
+            RangeTarBase = null;
+            MageTarBase = null;
+            ControllerTarBase = null;
+            AssasinTarBase = null;
+            #endregion
+
             return true;
         }
         public bool PolishWeapon()
@@ -1271,6 +1337,15 @@ namespace Assets.Entities
             }
             #endregion
             Protector(CharacterInstance, scapegoat);
+
+            #region Clean base templates
+            WarriorTarBase = null; //This is made null so that other can reuse it
+            TankTarBase = null;
+            RangeTarBase = null;
+            MageTarBase = null;
+            ControllerTarBase = null;
+            AssasinTarBase = null;
+            #endregion
             return false;
         }
         public bool Protector(object OwnerInstance, object TargetInstance)
@@ -1282,6 +1357,7 @@ namespace Assets.Entities
             if (TargetLetter == "a")
             {
                 WarriorTarBase.ProtectionSponser= OwnerInstance;
+
             }
             if (TargetLetter == "b")
             {
@@ -1304,6 +1380,15 @@ namespace Assets.Entities
                 AssasinTarBase.ProtectionSponser = OwnerInstance; ;
             }
             #endregion
+            #region Clean base templates
+            WarriorTarBase = null; //This is made null so that other can reuse it
+            TankTarBase = null;
+            RangeTarBase = null;
+            MageTarBase = null;
+            ControllerTarBase = null;
+            AssasinTarBase = null;
+            #endregion
+
             return false;
         }
         public object Protected(object TargetInstance) //this must return the protector
@@ -1338,12 +1423,61 @@ namespace Assets.Entities
                 sponser = AssasinTarBase.ProtectionSponser;
             }
             #endregion
+            #region Clean base templates
+            WarriorTarBase = null; //This is made null so that other can reuse it
+            TankTarBase = null;
+            RangeTarBase = null;
+            MageTarBase = null;
+            ControllerTarBase = null;
+            AssasinTarBase = null;
+            #endregion
             return sponser;
         }
-
         public bool Revigorate(object CharacterInstance, object TargetInstance)
         {
-            throw new NotImplementedException();
+            #region TargetInstance template logic
+
+            string TargetLetter = TemplateTarget(TargetInstance);
+            if (TargetLetter == "a")
+            {
+                WarriorTarBase.RemoveDebuffEffects=true;
+                TargetInstance = WarriorTarBase;
+            }
+            if (TargetLetter == "b")
+            {
+                TankTarBase.RemoveDebuffEffects=true;
+                TargetInstance = TankTarBase;
+            }
+            if (TargetLetter == "c")
+            {
+                RangeTarBase.RemoveDebuffEffects=true;
+                TargetInstance = RangeTarBase;
+            }
+            if (TargetLetter == "d")
+            {
+                MageTarBase.RemoveDebuffEffects=true;
+                TargetInstance = MageTarBase;
+            }
+            if (TargetLetter == "e")
+            {
+                ControllerTarBase.RemoveDebuffEffects=true;
+                TargetInstance = ControllerTarBase;
+            }
+            if (TargetLetter == "f")
+            {
+                AssasinTarBase.RemoveDebuffEffects=true;
+                TargetInstance = AssasinTarBase;
+            }
+            #endregion
+            #region Clean base templates
+            WarriorTarBase = null; //This is made null so that other can reuse it
+            TankTarBase = null;
+            RangeTarBase = null;
+            MageTarBase = null;
+            ControllerTarBase = null;
+            AssasinTarBase = null;
+            #endregion
+            return false;
         }
         public void HealVictim(object TargetInstance)
         {
@@ -1356,33 +1490,48 @@ namespace Assets.Entities
             {
                 HealingCache = (int)(WarriorCBase.Health * WarriorCBase.HealBuffPercent);
                 WarriorCBase.Health += HealingCache;
+                TargetInstance = WarriorCBase;
             }
             if (characterNumber == 2)
             {
                 HealingCache = (int)(TankCBase.Health * TankCBase.HealBuffPercent);
                 TankCBase.Health += HealingCache;
+                TargetInstance = TankCBase;
             }
             if (characterNumber == 3)
             {
                 HealingCache = (int)(RangeCBase.Health * RangeCBase.HealBuffPercent);
                 RangeCBase.Health += HealingCache;
+                TargetInstance = RangeCBase;
             }
             if (characterNumber == 4)
             {
                 HealingCache = (int)(MageCBase.Health * MageCBase.HealBuffPercent);
                 MageCBase.Health += HealingCache;
+                TargetInstance = MageCBase;
             }
             if (characterNumber == 5)
             {
                 HealingCache = (int)(ControllerCBase.Health * ControllerCBase.HealBuffPercent);
                 ControllerCBase.Health += HealingCache;
+                TargetInstance = ControllerCBase;
             }
             if (characterNumber == 6)
             {
                 HealingCache = (int)(AssasinCBase.Health * AssasinCBase.HealBuffPercent);
                 AssasinCBase.Health += HealingCache;
+                TargetInstance = AssasinCBase;
             }
             #endregion
+            #region Clean base templates
+            WarriorTarBase = null; //This is made null so that other can reuse it
+            TankTarBase = null;
+            RangeTarBase = null;
+            MageTarBase = null;
+            ControllerTarBase = null;
+            AssasinTarBase = null;
+            #endregion
+
             if (true/*Round over*/)
             {
                 HealingCache = -HealingCache; //this reverses the sign so that it simply undoes the added value

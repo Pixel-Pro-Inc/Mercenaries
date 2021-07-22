@@ -64,11 +64,11 @@ namespace Assets.Scripts.TraitInterface
         object Protected(object TargetInstance);//If hit, protector will take damage instead. but this isn't really given how damagegiven works. needs to be changed
         bool Revigorate(object CharacterInstance, object TargetInstance);
         void HealVictim(object TargetInstance); //this works on anyone, not just allies
-        bool GodsBlessing(object CharacterInstance, List<string> Allies);// I left it as allies so that its easier to deal with
+        bool GodsBlessing(object CharacterInstance, List<string> Allies);// I left it as allies so that its easier to deal with but really we dont need it as a parameter
 
         #endregion
         #region Debuff
-
+        // each of these has to have logic that asks if RemoverDebufeffects == true
         bool Slow(object CharacterInstance, object TargetInstance);
         bool Rooted(object CharacterInstance, object TargetInstance);
         bool WeakGrip(object CharacterInstance, object TargetInstance);
