@@ -59,7 +59,7 @@ namespace Assets.Scripts.TraitInterface
         bool Chosen();
         bool Aware();
         bool OnGuard(object CharacterInstance, object TargetInstance);
-        bool Provoking(object CharacterInstance, object TargetInstance); //this will be difficult
+        bool Provoking(object CharacterInstance); //this takes the character and uses the protector() method and its list of allies as targets
         bool Protector(object OwnerInstance, object TargetInstance); //this asks like a contract. The person who will protectand the protected. eg Protector( instance,Mister Froggo)
         object Protected(object TargetInstance);//If hit, protector will take damage instead. but this isn't really given how damagegiven works. needs to be changed
         bool Revigorate(object CharacterInstance, object TargetInstance);

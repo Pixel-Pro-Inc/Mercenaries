@@ -58,6 +58,7 @@ namespace Assets.Entities
         internal int ExperienceLevel { get { return ExperienceLevel;  } set { if (ExperienceLevel < 0) ExperienceLevel = 0; } }
         int shield { get { return shield; } set { if (shield < 0) shield = 0; shield = 0; } } //We are defining it (not ICharacterTraits) here cause it isn't used by everyone often but can be, and its 0 for everyone starting off
         public static bool BattleCalculate { get; set; }
+        bool RemoveEffects { get; set; }
 
         #region Template Logic
         //The code below was created because i was tired of writting the template code over and over. Itworks much more effeciently. Make sure these arent set 
@@ -1238,11 +1239,40 @@ namespace Assets.Entities
             throw new NotImplementedException();
         }
 
-        public bool Provoking(object CharacterInstance, object TargetInstance)
+        public bool Provoking(object CharacterInstance)
         {
-            throw new NotImplementedException();
-        }
+            object scapegoat = WarriorCBase;
+            #region CharacterInstance template logic
 
+            int characterNumber = TemplateCharacter(CharacterInstance);
+            if (characterNumber == 1)
+            {
+                scapegoat= WarriorCBase.Allies.Any();
+            }
+            if (characterNumber == 2)
+            {
+                scapegoat= TankCBase.Allies.Any();
+            }
+            if (characterNumber == 3)
+            {
+                scapegoat= RangeCBase.Allies.Any();
+            }
+            if (characterNumber == 4)
+            {
+                scapegoat= MageCBase.Allies.Any();
+            }
+            if (characterNumber == 5)
+            {
+                scapegoat= ControllerCBase.Allies.Any();
+            }
+            if (characterNumber == 6)
+            {
+                scapegoat= AssasinCBase.Allies.Any();
+            }
+            #endregion
+            Protector(CharacterInstance, scapegoat);
+            return false;
+        }
         public bool Protector(object OwnerInstance, object TargetInstance)
         {
             //this must assign themselves as the targets protector
@@ -1315,7 +1345,6 @@ namespace Assets.Entities
         {
             throw new NotImplementedException();
         }
-
         public void HealVictim(object TargetInstance)
         {
             int HealingCache = 0;
