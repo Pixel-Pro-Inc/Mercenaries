@@ -587,7 +587,7 @@ namespace Assets.Entities
             
             string TargetLetter = TemplateTarget(TargetInstance);
             if (TargetLetter == "a")
-            {
+            { //all the logic has to be removed here
                 shieldcache = WarriorTarBase.shield;
                 armourcahe = WarriorTarBase.Armour;
                 shieldcache -= physicalDamage; WarriorTarBase.shield -= physicalDamage;
