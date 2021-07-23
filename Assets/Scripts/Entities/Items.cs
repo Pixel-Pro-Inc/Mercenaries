@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Assets.Entities
 {
-    class Items: Cards
+    public class Items: Cards
     {
         //Here we will have items of all sorts.
         //Since it already inherts from cards it has passive traits already declared as well as cost.
@@ -57,28 +57,28 @@ namespace Assets.Entities
             {
                 #region MakeShift Switch for instances
 
-                if (CharacterInstance.GetType() == typeof(CharacterPersona.WarriorTemplate))
+                if (CharacterInstance.GetType() == typeof(WarriorTemplate))
                 {
-                    Ownertype= (CharacterPersona.WarriorTemplate)CharacterInstance;
+                    Ownertype= (WarriorTemplate)CharacterInstance;
                     Instance.Owner = 1;
                 }
-                if (CharacterInstance.GetType() == typeof(CharacterPersona.TankWarriorTemplate))
+                if (CharacterInstance.GetType() == typeof(TankWarriorTemplate))
                 {
                     Instance.Owner = 2;
                 }
-                if (CharacterInstance.GetType() == typeof(CharacterPersona.RangeTemplate))
+                if (CharacterInstance.GetType() == typeof(RangeTemplate))
                 {
                     Instance.Owner = 3;
                 }
-                if (CharacterInstance.GetType() == typeof(CharacterPersona.MageTemplate))
+                if (CharacterInstance.GetType() == typeof(MageTemplate))
                 {
                     Instance.Owner = 4;
                 }
-                if (CharacterInstance.GetType() == typeof(CharacterPersona.ControllerTemplate))
+                if (CharacterInstance.GetType() == typeof(ControllerTemplate))
                 {
                     Instance.Owner = 5;
                 }
-                if (CharacterInstance.GetType() == typeof(CharacterPersona.AssasinTemplate))
+                if (CharacterInstance.GetType() == typeof(AssasinTemplate))
                 {
                     Instance.Owner = 6;
                 }
@@ -98,8 +98,8 @@ namespace Assets.Entities
 
                 if (Owner == 1)
                 {
-                    CharacterPersona.WarriorTemplate.Instance.Health += (int)(CharacterPersona.WarriorTemplate.Instance.Health * 0.1);
-                    Instance.healthICache += (int)(CharacterPersona.WarriorTemplate.Instance.Health * 0.1);
+                    WarriorTemplate.Instance.Health += (int)(WarriorTemplate.Instance.Health * 0.1);
+                    Instance.healthICache += (int)(WarriorTemplate.Instance.Health * 0.1);
                 }
 
                 #endregion
@@ -107,16 +107,16 @@ namespace Assets.Entities
 
                 if (Owner == 2)
                 {
-                    CharacterPersona.TankWarriorTemplate.Instance.Health += (int)(CharacterPersona.TankWarriorTemplate.Instance.Health * 0.1);
-                    Instance.healthICache += (int)(CharacterPersona.TankWarriorTemplate.Instance.Health * 0.1);
+                    TankWarriorTemplate.Instance.Health += (int)(TankWarriorTemplate.Instance.Health * 0.1);
+                    Instance.healthICache += (int)(TankWarriorTemplate.Instance.Health * 0.1);
                 }
                 #endregion
                 #region Effect on Range
 
                 if (Owner == 3)
                 {
-                    CharacterPersona.RangeTemplate.Instance.Health += (int)(CharacterPersona.RangeTemplate.Instance.Health * 0.1);
-                    Instance.healthICache += (int)(CharacterPersona.RangeTemplate.Instance.Health * 0.1);
+                    RangeTemplate.Instance.Health += (int)(RangeTemplate.Instance.Health * 0.1);
+                    Instance.healthICache += (int)(RangeTemplate.Instance.Health * 0.1);
                 }
 
                 #endregion
@@ -124,8 +124,8 @@ namespace Assets.Entities
 
                 if (Owner == 4)
                 {
-                    CharacterPersona.MageTemplate.Instance.Health += (int)(CharacterPersona.MageTemplate.Instance.Health * 0.1);
-                    Instance.healthICache += (int)(CharacterPersona.MageTemplate.Instance.Health * 0.1);
+                    MageTemplate.Instance.Health += (int)(MageTemplate.Instance.Health * 0.1);
+                    Instance.healthICache += (int)(MageTemplate.Instance.Health * 0.1);
                 }
 
                 #endregion
@@ -133,8 +133,8 @@ namespace Assets.Entities
 
                 if (Owner == 5)
                 {
-                    CharacterPersona.ControllerTemplate.Instance.Health += (int)(CharacterPersona.ControllerTemplate.Instance.Health * 0.1);
-                    Instance.healthICache += (int)(CharacterPersona.ControllerTemplate.Instance.Health * 0.1);
+                    ControllerTemplate.Instance.Health += (int)(ControllerTemplate.Instance.Health * 0.1);
+                    Instance.healthICache += (int)(ControllerTemplate.Instance.Health * 0.1);
                 }
 
                 #endregion
@@ -142,8 +142,8 @@ namespace Assets.Entities
 
                 if (Owner == 6)
                 {
-                    CharacterPersona.AssasinTemplate.Instance.Health += (int)(CharacterPersona.AssasinTemplate.Instance.Health * 0.1);
-                    Instance.healthICache += (int)(CharacterPersona.AssasinTemplate.Instance.Health * 0.1);
+                    AssasinTemplate.Instance.Health += (int)(AssasinTemplate.Instance.Health * 0.1);
+                    Instance.healthICache += (int)(AssasinTemplate.Instance.Health * 0.1);
                 }
 
                 #endregion
@@ -164,12 +164,12 @@ namespace Assets.Entities
 
             public void Remove()
             {
-                if (Owner == 1) CharacterPersona.WarriorTemplate.Instance.Health -= Instance.healthICache;
-                if (Owner == 2) CharacterPersona.TankWarriorTemplate.Instance.Health -= Instance.healthICache;
-                if (Owner == 3) CharacterPersona.RangeTemplate.Instance.Health -= Instance.healthICache;
-                if (Owner == 4) CharacterPersona.MageTemplate.Instance.Health -= Instance.healthICache;
-                if (Owner == 5) CharacterPersona.ControllerTemplate.Instance.Health -= Instance.healthICache;
-                if (Owner == 6) CharacterPersona.AssasinTemplate.Instance.Health -= Instance.healthICache;
+                if (Owner == 1) WarriorTemplate.Instance.Health -= Instance.healthICache;
+                if (Owner == 2) TankWarriorTemplate.Instance.Health -= Instance.healthICache;
+                if (Owner == 3) RangeTemplate.Instance.Health -= Instance.healthICache;
+                if (Owner == 4) MageTemplate.Instance.Health -= Instance.healthICache;
+                if (Owner == 5) ControllerTemplate.Instance.Health -= Instance.healthICache;
+                if (Owner == 6) AssasinTemplate.Instance.Health -= Instance.healthICache;
 
 
                 BeingUsed = false;
@@ -218,28 +218,28 @@ namespace Assets.Entities
                 //here we put the logic to check if the conditions to use relics are met
                 #region MakeShift Switch for instances
 
-                if (CharacterInstance.GetType() == typeof(CharacterPersona.WarriorTemplate))
+                if (CharacterInstance.GetType() == typeof(WarriorTemplate))
                 {
-                    Ownertype = (CharacterPersona.WarriorTemplate)CharacterInstance;
+                    Ownertype = (WarriorTemplate)CharacterInstance;
                     Instance.Owner = 1;
                 }
-                if (CharacterInstance.GetType() == typeof(CharacterPersona.TankWarriorTemplate))
+                if (CharacterInstance.GetType() == typeof(TankWarriorTemplate))
                 {
                     Instance.Owner = 2;
                 }
-                if (CharacterInstance.GetType() == typeof(CharacterPersona.RangeTemplate))
+                if (CharacterInstance.GetType() == typeof(RangeTemplate))
                 {
                     Instance.Owner = 3;
                 }
-                if (CharacterInstance.GetType() == typeof(CharacterPersona.MageTemplate))
+                if (CharacterInstance.GetType() == typeof(MageTemplate))
                 {
                     Instance.Owner = 4;
                 }
-                if (CharacterInstance.GetType() == typeof(CharacterPersona.ControllerTemplate))
+                if (CharacterInstance.GetType() == typeof(ControllerTemplate))
                 {
                     Instance.Owner = 5;
                 }
-                if (CharacterInstance.GetType() == typeof(CharacterPersona.AssasinTemplate))
+                if (CharacterInstance.GetType() == typeof(AssasinTemplate))
                 {
                     Instance.Owner = 6;
                 }
@@ -255,8 +255,8 @@ namespace Assets.Entities
 
                 if (Owner==1)
                 {
-                    CharacterPersona.WarriorTemplate.Instance.Health += (int)(CharacterPersona.WarriorTemplate.Instance.Health * 0.1);
-                    Instance.healthICache += (int)(CharacterPersona.WarriorTemplate.Instance.Health * 0.1);
+                    WarriorTemplate.Instance.Health += (int)(WarriorTemplate.Instance.Health * 0.1);
+                    Instance.healthICache += (int)(WarriorTemplate.Instance.Health * 0.1);
                 }
 
                 #endregion
@@ -264,16 +264,16 @@ namespace Assets.Entities
 
                 if (Owner==2)
                 {
-                    CharacterPersona.TankWarriorTemplate.Instance.Health += (int)(CharacterPersona.TankWarriorTemplate.Instance.Health * 0.1);
-                    Instance.healthICache += (int)(CharacterPersona.TankWarriorTemplate.Instance.Health * 0.1);
+                    TankWarriorTemplate.Instance.Health += (int)(TankWarriorTemplate.Instance.Health * 0.1);
+                    Instance.healthICache += (int)(TankWarriorTemplate.Instance.Health * 0.1);
                 }
                 #endregion
                 #region Effect on Range
 
                 if (Owner==3)
                 {
-                    CharacterPersona.RangeTemplate.Instance.Health += (int)(CharacterPersona.RangeTemplate.Instance.Health * 0.1);
-                    Instance.healthICache += (int)(CharacterPersona.RangeTemplate.Instance.Health * 0.1);
+                    RangeTemplate.Instance.Health += (int)(RangeTemplate.Instance.Health * 0.1);
+                    Instance.healthICache += (int)(RangeTemplate.Instance.Health * 0.1);
                 }
 
                 #endregion
@@ -281,8 +281,8 @@ namespace Assets.Entities
 
                 if (Owner==4)
                 {
-                    CharacterPersona.MageTemplate.Instance.Health += (int)(CharacterPersona.MageTemplate.Instance.Health * 0.1);
-                    Instance.healthICache += (int)(CharacterPersona.MageTemplate.Instance.Health * 0.1);
+                    MageTemplate.Instance.Health += (int)(MageTemplate.Instance.Health * 0.1);
+                    Instance.healthICache += (int)(MageTemplate.Instance.Health * 0.1);
                 }
 
                 #endregion
@@ -290,8 +290,8 @@ namespace Assets.Entities
 
                 if (Owner==5)
                 {
-                    CharacterPersona.ControllerTemplate.Instance.Health += (int)(CharacterPersona.ControllerTemplate.Instance.Health * 0.1);
-                    Instance.healthICache += (int)(CharacterPersona.ControllerTemplate.Instance.Health * 0.1);
+                    ControllerTemplate.Instance.Health += (int)(ControllerTemplate.Instance.Health * 0.1);
+                    Instance.healthICache += (int)(ControllerTemplate.Instance.Health * 0.1);
                 }
 
                 #endregion
@@ -299,8 +299,8 @@ namespace Assets.Entities
 
                 if (Owner==6)
                 {
-                    CharacterPersona.AssasinTemplate.Instance.Health += (int)(CharacterPersona.AssasinTemplate.Instance.Health * 0.1);
-                    Instance.healthICache += (int)(CharacterPersona.AssasinTemplate.Instance.Health * 0.1);
+                    AssasinTemplate.Instance.Health += (int)(AssasinTemplate.Instance.Health * 0.1);
+                    Instance.healthICache += (int)(AssasinTemplate.Instance.Health * 0.1);
                 }
                
                 #endregion
@@ -321,12 +321,12 @@ namespace Assets.Entities
 
             public void Remove()
             {
-                if (Owner==1) CharacterPersona.WarriorTemplate.Instance.Health -= Instance.healthICache;
-                if (Owner==2)CharacterPersona.TankWarriorTemplate.Instance.Health -= Instance.healthICache;
-                if (Owner==3)CharacterPersona.RangeTemplate.Instance.Health -= Instance.healthICache;
-                if (Owner==4)CharacterPersona.MageTemplate.Instance.Health -= Instance.healthICache;
-                if (Owner==5)CharacterPersona.ControllerTemplate.Instance.Health -= Instance.healthICache;
-                if (Owner==6)CharacterPersona.AssasinTemplate.Instance.Health -= Instance.healthICache;
+                if (Owner==1) WarriorTemplate.Instance.Health -= Instance.healthICache;
+                if (Owner==2)TankWarriorTemplate.Instance.Health -= Instance.healthICache;
+                if (Owner==3)RangeTemplate.Instance.Health -= Instance.healthICache;
+                if (Owner==4)MageTemplate.Instance.Health -= Instance.healthICache;
+                if (Owner==5)ControllerTemplate.Instance.Health -= Instance.healthICache;
+                if (Owner==6)AssasinTemplate.Instance.Health -= Instance.healthICache;
 
 
                 BeingUsed = false;
@@ -384,12 +384,12 @@ namespace Assets.Entities
 
             public void Remove()
             {
-                if (Owner == 1) CharacterPersona.WarriorTemplate.Instance.Health -= Instance.healthICache;
-                if (Owner == 2) CharacterPersona.TankWarriorTemplate.Instance.Health -= Instance.healthICache;
-                if (Owner == 3) CharacterPersona.RangeTemplate.Instance.Health -= Instance.healthICache;
-                if (Owner == 4) CharacterPersona.MageTemplate.Instance.Health -= Instance.healthICache;
-                if (Owner == 5) CharacterPersona.ControllerTemplate.Instance.Health -= Instance.healthICache;
-                if (Owner == 6) CharacterPersona.AssasinTemplate.Instance.Health -= Instance.healthICache;
+                if (Owner == 1) WarriorTemplate.Instance.Health -= Instance.healthICache;
+                if (Owner == 2) TankWarriorTemplate.Instance.Health -= Instance.healthICache;
+                if (Owner == 3) RangeTemplate.Instance.Health -= Instance.healthICache;
+                if (Owner == 4) MageTemplate.Instance.Health -= Instance.healthICache;
+                if (Owner == 5) ControllerTemplate.Instance.Health -= Instance.healthICache;
+                if (Owner == 6) AssasinTemplate.Instance.Health -= Instance.healthICache;
 
 
                 BeingUsed = false;
@@ -400,28 +400,28 @@ namespace Assets.Entities
                 //here we put the logic to check if the conditions to use relics are met
                 #region MakeShift Switch for instances
 
-                if (CharacterInstance.GetType() == typeof(CharacterPersona.WarriorTemplate))
+                if (CharacterInstance.GetType() == typeof(WarriorTemplate))
                 {
-                    Ownertype = (CharacterPersona.WarriorTemplate)CharacterInstance;
+                    Ownertype = (WarriorTemplate)CharacterInstance;
                     Instance.Owner = 1;
                 }
-                if (CharacterInstance.GetType() == typeof(CharacterPersona.TankWarriorTemplate))
+                if (CharacterInstance.GetType() == typeof(TankWarriorTemplate))
                 {
                     Instance.Owner = 2;
                 }
-                if (CharacterInstance.GetType() == typeof(CharacterPersona.RangeTemplate))
+                if (CharacterInstance.GetType() == typeof(RangeTemplate))
                 {
                     Instance.Owner = 3;
                 }
-                if (CharacterInstance.GetType() == typeof(CharacterPersona.MageTemplate))
+                if (CharacterInstance.GetType() == typeof(MageTemplate))
                 {
                     Instance.Owner = 4;
                 }
-                if (CharacterInstance.GetType() == typeof(CharacterPersona.ControllerTemplate))
+                if (CharacterInstance.GetType() == typeof(ControllerTemplate))
                 {
                     Instance.Owner = 5;
                 }
-                if (CharacterInstance.GetType() == typeof(CharacterPersona.AssasinTemplate))
+                if (CharacterInstance.GetType() == typeof(AssasinTemplate))
                 {
                     Instance.Owner = 6;
                 }
@@ -437,11 +437,11 @@ namespace Assets.Entities
 
                 if (Owner == 1)
                 {
-                    CharacterPersona.WarriorTemplate.Instance.Armour+= (int)(CharacterPersona.WarriorTemplate.Instance.Armour * 0.1);
-                    Instance.armourICache += (int)(CharacterPersona.WarriorTemplate.Instance.Armour * 0.1);
+                    WarriorTemplate.Instance.Armour+= (int)(WarriorTemplate.Instance.Armour * 0.1);
+                    Instance.armourICache += (int)(WarriorTemplate.Instance.Armour * 0.1);
 
-                    CharacterPersona.WarriorTemplate.Instance.MagicRes += (int)(CharacterPersona.WarriorTemplate.Instance.MagicRes * 0.1);
-                    Instance.magresICache += (int)(CharacterPersona.WarriorTemplate.Instance.MagicRes * 0.1);
+                    WarriorTemplate.Instance.MagicRes += (int)(WarriorTemplate.Instance.MagicRes * 0.1);
+                    Instance.magresICache += (int)(WarriorTemplate.Instance.MagicRes * 0.1);
                 }
 
                 #endregion
@@ -449,22 +449,22 @@ namespace Assets.Entities
 
                 if (Owner == 2)
                 {
-                    CharacterPersona.TankWarriorTemplate.Instance.Armour += (int)(CharacterPersona.TankWarriorTemplate.Instance.Armour * 0.1);
-                    Instance.armourICache += (int)(CharacterPersona.TankWarriorTemplate.Instance.Armour * 0.1);
+                    TankWarriorTemplate.Instance.Armour += (int)(TankWarriorTemplate.Instance.Armour * 0.1);
+                    Instance.armourICache += (int)(TankWarriorTemplate.Instance.Armour * 0.1);
 
-                    CharacterPersona.TankWarriorTemplate.Instance.MagicRes += (int)(CharacterPersona.TankWarriorTemplate.Instance.MagicRes * 0.1);
-                    Instance.magresICache += (int)(CharacterPersona.TankWarriorTemplate.Instance.MagicRes * 0.1);
+                    TankWarriorTemplate.Instance.MagicRes += (int)(TankWarriorTemplate.Instance.MagicRes * 0.1);
+                    Instance.magresICache += (int)(TankWarriorTemplate.Instance.MagicRes * 0.1);
                 }
                 #endregion
                 #region Effect on Range
 
                 if (Owner == 3)
                 {
-                    CharacterPersona.RangeTemplate.Instance.Armour += (int)(CharacterPersona.RangeTemplate.Instance.Armour * 0.1);
-                    Instance.armourICache += (int)(CharacterPersona.RangeTemplate.Instance.Armour * 0.1);
+                    RangeTemplate.Instance.Armour += (int)(RangeTemplate.Instance.Armour * 0.1);
+                    Instance.armourICache += (int)(RangeTemplate.Instance.Armour * 0.1);
 
-                    CharacterPersona.RangeTemplate.Instance.MagicRes += (int)(CharacterPersona.RangeTemplate.Instance.MagicRes * 0.1);
-                    Instance.magresICache += (int)(CharacterPersona.RangeTemplate.Instance.MagicRes * 0.1);
+                    RangeTemplate.Instance.MagicRes += (int)(RangeTemplate.Instance.MagicRes * 0.1);
+                    Instance.magresICache += (int)(RangeTemplate.Instance.MagicRes * 0.1);
                 }
 
                 #endregion
@@ -472,11 +472,11 @@ namespace Assets.Entities
 
                 if (Owner == 4)
                 {
-                    CharacterPersona.MageTemplate.Instance.Armour += (int)(CharacterPersona.MageTemplate.Instance.Armour * 0.1);
-                    Instance.armourICache += (int)(CharacterPersona.MageTemplate.Instance.Armour * 0.1);
+                    MageTemplate.Instance.Armour += (int)(MageTemplate.Instance.Armour * 0.1);
+                    Instance.armourICache += (int)(MageTemplate.Instance.Armour * 0.1);
 
-                    CharacterPersona.MageTemplate.Instance.MagicRes += (int)(CharacterPersona.MageTemplate.Instance.MagicRes * 0.1);
-                    Instance.magresICache += (int)(CharacterPersona.MageTemplate.Instance.MagicRes * 0.1);
+                    MageTemplate.Instance.MagicRes += (int)(MageTemplate.Instance.MagicRes * 0.1);
+                    Instance.magresICache += (int)(MageTemplate.Instance.MagicRes * 0.1);
                 }
 
                 #endregion
@@ -484,11 +484,11 @@ namespace Assets.Entities
 
                 if (Owner == 5)
                 {
-                    CharacterPersona.ControllerTemplate.Instance.Armour += (int)(CharacterPersona.ControllerTemplate.Instance.Armour * 0.1);
-                    Instance.armourICache += (int)(CharacterPersona.ControllerTemplate.Instance.Armour * 0.1);
+                    ControllerTemplate.Instance.Armour += (int)(ControllerTemplate.Instance.Armour * 0.1);
+                    Instance.armourICache += (int)(ControllerTemplate.Instance.Armour * 0.1);
 
-                    CharacterPersona.ControllerTemplate.Instance.MagicRes += (int)(CharacterPersona.ControllerTemplate.Instance.MagicRes * 0.1);
-                    Instance.magresICache += (int)(CharacterPersona.ControllerTemplate.Instance.MagicRes * 0.1);
+                    ControllerTemplate.Instance.MagicRes += (int)(ControllerTemplate.Instance.MagicRes * 0.1);
+                    Instance.magresICache += (int)(ControllerTemplate.Instance.MagicRes * 0.1);
                 }
 
                 #endregion
@@ -496,11 +496,11 @@ namespace Assets.Entities
 
                 if (Owner == 6)
                 {
-                    CharacterPersona.AssasinTemplate.Instance.Armour += (int)(CharacterPersona.AssasinTemplate.Instance.Armour * 0.1);
-                    Instance.armourICache += (int)(CharacterPersona.AssasinTemplate.Instance.Armour * 0.1);
+                    AssasinTemplate.Instance.Armour += (int)(AssasinTemplate.Instance.Armour * 0.1);
+                    Instance.armourICache += (int)(AssasinTemplate.Instance.Armour * 0.1);
 
-                    CharacterPersona.AssasinTemplate.Instance.MagicRes += (int)(CharacterPersona.AssasinTemplate.Instance.MagicRes * 0.1);
-                    Instance.magresICache += (int)(CharacterPersona.AssasinTemplate.Instance.MagicRes * 0.1);
+                    AssasinTemplate.Instance.MagicRes += (int)(AssasinTemplate.Instance.MagicRes * 0.1);
+                    Instance.magresICache += (int)(AssasinTemplate.Instance.MagicRes * 0.1);
                 }
 
                 #endregion
