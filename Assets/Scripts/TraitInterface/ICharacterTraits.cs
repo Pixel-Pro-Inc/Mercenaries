@@ -49,6 +49,7 @@ namespace Assets.TraitInterface
         double EvadeBuffPercent { get; set; } //This is here for aware
         double AgileBUffPercent {get; set;}
         double HealBuffPercent { get; set; }
+        double counterAttackPercent { get; set; }
         object ProtectionSponser { get; set; }
 
         int MagicalDamageTaken { get; set; }

@@ -34,11 +34,11 @@ namespace Assets.Scripts.TraitInterface
         void MagicalDamage(object CharacterInstance, object TargetInstance);
         void TrueDamage(object CharacterInstance, object TargetInstance);
         void Drain(object CharacterInstance, object TargetInstance);
-        bool Ignite(object CharacterInstance, object TargetInstance);
-        bool Bleed(object CharacterInstance, object TargetInstance);
-        bool Blight(object CharacterInstance, object TargetInstance);
-        bool BalancedDamage(object CharacterInstance, object TargetInstance);
-        bool Curse(object CharacterInstance, object TargetInstance);
+        void Ignite(object CharacterInstance, object TargetInstance);
+        void Bleed(object CharacterInstance, object TargetInstance);
+        void Blight(object CharacterInstance, object TargetInstance);
+        void BalancedDamage(object CharacterInstance, object TargetInstance);
+        void Curse(object CharacterInstance, object TargetInstance);
         bool Feign(object CharacterInstance, object TargetInstance);
 
         #endregion
@@ -58,7 +58,7 @@ namespace Assets.Scripts.TraitInterface
         bool PolishWeapon();
         bool Chosen();
         bool Aware();
-        void OnGuard(object CharacterInstance, object TargetInstance);
+        void OnGuard(object CharacterInstance, object TargetInstance);//only works to be on guard to a specific person
         void Provoking(object CharacterInstance); //this takes the character and uses the protector() method and its list of allies as targets
         void Protector(object OwnerInstance, object TargetInstance); //this asks like a contract. The person who will protectand the protected. eg Protector( instance,Mister Froggo)
         object Protected(object TargetInstance);//If hit, protector will take damage instead. but this isn't really given how damagegiven works. needs to be changed

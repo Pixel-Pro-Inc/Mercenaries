@@ -951,23 +951,31 @@ namespace Assets.Entities
             #endregion
 
         }
-
-        public bool Ignite(object CharacterInstance, object TargetInstance)
+        public void Ignite(object CharacterInstance, object TargetInstance)
         {
-            throw new NotImplementedException();
+            bool howmany = RoundOver;
+            int count=0;
+            if (howmany != RoundOver) count++; howmany = RoundOver;
+            if (count == 2) MagicalDamage(CharacterInstance, TargetInstance);
         }
-
-        public bool Bleed(object CharacterInstance, object TargetInstance)
+        public void Bleed(object CharacterInstance, object TargetInstance)
         {
-            throw new NotImplementedException();
+            if (RoundOver == true) PhysicalDamage(CharacterInstance, TargetInstance);
         }
-
-        public bool Blight(object CharacterInstance, object TargetInstance)
+        public void Blight(object CharacterInstance, object TargetInstance)
         {
-            throw new NotImplementedException();
+            int count = 1;
+            if (RoundOver==false)
+            {
+                while (count==1)
+                {
+                    MagicalDamage(CharacterInstance, TargetInstance);
+                }
+                count--;
+            }
+            else count++;
         }
-
-        public bool BalancedDamage(object CharacterInstance, object TargetInstance)
+        public void BalancedDamage(object CharacterInstance, object TargetInstance)
         {
             int physicalDamage = 0;
             int shieldcache = 0;
@@ -1187,13 +1195,58 @@ namespace Assets.Entities
                 TargetInstance = AssasinTarBase;
             }
             #endregion
-
-            return false;//I made this false because the instance isn't getting the effect, but the enemyInstance
         }
-
-        public bool Curse(object CharacterInstance, object TargetInstance)
+        public void Curse(object CharacterInstance, object TargetInstance)
         {
-            throw new NotImplementedException();
+            int randamage = 0;
+           
+            int count = 1;
+            if (RoundOver == false)
+            {
+                while (count == 1)
+                {
+                    Random r = new Random();
+                    randamage = r.Next(1, 20);
+                    #region TargetInstance template logic
+
+
+                    string TargetLetter = TemplateTarget(TargetInstance);
+                    if (TargetLetter == "a")
+                    {
+                        WarriorTarBase.HealthLoss(randamage);
+                        TargetInstance = WarriorTarBase;
+
+                    }
+                    if (TargetLetter == "b")
+                    {
+                        TankTarBase.HealthLoss(randamage);
+                        TargetInstance = TankTarBase;
+                    }
+                    if (TargetLetter == "c")
+                    {
+                        RangeTarBase.HealthLoss(randamage);
+                        TargetInstance = RangeTarBase;
+                    }
+                    if (TargetLetter == "d")
+                    {
+                        MageTarBase.HealthLoss(randamage);
+                        TargetInstance = MageTarBase;
+                    }
+                    if (TargetLetter == "e")
+                    {
+                        ControllerTarBase.HealthLoss(randamage);
+                        TargetInstance = ControllerTarBase;
+                    }
+                    if (TargetLetter == "f")
+                    {
+                        AssasinTarBase.HealthLoss(randamage);
+                        TargetInstance = AssasinTarBase;
+                    }
+                    #endregion
+                }
+                count--;
+            }
+            else count++;
         }
 
         public bool Feign(object CharacterInstance, object TargetInstance)
@@ -1342,12 +1395,95 @@ namespace Assets.Entities
 
             return Aware;
         }
-
         public void OnGuard(object CharacterInstance, object TargetInstance)
         {
-            throw new NotImplementedException();
-        }
+            int standbyhealth=0;
+            int storedhealth = 0;
+            int count = 0;
 
+            int damage1 = 0;
+            Timer myTimer2;
+            myTimer2 = new System.Timers.Timer();
+            // Tell the timer what to do when it elapses
+            myTimer2.Elapsed += new ElapsedEventHandler(myEvent);
+            // Set it to go off every five seconds
+            myTimer2.Interval = 5000;
+            // And start it        
+            myTimer2.Enabled = true;
+
+            // Implement a call with the right signature for events going off
+            void myEvent(object source, ElapsedEventArgs e) //this checks if the characterInstance.health changes
+            {
+                while (RoundOver == false)
+                {
+                    #region CharacterInstance template logic
+
+                    int characterNumber = TemplateCharacter(CharacterInstance);
+                    if (characterNumber == 1)
+                    {
+                        standbyhealth = WarriorCBase.Health;
+                        damage1 = (int)(WarriorCBase.DamageGiven() * WarriorCBase.counterAttackPercent);
+                    }
+                    if (characterNumber == 2)
+                    {
+                        standbyhealth = TankCBase.Health;
+                        damage1 = (int)(TankCBase.DamageGiven() * TankCBase.counterAttackPercent);
+                    }
+                    if (characterNumber == 3)
+                    {
+                        standbyhealth = RangeCBase.Health;
+                        damage1 = (int)(RangeCBase.DamageGiven() * RangeCBase.counterAttackPercent);
+                    }
+                    if (characterNumber == 4)
+                    {
+                        standbyhealth = MageCBase.Health;
+                        damage1 = (int)(MageCBase.DamageGiven() * MageCBase.counterAttackPercent);
+                    }
+                    if (characterNumber == 5)
+                    {
+                        standbyhealth = ControllerCBase.Health;
+                        damage1 = (int)(ControllerCBase.DamageGiven() * ControllerCBase.counterAttackPercent);
+                    }
+                    if (characterNumber == 6)
+                    {
+                        standbyhealth = AssasinCBase.Health;
+                        damage1 = (int)(AssasinCBase.DamageGiven() * AssasinCBase.counterAttackPercent);
+                    }
+                    #endregion
+                }
+            }
+            
+
+            if (count == 0)//this is to store the initial health
+            {
+                storedhealth = standbyhealth;
+                count++;
+            }
+            else
+            {
+                if ((storedhealth != standbyhealth)&&(RoundOver=true)) //if the health changes and the round finished
+                {
+                    WarriorTarBase.HealthLoss(damage1);
+                    TankTarBase.HealthLoss(damage1);
+                    RangeTarBase.HealthLoss(damage1);
+                    MageTarBase.HealthLoss(damage1);
+                    ControllerTarBase.HealthLoss(damage1);
+                    AssasinTarBase.HealthLoss(damage1);
+
+                    #region TargetInstance template logic to hange the characterinstance
+
+                    string TargetLetter = TemplateTarget(TargetInstance);
+                    if (TargetLetter == "a") TargetInstance = WarriorTarBase;
+                    if (TargetLetter == "b") TargetInstance = TankTarBase;
+                    if (TargetLetter == "c") TargetInstance = RangeTarBase;
+                    if (TargetLetter == "d") TargetInstance = MageTarBase;
+                    if (TargetLetter == "e") TargetInstance = ControllerTarBase;
+                    if (TargetLetter == "f") TargetInstance = AssasinTarBase;
+                    #endregion
+                }
+
+            } 
+        }
         public void Provoking(object CharacterInstance)
         {
             object scapegoat = WarriorCBase;
@@ -1964,6 +2100,7 @@ namespace Assets.Entities
             public object ProtectionSponser { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public double AgileBUffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public double HealBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public double counterAttackPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
 
 
@@ -2336,6 +2473,7 @@ namespace Assets.Entities
             public object ProtectionSponser { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public double AgileBUffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public double HealBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public double counterAttackPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
 
             #endregion
@@ -2703,6 +2841,7 @@ namespace Assets.Entities
             public object ProtectionSponser { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public double AgileBUffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public double HealBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public double counterAttackPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
             #endregion
             #region Character Methods
@@ -3102,6 +3241,7 @@ namespace Assets.Entities
             public object ProtectionSponser { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public double AgileBUffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public double HealBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public double counterAttackPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
             #endregion
             #region Character Methods
@@ -3480,6 +3620,7 @@ namespace Assets.Entities
             public object ProtectionSponser { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public double AgileBUffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public double HealBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public double counterAttackPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
             #endregion
             #region Character Methods
@@ -3826,6 +3967,7 @@ namespace Assets.Entities
             public object ProtectionSponser { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public double AgileBUffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             public double HealBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public double counterAttackPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
             #endregion
             #region Character Methods
 
