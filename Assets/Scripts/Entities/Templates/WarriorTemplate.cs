@@ -7,7 +7,7 @@ using UnityEngine;
 using static Enums;
 using Random = System.Random;
 
-public class WarriorTemplate : CharacterPersona, ICardTraits, IWarriorTraits
+public class WarriorTemplate : CharacterPersona, ICardTraits, ICharacterTraits, IWarriorTraits
 {
     public static WarriorTemplate Instance { get; set; }
     public WarriorTemplate()
@@ -169,13 +169,14 @@ public class WarriorTemplate : CharacterPersona, ICardTraits, IWarriorTraits
     public bool PassiveWarriorTraits { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     public bool LowDamageWarrior { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
+
     public int ExpPoints
     {
         get { return ExpPoints; }
         set
         {
             if (ExpPoints < 0) ExpPoints = 0;
-            if (BattleCalculate == true/*This means characters can level up durning battle*/)
+            if (RoundOver == true/*This means characters can level up durning battle*/)
             {
                 Instance.ExpPoints += NewEarnedXp;
             }
@@ -207,7 +208,7 @@ public class WarriorTemplate : CharacterPersona, ICardTraits, IWarriorTraits
         get { return EarnedXp; }
         set
         {
-            if (BattleCalculate == false/*This means characters can level up durning battle*/)
+            if (RoundOver == false/*This means characters can level up durning battle*/)
             {
                 EarnedXp = false;
             }
@@ -310,6 +311,10 @@ public class WarriorTemplate : CharacterPersona, ICardTraits, IWarriorTraits
         }
         //fire levelIncrease animation
     }
+    public void TraitLevelUpActivation(int experienceLevel, List<Items> Items)
+    {
+        throw new NotImplementedException();
+    }
     public void XPIncrease(bool earnXp, int newEarnedXp)
     {
         EarnedXp = earnXp;
@@ -328,13 +333,10 @@ public class WarriorTemplate : CharacterPersona, ICardTraits, IWarriorTraits
             Random r = new Random();
             damageGiven = r.Next(3, 7);
         }
-
-        if (Instance.PolishWeapon() == true) damageGiven = (int)(damageGiven * Instance.PowerBuffPercent);// this is to work the polish buff
-
-        if (BattleCalculate == true)
-        {
-            return damageGiven; //This was put here so that it escapes the method all together if an action is still in calculation
-        }
+        /*
+         Eyy my guy, none of this below makes sense
+        But maybe im just dumb
+         */
 
         //My Implementation of Armour
         if (ArmourState && source == damageType.Physical)
@@ -385,42 +387,6 @@ public class WarriorTemplate : CharacterPersona, ICardTraits, IWarriorTraits
         {
             damageGiven = 0;
         }
-
-        //The code below needs to be here because true damage doesn't have any logic 
-        #region template logic
-
-
-        if (CharacterInstance.GetType() == typeof(WarriorTemplate))
-        {
-            WarriorTemplate starter = (WarriorTemplate)CharacterInstance;
-            starter.HealthLoss(damageGiven);
-        }
-        if (CharacterInstance.GetType() == typeof(TankWarriorTemplate))
-        {
-            TankWarriorTemplate starter = (TankWarriorTemplate)CharacterInstance;
-            starter.HealthLoss(damageGiven);
-        }
-        if (CharacterInstance.GetType() == typeof(RangeTemplate))
-        {
-            RangeTemplate starter = (RangeTemplate)CharacterInstance;
-            starter.HealthLoss(damageGiven);
-        }
-        if (CharacterInstance.GetType() == typeof(MageTemplate))
-        {
-            MageTemplate starter = (MageTemplate)CharacterInstance;
-            starter.HealthLoss(damageGiven);
-        }
-        if (CharacterInstance.GetType() == typeof(ControllerTemplate))
-        {
-            ControllerTemplate starter = (ControllerTemplate)CharacterInstance;
-            starter.HealthLoss(damageGiven);
-        }
-        if (CharacterInstance.GetType() == typeof(AssasinTemplate))
-        {
-            AssasinTemplate starter = (AssasinTemplate)CharacterInstance;
-            starter.HealthLoss(damageGiven);
-        }
-        #endregion
 
         return damageGiven;
 
@@ -520,6 +486,11 @@ public class WarriorTemplate : CharacterPersona, ICardTraits, IWarriorTraits
     public bool PurifiedState { get; private set; }
     public bool BlockState { get; private set; }
     public bool ImmuneState { get; private set; }
+    public double EvadeBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public double AgileBUffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public double HealBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public double counterAttackPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public object ProtectionSponser { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     #endregion
     public void ToggleArmour(bool state, int amount)
     {

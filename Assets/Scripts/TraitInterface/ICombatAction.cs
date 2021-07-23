@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Enums;
 
 namespace Assets.Scripts.TraitInterface
 {
@@ -13,9 +14,8 @@ namespace Assets.Scripts.TraitInterface
          So here how they work. When one wants to attack someone the line will be 'Instance.Drain( enemyInstance)'. the value that will be returnd is
         false. But within the method, for that enemyinstance it will be set true. So there will be a logic that divides whether or not the method will 
         affect yourself  or someone else.
-
-
          */
+
         #region Unqiue Action
 
         /*
@@ -30,25 +30,25 @@ namespace Assets.Scripts.TraitInterface
 
         #region Attack
 
-        void PhysicalDamage(object CharacterInstance, object TargetInstance);
-        void MagicalDamage(object CharacterInstance, object TargetInstance);
-        void TrueDamage(object CharacterInstance, object TargetInstance);
+        void PhysicalDamage(object CharacterInstance, object TargetInstance, damageType source);
+        void MagicalDamage(object CharacterInstance, object TargetInstance, damageType source);
+        void TrueDamage(object CharacterInstance, object TargetInstance, damageType source);
         void Drain(object CharacterInstance, object TargetInstance);
-        void Ignite(object CharacterInstance, object TargetInstance);
-        void Bleed(object CharacterInstance, object TargetInstance);
-        void Blight(object CharacterInstance, object TargetInstance);
-        void BalancedDamage(object CharacterInstance, object TargetInstance);
+        void Ignite(object CharacterInstance, object TargetInstance, damageType source);
+        void Bleed(object CharacterInstance, object TargetInstance, damageType source);
+        void Blight(object CharacterInstance, object TargetInstance, damageType source);
+        void BalancedDamage(object CharacterInstance, object TargetInstance, damageType source);
         void Curse(object CharacterInstance, object TargetInstance);
         bool Feign(object CharacterInstance, object TargetInstance);
 
         #endregion
         #region Defend
-        bool PutArmour(object CharacterInstance, object TargetInstance);
-        bool IncreaseMagicalResistance(object CharacterInstance, object TargetInstance);
-        bool ShieldUp(object CharacterInstance, object TargetInstance);
-        bool Purified(object CharacterInstance, object TargetInstance);
-        bool Block(object CharacterInstance, object TargetInstance);
-        bool Immune(object CharacterInstance, object TargetInstance);
+        void PutArmour(object CharacterInstance, bool state, int amount);
+        void IncreaseMagicalResistance(object CharacterInstance, bool state, int amount);
+        void ShieldUp(object CharacterInstance,  bool state, int amount);
+        void Purified(object CharacterInstance, bool state);
+        void Block(object CharacterInstance, bool state);
+        void Immune(object CharacterInstance,  bool state);
 
         #endregion
 
@@ -58,7 +58,7 @@ namespace Assets.Scripts.TraitInterface
         bool PolishWeapon();
         bool Chosen();
         bool Aware();
-        void OnGuard(object CharacterInstance, object TargetInstance);//only works to be on guard to a specific person
+        void OnGuard(object CharacterInstance, object TargetInstance, damageType source);//only works to be on guard to a specific person
         void Provoking(object CharacterInstance); //this takes the character and uses the protector() method and its list of allies as targets
         void Protector(object OwnerInstance, object TargetInstance); //this asks like a contract. The person who will protectand the protected. eg Protector( instance,Mister Froggo)
         object Protected(object TargetInstance);//If hit, protector will take damage instead. but this isn't really given how damagegiven works. needs to be changed

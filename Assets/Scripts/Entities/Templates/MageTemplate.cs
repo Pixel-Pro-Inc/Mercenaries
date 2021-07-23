@@ -10,7 +10,7 @@ using UnityEngine;
 using static Enums;
 using Random = System.Random;
 
-public class MageTemplate : CharacterPersona, ICardTraits, IMageTraits
+public class MageTemplate : CharacterPersona, ICardTraits, ICharacterTraits, IMageTraits
 {
     private Timer myTimer;// this is used for a passive mage trait
     public static MageTemplate Instance { get; set; }
@@ -203,7 +203,7 @@ public class MageTemplate : CharacterPersona, ICardTraits, IMageTraits
         get { return ExpPoints; }
         set
         {
-            if (BattleCalculate == true/*This means characters can level up durning battle*/)
+            if (RoundOver == true/*This means characters can level up durning battle*/)
             {
                 Instance.ExpPoints += NewEarnedXp;
             }
@@ -234,7 +234,7 @@ public class MageTemplate : CharacterPersona, ICardTraits, IMageTraits
         get { return EarnedXp; }
         set
         {
-            if (BattleCalculate == false/*This means characters can level up durning battle*/)
+            if (RoundOver == false/*This means characters can level up durning battle*/)
             {
                 EarnedXp = false;
             }
@@ -380,14 +380,6 @@ public class MageTemplate : CharacterPersona, ICardTraits, IMageTraits
             damageGiven = r.Next(5, 11);
         }
 
-        if (Instance.Chosen() == true) damageGiven = (int)(damageGiven * Instance.PowerBuffPercent);// this is to work the Chosen buff Controllers dont get a physical buff
-
-
-        if (BattleCalculate == true)
-        {
-            return damageGiven; //This was put here so that it escapes the method all together if an action is still in calculation
-        }
-
         //My Implementation of Armour
         if (ArmourState && source == damageType.Physical)
         {
@@ -438,50 +430,12 @@ public class MageTemplate : CharacterPersona, ICardTraits, IMageTraits
             damageGiven = 0;
         }
 
-        #region template logic
-
-
-        if (CharacterInstance.GetType() == typeof(WarriorTemplate))
-        {
-            WarriorTemplate starter = (WarriorTemplate)CharacterInstance;
-            starter.HealthLoss(damageGiven);
-        }
-        if (CharacterInstance.GetType() == typeof(TankWarriorTemplate))
-        {
-            TankWarriorTemplate starter = (TankWarriorTemplate)CharacterInstance;
-            starter.HealthLoss(damageGiven);
-        }
-        if (CharacterInstance.GetType() == typeof(RangeTemplate))
-        {
-            RangeTemplate starter = (RangeTemplate)CharacterInstance;
-            starter.HealthLoss(damageGiven);
-        }
-        if (CharacterInstance.GetType() == typeof(MageTemplate))
-        {
-            MageTemplate starter = (MageTemplate)CharacterInstance;
-            starter.HealthLoss(damageGiven);
-        }
-        if (CharacterInstance.GetType() == typeof(ControllerTemplate))
-        {
-            ControllerTemplate starter = (ControllerTemplate)CharacterInstance;
-            starter.HealthLoss(damageGiven);
-        }
-        if (CharacterInstance.GetType() == typeof(AssasinTemplate))
-        {
-            AssasinTemplate starter = (AssasinTemplate)CharacterInstance;
-            starter.HealthLoss(damageGiven);
-        }
-        #endregion
-
         return damageGiven;
     }
     public int HealthLoss(int damageGiven)
     {
-        Instance.PhysicalDamageTaken -= Instance.Armour;
-        Instance.MagicalDamageTaken -= Instance.MagicRes;
-        int damageTaken = Instance.MagicalDamageTaken + Instance.PhysicalDamageTaken;
-        Instance.Health -= damageTaken;
-        return damageTaken;
+        Instance.Health -= damageGiven;
+        return damageGiven;
     }
     #region Toggles
     #region variables
@@ -601,6 +555,11 @@ public class MageTemplate : CharacterPersona, ICardTraits, IMageTraits
     public bool PurifiedState { get; private set; }
     public bool BlockState { get; private set; }
     public bool ImmuneState { get; private set; }
+    public double EvadeBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public double AgileBUffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public double HealBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public double counterAttackPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public object ProtectionSponser { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     #endregion
     public void ToggleArmour(bool state, int amount)
     {

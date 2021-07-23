@@ -9,7 +9,7 @@ using UnityEngine;
 using static Enums;
 using Random = System.Random;
 
-public class ControllerTemplate : CharacterPersona, ICardTraits, IControllerTraits
+public class ControllerTemplate : CharacterPersona, ICardTraits, ICharacterTraits, IControllerTraits
 {
     public static ControllerTemplate Instance { get; set; }
     public ControllerTemplate()
@@ -161,7 +161,7 @@ public class ControllerTemplate : CharacterPersona, ICardTraits, IControllerTrai
         get { return ExpPoints; }
         set
         {
-            if (BattleCalculate == true/*This means characters can level up durning battle*/)
+            if (RoundOver == true/*This means characters can level up durning battle*/)
             {
                 Instance.ExpPoints += NewEarnedXp;
             }
@@ -192,7 +192,7 @@ public class ControllerTemplate : CharacterPersona, ICardTraits, IControllerTrai
         get { return EarnedXp; }
         set
         {
-            if (BattleCalculate == false)
+            if (RoundOver == false)
             {
                 EarnedXp = false;
             }
@@ -259,6 +259,10 @@ public class ControllerTemplate : CharacterPersona, ICardTraits, IControllerTrai
         EarnedXp = earnXp;
         NewEarnedXp = newEarnedXp;
     }
+    public void TraitLevelUpActivation(int experienceLevel, List<Items> Items)
+    {
+        throw new NotImplementedException();
+    }
     public void ActiveBuff()
     {
         throw new NotImplementedException();
@@ -288,13 +292,6 @@ public class ControllerTemplate : CharacterPersona, ICardTraits, IControllerTrai
         {
             Random r = new Random();
             damageGiven = r.Next(1, 3);
-        }
-
-        if (Instance.Chosen() == true) damageGiven = (int)(damageGiven * Instance.PowerBuffPercent);// this is to work the Chosen buff Controllers dont get a physical buff
-
-        if (BattleCalculate == true)
-        {
-            return damageGiven; //This was put here so that it escapes the method all together if an action is still in calculation
         }
 
         //My Implementation of Armour
@@ -346,40 +343,6 @@ public class ControllerTemplate : CharacterPersona, ICardTraits, IControllerTrai
         {
             damageGiven = 0;
         }
-        #region template logic
-
-
-        if (CharacterInstance.GetType() == typeof(WarriorTemplate))
-        {
-            WarriorTemplate starter = (WarriorTemplate)CharacterInstance;
-            starter.HealthLoss(damageGiven);
-        }
-        if (CharacterInstance.GetType() == typeof(TankWarriorTemplate))
-        {
-            TankWarriorTemplate starter = (TankWarriorTemplate)CharacterInstance;
-            starter.HealthLoss(damageGiven);
-        }
-        if (CharacterInstance.GetType() == typeof(RangeTemplate))
-        {
-            RangeTemplate starter = (RangeTemplate)CharacterInstance;
-            starter.HealthLoss(damageGiven);
-        }
-        if (CharacterInstance.GetType() == typeof(MageTemplate))
-        {
-            MageTemplate starter = (MageTemplate)CharacterInstance;
-            starter.HealthLoss(damageGiven);
-        }
-        if (CharacterInstance.GetType() == typeof(ControllerTemplate))
-        {
-            ControllerTemplate starter = (ControllerTemplate)CharacterInstance;
-            starter.HealthLoss(damageGiven);
-        }
-        if (CharacterInstance.GetType() == typeof(AssasinTemplate))
-        {
-            AssasinTemplate starter = (AssasinTemplate)CharacterInstance;
-            starter.HealthLoss(damageGiven);
-        }
-        #endregion
 
         return damageGiven;
     }
@@ -478,6 +441,11 @@ public class ControllerTemplate : CharacterPersona, ICardTraits, IControllerTrai
     public bool PurifiedState { get; private set; }
     public bool BlockState { get; private set; }
     public bool ImmuneState { get; private set; }
+    public double EvadeBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public double AgileBUffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public double HealBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public double counterAttackPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public object ProtectionSponser { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     #endregion
     public void ToggleArmour(bool state, int amount)
     {
@@ -506,6 +474,7 @@ public class ControllerTemplate : CharacterPersona, ICardTraits, IControllerTrai
     {
         ImmuneState = state;
     }
+    
     #endregion
     #endregion
 }

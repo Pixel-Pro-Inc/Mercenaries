@@ -9,7 +9,7 @@ using UnityEngine;
 using static Enums;
 using Random = System.Random;
 
-public class RangeTemplate : CharacterPersona, ICardTraits, IRangeTraits
+public class RangeTemplate : CharacterPersona, ICardTraits, ICharacterTraits , IRangeTraits
 {
     public static RangeTemplate Instance { get; set; }
     public RangeTemplate()
@@ -101,7 +101,6 @@ public class RangeTemplate : CharacterPersona, ICardTraits, IRangeTraits
             }
         }
     }
-    
     public int Damage
     {
         get { return Damage; }
@@ -164,7 +163,7 @@ public class RangeTemplate : CharacterPersona, ICardTraits, IRangeTraits
         get { return ExpPoints; }
         set
         {
-            if (BattleCalculate == true/*This means characters can level up durning battle*/)
+            if (RoundOver == true/*This means characters can level up durning battle*/)
             {
                 Instance.ExpPoints += NewEarnedXp;
             }
@@ -195,7 +194,7 @@ public class RangeTemplate : CharacterPersona, ICardTraits, IRangeTraits
         get { return EarnedXp; }
         set
         {
-            if (BattleCalculate == false)
+            if (RoundOver == false)
             {
                 EarnedXp = false;
             }
@@ -261,7 +260,10 @@ public class RangeTemplate : CharacterPersona, ICardTraits, IRangeTraits
         EarnedXp = earnXp;
         NewEarnedXp = newEarnedXp;
     }
-
+    public void TraitLevelUpActivation(int experienceLevel, List<Items> Items)
+    {
+        throw new NotImplementedException();
+    }
     public void ActiveBuff()
     {
         throw new NotImplementedException();
@@ -292,13 +294,6 @@ public class RangeTemplate : CharacterPersona, ICardTraits, IRangeTraits
         {
             Random r = new Random();
             damageGiven = r.Next(2, 7);
-        }
-
-        if (Instance.PolishWeapon() == true) damageGiven = (int)(damageGiven * Instance.PowerBuffPercent);// this is to work the polish buff
-
-        if (BattleCalculate == true)
-        {
-            return damageGiven; //This was put here so that it escapes the method all together if an action is still in calculation
         }
 
         //My Implementation of Armour
@@ -350,41 +345,6 @@ public class RangeTemplate : CharacterPersona, ICardTraits, IRangeTraits
         {
             damageGiven = 0;
         }
-
-        #region template logic
-
-
-        if (CharacterInstance.GetType() == typeof(WarriorTemplate))
-        {
-            WarriorTemplate starter = (WarriorTemplate)CharacterInstance;
-            starter.HealthLoss(damageGiven);
-        }
-        if (CharacterInstance.GetType() == typeof(TankWarriorTemplate))
-        {
-            TankWarriorTemplate starter = (TankWarriorTemplate)CharacterInstance;
-            starter.HealthLoss(damageGiven);
-        }
-        if (CharacterInstance.GetType() == typeof(RangeTemplate))
-        {
-            RangeTemplate starter = (RangeTemplate)CharacterInstance;
-            starter.HealthLoss(damageGiven);
-        }
-        if (CharacterInstance.GetType() == typeof(MageTemplate))
-        {
-            MageTemplate starter = (MageTemplate)CharacterInstance;
-            starter.HealthLoss(damageGiven);
-        }
-        if (CharacterInstance.GetType() == typeof(ControllerTemplate))
-        {
-            ControllerTemplate starter = (ControllerTemplate)CharacterInstance;
-            starter.HealthLoss(damageGiven);
-        }
-        if (CharacterInstance.GetType() == typeof(AssasinTemplate))
-        {
-            AssasinTemplate starter = (AssasinTemplate)CharacterInstance;
-            starter.HealthLoss(damageGiven);
-        }
-        #endregion
 
         return damageGiven;
     }
@@ -484,6 +444,11 @@ public class RangeTemplate : CharacterPersona, ICardTraits, IRangeTraits
     public bool PurifiedState { get; private set; }
     public bool BlockState { get; private set; }
     public bool ImmuneState { get; private set; }
+    public double EvadeBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public double AgileBUffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public double HealBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public double counterAttackPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public object ProtectionSponser { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     #endregion
     public void ToggleArmour(bool state, int amount)
     {
@@ -512,6 +477,7 @@ public class RangeTemplate : CharacterPersona, ICardTraits, IRangeTraits
     {
         ImmuneState = state;
     }
+    
     #endregion
     #endregion
 }

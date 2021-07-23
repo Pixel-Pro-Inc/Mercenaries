@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Enums;
 
 namespace Assets.TraitInterface
 {
@@ -31,7 +32,7 @@ namespace Assets.TraitInterface
         int Armour { get; set; }
         int Damage { get; set; }
         int HitCount { get; set; }
-        int DamageGiven();
+        int DamageGiven(object CharacterInstance, damageType source);
         int HealthLoss(int damageGiven);
         int Accuracy { get; set; }
 

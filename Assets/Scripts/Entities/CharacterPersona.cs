@@ -7,10 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
+using static Enums;
 
 namespace Assets.Entities
 {
-    public class CharacterPersona: Cards
+    public class CharacterPersona: Cards, ICombatAction
     {
         /*
          This CharacterPersona is the bluprint for all characters, friend and foe. The properties listed below are all the properties that each character shares
@@ -33,9 +34,6 @@ namespace Assets.Entities
             #endregion
         }
 
-        
-        //Be sure to define the passive traits!!!!!!!!!
-        //and the costs if there are any!!!!!!!!
         #region GivenCharacterTraits
 
 
@@ -419,7 +417,7 @@ namespace Assets.Entities
 
         #region Attack
 
-        public void TrueDamage(object CharacterInstance, object TargetInstance)
+        public void TrueDamage(object CharacterInstance, object TargetInstance, damageType source)
         {
             int Damage=0;
             //Note that battleCalculate is never set true here
@@ -430,76 +428,76 @@ namespace Assets.Entities
             int characterNumber = TemplateCharacter(CharacterInstance);
             if (characterNumber == 1)
             {
-                Damage = WarriorCBase.DamageGiven();
+                Damage = WarriorCBase.DamageGiven(CharacterInstance, source);
                 if (WarriorCBase.PolishWeapon() == true) Damage = (int)(Damage * WarriorCBase.PowerBuffPercent);// this is to work the polish buff
             }
             if (characterNumber == 2)
             {
-                Damage=TankCBase.DamageGiven();
+                Damage=TankCBase.DamageGiven(CharacterInstance, source);
                 if (TankCBase.PolishWeapon() == true) Damage = (int)(Damage * TankCBase.PowerBuffPercent);// this is to work the polish buff
             }
             if (characterNumber == 3)
             {
-                Damage=RangeCBase.DamageGiven();
+                Damage=RangeCBase.DamageGiven(CharacterInstance, source);
                 if (RangeCBase.PolishWeapon() == true) Damage = (int)(Damage * RangeCBase.PowerBuffPercent);// this is to work the polish buff
             }
             if (characterNumber == 4)
             {
-                Damage=MageCBase.DamageGiven();
+                Damage=MageCBase.DamageGiven(CharacterInstance, source);
                 if (MageCBase.PolishWeapon() == true) Damage = (int)(Damage * MageCBase.PowerBuffPercent);// this is to work the polish buff
             }
             if (characterNumber == 5)
             {
-                Damage=ControllerCBase.DamageGiven();
+                Damage=ControllerCBase.DamageGiven(CharacterInstance, source);
                 if (ControllerCBase.PolishWeapon() == true) Damage = (int)(Damage * ControllerCBase.PowerBuffPercent);// this is to work the polish buff
             }
             if (characterNumber == 6)
             {
-                Damage=AssasinCBase.DamageGiven();
+                Damage=AssasinCBase.DamageGiven(CharacterInstance, source);
                 if (AssasinCBase.PolishWeapon() == true) Damage = (int)(Damage * AssasinCBase.PowerBuffPercent);// this is to work the polish buff
             }
             #endregion
             #region template logic
             object finisher = WarriorTarBase;
 
-            if (TargetInstance.GetType() == typeof(CharacterPersona.WarriorTemplate))
+            if (TargetInstance.GetType() == typeof(WarriorTemplate))
             {
-                CharacterPersona.WarriorTemplate starter = (CharacterPersona.WarriorTemplate)TargetInstance;
+                WarriorTemplate starter = (WarriorTemplate)TargetInstance;
                 if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
                 else starter.HealthLoss(Damage);
                 TargetInstance = starter;
             }
-            if (TargetInstance.GetType() == typeof(CharacterPersona.TankWarriorTemplate))
+            if (TargetInstance.GetType() == typeof(TankWarriorTemplate))
             {
-                CharacterPersona.TankWarriorTemplate starter = (CharacterPersona.TankWarriorTemplate)TargetInstance;
+                TankWarriorTemplate starter = (TankWarriorTemplate)TargetInstance;
                 if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
                 else starter.HealthLoss(Damage);
                 TargetInstance = starter;
             }
-            if (TargetInstance.GetType() == typeof(CharacterPersona.RangeTemplate))
+            if (TargetInstance.GetType() == typeof(RangeTemplate))
             {
-                CharacterPersona.RangeTemplate starter = (CharacterPersona.RangeTemplate)TargetInstance;
+                RangeTemplate starter = (RangeTemplate)TargetInstance;
                 if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
                 else starter.HealthLoss(Damage);
                 TargetInstance = starter;
             }
-            if (TargetInstance.GetType() == typeof(CharacterPersona.MageTemplate))
+            if (TargetInstance.GetType() == typeof(MageTemplate))
             {
-                CharacterPersona.MageTemplate starter = (CharacterPersona.MageTemplate)TargetInstance;
+                MageTemplate starter = (MageTemplate)TargetInstance;
                 if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
                 else starter.HealthLoss(Damage);
                 TargetInstance = starter;
             }
-            if (TargetInstance.GetType() == typeof(CharacterPersona.ControllerTemplate))
+            if (TargetInstance.GetType() == typeof(ControllerTemplate))
             {
-                CharacterPersona.ControllerTemplate starter = (CharacterPersona.ControllerTemplate)TargetInstance;
+                ControllerTemplate starter = (ControllerTemplate)TargetInstance;
                 if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
                 else starter.HealthLoss(Damage);
                 TargetInstance = starter;
             }
-            if (TargetInstance.GetType() == typeof(CharacterPersona.AssasinTemplate))
+            if (TargetInstance.GetType() == typeof(AssasinTemplate))
             {
-                CharacterPersona.AssasinTemplate starter = (CharacterPersona.AssasinTemplate)TargetInstance;
+                AssasinTemplate starter = (AssasinTemplate)TargetInstance;
                 if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
                 else starter.HealthLoss(Damage);
                 TargetInstance = starter;
@@ -549,7 +547,7 @@ namespace Assets.Entities
             AssasinTarBase = null;
             #endregion
         }
-        public void PhysicalDamage(object CharacterInstance, object TargetInstance)
+        public void PhysicalDamage(object CharacterInstance, object TargetInstance, damageType source)
         {
 
             int physicalDamage = 0;
@@ -561,27 +559,27 @@ namespace Assets.Entities
             //the method DamageGiven needs to be done but the value also needs to be stored. I don't do them separate cause healthlos will still get fired
             if (characterNumber == 1)
             {
-                physicalDamage = WarriorCBase.DamageGiven();
+                physicalDamage = WarriorCBase.DamageGiven(CharacterInstance, source);
             }
             if (characterNumber == 2)
             {
-                physicalDamage = TankCBase.DamageGiven();
+                physicalDamage = TankCBase.DamageGiven(CharacterInstance, source);
             }
             if (characterNumber == 3)
             {
-                physicalDamage = RangeCBase.DamageGiven();
+                physicalDamage = RangeCBase.DamageGiven(CharacterInstance, source);
             }
             if (characterNumber == 4)
             {
-                physicalDamage = MageCBase.DamageGiven();
+                physicalDamage = MageCBase.DamageGiven(CharacterInstance, source);
             }
             if (characterNumber == 5)
             {
-                physicalDamage = ControllerCBase.DamageGiven();
+                physicalDamage = ControllerCBase.DamageGiven(CharacterInstance, source);
             }
             if (characterNumber == 6)
             {
-                physicalDamage = AssasinCBase.DamageGiven();
+                physicalDamage = AssasinCBase.DamageGiven(CharacterInstance, source);
             }
             #endregion
             #region TargetInstance template logic
@@ -738,7 +736,7 @@ namespace Assets.Entities
             #endregion
 
         }
-        public void MagicalDamage(object CharacterInstance, object TargetInstance)
+        public void MagicalDamage(object CharacterInstance, object TargetInstance, damageType source)
         {
             int magicalDamage = 0;
             int shieldcache = 0;
@@ -749,27 +747,27 @@ namespace Assets.Entities
             //the method DamageGiven needs to be done but the value also needs to be stored. I don't do them separate cause healthlos will still get fired
             if (characterNumber == 1)
             {
-                magicalDamage = WarriorCBase.DamageGiven();
+                magicalDamage = WarriorCBase.DamageGiven(CharacterInstance, source);
             }
             if (characterNumber == 2)
             {
-                magicalDamage = TankCBase.DamageGiven();
+                magicalDamage = TankCBase.DamageGiven(CharacterInstance, source);
             }
             if (characterNumber == 3)
             {
-                magicalDamage = RangeCBase.DamageGiven();
+                magicalDamage = RangeCBase.DamageGiven(CharacterInstance, source);
             }
             if (characterNumber == 4)
             {
-                magicalDamage = MageCBase.DamageGiven();
+                magicalDamage = MageCBase.DamageGiven(CharacterInstance, source);
             }
             if (characterNumber == 5)
             {
-                magicalDamage = ControllerCBase.DamageGiven();
+                magicalDamage = ControllerCBase.DamageGiven(CharacterInstance, source);
             }
             if (characterNumber == 6)
             {
-                magicalDamage = AssasinCBase.DamageGiven();
+                magicalDamage = AssasinCBase.DamageGiven(CharacterInstance, source);
             }
             #endregion
             #region TargetInstance template logic
@@ -945,31 +943,31 @@ namespace Assets.Entities
             #endregion
 
         }
-        public void Ignite(object CharacterInstance, object TargetInstance)
+        public void Ignite(object CharacterInstance, object TargetInstance, damageType source)
         {
             bool howmany = RoundOver;
             int count=0;
             if (howmany != RoundOver) count++; howmany = RoundOver;
-            if (count == 2) MagicalDamage(CharacterInstance, TargetInstance);
+            if (count == 2) MagicalDamage(CharacterInstance, TargetInstance, source);
         }
-        public void Bleed(object CharacterInstance, object TargetInstance)
+        public void Bleed(object CharacterInstance, object TargetInstance, damageType source)
         {
-            if (RoundOver == true) PhysicalDamage(CharacterInstance, TargetInstance);
+            if (RoundOver == true) PhysicalDamage(CharacterInstance, TargetInstance, source);
         }
-        public void Blight(object CharacterInstance, object TargetInstance)
+        public void Blight(object CharacterInstance, object TargetInstance, damageType source)
         {
             int count = 1;
             if (RoundOver==false)
             {
                 while (count==1)
                 {
-                    MagicalDamage(CharacterInstance, TargetInstance);
+                    MagicalDamage(CharacterInstance, TargetInstance,source);
                 }
                 count--;
             }
             else count++;
         }
-        public void BalancedDamage(object CharacterInstance, object TargetInstance)
+        public void BalancedDamage(object CharacterInstance, object TargetInstance, damageType source)
         {
             int physicalDamage = 0;
             int shieldcache = 0;
@@ -981,27 +979,27 @@ namespace Assets.Entities
             //the method DamageGiven needs to be done but the value also needs to be stored. I don't do them separate cause healthlos will still get fired
             if (characterNumber == 1)
             {
-                physicalDamage = WarriorCBase.DamageGiven();
+                physicalDamage = WarriorCBase.DamageGiven(CharacterInstance, source);
             }
             if (characterNumber == 2)
             {
-                physicalDamage = TankCBase.DamageGiven();
+                physicalDamage = TankCBase.DamageGiven(CharacterInstance, source);
             }
             if (characterNumber == 3)
             {
-                physicalDamage = RangeCBase.DamageGiven();
+                physicalDamage = RangeCBase.DamageGiven(CharacterInstance, source);
             }
             if (characterNumber == 4)
             {
-                physicalDamage = MageCBase.DamageGiven();
+                physicalDamage = MageCBase.DamageGiven(CharacterInstance, source);
             }
             if (characterNumber == 5)
             {
-                physicalDamage = ControllerCBase.DamageGiven();
+                physicalDamage = ControllerCBase.DamageGiven(CharacterInstance, source);
             }
             if (characterNumber == 6)
             {
-                physicalDamage = AssasinCBase.DamageGiven();
+                physicalDamage = AssasinCBase.DamageGiven(CharacterInstance, source);
             }
             #endregion
             #region TargetInstance template logic
@@ -1371,7 +1369,7 @@ namespace Assets.Entities
 
             return Aware;
         }
-        public void OnGuard(object CharacterInstance, object TargetInstance)
+        public void OnGuard(object CharacterInstance, object TargetInstance, damageType source)
         {
             int standbyhealth=0;
             int storedhealth = 0;
@@ -1388,7 +1386,7 @@ namespace Assets.Entities
             myTimer2.Enabled = true;
 
             // Implement a call with the right signature for events going off
-            void myEvent(object source, ElapsedEventArgs e) //this checks if the characterInstance.health changes
+            void myEvent(object source2, ElapsedEventArgs e) //this checks if the characterInstance.health changes
             {
                 while (RoundOver == false)
                 {
@@ -1398,32 +1396,32 @@ namespace Assets.Entities
                     if (characterNumber == 1)
                     {
                         standbyhealth = WarriorCBase.Health;
-                        damage1 = (int)(WarriorCBase.DamageGiven() * WarriorCBase.counterAttackPercent);
+                        damage1 = (int)(WarriorCBase.DamageGiven( CharacterInstance, source) * WarriorCBase.counterAttackPercent);
                     }
                     if (characterNumber == 2)
                     {
                         standbyhealth = TankCBase.Health;
-                        damage1 = (int)(TankCBase.DamageGiven() * TankCBase.counterAttackPercent);
+                        damage1 = (int)(TankCBase.DamageGiven(CharacterInstance, source) * TankCBase.counterAttackPercent);
                     }
                     if (characterNumber == 3)
                     {
                         standbyhealth = RangeCBase.Health;
-                        damage1 = (int)(RangeCBase.DamageGiven() * RangeCBase.counterAttackPercent);
+                        damage1 = (int)(RangeCBase.DamageGiven(CharacterInstance, source) * RangeCBase.counterAttackPercent);
                     }
                     if (characterNumber == 4)
                     {
                         standbyhealth = MageCBase.Health;
-                        damage1 = (int)(MageCBase.DamageGiven() * MageCBase.counterAttackPercent);
+                        damage1 = (int)(MageCBase.DamageGiven(CharacterInstance, source) * MageCBase.counterAttackPercent);
                     }
                     if (characterNumber == 5)
                     {
                         standbyhealth = ControllerCBase.Health;
-                        damage1 = (int)(ControllerCBase.DamageGiven() * ControllerCBase.counterAttackPercent);
+                        damage1 = (int)(ControllerCBase.DamageGiven(CharacterInstance, source) * ControllerCBase.counterAttackPercent);
                     }
                     if (characterNumber == 6)
                     {
                         standbyhealth = AssasinCBase.Health;
-                        damage1 = (int)(AssasinCBase.DamageGiven() * AssasinCBase.counterAttackPercent);
+                        damage1 = (int)(AssasinCBase.DamageGiven(CharacterInstance, source) * AssasinCBase.counterAttackPercent);
                     }
                     #endregion
                 }
@@ -1711,69 +1709,11 @@ namespace Assets.Entities
 
         public bool Slow(object CharacterInstance, object TargetInstance)
         {
-            #region CharacterInstance template logic
-
-            int characterNumber = TemplateCharacter(CharacterInstance);
-            //the method DamageGiven needs to be done but the value also needs to be stored. I don't do them separate cause healthlos will still get fired
-            if (characterNumber == 1)
-            {
-                WarriorCBase.Slow(CharacterInstance, TargetInstance);
-            }
-            if (characterNumber == 2)
-            {
-                TankCBase.Slow(CharacterInstance, TargetInstance);
-            }
-            if (characterNumber == 3)
-            {
-                RangeCBase.Slow(CharacterInstance, TargetInstance);
-            }
-            if (characterNumber == 4)
-            {
-                MageCBase.Slow(CharacterInstance, TargetInstance);
-            }
-            if (characterNumber == 5)
-            {
-                ControllerCBase.Slow(CharacterInstance, TargetInstance);
-            }
-            if (characterNumber == 6)
-            {
-                AssasinCBase.Slow(CharacterInstance, TargetInstance);
-            }
-            #endregion         
             return true;
         }
 
         public bool Rooted(object CharacterInstance, object TargetInstance)
         {
-            #region CharacterInstance template logic
-
-            int characterNumber = TemplateCharacter(CharacterInstance);
-            //the method DamageGiven needs to be done but the value also needs to be stored. I don't do them separate cause healthlos will still get fired
-            if (characterNumber == 1)
-            {
-                WarriorCBase.Rooted(CharacterInstance, TargetInstance);
-            }
-            if (characterNumber == 2)
-            {
-                TankCBase.Rooted(CharacterInstance, TargetInstance);
-            }
-            if (characterNumber == 3)
-            {
-                RangeCBase.Rooted(CharacterInstance, TargetInstance);
-            }
-            if (characterNumber == 4)
-            {
-                MageCBase.Rooted(CharacterInstance, TargetInstance);
-            }
-            if (characterNumber == 5)
-            {
-                ControllerCBase.Rooted(CharacterInstance, TargetInstance);
-            }
-            if (characterNumber == 6)
-            {
-                AssasinCBase.Rooted(CharacterInstance, TargetInstance);
-            }
-            #endregion         
             return true;
         }
 
