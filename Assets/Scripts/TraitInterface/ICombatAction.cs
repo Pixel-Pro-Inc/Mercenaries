@@ -30,10 +30,10 @@ namespace Assets.Scripts.TraitInterface
 
         #region Attack
 
-        bool PhysicalDamage(object CharacterInstance, object TargetInstance);
-        bool MagicalDamage(object CharacterInstance, object TargetInstance);
-        bool TrueDamage(object CharacterInstance, object TargetInstance);
-        bool Drain(object CharacterInstance, object TargetInstance);
+        void PhysicalDamage(object CharacterInstance, object TargetInstance);
+        void MagicalDamage(object CharacterInstance, object TargetInstance);
+        void TrueDamage(object CharacterInstance, object TargetInstance);
+        void Drain(object CharacterInstance, object TargetInstance);
         bool Ignite(object CharacterInstance, object TargetInstance);
         bool Bleed(object CharacterInstance, object TargetInstance);
         bool Blight(object CharacterInstance, object TargetInstance);
@@ -54,20 +54,21 @@ namespace Assets.Scripts.TraitInterface
 
         #region Buff
 
-        bool Agile(object CharacterInstance);
+        void Agile(object CharacterInstance);
         bool PolishWeapon();
         bool Chosen();
-        bool Aware(object CharacterInstance, object TargetInstance);
-        bool OnGuard(object CharacterInstance, object TargetInstance);
-        bool Provoking(object CharacterInstance, object TargetInstance); //this will be difficult
-        bool Protector(object OwnerInstance, object CharacterInstance);
-        bool Protected(object CharacterInstance, object TargetInstance);//If hit, protector will take damage instead
-        bool Revigorate(object CharacterInstance, object TargetInstance);
-        bool GodsBlessing(object CharacterInstance, List<string> Allies);// I left it as allies so that its easier to deal with
+        bool Aware();
+        void OnGuard(object CharacterInstance, object TargetInstance);
+        void Provoking(object CharacterInstance); //this takes the character and uses the protector() method and its list of allies as targets
+        void Protector(object OwnerInstance, object TargetInstance); //this asks like a contract. The person who will protectand the protected. eg Protector( instance,Mister Froggo)
+        object Protected(object TargetInstance);//If hit, protector will take damage instead. but this isn't really given how damagegiven works. needs to be changed
+        void Revigorate(object CharacterInstance, object TargetInstance);
+        void HealVictim(object TargetInstance); //this works on anyone, not just allies
+        void GodsBlessing(object CharacterInstance, List<string> Allies);// I left it as allies so that its easier to deal with but really we dont need it as a parameter
 
         #endregion
         #region Debuff
-
+        // each of these has to have logic that asks if RemoverDebufeffects == true
         bool Slow(object CharacterInstance, object TargetInstance);
         bool Rooted(object CharacterInstance, object TargetInstance);
         bool WeakGrip(object CharacterInstance, object TargetInstance);

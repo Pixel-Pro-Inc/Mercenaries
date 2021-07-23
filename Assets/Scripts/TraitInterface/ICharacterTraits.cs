@@ -18,7 +18,7 @@ namespace Assets.TraitInterface
         string CharacterName { get; set; }
         string CharacterDescription { get; set; } //Here the personality and backstory of a unique character will be defined
 
-       
+
         #region Stats
 
         bool DefaultValue { get; set; }
@@ -31,7 +31,7 @@ namespace Assets.TraitInterface
         int Armour { get; set; }
         int Damage { get; set; }
         int HitCount { get; set; }
-        int DamageGiven(object CharacterInstance);
+        int DamageGiven();
         int HealthLoss(int damageGiven);
         int Accuracy { get; set; }
 
@@ -44,7 +44,12 @@ namespace Assets.TraitInterface
             //character has currently
         }
         int Stamina { get; set; }//I assume the hunger method will affect this trait
+
         double PowerBuffPercent { get; set; } //Each character has their own percent buff and even this can be improved so yeah
+        double EvadeBuffPercent { get; set; } //This is here for aware
+        double AgileBUffPercent {get; set;}
+        double HealBuffPercent { get; set; }
+        object ProtectionSponser { get; set; }
 
         int MagicalDamageTaken { get; set; }
         int PhysicalDamageTaken { get; set; }
