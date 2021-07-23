@@ -22,7 +22,7 @@ namespace Assets.Scripts.TraitInterface
          Right now these are set to only work on the instance its being used by. But we might need it to be declareed as such:
         UniqueSkill(object CharacterInstance, List<object> CHaracteraffectedInstances);
          */
-        public void UniqueSkill(object CharacterInstance, object TargetInstance);
+        void UniqueSkill(object CharacterInstance, object TargetInstance);
         void UniqueActiveBuff(object CharacterInstance, object TargetInstance);
         void UniqueActiveDeBuff(object CharacterInstance, object TargetInstance);
 
