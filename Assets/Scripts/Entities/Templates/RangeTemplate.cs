@@ -231,8 +231,10 @@ public class RangeTemplate : CharacterPersona, ICardTraits, ICharacterTraits , I
             Instance.CritC += 2 * Instance.ExperienceLevel;
             Instance.MagicRes += 2 * (Instance.ExperienceLevel - 2);
             Instance.Armour += 2 * (Instance.ExperienceLevel - 2);
-            if (LowDamageRange == true) Instance.Damage += 2 * Instance.ExperienceLevel;
-            else
+            Instance.LowDamageRange = true;
+            if (LowDamageRange == true)
+            { Instance.Damage += 2 * Instance.ExperienceLevel; Instance.LowDamageRange = false; }
+            if (LowDamageRange == false)
             {
                 Instance.Damage += 4 * Instance.ExperienceLevel;
             }
@@ -246,8 +248,10 @@ public class RangeTemplate : CharacterPersona, ICardTraits, ICharacterTraits , I
             Instance.CritC += 2 * Instance.ExperienceLevel;
             Instance.MagicRes += 0 * (Instance.ExperienceLevel - 2);
             Instance.Armour += 0 * (Instance.ExperienceLevel - 2);
-            if (LowDamageRange == true) Instance.Damage += 1 * Instance.ExperienceLevel;
-            else
+            Instance.LowDamageRange = true;
+            if (LowDamageRange == true)
+            { Instance.Damage += 1 * Instance.ExperienceLevel; Instance.LowDamageRange = false; }
+            if (LowDamageRange == false)
             {
                 Instance.Damage += 2 * Instance.ExperienceLevel;
             }

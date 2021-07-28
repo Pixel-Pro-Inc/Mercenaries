@@ -289,8 +289,10 @@ public class WarriorTemplate : CharacterPersona, ICardTraits, ICharacterTraits, 
             Instance.CritC += 1 * Instance.ExperienceLevel;
             Instance.MagicRes += 1 * Instance.ExperienceLevel;
             Instance.Armour += 3 * Instance.ExperienceLevel;
-            if (LowDamageWarrior == true) Instance.Damage += 3 * Instance.ExperienceLevel;
-            else
+            Instance.LowDamageWarrior = true;
+            if (LowDamageWarrior == true)
+            { Instance.Damage += 3 * Instance.ExperienceLevel; Instance.LowDamageWarrior = false; }
+            if (LowDamageWarrior == false)
             {
                 Instance.Damage += 2 * Instance.ExperienceLevel;
             }
@@ -303,8 +305,10 @@ public class WarriorTemplate : CharacterPersona, ICardTraits, ICharacterTraits, 
             Instance.CritC += 1 * Instance.ExperienceLevel;
             Instance.MagicRes += 0;
             Instance.Armour += 0;
-            if (LowDamageWarrior == true) Instance.Damage += 1 * Instance.ExperienceLevel;
-            else
+            Instance.LowDamageWarrior = true;
+            if (LowDamageWarrior == true)
+            { Instance.Damage += 1 * Instance.ExperienceLevel; Instance.LowDamageWarrior = false; }
+            if (LowDamageWarrior == false)
             {
                 Instance.Damage += 2 * Instance.ExperienceLevel;
             }

@@ -228,8 +228,10 @@ public class ControllerTemplate : CharacterPersona, ICardTraits, ICharacterTrait
             Instance.CritC += 1 * Instance.ExperienceLevel;
             Instance.MagicRes += 1 * Instance.ExperienceLevel;
             Instance.Armour += 1 * Instance.ExperienceLevel;
-            if (LowDamageController == true) Instance.Damage += 3 * Instance.ExperienceLevel;
-            else
+            Instance.LowDamageController = true;
+            if (LowDamageController == true)
+            { Instance.Damage += 3 * Instance.ExperienceLevel; Instance.LowDamageController = false; }
+            if (LowDamageController == false)
             {
                 Instance.Damage += 4 * Instance.ExperienceLevel;
             }
@@ -246,8 +248,10 @@ public class ControllerTemplate : CharacterPersona, ICardTraits, ICharacterTrait
                 Instance.MagicRes += 1;
                 Instance.Armour += 1;
             }
-            if (LowDamageController == true) Instance.Damage += 1;
-            else
+            Instance.LowDamageController = true;
+            if (LowDamageController == true)
+            { Instance.Damage += 1; Instance.LowDamageController = false; }
+            if (LowDamageController == false)
             {
                 Instance.Damage += 2;
             }

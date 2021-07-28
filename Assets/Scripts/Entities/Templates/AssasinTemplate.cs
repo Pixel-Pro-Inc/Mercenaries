@@ -229,8 +229,10 @@ public class AssasinTemplate : CharacterPersona, ICardTraits, ICharacterTraits, 
             Instance.CritC += 3 * Instance.ExperienceLevel;
             Instance.MagicRes += 2 * (Instance.ExperienceLevel - 2);
             Instance.Armour += 2 * (Instance.ExperienceLevel - 2);
-            if (LowDamageAssasin == true) Instance.Damage += 6 * Instance.ExperienceLevel;
-            else
+            Instance.LowDamageAssasin = true;
+            if (LowDamageAssasin == true)
+            { Instance.Damage += 6 * Instance.ExperienceLevel; Instance.LowDamageAssasin = false; }
+            if (LowDamageAssasin == false)
             {
                 Instance.Damage += 7 * Instance.ExperienceLevel;
             }
@@ -244,8 +246,10 @@ public class AssasinTemplate : CharacterPersona, ICardTraits, ICharacterTraits, 
             Instance.CritC += 1 * Instance.ExperienceLevel;
             Instance.MagicRes += 0 * Instance.ExperienceLevel;
             Instance.Armour += 0 * Instance.ExperienceLevel;
-            if (LowDamageAssasin == true) Instance.Damage += 1 * Instance.ExperienceLevel;
-            else
+            Instance.LowDamageAssasin = true;
+            if (LowDamageAssasin == true)
+            { Instance.Damage += 1 * Instance.ExperienceLevel; Instance.LowDamageAssasin = false; }
+            if (LowDamageAssasin == false)
             {
                 Instance.Damage += 2 * Instance.ExperienceLevel;
             }

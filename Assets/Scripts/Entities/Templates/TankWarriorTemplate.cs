@@ -231,8 +231,10 @@ public class TankWarriorTemplate : CharacterPersona, ICardTraits,ICharacterTrait
             Instance.CritC += 1 * Instance.ExperienceLevel;
             Instance.MagicRes += 1 * Instance.ExperienceLevel;
             Instance.Armour += 2 * Instance.ExperienceLevel;
-            if (LowDamageTankWarrior == true) Instance.Damage += 2 * Instance.ExperienceLevel;
-            else
+            Instance.LowDamageTankWarrior = true;
+            if (LowDamageTankWarrior == true)
+            { Instance.Damage += 2 * Instance.ExperienceLevel; Instance.LowDamageTankWarrior = false; }
+            if (LowDamageTankWarrior == false)
             {
                 Instance.Damage += 2 * Instance.ExperienceLevel;
             }
@@ -245,8 +247,10 @@ public class TankWarriorTemplate : CharacterPersona, ICardTraits,ICharacterTrait
             Instance.CritC += 1 * Instance.ExperienceLevel;
             Instance.MagicRes += 1 * Instance.ExperienceLevel;
             Instance.Armour += 2 * Instance.ExperienceLevel;
-            if (LowDamageTankWarrior == true) Instance.Damage += 1 * Instance.ExperienceLevel;
-            else
+            Instance.LowDamageTankWarrior = true;
+            if (LowDamageTankWarrior == true)
+            { Instance.Damage += 1 * Instance.ExperienceLevel; Instance.LowDamageTankWarrior = false; }
+            if (LowDamageTankWarrior == false)
             {
                 Instance.Damage += 1 * Instance.ExperienceLevel;
             }

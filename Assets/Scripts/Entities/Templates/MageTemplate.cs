@@ -277,8 +277,10 @@ public class MageTemplate : CharacterPersona, ICardTraits, ICharacterTraits, IMa
                 Instance.MagicRes += 3 * (Instance.ExperienceLevel - 2);
                 Instance.Armour += 1 * (Instance.ExperienceLevel - 2);
                 #region Damage
-                if (LowDamageMage == true) Instance.Damage += 5 * Instance.ExperienceLevel;
-                else
+                Instance.LowDamageMage = true;
+                if (LowDamageMage == true)
+                { Instance.Damage += 5 * Instance.ExperienceLevel; Instance.LowDamageMage = false; }
+                if (LowDamageMage == false)
                 {
                     Instance.Damage += 4 * Instance.ExperienceLevel;
                 }
@@ -292,8 +294,10 @@ public class MageTemplate : CharacterPersona, ICardTraits, ICharacterTraits, IMa
                 Instance.CritC += 1 * Instance.ExperienceLevel;
                 Instance.MagicRes += 1 * Instance.ExperienceLevel;
                 Instance.Armour += 1 * Instance.ExperienceLevel;
-                if (LowDamageMage == true) Instance.Damage += 3 * Instance.ExperienceLevel;
-                else
+                Instance.LowDamageMage = true;
+                if (LowDamageMage == true)
+                { Instance.Damage += 3 * Instance.ExperienceLevel; Instance.LowDamageMage = false; }
+                if (LowDamageMage == false)
                 {
                     Instance.Damage += 4 * Instance.ExperienceLevel;
                 }
@@ -308,8 +312,10 @@ public class MageTemplate : CharacterPersona, ICardTraits, ICharacterTraits, IMa
             Instance.CritC += 1 * Instance.ExperienceLevel;
             Instance.MagicRes += 0 * Instance.ExperienceLevel;
             Instance.Armour += 0 * Instance.ExperienceLevel;
-            if (LowDamageMage == true) Instance.Damage += 1 * Instance.ExperienceLevel;
-            else
+            Instance.LowDamageMage = true;
+            if (LowDamageMage == true)
+            { Instance.Damage += 1 * Instance.ExperienceLevel; Instance.LowDamageMage = false; }
+            if (LowDamageMage == false)
             {
                 Instance.Damage += 5 * Instance.ExperienceLevel;
             }
