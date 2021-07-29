@@ -15,8 +15,21 @@ public class AssasinTemplate : CharacterPersona, ICardTraits, ICharacterTraits, 
     public AssasinTemplate()
     {
         Instance = this;
+
+        while (Instance.LowDamageAssasin==true)
+        {
+            Instance.Lowval = Instance.Damage;
+            Instance.LowDamageAssasin = false;
+        }
+        while (Instance.LowDamageAssasin == false)
+        {
+            Instance.highval = Instance.Damage;
+        }
+        
     }
 
+    public int highval;
+    public int Lowval;
     #region Character Variables
 
     public string CharacterName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
@@ -204,9 +217,9 @@ public class AssasinTemplate : CharacterPersona, ICardTraits, ICharacterTraits, 
     public string BriefDescription { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     public List<string> NaturalAllies { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     public List<string> NaturalEnemies { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-    public bool Foe { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public bool Foe { get { return Foe; } set { Foe = false; } }
     public bool PassiveAssasinTraits { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-    public bool LowDamageAssasin { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public bool LowDamageAssasin { get { return LowDamageAssasin; } set { LowDamageAssasin = true; } }
 
     public int MagicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     public int PhysicalDamageTaken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
@@ -282,8 +295,10 @@ public class AssasinTemplate : CharacterPersona, ICardTraits, ICharacterTraits, 
             amount = Debuff
         };
     }
+    
     public int DamageGiven(object CharacterInstance, damageType source)
-    {
+    { 
+
         int damageGiven = 0;
         if (Foe == false)
         {
