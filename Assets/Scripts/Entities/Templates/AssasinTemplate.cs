@@ -15,21 +15,8 @@ public class AssasinTemplate : CharacterPersona, ICardTraits, ICharacterTraits, 
     public AssasinTemplate()
     {
         Instance = this;
-
-        while (Instance.LowDamageAssasin==true)
-        {
-            Instance.Lowval = Instance.Damage;
-            Instance.LowDamageAssasin = false;
-        }
-        while (Instance.LowDamageAssasin == false)
-        {
-            Instance.highval = Instance.Damage;
-        }
-        
     }
 
-    public int highval;
-    public int Lowval;
     #region Character Variables
 
     public string CharacterName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
