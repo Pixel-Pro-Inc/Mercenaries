@@ -73,7 +73,7 @@ namespace Assets.Scripts.TraitInterface
         void Rooted(object CharacterInstance, object TargetInstance);
         void WeakGrip(object TargetInstance);
         void Exiled(object TargetInstance);
-        bool Marked(object CharacterInstance, object TargetInstance);
+        void Marked(object CharacterInstance, object TargetInstance);
         bool Calm(object CharacterInstance, object TargetInstance);
         bool BrokenGuard(object CharacterInstance, object TargetInstance);
         bool Burnt(object CharacterInstance, object TargetInstance);

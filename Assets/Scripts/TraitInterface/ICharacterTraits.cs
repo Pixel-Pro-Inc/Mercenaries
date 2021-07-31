@@ -57,6 +57,7 @@ namespace Assets.TraitInterface
         double RootedDebuffPercent { get; set; }
         double WeakGripDeBuffPercent { get; set; }
         double ExiledDeBuffPercent { get; set; }
+        double MarkedDeBuffPerent { get; set; }
 
         int MagicalDamageTaken { get; set; }
         int PhysicalDamageTaken { get; set; }
