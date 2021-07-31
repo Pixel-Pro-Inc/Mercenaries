@@ -566,6 +566,10 @@ public class MageTemplate : CharacterPersona, ICardTraits, ICharacterTraits, IMa
     public double HealBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     public double counterAttackPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     public object ProtectionSponser { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public double SlowDeBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public double RootedDebuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public double WeakGripDeBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public double ExiledDeBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     #endregion
     public void ToggleArmour(bool state, int amount)
     {

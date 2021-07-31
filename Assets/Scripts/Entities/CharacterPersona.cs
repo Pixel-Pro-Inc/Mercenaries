@@ -18,9 +18,7 @@ namespace Assets.Entities
         that does not need to be given a unique default value for that character. Its also the place for variables that arent used often and don't need to be 
         defined. The 'must have' properties are defined in ICharacterTraits. In ICHaractertraits each property will be unique per character and is important and 
         must be implemented and defined.
-
-        Below I planned on defining each unique character and all their traits and abilities (methods).
-        In my mind each one will be of Type 'Class' and so this will just be used as a reference for their combat types.
+        
          */
         public enum MasterCharacterList
         {
@@ -55,6 +53,8 @@ namespace Assets.Entities
         int shield { get { return shield; } set { if (shield < 0) shield = 0; shield = 0; } } //We are defining it (not ICharacterTraits) here cause it isn't used by everyone often but can be, and its 0 for everyone starting off
         public static bool RoundOver { get; set; }
         bool RemoveDebuffEffects { get; set; }
+        bool Weakg { get; set; } //these work for each instances weakgrip debuff
+        bool exiledg { get; set; }// these work for each instances exiled debuff
 
         #region Template Logic
         //The code below was created because i was tired of writting the template code over and over. Itworks much more effeciently. Make sure these arent set 
@@ -560,26 +560,32 @@ namespace Assets.Entities
             if (characterNumber == 1)
             {
                 physicalDamage = WarriorCBase.DamageGiven(CharacterInstance, source);
+                if (WarriorCBase.Weakg == true) physicalDamage -= (int)(physicalDamage * WarriorCBase.WeakGripDeBuffPercent);
             }
             if (characterNumber == 2)
             {
                 physicalDamage = TankCBase.DamageGiven(CharacterInstance, source);
+                if (TankCBase.Weakg == true) physicalDamage -= (int)(physicalDamage * TankCBase.WeakGripDeBuffPercent);
             }
             if (characterNumber == 3)
             {
                 physicalDamage = RangeCBase.DamageGiven(CharacterInstance, source);
+                if (RangeCBase.Weakg == true) physicalDamage -= (int)(physicalDamage * RangeCBase.WeakGripDeBuffPercent);
             }
             if (characterNumber == 4)
             {
                 physicalDamage = MageCBase.DamageGiven(CharacterInstance, source);
+                if (MageCBase.Weakg == true) physicalDamage -= (int)(physicalDamage * MageCBase.WeakGripDeBuffPercent);
             }
             if (characterNumber == 5)
             {
                 physicalDamage = ControllerCBase.DamageGiven(CharacterInstance, source);
+                if (ControllerCBase.Weakg == true) physicalDamage -= (int)(physicalDamage * ControllerCBase.WeakGripDeBuffPercent);
             }
             if (characterNumber == 6)
             {
                 physicalDamage = AssasinCBase.DamageGiven(CharacterInstance, source);
+                if (AssasinCBase.Weakg == true) physicalDamage -= (int)(physicalDamage * AssasinCBase.WeakGripDeBuffPercent);
             }
             #endregion
             #region TargetInstance template logic
@@ -748,26 +754,32 @@ namespace Assets.Entities
             if (characterNumber == 1)
             {
                 magicalDamage = WarriorCBase.DamageGiven(CharacterInstance, source);
+                if (WarriorCBase.exiledg == true) magicalDamage -= (int)(magicalDamage * WarriorCBase.ExiledDeBuffPercent);
             }
             if (characterNumber == 2)
             {
                 magicalDamage = TankCBase.DamageGiven(CharacterInstance, source);
+                if (WarriorCBase.exiledg == true) magicalDamage -= (int)(magicalDamage * TankCBase.ExiledDeBuffPercent);
             }
             if (characterNumber == 3)
             {
                 magicalDamage = RangeCBase.DamageGiven(CharacterInstance, source);
+                if (WarriorCBase.exiledg == true) magicalDamage -= (int)(magicalDamage * RangeCBase.ExiledDeBuffPercent);
             }
             if (characterNumber == 4)
             {
                 magicalDamage = MageCBase.DamageGiven(CharacterInstance, source);
+                if (WarriorCBase.exiledg == true) magicalDamage -= (int)(magicalDamage * MageCBase.ExiledDeBuffPercent);
             }
             if (characterNumber == 5)
             {
                 magicalDamage = ControllerCBase.DamageGiven(CharacterInstance, source);
+                if (WarriorCBase.exiledg == true) magicalDamage -= (int)(magicalDamage * ControllerCBase.ExiledDeBuffPercent);
             }
             if (characterNumber == 6)
             {
                 magicalDamage = AssasinCBase.DamageGiven(CharacterInstance, source);
+                if (WarriorCBase.exiledg == true) magicalDamage -= (int)(magicalDamage * AssasinCBase.ExiledDeBuffPercent);
             }
             #endregion
             #region TargetInstance template logic
@@ -1707,24 +1719,243 @@ namespace Assets.Entities
         #endregion
         #region Debuff
 
-        public bool Slow(object CharacterInstance, object TargetInstance)
+        public void Slow(object CharacterInstance, object TargetInstance)
         {
-            return true;
-        }
+            int SlowCache = 0;
+            #region CharacterInstance template logic
 
-        public bool Rooted(object CharacterInstance, object TargetInstance)
-        {
-            return true;
+            //battleCalculate has to remain false or null.
+            int characterNumber = TemplateCharacter(CharacterInstance);
+            if (characterNumber == 1)
+            {
+                SlowCache = (int)(WarriorCBase.Speed * WarriorCBase.SlowDeBuffPercent);
+                WarriorCBase.Speed -= SlowCache;
+                CharacterInstance = WarriorCBase;
+            }
+            if (characterNumber == 2)
+            {
+                SlowCache = (int)(TankCBase.Speed * TankCBase.SlowDeBuffPercent);
+                TankCBase.Speed -= SlowCache;
+                CharacterInstance = TankCBase;
+            }
+            if (characterNumber == 3)
+            {
+                SlowCache = (int)(RangeCBase.Speed * RangeCBase.SlowDeBuffPercent);
+                RangeCBase.Speed -= SlowCache;
+                CharacterInstance = RangeCBase;
+            }
+            if (characterNumber == 4)
+            {
+                SlowCache = (int)(MageCBase.Speed * MageCBase.SlowDeBuffPercent);
+                MageCBase.Speed -= SlowCache;
+                CharacterInstance = MageCBase;
+            }
+            if (characterNumber == 5)
+            {
+                SlowCache = (int)(ControllerCBase.Speed * ControllerCBase.SlowDeBuffPercent);
+                ControllerCBase.Speed -= SlowCache;
+                CharacterInstance = ControllerCBase;
+            }
+            if (characterNumber == 6)
+            {
+                SlowCache = (int)(AssasinCBase.Speed * AssasinCBase.SlowDeBuffPercent);
+                AssasinCBase.Speed -= SlowCache;
+                CharacterInstance = AssasinCBase;
+            }
+            #endregion
+            if (RoundOver == true)
+            {
+                SlowCache = -SlowCache; //this reverses the sign so that it simply undoes the added value
+                if (characterNumber == 1)
+                {
+                    WarriorCBase.Speed += SlowCache;
+                    CharacterInstance = WarriorCBase;
+                }
+                if (characterNumber == 2)
+                {
+                    TankCBase.Speed += SlowCache;
+                    CharacterInstance = TankCBase;
+                }
+                if (characterNumber == 3)
+                {
+                    RangeCBase.Speed += SlowCache;
+                    CharacterInstance = RangeCBase;
+                }
+                if (characterNumber == 4)
+                {
+                    MageCBase.Speed += SlowCache;
+                    CharacterInstance = MageCBase;
+                }
+                if (characterNumber == 5)
+                {
+                    ControllerCBase.Speed += SlowCache;
+                    CharacterInstance = ControllerCBase;
+                }
+                if (characterNumber == 6)
+                {
+                    AssasinCBase.Speed += SlowCache;
+                    CharacterInstance = AssasinCBase;
+                }
+            }
         }
-
-        public bool WeakGrip(object CharacterInstance, object TargetInstance)
+        public void Rooted(object CharacterInstance, object TargetInstance)
         {
-            throw new NotImplementedException();
+            int RootedCache = 0;
+            #region CharacterInstance template logic
+
+            //battleCalculate has to remain false or null.
+            int characterNumber = TemplateCharacter(CharacterInstance);
+            if (characterNumber == 1)
+            {
+                RootedCache = (int)(WarriorCBase.dodge * WarriorCBase.RootedDebuffPercent);
+                WarriorCBase.dodge -= RootedCache;
+                CharacterInstance = WarriorCBase;
+            }
+            if (characterNumber == 2)
+            {
+                RootedCache = (int)(TankCBase.dodge * TankCBase.RootedDebuffPercent);
+                TankCBase.dodge -= RootedCache;
+                CharacterInstance = TankCBase;
+            }
+            if (characterNumber == 3)
+            {
+                RootedCache = (int)(RangeCBase.dodge * RangeCBase.RootedDebuffPercent);
+                RangeCBase.dodge -= RootedCache;
+                CharacterInstance = RangeCBase;
+            }
+            if (characterNumber == 4)
+            {
+                RootedCache = (int)(MageCBase.dodge * MageCBase.RootedDebuffPercent);
+                MageCBase.dodge -= RootedCache;
+                CharacterInstance = MageCBase;
+            }
+            if (characterNumber == 5)
+            {
+                RootedCache = (int)(ControllerCBase.dodge * ControllerCBase.RootedDebuffPercent);
+                ControllerCBase.dodge -= RootedCache;
+                CharacterInstance = ControllerCBase;
+            }
+            if (characterNumber == 6)
+            {
+                RootedCache = (int)(AssasinCBase.dodge * AssasinCBase.RootedDebuffPercent);
+                AssasinCBase.dodge -= RootedCache;
+                CharacterInstance = AssasinCBase;
+            }
+            #endregion
+            if (RoundOver == true)
+            {
+                RootedCache = -RootedCache; //this reverses the sign so that it simply undoes the added value
+                if (characterNumber == 1)
+                {
+                    WarriorCBase.dodge += RootedCache;
+                    CharacterInstance = WarriorCBase;
+                }
+                if (characterNumber == 2)
+                {
+                    TankCBase.dodge += RootedCache;
+                    CharacterInstance = TankCBase;
+                }
+                if (characterNumber == 3)
+                {
+                    RangeCBase.dodge += RootedCache;
+                    CharacterInstance = RangeCBase;
+                }
+                if (characterNumber == 4)
+                {
+                    MageCBase.dodge += RootedCache;
+                    CharacterInstance = MageCBase;
+                }
+                if (characterNumber == 5)
+                {
+                    ControllerCBase.dodge += RootedCache;
+                    CharacterInstance = ControllerCBase;
+                }
+                if (characterNumber == 6)
+                {
+                    AssasinCBase.dodge += RootedCache;
+                    CharacterInstance = AssasinCBase;
+                }
+            }
         }
-
-        public bool Exiled(object CharacterInstance, object TargetInstance)
+        public void WeakGrip(object TargetInstance)
         {
-            throw new NotImplementedException();
+            bool choice;
+            if (RoundOver == false) choice = true;
+            else { choice = false; }
+            #region TargetInstance template logic
+
+            string TargetLetter = TemplateTarget(TargetInstance);
+            if (TargetLetter == "a")
+            {
+                WarriorTarBase.Weakg = choice;
+                TargetInstance = WarriorTarBase; //This is so tthe actual instance gets changed instead of the lueprint base only.
+            }
+            if (TargetLetter == "b")
+            {
+                TankTarBase.Weakg = choice;
+                TargetInstance = TankTarBase;
+            }
+            if (TargetLetter == "c")
+            {
+                RangeTarBase.Weakg = choice;
+                TargetInstance = RangeTarBase;
+            }
+            if (TargetLetter == "d")
+            {
+                MageTarBase.Weakg = choice;
+                TargetInstance = MageTarBase;
+            }
+            if (TargetLetter == "e")
+            {
+                ControllerTarBase.Weakg = choice;
+                TargetInstance = ControllerTarBase;
+            }
+            if (TargetLetter == "f")
+            {
+                AssasinTarBase.Weakg = choice;
+                TargetInstance = AssasinTarBase;
+            }
+            #endregion
+        }
+        public void Exiled(object TargetInstance)
+        {
+            bool choice;
+            if (RoundOver == false) choice = true;
+            else { choice = false; }
+            #region TargetInstance template logic
+
+            string TargetLetter = TemplateTarget(TargetInstance);
+            if (TargetLetter == "a")
+            {
+                WarriorTarBase.exiledg = choice;
+                TargetInstance = WarriorTarBase; //This is so tthe actual instance gets changed instead of the lueprint base only.
+            }
+            if (TargetLetter == "b")
+            {
+                TankTarBase.exiledg = choice;
+                TargetInstance = TankTarBase;
+            }
+            if (TargetLetter == "c")
+            {
+                RangeTarBase.exiledg = choice;
+                TargetInstance = RangeTarBase;
+            }
+            if (TargetLetter == "d")
+            {
+                MageTarBase.exiledg = choice;
+                TargetInstance = MageTarBase;
+            }
+            if (TargetLetter == "e")
+            {
+                ControllerTarBase.exiledg = choice;
+                TargetInstance = ControllerTarBase;
+            }
+            if (TargetLetter == "f")
+            {
+                AssasinTarBase.exiledg = choice;
+                TargetInstance = AssasinTarBase;
+            }
+            #endregion
         }
 
         public bool Marked(object CharacterInstance, object TargetInstance)

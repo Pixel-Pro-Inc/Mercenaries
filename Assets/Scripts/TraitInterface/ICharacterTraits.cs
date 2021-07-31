@@ -53,6 +53,11 @@ namespace Assets.TraitInterface
         double counterAttackPercent { get; set; }
         object ProtectionSponser { get; set; }
 
+        double SlowDeBuffPercent { get; set; }
+        double RootedDebuffPercent { get; set; }
+        double WeakGripDeBuffPercent { get; set; }
+        double ExiledDeBuffPercent { get; set; }
+
         int MagicalDamageTaken { get; set; }
         int PhysicalDamageTaken { get; set; }
 

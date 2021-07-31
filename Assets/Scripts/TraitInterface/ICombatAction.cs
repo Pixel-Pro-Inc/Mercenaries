@@ -69,10 +69,10 @@ namespace Assets.Scripts.TraitInterface
         #endregion
         #region Debuff
         // each of these has to have logic that asks if RemoverDebufeffects == true
-        bool Slow(object CharacterInstance, object TargetInstance);
-        bool Rooted(object CharacterInstance, object TargetInstance);
-        bool WeakGrip(object CharacterInstance, object TargetInstance);
-        bool Exiled(object CharacterInstance, object TargetInstance);
+        void Slow(object CharacterInstance, object TargetInstance);
+        void Rooted(object CharacterInstance, object TargetInstance);
+        void WeakGrip(object TargetInstance);
+        void Exiled(object TargetInstance);
         bool Marked(object CharacterInstance, object TargetInstance);
         bool Calm(object CharacterInstance, object TargetInstance);
         bool BrokenGuard(object CharacterInstance, object TargetInstance);
