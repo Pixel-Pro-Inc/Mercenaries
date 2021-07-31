@@ -1402,37 +1402,31 @@ namespace Assets.Entities
             {
                 agileCache = (int)(WarriorCBase.dodge * WarriorCBase.AgileBUffPercent);
                 WarriorCBase.dodge += agileCache;
-                CharacterInstance = WarriorCBase;
             }
             if (characterNumber == 2)
             {
                 agileCache = (int)(TankCBase.dodge * TankCBase.AgileBUffPercent);
                 TankCBase.dodge += agileCache;
-                CharacterInstance = TankCBase;
             }
             if (characterNumber == 3)
             {
                 agileCache = (int)(RangeCBase.dodge * RangeCBase.AgileBUffPercent);
                 RangeCBase.dodge += agileCache;
-                CharacterInstance = RangeCBase;
             }
             if (characterNumber == 4)
             {
                 agileCache = (int)(MageCBase.dodge * MageCBase.AgileBUffPercent);
                 MageCBase.dodge += agileCache;
-                CharacterInstance = MageCBase;
             }
             if (characterNumber == 5)
             {
                 agileCache = (int)(ControllerCBase.dodge * ControllerCBase.AgileBUffPercent);
                 ControllerCBase.dodge += agileCache;
-                CharacterInstance = ControllerCBase;
             }
             if (characterNumber == 6)
             {
                 agileCache = (int)(AssasinCBase.dodge * AssasinCBase.AgileBUffPercent);
                 AssasinCBase.dodge += agileCache;
-                CharacterInstance = AssasinCBase;
             }
             #endregion
             if (RoundOver==true)
@@ -1722,32 +1716,26 @@ namespace Assets.Entities
             if (TargetLetter == "a")
             {
                 WarriorTarBase.RemoveDebuffEffects=true;
-                TargetInstance = WarriorTarBase;
             }
             if (TargetLetter == "b")
             {
                 TankTarBase.RemoveDebuffEffects=true;
-                TargetInstance = TankTarBase;
             }
             if (TargetLetter == "c")
             {
                 RangeTarBase.RemoveDebuffEffects=true;
-                TargetInstance = RangeTarBase;
             }
             if (TargetLetter == "d")
             {
                 MageTarBase.RemoveDebuffEffects=true;
-                TargetInstance = MageTarBase;
             }
             if (TargetLetter == "e")
             {
                 ControllerTarBase.RemoveDebuffEffects=true;
-                TargetInstance = ControllerTarBase;
             }
             if (TargetLetter == "f")
             {
                 AssasinTarBase.RemoveDebuffEffects=true;
-                TargetInstance = AssasinTarBase;
             }
             #endregion
         }
@@ -1796,7 +1784,7 @@ namespace Assets.Entities
             }
             #endregion
 
-            if (true/*Round over*/)
+            if (RoundOver==true)
             {
                 HealingCache = -HealingCache; //this reverses the sign so that it simply undoes the added value
                 if (characterNumber == 1)
@@ -1876,32 +1864,26 @@ namespace Assets.Entities
                 if (characterNumber == 1)
                 {
                     WarriorCBase.Speed += SlowCache;
-                    CharacterInstance = WarriorCBase;
                 }
                 if (characterNumber == 2)
                 {
                     TankCBase.Speed += SlowCache;
-                    CharacterInstance = TankCBase;
                 }
                 if (characterNumber == 3)
                 {
                     RangeCBase.Speed += SlowCache;
-                    CharacterInstance = RangeCBase;
                 }
                 if (characterNumber == 4)
                 {
                     MageCBase.Speed += SlowCache;
-                    CharacterInstance = MageCBase;
                 }
                 if (characterNumber == 5)
                 {
                     ControllerCBase.Speed += SlowCache;
-                    CharacterInstance = ControllerCBase;
                 }
                 if (characterNumber == 6)
                 {
                     AssasinCBase.Speed += SlowCache;
-                    CharacterInstance = AssasinCBase;
                 }
             }
         }
