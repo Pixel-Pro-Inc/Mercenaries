@@ -52,10 +52,12 @@ namespace Assets.Entities
         internal int ExperienceLevel { get { return ExperienceLevel;  } set { if (ExperienceLevel < 0) ExperienceLevel = 0; } }
         int shield { get { return shield; } set { if (shield < 0) shield = 0; shield = 0; } } //We are defining it (not ICharacterTraits) here cause it isn't used by everyone often but can be, and its 0 for everyone starting off
         public static bool RoundOver { get; set; }
+        
         bool RemoveDebuffEffects { get; set; }
         bool Weakg { get; set; } //these work for each instances weakgrip debuff
         bool exiledg { get; set; }// these work for each instances exiled debuff
         bool markedg { get; set; }
+        bool calmState { get; set; }
 
         #region Template Logic
         //The code below was created because i was tired of writting the template code over and over. Itworks much more effeciently. Make sure these arent set 
@@ -421,117 +423,132 @@ namespace Assets.Entities
         public void TrueDamage(object CharacterInstance, object TargetInstance, damageType source)
         {
             int Damage=0;
-            //Note that battleCalculate is never set true here
 
             #region CharacterInstance template logic giving Damage
 
-            //battleCalculate has to remain false or null.
             int characterNumber = TemplateCharacter(CharacterInstance);
             if (characterNumber == 1)
             {
                 Damage = WarriorCBase.DamageGiven(CharacterInstance, source);
-                if (WarriorCBase.PolishWeapon() == true) Damage = (int)(Damage * WarriorCBase.PowerBuffPercent);// this is to work the polish buff
             }
             if (characterNumber == 2)
             {
                 Damage=TankCBase.DamageGiven(CharacterInstance, source);
-                if (TankCBase.PolishWeapon() == true) Damage = (int)(Damage * TankCBase.PowerBuffPercent);// this is to work the polish buff
             }
             if (characterNumber == 3)
             {
                 Damage=RangeCBase.DamageGiven(CharacterInstance, source);
-                if (RangeCBase.PolishWeapon() == true) Damage = (int)(Damage * RangeCBase.PowerBuffPercent);// this is to work the polish buff
             }
             if (characterNumber == 4)
             {
                 Damage=MageCBase.DamageGiven(CharacterInstance, source);
-                if (MageCBase.PolishWeapon() == true) Damage = (int)(Damage * MageCBase.PowerBuffPercent);// this is to work the polish buff
             }
             if (characterNumber == 5)
             {
                 Damage=ControllerCBase.DamageGiven(CharacterInstance, source);
-                if (ControllerCBase.PolishWeapon() == true) Damage = (int)(Damage * ControllerCBase.PowerBuffPercent);// this is to work the polish buff
             }
             if (characterNumber == 6)
             {
                 Damage=AssasinCBase.DamageGiven(CharacterInstance, source);
-                if (AssasinCBase.PolishWeapon() == true) Damage = (int)(Damage * AssasinCBase.PowerBuffPercent);// this is to work the polish buff
             }
             #endregion
             #region template logic
-            object finisher = WarriorTarBase;
+            //object finisher = WarriorTarBase; // this is just given warriortarbase just so it's not empty. i would have left it null but it would hav thrown errors
 
             if (TargetInstance.GetType() == typeof(WarriorTemplate))
             {
                 WarriorTemplate starter = (WarriorTemplate)TargetInstance;
-                if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
+                if (starter.ProtectionSponser != null)
+                {
+                    //finisher = starter.ProtectionSponser; if being reinstated, remove line below
+                    starter.HealthLoss(Damage);
+                }
                 else starter.HealthLoss(Damage);
             }
             if (TargetInstance.GetType() == typeof(TankWarriorTemplate))
             {
                 TankWarriorTemplate starter = (TankWarriorTemplate)TargetInstance;
-                if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
+                if (starter.ProtectionSponser != null)
+                {
+                    //finisher = starter.ProtectionSponser;
+                    starter.HealthLoss(Damage);
+                } 
                 else starter.HealthLoss(Damage);
             }
             if (TargetInstance.GetType() == typeof(RangeTemplate))
             {
                 RangeTemplate starter = (RangeTemplate)TargetInstance;
-                if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
+                if (starter.ProtectionSponser != null)
+                {
+                    // finisher = starter.ProtectionSponser;
+                    starter.HealthLoss(Damage);
+                }
                 else starter.HealthLoss(Damage);
             }
             if (TargetInstance.GetType() == typeof(MageTemplate))
             {
                 MageTemplate starter = (MageTemplate)TargetInstance;
-                if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
+                if (starter.ProtectionSponser != null)
+                {
+                    // finisher = starter.ProtectionSponser;
+                    starter.HealthLoss(Damage);
+                }
                 else starter.HealthLoss(Damage);
             }
             if (TargetInstance.GetType() == typeof(ControllerTemplate))
             {
                 ControllerTemplate starter = (ControllerTemplate)TargetInstance;
-                if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
+                if (starter.ProtectionSponser != null)
+                {
+                    // finisher = starter.ProtectionSponser;
+                    starter.HealthLoss(Damage);
+                }
                 else starter.HealthLoss(Damage);
             }
             if (TargetInstance.GetType() == typeof(AssasinTemplate))
             {
                 AssasinTemplate starter = (AssasinTemplate)TargetInstance;
-                if (starter.ProtectionSponser != null) finisher = starter.ProtectionSponser;
+                if (starter.ProtectionSponser != null)
+                {
+                    //finisher = starter.ProtectionSponser;
+                    starter.HealthLoss(Damage);
+                }
                 else starter.HealthLoss(Damage);
             }
             #endregion
-            #region TargetInstance template logic
+
+            //i commented these out an relatedd logic cause i want truedamage to work unabeted
+            /*
+             #region TargetInstance template logic
 
             string TargetLetter = TemplateTarget(finisher);
             if (TargetLetter == "a")
             {
-                if (WarriorTarBase.markedg == true) Damage += (int)(Damage * WarriorTarBase.MarkedDeBuffPerent);
                 WarriorTarBase.HealthLoss(Damage);
             }
             if (TargetLetter == "b")
             {
-                if (TankTarBase.markedg == true) Damage += (int)(Damage * TankTarBase.MarkedDeBuffPerent);
                 TankTarBase.HealthLoss(Damage);
             }
             if (TargetLetter == "c")
             {
-                if (RangeTarBase.markedg == true) Damage += (int)(Damage * RangeTarBase.MarkedDeBuffPerent);
                 RangeTarBase.HealthLoss(Damage);
             }
             if (TargetLetter == "d")
             {
-                if (MageTarBase.markedg == true) Damage += (int)(Damage * MageTarBase.MarkedDeBuffPerent);
                 MageTarBase.HealthLoss(Damage);
             }
             if (TargetLetter == "e")
             {
-                if (ControllerTarBase.markedg == true) Damage += (int)(Damage * ControllerTarBase.MarkedDeBuffPerent);
                 ControllerTarBase.HealthLoss(Damage);
             }
             if (TargetLetter == "f")
             {
-                if (AssasinTarBase.markedg == true) Damage += (int)(Damage * AssasinTarBase.MarkedDeBuffPerent);
                 AssasinTarBase.HealthLoss(Damage);
             }
             #endregion
+             */
+
 
             #region Clean base templates //This is unnecessary cause the templates are changed everytime you use them
             WarriorTarBase = null; 
@@ -548,6 +565,7 @@ namespace Assets.Entities
             int physicalDamage = 0;
             int shieldcache=0;
             int armourcahe=0;
+            double markedda = 0;
             #region CharacterInstance template logic
 
             int characterNumber = TemplateCharacter(CharacterInstance);
@@ -555,31 +573,43 @@ namespace Assets.Entities
             if (characterNumber == 1)
             {
                 physicalDamage = WarriorCBase.DamageGiven(CharacterInstance, source);
+                markedda = WarriorCBase.MarkedDeBuffPerent;
+                if (WarriorCBase.PolishWeapon() == true) physicalDamage += (int)(physicalDamage * WarriorCBase.PowerBuffPercent);// this is to work the polish buff
                 if (WarriorCBase.Weakg == true) physicalDamage -= (int)(physicalDamage * WarriorCBase.WeakGripDeBuffPercent);
             }
             if (characterNumber == 2)
             {
                 physicalDamage = TankCBase.DamageGiven(CharacterInstance, source);
+                markedda = TankCBase.MarkedDeBuffPerent;
+                if (TankCBase.PolishWeapon() == true) physicalDamage += (int)(physicalDamage * TankCBase.PowerBuffPercent);
                 if (TankCBase.Weakg == true) physicalDamage -= (int)(physicalDamage * TankCBase.WeakGripDeBuffPercent);
             }
             if (characterNumber == 3)
             {
                 physicalDamage = RangeCBase.DamageGiven(CharacterInstance, source);
+                markedda = RangeCBase.MarkedDeBuffPerent;
+                if (RangeCBase.PolishWeapon() == true) physicalDamage += (int)(physicalDamage * RangeCBase.PowerBuffPercent);
                 if (RangeCBase.Weakg == true) physicalDamage -= (int)(physicalDamage * RangeCBase.WeakGripDeBuffPercent);
             }
             if (characterNumber == 4)
             {
                 physicalDamage = MageCBase.DamageGiven(CharacterInstance, source);
+                markedda = MageCBase.MarkedDeBuffPerent;
+                if (MageCBase.PolishWeapon() == true) physicalDamage += (int)(physicalDamage * MageCBase.PowerBuffPercent);
                 if (MageCBase.Weakg == true) physicalDamage -= (int)(physicalDamage * MageCBase.WeakGripDeBuffPercent);
             }
             if (characterNumber == 5)
             {
                 physicalDamage = ControllerCBase.DamageGiven(CharacterInstance, source);
+                markedda = ControllerCBase.MarkedDeBuffPerent;
+                if (ControllerCBase.PolishWeapon() == true) physicalDamage += (int)(physicalDamage * ControllerCBase.PowerBuffPercent);
                 if (ControllerCBase.Weakg == true) physicalDamage -= (int)(physicalDamage * ControllerCBase.WeakGripDeBuffPercent);
             }
             if (characterNumber == 6)
             {
                 physicalDamage = AssasinCBase.DamageGiven(CharacterInstance, source);
+                markedda = AssasinCBase.MarkedDeBuffPerent;
+                if (AssasinCBase.PolishWeapon() == true) physicalDamage += (int)(physicalDamage * AssasinCBase.PowerBuffPercent);
                 if (AssasinCBase.Weakg == true) physicalDamage -= (int)(physicalDamage * AssasinCBase.WeakGripDeBuffPercent);
             }
             #endregion
@@ -590,7 +620,7 @@ namespace Assets.Entities
             if (TargetLetter == "a")
             {
                 if (WarriorTarBase.ProtectionSponser != null) WarriorTarBase = (WarriorTemplate)WarriorTarBase.ProtectionSponser; 
-                if (WarriorTarBase.markedg == true) physicalDamage += (int)(physicalDamage * WarriorTarBase.MarkedDeBuffPerent);
+                if (WarriorTarBase.markedg == true) physicalDamage += (int)(physicalDamage * markedda);
                 //The above code is just an arbituary convertion. I didnt want to make a third template since its just one value thats changing
                 shieldcache = WarriorTarBase.shield;
                 armourcahe = WarriorTarBase.Armour;
@@ -619,7 +649,7 @@ namespace Assets.Entities
             if (TargetLetter == "b")
             {
                 if (TankTarBase.ProtectionSponser != null) TankTarBase = (TankWarriorTemplate)TankTarBase.ProtectionSponser; 
-                if (TankTarBase.markedg == true) physicalDamage += (int)(physicalDamage * TankTarBase.MarkedDeBuffPerent);
+                if (TankTarBase.markedg == true) physicalDamage += (int)(physicalDamage * markedda);
                 shieldcache = TankTarBase.shield;
                 armourcahe = TankTarBase.Armour;
                 shieldcache -= physicalDamage; TankTarBase.shield -= physicalDamage;
@@ -645,7 +675,7 @@ namespace Assets.Entities
             if (TargetLetter == "c")
             {
                 if (RangeTarBase.ProtectionSponser != null) RangeTarBase = (RangeTemplate)RangeTarBase.ProtectionSponser;
-                if (RangeTarBase.markedg == true) physicalDamage += (int)(physicalDamage * RangeTarBase.MarkedDeBuffPerent);
+                if (RangeTarBase.markedg == true) physicalDamage += (int)(physicalDamage * markedda);
                 shieldcache = RangeTarBase.shield;
                 armourcahe = RangeTarBase.Armour;
                 shieldcache -= physicalDamage; RangeTarBase.shield -= physicalDamage;
@@ -670,7 +700,7 @@ namespace Assets.Entities
             if (TargetLetter == "d")
             {
                 if (MageTarBase.ProtectionSponser != null) MageTarBase = (MageTemplate)MageTarBase.ProtectionSponser;
-                if (MageTarBase.markedg == true) physicalDamage += (int)(physicalDamage * MageTarBase.MarkedDeBuffPerent);
+                if (MageTarBase.markedg == true) physicalDamage += (int)(physicalDamage * markedda);
                 shieldcache = MageTarBase.shield;
                 armourcahe = MageTarBase.Armour;
                 shieldcache -= physicalDamage; MageTarBase.shield -= physicalDamage;
@@ -695,7 +725,7 @@ namespace Assets.Entities
             if (TargetLetter == "e")
             {
                 if (ControllerTarBase.ProtectionSponser != null) ControllerTarBase = (ControllerTemplate)ControllerTarBase.ProtectionSponser;
-                if (ControllerTarBase.markedg == true) physicalDamage += (int)(physicalDamage * ControllerTarBase.MarkedDeBuffPerent);
+                if (ControllerTarBase.markedg == true) physicalDamage += (int)(physicalDamage * markedda);
                 shieldcache = ControllerTarBase.shield;
                 armourcahe = ControllerTarBase.Armour;
                 shieldcache -= physicalDamage; ControllerTarBase.shield -= physicalDamage;
@@ -720,7 +750,7 @@ namespace Assets.Entities
             if (TargetLetter == "f")
             {
                 if (AssasinTarBase.ProtectionSponser != null) AssasinTarBase = (AssasinTemplate)AssasinTarBase.ProtectionSponser;
-                if (AssasinTarBase.markedg == true) physicalDamage += (int)(physicalDamage * AssasinTarBase.MarkedDeBuffPerent);
+                if (AssasinTarBase.markedg == true) physicalDamage += (int)(physicalDamage * markedda);
                 shieldcache = AssasinTarBase.shield;
                 armourcahe = AssasinTarBase.Armour;
                 shieldcache -= physicalDamage; AssasinTarBase.shield -= physicalDamage;
@@ -750,6 +780,7 @@ namespace Assets.Entities
             int magicalDamage = 0;
             int shieldcache = 0;
             int magrescache = 0;
+            double markedda = 0;
             #region CharacterInstance template logic
 
             int characterNumber = TemplateCharacter(CharacterInstance);
@@ -757,32 +788,44 @@ namespace Assets.Entities
             if (characterNumber == 1)
             {
                 magicalDamage = WarriorCBase.DamageGiven(CharacterInstance, source);
+                markedda = WarriorCBase.MarkedDeBuffPerent;
+                if (WarriorCBase.Chosen() == true) magicalDamage += (int)(magicalDamage * WarriorCBase.MagiBuffPercent);
                 if (WarriorCBase.exiledg == true) magicalDamage -= (int)(magicalDamage * WarriorCBase.ExiledDeBuffPercent);
             }
             if (characterNumber == 2)
             {
                 magicalDamage = TankCBase.DamageGiven(CharacterInstance, source);
-                if (WarriorCBase.exiledg == true) magicalDamage -= (int)(magicalDamage * TankCBase.ExiledDeBuffPercent);
+                markedda = TankCBase.MarkedDeBuffPerent;
+                if (TankCBase.Chosen() == true) magicalDamage += (int)(magicalDamage * TankCBase.MagiBuffPercent);
+                if (TankCBase.exiledg == true) magicalDamage -= (int)(magicalDamage * TankCBase.ExiledDeBuffPercent);
             }
             if (characterNumber == 3)
             {
                 magicalDamage = RangeCBase.DamageGiven(CharacterInstance, source);
-                if (WarriorCBase.exiledg == true) magicalDamage -= (int)(magicalDamage * RangeCBase.ExiledDeBuffPercent);
+                markedda = RangeCBase.MarkedDeBuffPerent;
+                if (RangeCBase.Chosen() == true) magicalDamage += (int)(magicalDamage * RangeCBase.MagiBuffPercent);
+                if (RangeCBase.exiledg == true) magicalDamage -= (int)(magicalDamage * RangeCBase.ExiledDeBuffPercent);
             }
             if (characterNumber == 4)
             {
                 magicalDamage = MageCBase.DamageGiven(CharacterInstance, source);
-                if (WarriorCBase.exiledg == true) magicalDamage -= (int)(magicalDamage * MageCBase.ExiledDeBuffPercent);
+                markedda = MageCBase.MarkedDeBuffPerent;
+                if (MageCBase.Chosen() == true) magicalDamage += (int)(magicalDamage * MageCBase.MagiBuffPercent);
+                if (MageCBase.exiledg == true) magicalDamage -= (int)(magicalDamage * MageCBase.ExiledDeBuffPercent);
             }
             if (characterNumber == 5)
             {
                 magicalDamage = ControllerCBase.DamageGiven(CharacterInstance, source);
-                if (WarriorCBase.exiledg == true) magicalDamage -= (int)(magicalDamage * ControllerCBase.ExiledDeBuffPercent);
+                markedda = ControllerCBase.MarkedDeBuffPerent;
+                if (ControllerCBase.Chosen() == true) magicalDamage += (int)(magicalDamage * ControllerCBase.MagiBuffPercent);
+                if (ControllerCBase.exiledg == true) magicalDamage -= (int)(magicalDamage * ControllerCBase.ExiledDeBuffPercent);
             }
             if (characterNumber == 6)
             {
                 magicalDamage = AssasinCBase.DamageGiven(CharacterInstance, source);
-                if (WarriorCBase.exiledg == true) magicalDamage -= (int)(magicalDamage * AssasinCBase.ExiledDeBuffPercent);
+                markedda = AssasinCBase.MarkedDeBuffPerent;
+                if (AssasinCBase.Chosen() == true) magicalDamage += (int)(magicalDamage * AssasinCBase.MagiBuffPercent);
+                if (AssasinCBase.exiledg == true) magicalDamage -= (int)(magicalDamage * AssasinCBase.ExiledDeBuffPercent);
             }
             #endregion
             #region TargetInstance template logic
@@ -791,7 +834,7 @@ namespace Assets.Entities
             if (TargetLetter == "a")
             {
                 if (WarriorTarBase.ProtectionSponser != null) WarriorTarBase = (WarriorTemplate)WarriorTarBase.ProtectionSponser;
-                if (WarriorTarBase.markedg == true) magicalDamage += (int)(magicalDamage * WarriorTarBase.MarkedDeBuffPerent);
+                if (WarriorTarBase.markedg == true) magicalDamage += (int)(magicalDamage * markedda);
                 shieldcache = WarriorTarBase.shield;
                 magrescache = WarriorTarBase.MagicRes;
                 shieldcache -= magicalDamage; WarriorTarBase.shield -= magicalDamage;
@@ -813,7 +856,7 @@ namespace Assets.Entities
             if (TargetLetter == "b")
             {
                 if (TankTarBase.ProtectionSponser != null) TankTarBase = (TankWarriorTemplate)TankTarBase.ProtectionSponser;
-                if (TankTarBase.markedg == true) magicalDamage += (int)(magicalDamage * TankTarBase.MarkedDeBuffPerent);
+                if (TankTarBase.markedg == true) magicalDamage += (int)(magicalDamage * markedda);
                 shieldcache = TankTarBase.shield;
                 magrescache = TankTarBase.MagicRes;
                 shieldcache -= magicalDamage; TankTarBase.shield -= magicalDamage;
@@ -835,7 +878,7 @@ namespace Assets.Entities
             if (TargetLetter == "c")
             {
                 if (RangeTarBase.ProtectionSponser != null) RangeTarBase = (RangeTemplate)RangeTarBase.ProtectionSponser;
-                if (RangeTarBase.markedg == true) magicalDamage += (int)(magicalDamage * RangeTarBase.MarkedDeBuffPerent);
+                if (RangeTarBase.markedg == true) magicalDamage += (int)(magicalDamage * markedda);
                 shieldcache = RangeTarBase.shield;
                 magrescache = RangeTarBase.MagicRes;
                 shieldcache -= magicalDamage; RangeTarBase.shield -= magicalDamage;
@@ -857,7 +900,7 @@ namespace Assets.Entities
             if (TargetLetter == "d")
             {
                 if (MageTarBase.ProtectionSponser != null) MageTarBase = (MageTemplate)MageTarBase.ProtectionSponser;
-                if (MageTarBase.markedg == true) magicalDamage += (int)(magicalDamage * MageTarBase.MarkedDeBuffPerent);
+                if (MageTarBase.markedg == true) magicalDamage += (int)(magicalDamage * markedda);
                 shieldcache = MageTarBase.shield;
                 magrescache = MageTarBase.MagicRes;
                 shieldcache -= magicalDamage; MageTarBase.shield -= magicalDamage;
@@ -879,7 +922,7 @@ namespace Assets.Entities
             if (TargetLetter == "e")
             {
                 if (ControllerTarBase.ProtectionSponser != null) ControllerTarBase = (ControllerTemplate)ControllerTarBase.ProtectionSponser;
-                if (ControllerTarBase.markedg == true) magicalDamage += (int)(magicalDamage * ControllerTarBase.MarkedDeBuffPerent);
+                if (ControllerTarBase.markedg == true) magicalDamage += (int)(magicalDamage * markedda);
                 shieldcache = ControllerTarBase.shield;
                 magrescache = ControllerTarBase.MagicRes;
                 shieldcache -= magicalDamage; ControllerTarBase.shield -= magicalDamage;
@@ -901,7 +944,7 @@ namespace Assets.Entities
             if (TargetLetter == "f")
             {
                 if (AssasinTarBase.ProtectionSponser != null) AssasinTarBase = (AssasinTemplate)AssasinTarBase.ProtectionSponser;
-                if (AssasinTarBase.markedg == true) magicalDamage += (int)(magicalDamage * AssasinTarBase.MarkedDeBuffPerent);
+                if (AssasinTarBase.markedg == true) magicalDamage += (int)(magicalDamage * markedda);
                 shieldcache = AssasinTarBase.shield;
                 magrescache = AssasinTarBase.MagicRes;
                 shieldcache -= magicalDamage; AssasinTarBase.shield -= magicalDamage;
@@ -988,6 +1031,7 @@ namespace Assets.Entities
             int shieldcache = 0;
             int armourcahe = 0;
             int magrescache = 0;
+            double markedda = 0;
             #region CharacterInstance template logic
 
             int characterNumber = TemplateCharacter(CharacterInstance);
@@ -995,26 +1039,32 @@ namespace Assets.Entities
             if (characterNumber == 1)
             {
                 physicalDamage = WarriorCBase.DamageGiven(CharacterInstance, source);
+                markedda = WarriorCBase.MarkedDeBuffPerent;
             }
             if (characterNumber == 2)
             {
                 physicalDamage = TankCBase.DamageGiven(CharacterInstance, source);
+                markedda = TankCBase.MarkedDeBuffPerent;
             }
             if (characterNumber == 3)
             {
                 physicalDamage = RangeCBase.DamageGiven(CharacterInstance, source);
+                markedda = RangeCBase.MarkedDeBuffPerent;
             }
             if (characterNumber == 4)
             {
                 physicalDamage = MageCBase.DamageGiven(CharacterInstance, source);
+                markedda = MageCBase.MarkedDeBuffPerent;
             }
             if (characterNumber == 5)
             {
                 physicalDamage = ControllerCBase.DamageGiven(CharacterInstance, source);
+                markedda = ControllerCBase.MarkedDeBuffPerent;
             }
             if (characterNumber == 6)
             {
                 physicalDamage = AssasinCBase.DamageGiven(CharacterInstance, source);
+                markedda = AssasinCBase.MarkedDeBuffPerent;
             }
             #endregion
             #region TargetInstance template logic
@@ -1023,7 +1073,7 @@ namespace Assets.Entities
             if (TargetLetter == "a")
             {
                 if (WarriorTarBase.ProtectionSponser != null) WarriorTarBase = (WarriorTemplate)WarriorTarBase.ProtectionSponser;
-                if (WarriorTarBase.markedg == true) physicalDamage += (int)(physicalDamage * WarriorTarBase.MarkedDeBuffPerent);
+                if (WarriorTarBase.markedg == true) physicalDamage += (int)(physicalDamage * markedda);
                 shieldcache = WarriorTarBase.shield;
                 armourcahe = WarriorTarBase.Armour;
                 magrescache = WarriorTarBase.MagicRes;
@@ -1055,7 +1105,7 @@ namespace Assets.Entities
             if (TargetLetter == "b")
             {
                 if (TankTarBase.ProtectionSponser != null) TankTarBase = (TankWarriorTemplate)TankTarBase.ProtectionSponser;
-                if (TankTarBase.markedg == true) physicalDamage += (int)(physicalDamage * TankTarBase.MarkedDeBuffPerent);
+                if (TankTarBase.markedg == true) physicalDamage += (int)(physicalDamage * markedda);
                 shieldcache = TankTarBase.shield;
                 armourcahe = TankTarBase.Armour;
                 magrescache = TankTarBase.MagicRes;
@@ -1086,7 +1136,7 @@ namespace Assets.Entities
             if (TargetLetter == "c")
             {
                 if (RangeTarBase.ProtectionSponser != null) RangeTarBase = (RangeTemplate)RangeTarBase.ProtectionSponser;
-                if (RangeTarBase.markedg == true) physicalDamage += (int)(physicalDamage * RangeTarBase.MarkedDeBuffPerent);
+                if (RangeTarBase.markedg == true) physicalDamage += (int)(physicalDamage * markedda);
                 shieldcache = RangeTarBase.shield;
                 armourcahe = RangeTarBase.Armour;
                 magrescache = RangeTarBase.MagicRes;
@@ -1117,7 +1167,7 @@ namespace Assets.Entities
             if (TargetLetter == "d")
             {
                 if (MageTarBase.ProtectionSponser != null) MageTarBase = (MageTemplate)MageTarBase.ProtectionSponser;
-                if (MageTarBase.markedg == true) physicalDamage += (int)(physicalDamage * MageTarBase.MarkedDeBuffPerent);
+                if (MageTarBase.markedg == true) physicalDamage += (int)(physicalDamage * markedda);
                 shieldcache = MageTarBase.shield;
                 armourcahe = MageTarBase.Armour;
                 magrescache = MageTarBase.MagicRes;
@@ -1148,7 +1198,7 @@ namespace Assets.Entities
             if (TargetLetter == "e")
             {
                 if (ControllerTarBase.ProtectionSponser != null) ControllerTarBase = (ControllerTemplate)ControllerTarBase.ProtectionSponser;
-                if (ControllerTarBase.markedg == true) physicalDamage += (int)(physicalDamage * ControllerTarBase.MarkedDeBuffPerent);
+                if (ControllerTarBase.markedg == true) physicalDamage += (int)(physicalDamage * markedda);
                 shieldcache = ControllerTarBase.shield;
                 armourcahe = ControllerTarBase.Armour;
                 magrescache = MageTarBase.MagicRes;
@@ -1179,7 +1229,7 @@ namespace Assets.Entities
             if (TargetLetter == "f")
             {
                 if (AssasinTarBase.ProtectionSponser != null) AssasinTarBase = (AssasinTemplate)AssasinTarBase.ProtectionSponser;
-                if (AssasinTarBase.markedg == true) physicalDamage += (int)(physicalDamage * AssasinTarBase.MarkedDeBuffPerent);
+                if (AssasinTarBase.markedg == true) physicalDamage += (int)(physicalDamage * markedda);
                 shieldcache = AssasinTarBase.shield;
                 armourcahe = AssasinTarBase.Armour;
                 magrescache = AssasinTarBase.MagicRes;
@@ -1212,7 +1262,37 @@ namespace Assets.Entities
         public void Curse(object CharacterInstance, object TargetInstance)
         {
             int randamage = 0;
-           // the code below is set up so that it only fires in between rounds
+            double markedda = 0;
+            #region CharacterInstance template logic
+
+            int characterNumber = TemplateCharacter(CharacterInstance);
+            //the method DamageGiven needs to be done but the value also needs to be stored. I don't do them separate cause healthlos will still get fired
+            if (characterNumber == 1)
+            {
+                markedda = WarriorCBase.MarkedDeBuffPerent;
+            }
+            if (characterNumber == 2)
+            {
+                markedda = TankCBase.MarkedDeBuffPerent;
+            }
+            if (characterNumber == 3)
+            {
+                markedda = RangeCBase.MarkedDeBuffPerent;
+            }
+            if (characterNumber == 4)
+            {
+                markedda = MageCBase.MarkedDeBuffPerent;
+            }
+            if (characterNumber == 5)
+            {
+                markedda = ControllerCBase.MarkedDeBuffPerent;
+            }
+            if (characterNumber == 6)
+            {
+                markedda = AssasinCBase.MarkedDeBuffPerent;
+            }
+            #endregion
+            // the code below is set up so that it only fires in between rounds
             int count = 1;
             if (RoundOver == false)
             {
@@ -1227,45 +1307,39 @@ namespace Assets.Entities
                     if (TargetLetter == "a")
                     {
                         if (WarriorTarBase.ProtectionSponser != null) WarriorTarBase = (WarriorTemplate)WarriorTarBase.ProtectionSponser;
-                        if (WarriorTarBase.markedg == true) randamage += (int)(randamage * WarriorTarBase.MarkedDeBuffPerent);
+                        if (WarriorTarBase.markedg == true) randamage += (int)(randamage * markedda);
                         WarriorTarBase.HealthLoss(randamage);
-                        TargetInstance = WarriorTarBase;
 
                     }
                     if (TargetLetter == "b")
                     {
                         if (TankTarBase.ProtectionSponser != null) TankTarBase = (TankWarriorTemplate)TankTarBase.ProtectionSponser;
-                        if (TankTarBase.markedg == true) randamage += (int)(randamage * TankTarBase.MarkedDeBuffPerent);
+                        if (TankTarBase.markedg == true) randamage += (int)(randamage * markedda);
                         TankTarBase.HealthLoss(randamage);
-                        TargetInstance = TankTarBase;
                     }
                     if (TargetLetter == "c")
                     {
                         if (RangeTarBase.ProtectionSponser != null) RangeTarBase = (RangeTemplate)RangeTarBase.ProtectionSponser;
-                        if (RangeTarBase.markedg == true) randamage += (int)(randamage * RangeTarBase.MarkedDeBuffPerent);
+                        if (RangeTarBase.markedg == true) randamage += (int)(randamage * markedda);
                         RangeTarBase.HealthLoss(randamage);
-                        TargetInstance = RangeTarBase;
                     }
                     if (TargetLetter == "d")
                     {
                         if (MageTarBase.ProtectionSponser != null) MageTarBase = (MageTemplate)MageTarBase.ProtectionSponser;
-                        if (MageTarBase.markedg == true) randamage += (int)(randamage * MageTarBase.MarkedDeBuffPerent);
+                        if (MageTarBase.markedg == true) randamage += (int)(randamage * markedda);
                         MageTarBase.HealthLoss(randamage);
-                        TargetInstance = MageTarBase;
                     }
                     if (TargetLetter == "e")
                     {
                         if (ControllerTarBase.ProtectionSponser != null) ControllerTarBase = (ControllerTemplate)ControllerTarBase.ProtectionSponser;
-                        if (ControllerTarBase.markedg == true) randamage += (int)(randamage * ControllerTarBase.MarkedDeBuffPerent);
+                        if (ControllerTarBase.markedg == true) randamage += (int)(randamage * markedda);
                         ControllerTarBase.HealthLoss(randamage);
-                        TargetInstance = ControllerTarBase;
                     }
                     if (TargetLetter == "f")
                     {
                         if (AssasinTarBase.ProtectionSponser != null) AssasinTarBase = (AssasinTemplate)AssasinTarBase.ProtectionSponser;
-                        if (AssasinTarBase.markedg == true) randamage += (int)(randamage * AssasinTarBase.MarkedDeBuffPerent);
+                        if (AssasinTarBase.markedg == true) randamage += (int)(randamage * markedda);
                         AssasinTarBase.HealthLoss(randamage);
-                        TargetInstance = AssasinTarBase;
                     }
                     #endregion
                 }
@@ -1948,7 +2022,7 @@ namespace Assets.Entities
             }
             #endregion
         }
-        public void Marked(object CharacterInstance, object TargetInstance)
+        public void Marked( object TargetInstance)
         {
             bool choice;
             if (RoundOver == false) choice = true;
@@ -2034,10 +2108,25 @@ namespace Assets.Entities
                 #endregion
             }
         }
-
-        public bool Calm(object CharacterInstance, object TargetInstance)
+        public void Calm(object CharacterInstance, object TargetInstance)
         {
-            throw new NotImplementedException();
+            bool creeeeee=true;
+            if (RoundOver == false)
+            {
+                creeeeee = true;
+            }
+            else { creeeeee = false; }
+            #region TargetInstance template logic
+
+
+            string TargetLetter = TemplateTarget(TargetInstance);
+            if (TargetLetter == "a") WarriorTarBase.calmState = creeeeee;
+            if (TargetLetter == "b") WarriorTarBase.calmState = creeeeee;
+            if (TargetLetter == "c") WarriorTarBase.calmState = creeeeee;
+            if (TargetLetter == "d") WarriorTarBase.calmState = creeeeee;
+            if (TargetLetter == "e")WarriorTarBase.calmState = creeeeee;
+            if (TargetLetter == "f") WarriorTarBase.calmState = creeeeee;
+            #endregion
         }
 
         public bool BrokenGuard(object CharacterInstance, object TargetInstance)

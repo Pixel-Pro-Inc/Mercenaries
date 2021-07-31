@@ -47,6 +47,7 @@ namespace Assets.TraitInterface
         int Stamina { get; set; }//I assume the hunger method will affect this trait
 
         double PowerBuffPercent { get; set; } //Each character has their own percent buff and even this can be improved so yeah
+        double MagiBuffPercent { get; set; }
         double EvadeBuffPercent { get; set; } //This is here for aware
         double AgileBUffPercent {get; set;}
         double HealBuffPercent { get; set; }
@@ -58,6 +59,7 @@ namespace Assets.TraitInterface
         double WeakGripDeBuffPercent { get; set; }
         double ExiledDeBuffPercent { get; set; }
         double MarkedDeBuffPerent { get; set; }
+        double CalmDeBuffPercent { get; set; }
 
         int MagicalDamageTaken { get; set; }
         int PhysicalDamageTaken { get; set; }

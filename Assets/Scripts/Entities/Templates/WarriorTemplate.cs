@@ -402,6 +402,7 @@ public class WarriorTemplate : CharacterPersona, ICardTraits, ICharacterTraits, 
     }
 
     #region Toggles
+
     #region variables
     public int MagicRes
     {
@@ -500,6 +501,8 @@ public class WarriorTemplate : CharacterPersona, ICardTraits, ICharacterTraits, 
     public double WeakGripDeBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     public double ExiledDeBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     public double MarkedDeBuffPerent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public double CalmDeBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public double MagiBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     #endregion
     public void ToggleArmour(bool state, int amount)
     {
@@ -529,5 +532,6 @@ public class WarriorTemplate : CharacterPersona, ICardTraits, ICharacterTraits, 
         ImmuneState = state;
     }
     #endregion
+
     #endregion
 }
