@@ -576,6 +576,7 @@ namespace Assets.Entities
                 markedda = WarriorCBase.MarkedDeBuffPerent;
                 if (WarriorCBase.PolishWeapon() == true) physicalDamage += (int)(physicalDamage * WarriorCBase.PowerBuffPercent);// this is to work the polish buff
                 if (WarriorCBase.Weakg == true) physicalDamage -= (int)(physicalDamage * WarriorCBase.WeakGripDeBuffPercent);
+                if (WarriorCBase.calmState == true) physicalDamage -= (int)(physicalDamage * WarriorCBase.CalmDeBuffPercent);
             }
             if (characterNumber == 2)
             {
@@ -583,6 +584,7 @@ namespace Assets.Entities
                 markedda = TankCBase.MarkedDeBuffPerent;
                 if (TankCBase.PolishWeapon() == true) physicalDamage += (int)(physicalDamage * TankCBase.PowerBuffPercent);
                 if (TankCBase.Weakg == true) physicalDamage -= (int)(physicalDamage * TankCBase.WeakGripDeBuffPercent);
+                if (TankCBase.calmState == true) physicalDamage -= (int)(physicalDamage * WarriorCBase.CalmDeBuffPercent);
             }
             if (characterNumber == 3)
             {
@@ -590,6 +592,7 @@ namespace Assets.Entities
                 markedda = RangeCBase.MarkedDeBuffPerent;
                 if (RangeCBase.PolishWeapon() == true) physicalDamage += (int)(physicalDamage * RangeCBase.PowerBuffPercent);
                 if (RangeCBase.Weakg == true) physicalDamage -= (int)(physicalDamage * RangeCBase.WeakGripDeBuffPercent);
+                if (RangeCBase.calmState == true) physicalDamage -= (int)(physicalDamage * RangeCBase.CalmDeBuffPercent);
             }
             if (characterNumber == 4)
             {
@@ -597,6 +600,7 @@ namespace Assets.Entities
                 markedda = MageCBase.MarkedDeBuffPerent;
                 if (MageCBase.PolishWeapon() == true) physicalDamage += (int)(physicalDamage * MageCBase.PowerBuffPercent);
                 if (MageCBase.Weakg == true) physicalDamage -= (int)(physicalDamage * MageCBase.WeakGripDeBuffPercent);
+                if (MageCBase.calmState == true) physicalDamage -= (int)(physicalDamage * MageCBase.CalmDeBuffPercent);
             }
             if (characterNumber == 5)
             {
@@ -604,6 +608,7 @@ namespace Assets.Entities
                 markedda = ControllerCBase.MarkedDeBuffPerent;
                 if (ControllerCBase.PolishWeapon() == true) physicalDamage += (int)(physicalDamage * ControllerCBase.PowerBuffPercent);
                 if (ControllerCBase.Weakg == true) physicalDamage -= (int)(physicalDamage * ControllerCBase.WeakGripDeBuffPercent);
+                if (ControllerCBase.calmState == true) physicalDamage -= (int)(physicalDamage * ControllerCBase.CalmDeBuffPercent);
             }
             if (characterNumber == 6)
             {
@@ -611,6 +616,7 @@ namespace Assets.Entities
                 markedda = AssasinCBase.MarkedDeBuffPerent;
                 if (AssasinCBase.PolishWeapon() == true) physicalDamage += (int)(physicalDamage * AssasinCBase.PowerBuffPercent);
                 if (AssasinCBase.Weakg == true) physicalDamage -= (int)(physicalDamage * AssasinCBase.WeakGripDeBuffPercent);
+                if (AssasinCBase.calmState == true) physicalDamage -= (int)(physicalDamage * AssasinCBase.CalmDeBuffPercent);
             }
             #endregion
             #region TargetInstance template logic
@@ -791,6 +797,7 @@ namespace Assets.Entities
                 markedda = WarriorCBase.MarkedDeBuffPerent;
                 if (WarriorCBase.Chosen() == true) magicalDamage += (int)(magicalDamage * WarriorCBase.MagiBuffPercent);
                 if (WarriorCBase.exiledg == true) magicalDamage -= (int)(magicalDamage * WarriorCBase.ExiledDeBuffPercent);
+                if (WarriorCBase.calmState == true) magicalDamage -= (int)(magicalDamage * WarriorCBase.CalmDeBuffPercent);
             }
             if (characterNumber == 2)
             {
@@ -798,6 +805,7 @@ namespace Assets.Entities
                 markedda = TankCBase.MarkedDeBuffPerent;
                 if (TankCBase.Chosen() == true) magicalDamage += (int)(magicalDamage * TankCBase.MagiBuffPercent);
                 if (TankCBase.exiledg == true) magicalDamage -= (int)(magicalDamage * TankCBase.ExiledDeBuffPercent);
+                if (TankCBase.calmState == true) magicalDamage -= (int)(magicalDamage * TankCBase.CalmDeBuffPercent);
             }
             if (characterNumber == 3)
             {
@@ -805,6 +813,7 @@ namespace Assets.Entities
                 markedda = RangeCBase.MarkedDeBuffPerent;
                 if (RangeCBase.Chosen() == true) magicalDamage += (int)(magicalDamage * RangeCBase.MagiBuffPercent);
                 if (RangeCBase.exiledg == true) magicalDamage -= (int)(magicalDamage * RangeCBase.ExiledDeBuffPercent);
+                if (RangeCBase.calmState == true) magicalDamage -= (int)(magicalDamage * RangeCBase.CalmDeBuffPercent);
             }
             if (characterNumber == 4)
             {
@@ -812,6 +821,7 @@ namespace Assets.Entities
                 markedda = MageCBase.MarkedDeBuffPerent;
                 if (MageCBase.Chosen() == true) magicalDamage += (int)(magicalDamage * MageCBase.MagiBuffPercent);
                 if (MageCBase.exiledg == true) magicalDamage -= (int)(magicalDamage * MageCBase.ExiledDeBuffPercent);
+                if (MageCBase.calmState == true) magicalDamage -= (int)(magicalDamage * MageCBase.CalmDeBuffPercent);
             }
             if (characterNumber == 5)
             {
@@ -819,6 +829,7 @@ namespace Assets.Entities
                 markedda = ControllerCBase.MarkedDeBuffPerent;
                 if (ControllerCBase.Chosen() == true) magicalDamage += (int)(magicalDamage * ControllerCBase.MagiBuffPercent);
                 if (ControllerCBase.exiledg == true) magicalDamage -= (int)(magicalDamage * ControllerCBase.ExiledDeBuffPercent);
+                if (ControllerCBase.calmState == true) magicalDamage -= (int)(magicalDamage * ControllerCBase.CalmDeBuffPercent);
             }
             if (characterNumber == 6)
             {
@@ -826,6 +837,7 @@ namespace Assets.Entities
                 markedda = AssasinCBase.MarkedDeBuffPerent;
                 if (AssasinCBase.Chosen() == true) magicalDamage += (int)(magicalDamage * AssasinCBase.MagiBuffPercent);
                 if (AssasinCBase.exiledg == true) magicalDamage -= (int)(magicalDamage * AssasinCBase.ExiledDeBuffPercent);
+                if (AssasinCBase.calmState == true) magicalDamage -= (int)(magicalDamage * AssasinCBase.CalmDeBuffPercent);
             }
             #endregion
             #region TargetInstance template logic
@@ -1027,7 +1039,7 @@ namespace Assets.Entities
         }
         public void BalancedDamage(object CharacterInstance, object TargetInstance, damageType source)
         {
-            int physicalDamage = 0;
+            int physicalDamage = 0; //this should have just been damage but i guess i failed. it should be
             int shieldcache = 0;
             int armourcahe = 0;
             int magrescache = 0;
@@ -1039,31 +1051,37 @@ namespace Assets.Entities
             if (characterNumber == 1)
             {
                 physicalDamage = WarriorCBase.DamageGiven(CharacterInstance, source);
+                if (WarriorCBase.calmState == true) physicalDamage -= (int)(physicalDamage * WarriorCBase.CalmDeBuffPercent);
                 markedda = WarriorCBase.MarkedDeBuffPerent;
             }
             if (characterNumber == 2)
             {
                 physicalDamage = TankCBase.DamageGiven(CharacterInstance, source);
+                if (TankCBase.calmState == true) physicalDamage -= (int)(physicalDamage * TankCBase.CalmDeBuffPercent);
                 markedda = TankCBase.MarkedDeBuffPerent;
             }
             if (characterNumber == 3)
             {
                 physicalDamage = RangeCBase.DamageGiven(CharacterInstance, source);
+                if (RangeCBase.calmState == true) physicalDamage -= (int)(physicalDamage * RangeCBase.CalmDeBuffPercent);
                 markedda = RangeCBase.MarkedDeBuffPerent;
             }
             if (characterNumber == 4)
             {
                 physicalDamage = MageCBase.DamageGiven(CharacterInstance, source);
+                if (MageCBase.calmState == true) physicalDamage -= (int)(physicalDamage * MageCBase.CalmDeBuffPercent);
                 markedda = MageCBase.MarkedDeBuffPerent;
             }
             if (characterNumber == 5)
             {
                 physicalDamage = ControllerCBase.DamageGiven(CharacterInstance, source);
+                if (ControllerCBase.calmState == true) physicalDamage -= (int)(physicalDamage * ControllerCBase.CalmDeBuffPercent);
                 markedda = ControllerCBase.MarkedDeBuffPerent;
             }
             if (characterNumber == 6)
             {
                 physicalDamage = AssasinCBase.DamageGiven(CharacterInstance, source);
+                if (AssasinCBase.calmState == true) physicalDamage -= (int)(physicalDamage * AssasinCBase.CalmDeBuffPercent);
                 markedda = AssasinCBase.MarkedDeBuffPerent;
             }
             #endregion
