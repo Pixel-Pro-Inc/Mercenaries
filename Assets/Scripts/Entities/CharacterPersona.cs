@@ -50,7 +50,7 @@ namespace Assets.Entities
             Triton
         };
         internal int ExperienceLevel { get { return ExperienceLevel;  } set { if (ExperienceLevel < 0) ExperienceLevel = 0; } }
-        int shield { get { return shield; } set { if (shield < 0) shield = 0; shield = 0; } } //We are defining it (not ICharacterTraits) here cause it isn't used by everyone often but can be, and its 0 for everyone starting off
+        int shield { get { return shield; } set { shield = 0; if (shield < 0) shield = 0;  } } //We are defining it (not ICharacterTraits) here cause it isn't used by everyone often but can be, and its 0 for everyone starting off
         public static bool RoundOver { get; set; }
         
         bool RemoveDebuffEffects { get; set; }
