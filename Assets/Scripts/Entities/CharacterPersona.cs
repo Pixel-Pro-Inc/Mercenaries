@@ -80,32 +80,26 @@ namespace Assets.Entities
             int TempCharNumber = 0;
             if (CharacterInstance.GetType() == typeof(WarriorTemplate))
             {
-                WarriorCBase = (WarriorTemplate)CharacterInstance;
                 TempCharNumber = 1;
             }
             if (CharacterInstance.GetType() == typeof(TankWarriorTemplate))
             {
-                TankCBase = (TankWarriorTemplate)CharacterInstance;
                 TempCharNumber = 2;
             }
             if (CharacterInstance.GetType() == typeof(RangeTemplate))
             {
-                RangeCBase = (RangeTemplate)CharacterInstance;
                 TempCharNumber = 3;
             }
             if (CharacterInstance.GetType() == typeof(MageTemplate))
             {
-                MageCBase = (MageTemplate)CharacterInstance;
                 TempCharNumber = 4;
             }
             if (CharacterInstance.GetType() == typeof(ControllerTemplate))
             {
-                ControllerCBase = (ControllerTemplate)CharacterInstance;
                 TempCharNumber = 5;
             }
             if (CharacterInstance.GetType() == typeof(AssasinTemplate))
             {
-                AssasinCBase = (AssasinTemplate)CharacterInstance;
                 TempCharNumber = 6;
             }
             return TempCharNumber;
@@ -1609,7 +1603,7 @@ namespace Assets.Entities
             }
             #endregion
             Random r = new Random();
-            double chanceDa = r.Next(1, 101)/100;
+            double chanceDa = r.Next(1, 101);
             if (chanceDa>=50)
             {
                 Protector(CharacterInstance, scapegoat);

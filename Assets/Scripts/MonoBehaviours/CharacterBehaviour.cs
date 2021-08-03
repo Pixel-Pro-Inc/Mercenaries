@@ -11,11 +11,30 @@ public class CharacterBehaviour : MonoBehaviour
     public Vector3 Goto;
     public SpeciesType species;
     public Image Deck;
+
+    public WarriorTemplate WarriorCBase;
+    public TankWarriorTemplate TankCBase;
+    public RangeTemplate RangeCBase;
+    public MageTemplate MageCBase;
+    public ControllerTemplate ControllerCBase;
+    public AssasinTemplate AssasinCBase;
+
+    public List<object> templates = new List<object>();
+
+
+    public object CharacterTemplate;
     void Awake() 
     {
         parent = transform.parent.gameObject;
         Goto = transform.position;
         Deck = GameObject.Find("Deck").GetComponent<Image>();
+
+        templates.Add(WarriorCBase);
+        templates.Add(TankCBase);
+        templates.Add(RangeCBase);
+        templates.Add(MageCBase);
+        templates.Add(ControllerCBase);
+        templates.Add(AssasinCBase);
     }
     
     public void OnMouseDown()
