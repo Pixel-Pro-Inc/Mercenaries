@@ -10,7 +10,7 @@ namespace Assets.Scripts.Entities.Character
 {
     class MageTemplate : Persona, IMageWarrior
     {
-        new public static MageTemplate Instance;
+        new public MageTemplate Instance;
         public MageTemplate()
         {
             Instance = this;

@@ -15,7 +15,7 @@ namespace Assets.Scripts.Entities.Character
         //We aren't making persona abstract cause we need to use it as a template in some logic
         //Anything here thats not virtual will be the same for all characters
 
-        public static Persona Instance;
+        public Persona Instance;
         public Persona()
         {
             Instance = this;
@@ -60,6 +60,16 @@ namespace Assets.Scripts.Entities.Character
         public virtual string CharacterName { get { return CharacterName; } set { CharacterName = "UnKnown"; } }
         public virtual string CharacterDescription { get { return CharacterDescription; } set { CharacterDescription = "UnKnown"; } } //Here the personality and backstory of a unique character will be defined
         public virtual bool Foe { get { return Foe; } set { Foe = false; } }
+        public virtual int Life
+        {
+            get { return Life; }
+            set
+            {
+                if (Life < 0) Life = 0;
+                Life = value;
+                Life = Health;
+            }
+        }
         public virtual int Health
         {
             get { return Health; }

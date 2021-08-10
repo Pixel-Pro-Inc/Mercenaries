@@ -9,7 +9,7 @@ namespace Assets.Scripts.Entities.Character
 {
     class TankWarriorTemplate:Persona, IWarriorTraits
     {
-        new public static TankWarriorTemplate Instance;
+        new public TankWarriorTemplate Instance;
         public TankWarriorTemplate()
         {
             Instance = this;
