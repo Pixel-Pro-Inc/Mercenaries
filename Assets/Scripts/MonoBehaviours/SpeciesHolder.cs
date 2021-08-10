@@ -1,9 +1,15 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using static Assets.Scripts.Entities.Character.Persona;
 using UnityEngine;
-using static Assets.Entities.CharacterPersona;
 
-public class SpeciesHolder : MonoBehaviour
+namespace Assets.Scripts.MonoBehaviours
 {
-    public SpeciesType type;
+    public class SpeciesHolder : MonoBehaviour
+    {
+        public SpeciesType type;
+    }
 }

@@ -1,17 +1,23 @@
 ﻿using Assets.Scripts.Models;
-using System.Collections;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+namespace Assets.Scripts.MonoBehaviours
 {
-    public static GameManager Instance { get; set; }
-
-    public List<GameObject> characters = new List<GameObject>();
-    public RoundInfo roundInfo;
-    public CharacterBehaviour activeCharacter;
-    private void Awake()
+    public class GameManager : MonoBehaviour
     {
-        Instance = this;
+        public static GameManager Instance { get; set; }
+
+        public List<GameObject> characters = new List<GameObject>();
+        public RoundInfo roundInfo;
+        public CharacterBehaviour activeCharacter;
+        private void Awake()
+        {
+            Instance = this;
+        }
     }
 }

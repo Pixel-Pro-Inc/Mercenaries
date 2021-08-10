@@ -1,11 +1,18 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
-using static Enums;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using static Assets.Scripts.Models.Enums;
 
-public class DebuffObject
+namespace Assets.Scripts.Models
 {
-    public debuffType type { get; set; }
-    public int amount { get; set; }
-    public bool state { get; set; }
+    class DebuffObject
+    {
+        public debuffType type { get; set; }
+        public double amount { get; set; }
+        public bool state { get; set; }
+        public int roundsActive { get; set; }
+        public int lifeTime { get; set; }
+    }
 }

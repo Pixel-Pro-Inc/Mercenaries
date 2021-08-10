@@ -8,5 +8,8 @@ namespace Assets.Scripts.Models
 {
     public class RoundInfo
     {
+        public static bool GameInSession;
+        public static bool RoundDone;
+        public static int RoundsPassed;
     }
 }
