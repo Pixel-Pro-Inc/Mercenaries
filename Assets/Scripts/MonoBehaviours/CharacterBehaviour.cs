@@ -86,5 +86,10 @@ namespace Assets.Scripts.MonoBehaviours
             transform.parent.localScale = Vector3.Lerp(GotoS, transform.parent.localScale, .1f);
             transform.parent.position = Vector3.Lerp(GotoP, transform.parent.position, .1f);
         }
+
+        public void Flee(List<object> Targets)
+        {
+
+        }
     }
 }

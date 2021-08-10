@@ -10,7 +10,7 @@ namespace Assets.Scripts.Entities.Character
 {
     class ControllerTemplate : Persona, IMageWarrior
     {
-        new public static ControllerTemplate Instance;
+        new public ControllerTemplate Instance;
         public ControllerTemplate()
         {
             Instance = this;

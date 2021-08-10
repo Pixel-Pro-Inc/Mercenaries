@@ -9,7 +9,7 @@ namespace Assets.Scripts.Entities.Character
 {
     class AssasinTemplate : Persona, IWarriorTraits
     {
-        new public static AssasinTemplate Instance;
+        new public AssasinTemplate Instance;
         public AssasinTemplate()
         {
             Instance = this;

@@ -9,7 +9,7 @@ namespace Assets.Scripts.Entities.Character
 {
     class RangeTemplate : Persona, IWarriorTraits
     {
-        new public static RangeTemplate Instance;
+        new public RangeTemplate Instance;
         public RangeTemplate()
         {
             Instance = this;

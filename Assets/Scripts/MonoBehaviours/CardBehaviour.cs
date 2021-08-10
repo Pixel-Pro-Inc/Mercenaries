@@ -93,6 +93,54 @@ public class CardBehaviour : Card
                 }
                 break;
             case cardName.lionFifthCard:
+                Persona LionCHaracter = CharacterInstance;
+                Timer Boom;
+                Boom = new Timer();
+                // Tell the timer what to do when it elapses
+                Boom.Elapsed += new ElapsedEventHandler(Punch);
+                // Set it to go off every one seconds
+                Boom.Interval = 1000;
+                // And start it        
+                Boom.Enabled = true;
+
+                void Punch(object source2, ElapsedEventArgs e)
+                {
+                    if (((Persona)Target.AttackSponser == LionCHaracter) &&(Target.Health==0))
+                    {
+                        int chin = UnityEngine.Random.Range(1, 101);
+                        int TemplateHealth = 0;
+                        WarriorTemplate Warrior = new WarriorTemplate(); 
+                        TankWarriorTemplate tankWarrior = new TankWarriorTemplate();
+                        RangeTemplate Ranger = new RangeTemplate();
+                        MageTemplate Magi = new MageTemplate();
+                        ControllerTemplate Cont = new ControllerTemplate();
+                        AssasinTemplate assasin = new AssasinTemplate();
+
+                        if (chin>=50)
+                        {
+                            foreach (var item in LionCHaracter.Enemies)
+                            {
+                                Type itemType = item.GetType();
+                                Persona ads = (Persona)item;
+
+
+                                if (item.GetType() == typeof(WarriorTemplate)) TemplateHealth = Warrior.Health;
+                                if (item.GetType() == typeof(TankWarriorTemplate)) TemplateHealth = tankWarrior.Health;
+                                if (item.GetType() == typeof(RangeTemplate)) TemplateHealth = Ranger.Health;
+                                if (item.GetType() == typeof(MageTemplate)) TemplateHealth = Magi.Health;
+                                if (item.GetType() == typeof(ControllerTemplate)) TemplateHealth = Cont.Health;
+                                if (item.GetType() == typeof(AssasinTemplate)) TemplateHealth = assasin.Health;
+
+                                if (ads.Health< TemplateHealth*0.3)
+                                {
+
+                                }
+                            }
+                        }
+                        Boom.Close();
+                    }
+                     
+                }
                 break;
             case cardName.lionSixthCard:
                 CharacterInstance.PhysicalDamage(CharacterInstance, Target);
@@ -244,8 +292,7 @@ public class CardBehaviour : Card
                 object aallss = CharacterInstance.Enemies[cond];
                 CharacterInstance.PhysicalDamage(CharacterInstance, fiaas); CharacterInstance.WeakGrip(CharacterInstance, fiaas);
                 CharacterInstance.PhysicalDamage(CharacterInstance, aallss); CharacterInstance.WeakGrip(CharacterInstance, aallss);
-                WarriorTemplate reee = new();
-                CharacterInstance.Health -= (int)(reee.Health * 0.5); //cause apparently it costs 5% of the max health which i assume is the health of a warrior
+                CharacterInstance.Health -= (int)(CharacterInstance.Life * 0.05); //cause apparently it costs 5% of the max health which i assume is the health of a warrior
                 break;
             case cardName.salamanderFifthCard:
                 break;
@@ -375,8 +422,7 @@ public class CardBehaviour : Card
                 CharacterInstance.ShieldUp(CharacterInstance, (int)(CharacterInstance.shield*0.1)*war);
                 break;
             case cardName.tritonSecondCard:
-                TankWarriorTemplate tank = new();
-                int gethee= (int)(tank.Health * 0.1);
+                int gethee = (int)(CharacterInstance.Life * 0.1);
                 foreach (var item in CharacterInstance.Allies) CharacterInstance.ShieldUp(item, gethee);
                 break;
             case cardName.tritonThirdCard:
@@ -425,7 +471,7 @@ public class CardBehaviour : Card
                
                 break;
             case cardName.tritonEighthCard:
-                TankWarriorTemplate trr = new();
+                TankWarriorTemplate trr = new TankWarriorTemplate();
                 if (CharacterInstance.shield <= 0) CharacterInstance.ShieldUp(CharacterInstance, (int)(trr.shield * 0.2));
                 if(CharacterInstance.shield >0)
                 {
