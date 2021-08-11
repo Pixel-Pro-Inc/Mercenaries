@@ -64,7 +64,7 @@ namespace Assets.Scripts.Interface
         void Protector(object OwnerInstance, object TargetInstance); //this asks like a contract. The person who will protectand the protected. eg Protector( instance,Mister Froggo)
         object Protected(object TargetInstance);//If hit, protector will take damage instead. but this isn't really given how damagegiven works. needs to be changed
         void Revigorate(object TargetInstance);
-        void HealVictim(object TargetInstance); //this works on anyone, not just allies
+        void HealVictim(object CharacterInstance, object TargetInstance); //this works on anyone, not just allies
         void GodsBlessing(object CharacterInstance, List<string> Allies);// I left it as allies so that its easier to deal with but really we dont need it as a parameter
 
         #endregion

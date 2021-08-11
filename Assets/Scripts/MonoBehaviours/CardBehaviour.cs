@@ -368,7 +368,7 @@ public class CardBehaviour : Card
                         {
                             final1 = (stored1 - Target.Health);
                             CharacterInstance.HealBuffPercent = (double)0.2 * final1;
-                            CharacterInstance.HealVictim(Target);
+                            CharacterInstance.HealVictim(CharacterInstance, Target);
                             stored1 = Target.Health;
                             myTimer2.Close();
                         }

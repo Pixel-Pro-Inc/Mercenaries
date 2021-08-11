@@ -40,7 +40,7 @@ namespace Assets.Scripts.Entities.Character
         public List<object> Master { get; set; }
         public List<object> Allies { get; set; }
         public List<object> Enemies { get; set; }
-
+        public List<BuffObject> BuffsInEffect { get; set; }
         public enum SpeciesType
         {
             Lion,
@@ -50,7 +50,7 @@ namespace Assets.Scripts.Entities.Character
             Frog,
             Triton
         };
-        bool RemoveDebuffEffects { get; set; }
+        public bool RemoveDebuffEffects { get; set; }
 
         #endregion
         #region Character Traits
@@ -360,6 +360,29 @@ namespace Assets.Scripts.Entities.Character
             NewEarnedXp = newEarnedXp;
         }
 
+        public void AddBuff(BuffObject buff)
+        {
+            BuffsInEffect.Add(buff);
+            Timer Buff = new Timer();
+            Buff.Elapsed += new ElapsedEventHandler(Buffer);
+            // Set it to go off every one seconds
+            Buff.Interval = 1000;
+            // And start it        
+            Buff.Enabled = true;
+            void Buffer(object source2, ElapsedEventArgs e)
+            {
+                if (RoundInfo.RoundDone == true)
+                {
+                    Buff.Close();
+                }
+            }
+
+        }
+        public List<BuffObject> GetBuff(object CharacterInstance)
+        {
+            Persona deem = (Persona)CharacterInstance;
+            return deem.BuffsInEffect;
+        }
 
         #endregion
         #region Combat Actions
@@ -371,7 +394,7 @@ namespace Assets.Scripts.Entities.Character
             Persona target = (Persona)TargetInstance;
             if (target.ImmuneState == true)
             { }
-            else { target.HealthLoss(DamageObj.DamageValue); }
+            else { target.HealthLoss(DamageObj.DamageValue); target.HitCount++; }
         }
         public void PhysicalDamage(object CharacterInstance, object TargetInstance)
         {
@@ -413,6 +436,7 @@ namespace Assets.Scripts.Entities.Character
                 //blocking animation
             }
 
+            Target.HitCount++;
             shieldcache = Target.shield;
             armourcahe = Target.Armour;
             shieldcache -= physicalDamage; Target.shield -= physicalDamage;//this will make shield=0 if the physical damage is too much
@@ -475,6 +499,7 @@ namespace Assets.Scripts.Entities.Character
                 //blocking animation
             }
 
+            Target.HitCount++;
             shieldcache = Target.shield;
             armourcahe = Target.Armour;
             shieldcache -= physicalDamage; Target.shield -= physicalDamage;//this will make shield=0 if the physical damage is too much
@@ -528,6 +553,7 @@ namespace Assets.Scripts.Entities.Character
             #region Target Logic
 
             Target.AttackSponser = Character; //for Onguard()
+            Target.HitCount++;
             shieldcache = Target.shield;
             magrescache = Target.MagicRes;
             if (Target.ImmuneState == true) magicalDamage = 0;
@@ -584,6 +610,7 @@ namespace Assets.Scripts.Entities.Character
             #region Target Logic
 
             Target.AttackSponser = Character; //for Onguard()
+            Target.HitCount++;
             shieldcache = Target.shield;
             magrescache = Target.MagicRes;
             if (Target.ImmuneState == true) magicalDamage = 0;
@@ -717,6 +744,8 @@ namespace Assets.Scripts.Entities.Character
             if (Target.ImmuneState == true) Dama = 0;
             if (Target.ProtectionSponser != null) Target = (Persona)Target.ProtectionSponser;
             if (Target.markedg == true) Dama += (int)(Dama * markedda);
+
+            Target.HitCount++;
             shieldcache = Target.shield;
             armourcahe = Target.Armour;
             magrescache = Target.MagicRes;
@@ -788,6 +817,7 @@ namespace Assets.Scripts.Entities.Character
                     { }
                     else
                     {
+                        Target.HitCount++;
                         Character.MagicalDamage(Character, Target, randamage);
                     }
                 }
@@ -914,12 +944,14 @@ namespace Assets.Scripts.Entities.Character
             Persona Character = (Persona)CharacterInstance;
             Persona Target = (Persona)TargetInstance;
             int damage1 = 0;
+            damage1 = (int)(Character.DamageGiven() * Character.counterAttackPercent);
+
             Timer myTimer2;
             myTimer2 = new Timer();
             // Tell the timer what to do when it elapses
             myTimer2.Elapsed += new ElapsedEventHandler(myEvent);
             // Set it to go off every five seconds
-            myTimer2.Interval = 5000;
+            myTimer2.Interval = 1000;
             // And start it        
             myTimer2.Enabled = true;
 
@@ -928,25 +960,26 @@ namespace Assets.Scripts.Entities.Character
                 while (RoundInfo.RoundDone == false)
                 {
                     standbyhealth = Character.Health;
-                    damage1 = (int)(Character.DamageGiven() * Character.counterAttackPercent);
                 }
-            }
-            if (count == 0)//this is to store the initial health
-            {
-                storedhealth = standbyhealth;
-                count++;
-            }
-            else
-            {
-                if ((storedhealth != standbyhealth) && (RoundInfo.RoundDone = true)) //if the health changes and the round finished
+                if (count == 0)//this is to store the initial health
                 {
-                    Target.PhysicalDamage(Target, Target.AttackSponser); //This is to attack the person who hit him
-                    Target.AttackSponser = null;
-                    Target.HealthLoss(damage1);
-                    count = 0;
+                    storedhealth = standbyhealth;
+                    count++;
                 }
+                else
+                {
+                    if ((storedhealth != standbyhealth) && (RoundInfo.RoundDone = true)) //if the health changes and the round finished
+                    {
+                        DamageObject sayless = new DamageObject();
+                        sayless.DamageValue = damage1;
+                        Character.PhysicalDamage(Character, Target, sayless); //This is to attack the person who hit him
+                        count = 0;
+                    }
 
+                }
+                if (RoundInfo.RoundDone == true) myTimer2.Close();
             }
+        
         }
         public void Provoking(object CharacterInstance)
         {
@@ -982,11 +1015,12 @@ namespace Assets.Scripts.Entities.Character
             Target.RemoveDebuffEffects = true;
             //in every Debuff there will be a removeBuff==false, but of course it will ask first if it equals true
         }
-        public void HealVictim(object TargetInstance)
+        public void HealVictim(object CharacterInstance, object TargetInstance)
         {
             int HealingCache = 0;
+            Persona Character = (Persona)CharacterInstance;
             Persona Target = (Persona)TargetInstance;
-            HealingCache = (int)(Target.Health * Target.HealBuffPercent);
+            HealingCache = (int)(Target.Health * Character.HealBuffPercent);
             Target.Health += HealingCache;
         }
         public void GodsBlessing(object CharacterInstance, List<string> Allies)

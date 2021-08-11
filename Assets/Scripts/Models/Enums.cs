@@ -28,6 +28,19 @@ namespace Assets.Scripts.Models
             Healthy,
             UnHealthy,
             GodsAnger,
+        }
+        public enum buffType
+        {
+            Agile,
+            PolishedWeapon,
+            Chosen,
+            Aware,
+            OnGuard,
+            Provoking,
+            Protector,//i am honestly debating on whether Protector is even a Buff
+            Protected,
+            Revigorate,// i didn't even give this a BuffObject, cause really its a once off method
+            HealVictim,// i didn't even give this a BuffObject, cause really its a once off method
             GodsBlessing
         }
         public enum cardName
