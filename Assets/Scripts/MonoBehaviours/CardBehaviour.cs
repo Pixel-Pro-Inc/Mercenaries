@@ -117,8 +117,7 @@ public class CardBehaviour : Card
                                 Persona ads = (Persona)item;
                                 if (ads.Health< ads.Life * 0.3) flea.Add(item);
                             }
-                            CharacterBehaviour youtube = new CharacterBehaviour();
-                            youtube.Flee(flea);
+                            GameManager.Instance.activeCharacter.Flee(flea);
                         }
                         Boom.Close();
                     }
@@ -178,6 +177,17 @@ public class CardBehaviour : Card
                 }
                 break;
             case cardName.lionNinthCard:
+                int Armourbuffcount = new int();
+                foreach (var item in CharacterInstance.Allies)
+                {
+                    Persona Bach = (Persona)item;
+                    Armourbuffcount += Bach.GetBuff(Bach).Count;
+                    Armourbuffcount += Bach.shield;
+                }
+                int increaseValueforArmour = (int)(CharacterInstance.Armour * 0.05 * Armourbuffcount);
+                int increaseValueforMagi = (int)(CharacterInstance.MagicRes * 0.05 * Armourbuffcount);
+                CharacterInstance.PutArmour(CharacterInstance, increaseValueforArmour);
+                CharacterInstance.IncreaseMagicalResistance(CharacterInstance, increaseValueforArmour);
                 break;
             case cardName.crocodileFirstCard:
                 int ver = Target.Health;
@@ -205,7 +215,45 @@ public class CardBehaviour : Card
                 CharacterInstance.TrueDamage(Target, damageObject);
                 break;
             case cardName.crocodileFifthCard:
-                
+                int roundcout = RoundInfo.RoundsPassed;
+                int[] ycount = new int[CharacterInstance.Enemies.Count];// these store the initial values of health of enemies
+                int[] Zcount = new int[CharacterInstance.Enemies.Count];// these store the new values of health enemies
+
+                for (int i = 0; i < CharacterInstance.Enemies.Count; i++) //this is to store the health of each enemy
+                {
+                    Persona indiv = (Persona)CharacterInstance.Enemies[i];
+                    ycount[i] = indiv.Health;
+                }
+
+                Timer Bethoven;
+                Bethoven = new Timer();
+                // Tell the timer what to do when it elapses
+                Bethoven.Elapsed += new ElapsedEventHandler(fifth);
+                // Set it to go off every one seconds
+                Bethoven.Interval = 1000;
+                // And start it        
+                Bethoven.Enabled = true;
+
+                void fifth(object source2, ElapsedEventArgs e)
+                {
+                    for (int i = 0; i < CharacterInstance.Enemies.Count; i++) //this here is meant to only populate the z array without finding anything new
+                    {
+                        Persona ego = (Persona)CharacterInstance.Enemies[i];
+                        Zcount[i] = ego.Health;
+                    }
+                    for (int i = 0; i < CharacterInstance.Enemies.Count; i++)//this is meant to actually do the logic
+                    {
+                        Persona tribe = (Persona)CharacterInstance.Enemies[i]; //this is cause we need each enemies attacksponser info to see if it matches
+                        if ((ycount[i] != Zcount[i]) && ((Persona)tribe.AttackSponser == CharacterInstance))// checks health and attack sponser
+                        {
+                            if(RoundInfo.RoundsPassed >= roundcout + 2)//basically polishes for this and the next turn, so this round+enemyround+nextroundafter
+                            {
+                                CharacterInstance.PolishWeapon();
+                            }
+                            if (RoundInfo.RoundsPassed == roundcout + 2) Bethoven.Close();
+                        }
+                    }
+                }
                 break;
             case cardName.crocodileSixthCard:
                 CharacterInstance.Bleed(CharacterInstance, Target);
@@ -235,6 +283,33 @@ public class CardBehaviour : Card
                 break;
             case cardName.fishFirstCard:
 
+                Vector3 TargetPosition=new Vector3();
+                Vector3 Mozarttt = new Vector3(); //Meant to be the position behind the target
+
+                GameObject Aim = (GameObject)TargetInstance;
+                GameObject Fire=new GameObject(); //supposed to be the instance of the next target
+
+                Persona Bullseye;// what we will actually use to work on the target
+
+                for (int i = 0; i < GameManager.Instance.characters.Count; i++) //checks through the list of characters to see which one is the targets position
+                {
+                    if (GameManager.Instance.characters[i].transform.GetChild(0).localPosition == Aim.transform.position)
+                    {
+                        TargetPosition = GameManager.Instance.characters[i].transform.GetChild(0).localPosition;
+                        Mozarttt = TargetPosition - new Vector3(2.0f, 0.0f, 0.0f);// the position behind the target, the different positions are separated by 2 on x axis
+                    }
+                }
+                for (int i = 0; i < GameManager.Instance.characters.Count; i++) //This is so i can make sure it waits to get the position of the target first
+                {
+                    if (GameManager.Instance.characters[i].transform.GetChild(0).localPosition == Mozarttt)
+                    {
+                        Fire = GameManager.Instance.characters[i];
+                    }
+                }
+                Bullseye = Fire.GetComponent<Persona>();
+                CharacterInstance.CriticalChance = true;
+                CharacterInstance.PhysicalDamage(CharacterInstance, Bullseye);
+                
                 break;
             case cardName.fishSecondCard:
                 CharacterInstance.PhysicalDamage(CharacterInstance, Target);
