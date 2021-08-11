@@ -8,6 +8,19 @@ namespace Assets.Scripts.Models
 {
     public class Enums
     {
+        public enum AttackType
+        {
+            TrueDamage,
+            PhysicalDamage,
+            MagicalDamage, 
+            Drain,
+            Ignite,
+            Bleed,
+            Blight,
+            BalancedDamage,
+            Curse, 
+            Feign
+        }
         public enum debuffType
         {
             Slow,

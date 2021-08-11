@@ -187,7 +187,7 @@ public class CardBehaviour : Card
                 int increaseValueforArmour = (int)(CharacterInstance.Armour * 0.05 * Armourbuffcount);
                 int increaseValueforMagi = (int)(CharacterInstance.MagicRes * 0.05 * Armourbuffcount);
                 CharacterInstance.PutArmour(CharacterInstance, increaseValueforArmour);
-                CharacterInstance.IncreaseMagicalResistance(CharacterInstance, increaseValueforArmour);
+                CharacterInstance.IncreaseMagicalResistance(CharacterInstance, increaseValueforMagi);
                 break;
             case cardName.crocodileFirstCard:
                 int ver = Target.Health;
@@ -202,9 +202,9 @@ public class CardBehaviour : Card
                 int butter = UnityEngine.Random.Range(1, enemyindexCount);
                 Persona first = (Persona)CharacterInstance.Enemies[tea];
                 Persona second = (Persona)CharacterInstance.Enemies[butter];
-                CharacterInstance.TrueDamage(Target, damageObject);
+                CharacterInstance.TrueDamage(CharacterInstance,first, damageObject);
                 damageObject.DamageValue = CharacterInstance.DamageGiven();
-                CharacterInstance.TrueDamage(Target, damageObject);
+                CharacterInstance.TrueDamage(CharacterInstance, second, damageObject);
                 break;
             case cardName.crocodileThirdCard:
                 CharacterInstance.PhysicalDamage(CharacterInstance, Target);
@@ -212,7 +212,7 @@ public class CardBehaviour : Card
                 break;
             case cardName.crocodileFourthCard:
                 damageObject.DamageValue = CharacterInstance.DamageGiven();
-                CharacterInstance.TrueDamage(Target, damageObject);
+                CharacterInstance.TrueDamage(CharacterInstance, Target, damageObject);
                 break;
             case cardName.crocodileFifthCard:
                 int roundcout = RoundInfo.RoundsPassed;
@@ -272,7 +272,7 @@ public class CardBehaviour : Card
                 int heCache = 0;
                 foreach (var item in CharacterInstance.Enemies)
                 {
-                    CharacterInstance.TrueDamage(item, damageObject);
+                    CharacterInstance.TrueDamage(CharacterInstance, item, damageObject);
                     heCache += damageObject.DamageValue;
                 }
                 CharacterInstance.Health += heCache;
@@ -318,7 +318,7 @@ public class CardBehaviour : Card
                 if ((Target.Health/ CharacterInstance.Health) <=0.85)
                 {
                     int stored = Target.Health;
-                    CharacterInstance.PhysicalDamage(CharacterInstance, TargetInstance);
+                    CharacterInstance.PhysicalDamage(CharacterInstance, Target);
                     int final = (stored - Target.Health); if (final <=0) final = 0;
                     CharacterInstance.Health += 2 * final;
                 }
@@ -332,17 +332,26 @@ public class CardBehaviour : Card
             case cardName.fishSixthCard:
                 if(Target.Health==100)
                 {
-                    CharacterInstance.PhysicalDamage(CharacterInstance, TargetInstance);
-                    CharacterInstance.PhysicalDamage(CharacterInstance, TargetInstance);
+                    CharacterInstance.PhysicalDamage(CharacterInstance, Target);
+                    CharacterInstance.PhysicalDamage(CharacterInstance, Target);
                 }
                 if(Target.Health<50)
                 {
                     int guut= CharacterInstance.DamageGiven()/2;
                     damageObject.DamageValue = guut;
-                    CharacterInstance.PhysicalDamage(CharacterInstance, TargetInstance, damageObject);
+                    CharacterInstance.PhysicalDamage(CharacterInstance, Target, damageObject);
                 }
                 break;
             case cardName.fishSeventhCard:
+                /*
+                 int buffCount=Target.GetDeBuff().count;
+                damageObject.DamageValue = CharacterInstance.DamageGiven()*5;
+                if(buffcount!=0)
+                {
+                    CharacterInstance.PhysicalDamage(CharacterInstance, Target, damageObject);
+                    CHaracterInstance.Sleep(CharacterInstance, CharacterInstance);
+                }
+                 */
                 break;
             case cardName.fishEighthCard:
                 CharacterInstance.AgileBUffPercent = 0.2; CharacterInstance.Agile(CharacterInstance);
@@ -403,6 +412,25 @@ public class CardBehaviour : Card
                 }
                 break;
             case cardName.salamanderEighthCard:
+                int enemyCount = CharacterInstance.Enemies.Count;
+                damageObject.DamageValue = CharacterInstance.DamageGiven();
+                int puuley = UnityEngine.Random.Range(1, enemyCount);
+                int levvrr = UnityEngine.Random.Range(1, enemyCount);
+                Persona firstone = (Persona)CharacterInstance.Enemies[puuley];
+                Persona secondone = (Persona)CharacterInstance.Enemies[levvrr];
+                CharacterInstance.TrueDamage(CharacterInstance, firstone, damageObject);
+                damageObject.DamageValue = CharacterInstance.DamageGiven();
+                CharacterInstance.TrueDamage(CharacterInstance, secondone, damageObject);
+
+                /*
+                 int numberofDebuff= new int();
+                 foreach (var item in CharacterInstance.Enemies)
+                {
+                    Persona judas= (Persona)item;
+                    numberofDebuff+=judas.GetDebuff().Count;
+                }
+                CharacterInstance.Health+= (int)(CharacterInstance.Life*0.02*numberofDebuff);
+                 */
                 break;
             case cardName.salamanderNinthCard:
                 damageObject.DamageValue = CharacterInstance.DamageGiven() / 2;

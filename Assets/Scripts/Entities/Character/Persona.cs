@@ -41,6 +41,7 @@ namespace Assets.Scripts.Entities.Character
         public List<object> Allies { get; set; }
         public List<object> Enemies { get; set; }
         public List<BuffObject> BuffsInEffect { get; set; }
+        public List<AttackObject> AttacksGiven { get; set; }
         public enum SpeciesType
         {
             Lion,
@@ -360,6 +361,24 @@ namespace Assets.Scripts.Entities.Character
             NewEarnedXp = newEarnedXp;
         }
 
+        public void AddAttack(AttackObject attack)
+        {
+            AttacksGiven.Add(attack);
+            Timer Attack = new Timer();
+            Attack.Elapsed += new ElapsedEventHandler(Attacker);
+            // Set it to go off every one seconds
+            Attack.Interval = 1000;
+            // And start it        
+            Attack.Enabled = true;
+            void Attacker(object source2, ElapsedEventArgs e)
+            {
+                if (RoundInfo.RoundDone == true)
+                {
+                    Attack.Close();
+                }
+            }
+
+        }
         public void AddBuff(BuffObject buff)
         {
             BuffsInEffect.Add(buff);
@@ -378,10 +397,16 @@ namespace Assets.Scripts.Entities.Character
             }
 
         }
+
         public List<BuffObject> GetBuff(object CharacterInstance)
         {
             Persona deem = (Persona)CharacterInstance;
             return deem.BuffsInEffect;
+        }
+        public List<AttackObject> GetAttack(object CharacterInstance)
+        {
+            Persona meed = (Persona)CharacterInstance;
+            return meed.AttacksGiven;
         }
 
         #endregion
@@ -389,7 +414,7 @@ namespace Assets.Scripts.Entities.Character
 
         #region Attack
 
-        public void TrueDamage(object TargetInstance, DamageObject DamageObj)
+        public void TrueDamage(object CharacterInstance, object TargetInstance, DamageObject DamageObj)
         {
             Persona target = (Persona)TargetInstance;
             if (target.ImmuneState == true)
@@ -448,7 +473,7 @@ namespace Assets.Scripts.Entities.Character
                 {
                     Target.Armour = 0; // this makes sure armour is zero
                     hitval.DamageValue = Math.Abs(armourcahe);
-                    Character.TrueDamage(Target, hitval); //This removes the health of the target
+                    Character.TrueDamage(Character,Target, hitval); //This removes the health of the target
                 }
                 else { Target.Armour = armourcahe; }
             }
@@ -511,7 +536,7 @@ namespace Assets.Scripts.Entities.Character
                 {
                     Target.Armour = 0; // this makes sure armour is zero
                     damageObject.DamageValue = Math.Abs(armourcahe);
-                    Character.TrueDamage(Target, damageObject); //This removes the health of the target
+                    Character.TrueDamage(Character,Target, damageObject); //This removes the health of the target
                 }
                 else { Target.Armour = armourcahe; }
             }
@@ -568,7 +593,7 @@ namespace Assets.Scripts.Entities.Character
                 {
                     Target.MagicRes = 0;
                     hitval.DamageValue = Math.Abs(magrescache);
-                    Character.TrueDamage(Target, hitval); //This removes the health of the target
+                    Character.TrueDamage(Character, Target, hitval); //This removes the health of the target
                 }
                 else { Target.MagicRes = magrescache; }
             }
@@ -625,7 +650,7 @@ namespace Assets.Scripts.Entities.Character
                 {
                     Target.MagicRes = 0;
                     hitval.DamageValue = Math.Abs(magrescache);
-                    Character.TrueDamage(Target, hitval); //This removes the health of the target
+                    Character.TrueDamage(Character, Target, hitval); //This removes the health of the target
                 }
                 else { Target.MagicRes = magrescache; }
             }
@@ -758,7 +783,7 @@ namespace Assets.Scripts.Entities.Character
                 {
                     Target.Armour = 0; // this makes sure armour is zero
                     hitval.DamageValue = Math.Abs(armourcahe);
-                    Character.TrueDamage(Target, hitval); //This removes the health of the target
+                    Character.TrueDamage(Character, Target, hitval); //This removes the health of the target
                 }
                 else { Target.Armour = armourcahe; }
 
@@ -767,7 +792,7 @@ namespace Assets.Scripts.Entities.Character
                 {
                     Target.MagicRes = 0;
                     hitval.DamageValue = Math.Abs(magrescache);
-                    Character.TrueDamage(Target, hitval); //This removes the health of the target
+                    Character.TrueDamage(Character, Target, hitval); //This removes the health of the target
                 }
                 else { Target.MagicRes = magrescache; }
             }
