@@ -108,41 +108,24 @@ public class CardBehaviour : Card
                     if (((Persona)Target.AttackSponser == LionCHaracter) &&(Target.Health==0))
                     {
                         int chin = UnityEngine.Random.Range(1, 101);
-                        int TemplateHealth = 0;
-                        WarriorTemplate Warrior = new WarriorTemplate(); 
-                        TankWarriorTemplate tankWarrior = new TankWarriorTemplate();
-                        RangeTemplate Ranger = new RangeTemplate();
-                        MageTemplate Magi = new MageTemplate();
-                        ControllerTemplate Cont = new ControllerTemplate();
-                        AssasinTemplate assasin = new AssasinTemplate();
+                        List<object> flea = new List<object>();
 
-                        if (chin>=50)
+                        if (chin<=50)
                         {
                             foreach (var item in LionCHaracter.Enemies)
                             {
-                                Type itemType = item.GetType();
                                 Persona ads = (Persona)item;
-
-
-                                if (item.GetType() == typeof(WarriorTemplate)) TemplateHealth = Warrior.Health;
-                                if (item.GetType() == typeof(TankWarriorTemplate)) TemplateHealth = tankWarrior.Health;
-                                if (item.GetType() == typeof(RangeTemplate)) TemplateHealth = Ranger.Health;
-                                if (item.GetType() == typeof(MageTemplate)) TemplateHealth = Magi.Health;
-                                if (item.GetType() == typeof(ControllerTemplate)) TemplateHealth = Cont.Health;
-                                if (item.GetType() == typeof(AssasinTemplate)) TemplateHealth = assasin.Health;
-
-                                if (ads.Health< TemplateHealth*0.3)
-                                {
-
-                                }
+                                if (ads.Health< ads.Life * 0.3) flea.Add(item);
                             }
+                            CharacterBehaviour youtube = new CharacterBehaviour();
+                            youtube.Flee(flea);
                         }
                         Boom.Close();
                     }
                      
                 }
                 break;
-            case cardName.lionSixthCard:
+            case cardName.lionSixthCard: //apparently i shouldn't have done this cause it will work on a different system
                 CharacterInstance.PhysicalDamage(CharacterInstance, Target);
                 int stunnedNumber = 0;
                 if ((Target.Health / CharacterInstance.Health) < 0.80) CharacterInstance.Stun(CharacterInstance, Target);
@@ -174,6 +157,25 @@ public class CardBehaviour : Card
                 }
                 break;
             case cardName.lionEighthCard:
+                CharacterInstance.PhysicalDamage(CharacterInstance, Target);
+                int gotit = RoundInfo.RoundsPassed;
+                Timer Boom2;
+                Boom2 = new Timer();
+                // Tell the timer what to do when it elapses
+                Boom2.Elapsed += new ElapsedEventHandler(Rebodouche);
+                // Set it to go off every one seconds
+                Boom2.Interval = 1000;
+                // And start it        
+                Boom2.Enabled = true;
+                
+                void Rebodouche(object source2, ElapsedEventArgs e)
+                {
+                    CharacterInstance.CriticalChance = true;
+                    if (RoundInfo.RoundsPassed >= (gotit + 2))
+                    {
+                        Boom2.Close();
+                    }
+                }
                 break;
             case cardName.lionNinthCard:
                 break;

@@ -248,10 +248,7 @@ namespace Assets.Scripts.Entities.Character
          */
         //Above is the mana and stamina int
 
-        public bool Weakg { get; set; } //these work for each instances weakgrip debuff
-        public bool exiledg { get; set; }// these work for each instances exiled debuff
-        public bool markedg { get; set; }
-        public bool calmState { get; set; }
+       
 
         #endregion
         #region Attack Percent
@@ -260,6 +257,7 @@ namespace Assets.Scripts.Entities.Character
         public int DrainPercent { get; set; }
         public int CursePercent { get; set; }
         public int BlightAmount { get; set; }
+        public bool CriticalChance { get; set; }
 
         #endregion
         #region Defend Percent
@@ -290,7 +288,10 @@ namespace Assets.Scripts.Entities.Character
         public double MarkedDeBuffPerent { get; set; }
         public double CalmDeBuffPercent { get; set; }
 
-
+        public bool Weakg { get; set; } //these work for each instances weakgrip debuff
+        public bool exiledg { get; set; }// these work for each instances exiled debuff
+        public bool markedg { get; set; }
+        public bool calmState { get; set; }
         #endregion
 
         #endregion
@@ -388,6 +389,13 @@ namespace Assets.Scripts.Entities.Character
 
             physicalDamage = Character.DamageGiven();
             markedda = Character.MarkedDeBuffPerent;
+            if(Character.CriticalChance==true)
+            {
+                Random vox = new Random();
+                int skylar=vox.Next(1, 101);
+                if (skylar < Character.CritC) physicalDamage += physicalDamage;
+                Character.CriticalChance = false;
+            }
             if (Character.PolishWeapon() == true) physicalDamage += (int)(physicalDamage * Character.PowerBuffPercent);// this is to work the polish buff
             if (Character.Weakg == true) physicalDamage -= (int)(physicalDamage * Character.WeakGripDeBuffPercent);
             if (Character.calmState == true) physicalDamage -= (int)(physicalDamage * Character.CalmDeBuffPercent);
@@ -443,6 +451,13 @@ namespace Assets.Scripts.Entities.Character
             physicalDamage = damageObject.DamageValue;
             damageObject.DamageTrait= DamageObject.DamageVersion.Physical;
             markedda = Character.MarkedDeBuffPerent;
+            if (Character.CriticalChance == true)
+            {
+                Random vox = new Random();
+                int skylar = vox.Next(1, 101);
+                if (skylar < Character.CritC) physicalDamage += physicalDamage;
+                Character.CriticalChance = false;
+            }
             if (Character.PolishWeapon() == true) physicalDamage += (int)(physicalDamage * Character.PowerBuffPercent);// this is to work the polish buff
             if (Character.Weakg == true) physicalDamage -= (int)(physicalDamage * Character.WeakGripDeBuffPercent);
             if (Character.calmState == true) physicalDamage -= (int)(physicalDamage * Character.CalmDeBuffPercent);
@@ -499,6 +514,13 @@ namespace Assets.Scripts.Entities.Character
 
             magicalDamage = Character.DamageGiven();
             markedda = Character.MarkedDeBuffPerent;
+            if (Character.CriticalChance == true)
+            {
+                Random vox = new Random();
+                int skylar = vox.Next(1, 101);
+                if (skylar < Character.CritC) magicalDamage += magicalDamage;
+                Character.CriticalChance = false;
+            }
             if (Character.Chosen() == true) magicalDamage += (int)(magicalDamage * Character.MagiBuffPercent);
             if (Character.exiledg == true) magicalDamage -= (int)(magicalDamage * Character.ExiledDeBuffPercent);
             if (Character.calmState == true) magicalDamage -= (int)(magicalDamage * Character.CalmDeBuffPercent);
@@ -548,6 +570,13 @@ namespace Assets.Scripts.Entities.Character
 
             magicalDamage = amount;
             markedda = Character.MarkedDeBuffPerent;
+            if (Character.CriticalChance == true)
+            {
+                Random vox = new Random();
+                int skylar = vox.Next(1, 101);
+                if (skylar < Character.CritC) magicalDamage += magicalDamage;
+                Character.CriticalChance = false;
+            }
             if (Character.Chosen() == true) magicalDamage += (int)(magicalDamage * Character.MagiBuffPercent);
             if (Character.exiledg == true) magicalDamage -= (int)(magicalDamage * Character.ExiledDeBuffPercent);
             if (Character.calmState == true) magicalDamage -= (int)(magicalDamage * Character.CalmDeBuffPercent);
@@ -657,7 +686,7 @@ namespace Assets.Scripts.Entities.Character
         }
         public void BalancedDamage(object CharacterInstance, object TargetInstance)
         {
-            int Dama = 0; //this should have just been damage but i guess i failed. it should be
+            int Dama = 0; 
             int shieldcache = 0;
             int armourcahe = 0;
             int magrescache = 0;
@@ -673,6 +702,13 @@ namespace Assets.Scripts.Entities.Character
             Dama = Character.DamageGiven();
             if (Character.calmState == true) Dama -= (int)(Dama * Character.CalmDeBuffPercent);
             markedda = Character.MarkedDeBuffPerent;
+            if (Character.CriticalChance == true)
+            {
+                Random vox = new Random();
+                int skylar = vox.Next(1, 101);
+                if (skylar < Character.CritC) Dama += Dama;
+                Character.CriticalChance = false;
+            }
 
             #endregion
             #region Target Logic
