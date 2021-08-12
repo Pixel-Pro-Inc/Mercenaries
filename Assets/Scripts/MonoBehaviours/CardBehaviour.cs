@@ -39,7 +39,7 @@ public class CardBehaviour : Card
                 break;
             case cardName.lionSecondCard:
                 CharacterInstance.PhysicalDamage(CharacterInstance, Target); CharacterInstance.PowerBuffPercent = 0.3;
-                CharacterInstance.PolishWeapon();
+                CharacterInstance.PolishWeapon(CharacterInstance);
                 break;
             case cardName.lionThirdCard:
                 int lionBalls2 = Target.Health;
@@ -152,7 +152,7 @@ public class CardBehaviour : Card
                     fried.shield -= bass2 = (int)(fried.shield * 0.05);
                     fried.Accuracy -= acc2 = (int)(fried.Accuracy * 0.05);
                     CharacterInstance.PowerBuffPercent = 0.1;
-                    CharacterInstance.PolishWeapon();
+                    CharacterInstance.PolishWeapon(CharacterInstance);
                 }
                 break;
             case cardName.lionEighthCard:
@@ -248,7 +248,7 @@ public class CardBehaviour : Card
                         {
                             if(RoundInfo.RoundsPassed >= roundcout + 2)//basically polishes for this and the next turn, so this round+enemyround+nextroundafter
                             {
-                                CharacterInstance.PolishWeapon();
+                                CharacterInstance.PolishWeapon(CharacterInstance);
                             }
                             if (RoundInfo.RoundsPassed == roundcout + 2) Bethoven.Close();
                         }
@@ -324,7 +324,7 @@ public class CardBehaviour : Card
                 }
                 break;
             case cardName.fishFourthCard:
-                CharacterInstance.PolishWeapon();
+                CharacterInstance.PolishWeapon(CharacterInstance);
                 if (CharacterInstance.Health == 100) CharacterInstance.BreakArmour(Target, 20);
                 break;
             case cardName.fishFifthCard:
@@ -354,7 +354,7 @@ public class CardBehaviour : Card
                  */
                 break;
             case cardName.fishEighthCard:
-                CharacterInstance.AgileBUffPercent = 0.2; CharacterInstance.Agile(CharacterInstance);
+                CharacterInstance.AgileBUffPercent = 0.2; CharacterInstance.Agile(CharacterInstance,true);
                 break;
             case cardName.fishNinthCard:
                 CharacterInstance.PhysicalDamage(CharacterInstance, Target);
@@ -369,7 +369,7 @@ public class CardBehaviour : Card
             case cardName.salamanderThirdCard:
                 CharacterInstance.PhysicalDamage(CharacterInstance, Target);
                 CharacterInstance.PowerBuffPercent = 0.3;
-                CharacterInstance.PolishWeapon();
+                CharacterInstance.PolishWeapon(CharacterInstance);
                 break;
             case cardName.salamanderFourthCard:
                 int enemyindexCount3 = CharacterInstance.Enemies.Count;
@@ -447,7 +447,7 @@ public class CardBehaviour : Card
             case cardName.frogSecondCard:
                 CharacterInstance.AgileBUffPercent = 0.5;
                 Target.AgileBUffPercent = 0.5;
-                CharacterInstance.Agile(CharacterInstance);Target.Agile(Target);
+                CharacterInstance.Agile(CharacterInstance,true);Target.Agile(Target,true);
                 break;
             case cardName.frogThirdCard:
                 int stored1 = Target.Health;
@@ -533,7 +533,7 @@ public class CardBehaviour : Card
             case cardName.tritonThirdCard:
                 if (CharacterInstance.shield > 0)
                 {
-                    CharacterInstance.PowerBuffPercent = 2; CharacterInstance.PolishWeapon();
+                    CharacterInstance.PowerBuffPercent = 2; CharacterInstance.PolishWeapon(CharacterInstance);
                     CharacterInstance.PhysicalDamage(CharacterInstance, Target);
                 }
                 else { CharacterInstance.PhysicalDamage(CharacterInstance, Target); }

@@ -55,10 +55,10 @@ namespace Assets.Scripts.Interface
 
         #region Buff
 
-        void Agile(object CharacterInstance);
-        bool PolishWeapon();
-        bool Chosen();
-        bool Aware();
+        void Agile(object CharacterInstance, bool state);
+        bool PolishWeapon(object CharacterInstance);
+        bool Chosen(object CharacterInstance);
+        bool Aware(object CharacterInstance);
         void OnGuard(object CharacterInstance, object TargetInstance);//only works to be on guard to a specific person
         void Provoking(object CharacterInstance); //this takes the character and uses the protector() method and its list of allies as targets
         void Protector(object OwnerInstance, object TargetInstance); //this asks like a contract. The person who will protectand the protected. eg Protector( instance,Mister Froggo)
