@@ -56,8 +56,8 @@ namespace Assets.Scripts.Interface
         #region Buff
 
         void Agile(object CharacterInstance, bool state);
-        bool PolishWeapon(object CharacterInstance);
-        bool Chosen(object CharacterInstance);
+        void PolishWeapon(object CharacterInstance);
+        void Chosen(object CharacterInstance);
         bool Aware(object CharacterInstance);
         void OnGuard(object CharacterInstance, object TargetInstance);//only works to be on guard to a specific person
         void Provoking(object CharacterInstance); //this takes the character and uses the protector() method and its list of allies as targets
@@ -70,24 +70,23 @@ namespace Assets.Scripts.Interface
         #endregion
         #region Debuff
         // each of these has to have logic that asks if RemoverDebufeffects == true
-        bool Slow(object CharacterInstance, object TargetInstance);
-        bool Rooted(object CharacterInstance, object TargetInstance);
-        bool WeakGrip(object CharacterInstance, object TargetInstance);
-        bool Exiled(object CharacterInstance, object TargetInstance);
-        bool Marked(object CharacterInstance, object TargetInstance);
-        bool Calm(object CharacterInstance, object TargetInstance);
-        bool BrokenGuard(object CharacterInstance, object TargetInstance);
-        bool Burnt(object CharacterInstance, object TargetInstance);
-        bool Stun(object CharacterInstance, object TargetInstance);
-        bool Freeze(object CharacterInstance, object TargetInstance);//stuns after cold applied twice
-        bool Cold(object CharacterInstance, object TargetInstance);
-        bool Blinded(object CharacterInstance, object TargetInstance);
-        bool Tainted(object CharacterInstance, object TargetInstance);
-        bool Sleep(object CharacterInstance, object TargetInstance);
-        bool Hungry(object CharacterInstance, object TargetInstance);
-        bool Unhealthy(object CharacterInstance, object TargetInstance);
-        bool GodsAnger(object CharacterInstance, List<string> Allies);
+       void Slow(object CharacterInstance, object TargetInstance);
+       void Rooted(object CharacterInstance, object TargetInstance);
+       void WeakGrip(object CharacterInstance, object TargetInstance);
+       void Exiled(object CharacterInstance, object TargetInstance);
+       void Marked(object CharacterInstance, object TargetInstance);
+       void Calm(object CharacterInstance, object TargetInstance);
+       void BrokenGuard(object CharacterInstance, object TargetInstance);
+       void Burnt(object CharacterInstance, object TargetInstance);
+       void Stun(object CharacterInstance, object TargetInstance);
+       void Freeze(object CharacterInstance, object TargetInstance);//stuns after cold applied twice
+       void Cold(object CharacterInstance, object TargetInstance);
+       void Blinded(object CharacterInstance, object TargetInstance);
+       void Tainted(object CharacterInstance, object TargetInstance);
+       void Sleep(object CharacterInstance, object TargetInstance);
+       void Hungry(object CharacterInstance, object TargetInstance);
+       void Unhealthy(object CharacterInstance, object TargetInstance);
+       void GodsAnger(object CharacterInstance, List<string> Allies);
         #endregion
-
     }
 }

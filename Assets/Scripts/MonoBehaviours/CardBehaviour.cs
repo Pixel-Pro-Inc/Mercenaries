@@ -503,7 +503,7 @@ public class CardBehaviour : Card
                 int totalEnemyHealth = 0;
                 int indienemyhealth;
                 int count = 0;
-                Persona lowestenemy = new();
+                Persona lowestenemy = new Persona();
                 foreach (var item in CharacterInstance.Enemies)
                 {
                     Persona enemy= (Persona)item;

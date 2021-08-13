@@ -44,7 +44,7 @@ namespace Assets.Scripts.Entities.Character
                 }
             }
         }
-        public override int dodge
+        public override double dodge
         {
             get { return dodge; }
             set
@@ -68,7 +68,7 @@ namespace Assets.Scripts.Entities.Character
 
             }
         }
-        public override int Speed
+        public override double Speed
         {
             get { return Speed; }
             set
@@ -161,7 +161,7 @@ namespace Assets.Scripts.Entities.Character
 
             }
         }
-        public override int Accuracy
+        public override double Accuracy
         {
             get { return Accuracy; }
             set
@@ -302,10 +302,6 @@ namespace Assets.Scripts.Entities.Character
             // Implement a call with the right signature for events going off
             //void myEvent(object source, ElapsedEventArgs e) { Mana++; }
             #endregion
-        }
-        public void ActiveDeBuff()
-        {
-            throw new System.NotImplementedException();
         }
         //Experince methods
         public override void LevelIncrease()

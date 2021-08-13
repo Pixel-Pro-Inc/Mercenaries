@@ -36,7 +36,7 @@ namespace Assets.Scripts.Entities.Character
                 }
             }
         }
-        public override int dodge
+        public override double dodge
         {
             get { return dodge; }
             set
@@ -53,7 +53,7 @@ namespace Assets.Scripts.Entities.Character
 
             }
         }
-        public override int Speed
+        public override double Speed
         {
             get { return Speed; }
             set
@@ -118,7 +118,7 @@ namespace Assets.Scripts.Entities.Character
 
             }
         }
-        public override int Accuracy
+        public override double Accuracy
         {
             get { return Accuracy; }
             set
@@ -217,10 +217,6 @@ namespace Assets.Scripts.Entities.Character
         //forget to include the correct and necesary info
 
         public void ActiveBuff()
-        {
-            throw new System.NotImplementedException();
-        }
-        public void ActiveDeBuff()
         {
             throw new System.NotImplementedException();
         }

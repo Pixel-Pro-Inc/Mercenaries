@@ -12,7 +12,6 @@ namespace Assets.Scripts.Helpers
 {
     public class Attack
     {
-
         public void TrueDamage(object CharacterInstance, object TargetInstance, DamageObject DamageObj)
         {
             Persona Character = (Persona)CharacterInstance;
@@ -65,16 +64,35 @@ namespace Assets.Scripts.Helpers
                 if (skylar < Character.CritC) physicalDamage += physicalDamage;
                 Character.CriticalChance = false;
             }
-            if (Character.PolishWeapon() == true) physicalDamage += (int)(physicalDamage * Character.PowerBuffPercent);// this is to work the polish buff
-            if (Character.Weakg == true) physicalDamage -= (int)(physicalDamage * Character.WeakGripDeBuffPercent);
-            if (Character.calmState == true) physicalDamage -= (int)(physicalDamage * Character.CalmDeBuffPercent);
+            bool polishM = new bool();
+            List<BuffObject> polishmaybe= Character.GetBuff(Character);
+            foreach (var item in polishmaybe)
+            {
+                if (item.type == buffType.PolishedWeapon) polishM = true;
+            }
+            bool WeakDebuffM = new bool(); bool CalmDebuffM = new bool();
+            List<DebuffObject> Debuffmaybe = Character.GetDebuffs();
+            foreach (var item in Debuffmaybe)
+            {
+                if (item.type == debuffType.WeakGrip) WeakDebuffM = true;
+                if (item.type == debuffType.Calm) CalmDebuffM = true;
+            }
+            if (polishM == true) physicalDamage += (int)(physicalDamage * Character.PowerBuffPercent);// this is to work the polish buff
+            if (WeakDebuffM == true) physicalDamage -= (int)(physicalDamage * Character.WeakGripDeBuffPercent);
+            if (CalmDebuffM == true) physicalDamage -= (int)(physicalDamage * Character.CalmDeBuffPercent);
 
             #endregion
             #region Target Logic
 
+            bool MArkedDebuffM = new bool();
+            List<DebuffObject> DebuffmaybeTar = Target.GetDebuffs();
+            foreach (var item in DebuffmaybeTar)
+            {
+                if (item.type == debuffType.Marked) MArkedDebuffM = true;
+            }
             Target.AttackSponser = Character;
             if (Target.ProtectionSponser != null) Target = (Persona)Target.ProtectionSponser;
-            if (Target.markedg == true) physicalDamage += (int)(physicalDamage * markedda);
+            if (MArkedDebuffM == true) physicalDamage += (int)(physicalDamage * markedda);
             if (Target.BlockState == true)
             {
                 physicalDamage = 0;
@@ -137,16 +155,35 @@ namespace Assets.Scripts.Helpers
                 if (skylar < Character.CritC) physicalDamage += physicalDamage;
                 Character.CriticalChance = false;
             }
-            if (Character.PolishWeapon() == true) physicalDamage += (int)(physicalDamage * Character.PowerBuffPercent);// this is to work the polish buff
-            if (Character.Weakg == true) physicalDamage -= (int)(physicalDamage * Character.WeakGripDeBuffPercent);
-            if (Character.calmState == true) physicalDamage -= (int)(physicalDamage * Character.CalmDeBuffPercent);
+            bool polishM = new bool();
+            List<BuffObject> polishmaybe = Character.GetBuff(Character);
+            foreach (var item in polishmaybe)
+            {
+                if (item.type == buffType.PolishedWeapon) polishM = true;
+            }
+            bool WeakDebuffM = new bool(); bool CalmDebuffM = new bool();
+            List<DebuffObject> Debuffmaybe = Character.GetDebuffs();
+            foreach (var item in Debuffmaybe)
+            {
+                if (item.type == debuffType.WeakGrip) WeakDebuffM = true;
+                if (item.type == debuffType.Calm) CalmDebuffM = true;
+            }
+            if (polishM == true) physicalDamage += (int)(physicalDamage * Character.PowerBuffPercent);// this is to work the polish buff
+            if (WeakDebuffM == true) physicalDamage -= (int)(physicalDamage * Character.WeakGripDeBuffPercent);
+            if (CalmDebuffM == true) physicalDamage -= (int)(physicalDamage * Character.CalmDeBuffPercent);
 
             #endregion
             #region Target Logic
 
+            bool MArkedDebuffM = new bool();
+            List<DebuffObject> DebuffmaybeTar = Target.GetDebuffs();
+            foreach (var item in DebuffmaybeTar)
+            {
+                if (item.type == debuffType.Marked) MArkedDebuffM = true;
+            }
             Target.AttackSponser = Character;
             if (Target.ProtectionSponser != null) Target = (Persona)Target.ProtectionSponser;
-            if (Target.markedg == true) physicalDamage += (int)(physicalDamage * markedda);
+            if (MArkedDebuffM == true) physicalDamage += (int)(physicalDamage * markedda);
             if (Target.BlockState == true)
             {
                 physicalDamage = 0;
@@ -212,12 +249,31 @@ namespace Assets.Scripts.Helpers
                 if (skylar < Character.CritC) magicalDamage += magicalDamage;
                 Character.CriticalChance = false;
             }
-            if (Character.Chosen() == true) magicalDamage += (int)(magicalDamage * Character.MagiBuffPercent);
-            if (Character.exiledg == true) magicalDamage -= (int)(magicalDamage * Character.ExiledDeBuffPercent);
-            if (Character.calmState == true) magicalDamage -= (int)(magicalDamage * Character.CalmDeBuffPercent);
+            bool ChosenhM = new bool();
+            List<BuffObject> polishmaybe = Character.GetBuff(Character);
+            foreach (var item in polishmaybe)
+            {
+                if (item.type == buffType.Chosen) ChosenhM = true;
+            }
+            bool ExiledDebuffM = new bool(); bool CalmDebuffM = new bool();
+            List<DebuffObject> Debuffmaybe = Character.GetDebuffs();
+            foreach (var item in Debuffmaybe)
+            {
+                if (item.type == debuffType.Exiled) ExiledDebuffM = true;
+                if (item.type == debuffType.Calm) CalmDebuffM = true;
+            }
+            if (ChosenhM == true) magicalDamage += (int)(magicalDamage * Character.MagiBuffPercent);
+            if (ExiledDebuffM == true) magicalDamage -= (int)(magicalDamage * Character.ExiledDeBuffPercent);
+            if (CalmDebuffM == true) magicalDamage -= (int)(magicalDamage * Character.CalmDeBuffPercent);
             #endregion
             #region Target Logic
 
+            bool MArkedDebuffM = new bool();
+            List<DebuffObject> DebuffmaybeTar = Target.GetDebuffs();
+            foreach (var item in DebuffmaybeTar)
+            {
+                if (item.type == debuffType.Marked) MArkedDebuffM = true;
+            }
             Target.AttackSponser = Character; //for Onguard()
             Target.HitCount++;
             shieldcache = Target.shield;
@@ -225,7 +281,7 @@ namespace Assets.Scripts.Helpers
             if (Target.ImmuneState == true) magicalDamage = 0;
             shieldcache -= magicalDamage; Target.shield -= magicalDamage;
             if (Target.ProtectionSponser != null) Target = (Persona)Target.ProtectionSponser;
-            if (Target.markedg == true) magicalDamage += (int)(magicalDamage * markedda);
+            if (MArkedDebuffM == true) magicalDamage += (int)(magicalDamage * markedda);
 
             if (shieldcache < 0)//this asks if there is no more sheild left
             {
@@ -278,12 +334,31 @@ namespace Assets.Scripts.Helpers
                 if (skylar < Character.CritC) magicalDamage += magicalDamage;
                 Character.CriticalChance = false;
             }
-            if (Character.Chosen() == true) magicalDamage += (int)(magicalDamage * Character.MagiBuffPercent);
-            if (Character.exiledg == true) magicalDamage -= (int)(magicalDamage * Character.ExiledDeBuffPercent);
-            if (Character.calmState == true) magicalDamage -= (int)(magicalDamage * Character.CalmDeBuffPercent);
+            bool ChosenhM = new bool();
+            List<BuffObject> polishmaybe = Character.GetBuff(Character);
+            foreach (var item in polishmaybe)
+            {
+                if (item.type == buffType.Chosen) ChosenhM = true;
+            }
+            bool ExiledDebuffM = new bool(); bool CalmDebuffM = new bool();
+            List<DebuffObject> Debuffmaybe = Character.GetDebuffs();
+            foreach (var item in Debuffmaybe)
+            {
+                if (item.type == debuffType.Exiled) ExiledDebuffM = true;
+                if (item.type == debuffType.Calm) CalmDebuffM = true;
+            }
+            if (ChosenhM == true) magicalDamage += (int)(magicalDamage * Character.MagiBuffPercent);
+            if (ExiledDebuffM == true) magicalDamage -= (int)(magicalDamage * Character.ExiledDeBuffPercent);
+            if (CalmDebuffM == true) magicalDamage -= (int)(magicalDamage * Character.CalmDeBuffPercent);
             #endregion
             #region Target Logic
 
+            bool MArkedDebuffM = new bool();
+            List<DebuffObject> DebuffmaybeTar = Target.GetDebuffs();
+            foreach (var item in DebuffmaybeTar)
+            {
+                if (item.type == debuffType.Marked) MArkedDebuffM = true;
+            }
             Target.AttackSponser = Character; //for Onguard()
             Target.HitCount++;
             shieldcache = Target.shield;
@@ -291,7 +366,7 @@ namespace Assets.Scripts.Helpers
             if (Target.ImmuneState == true) magicalDamage = 0;
             shieldcache -= magicalDamage; Target.shield -= magicalDamage;
             if (Target.ProtectionSponser != null) Target = (Persona)Target.ProtectionSponser;
-            if (Target.markedg == true) magicalDamage += (int)(magicalDamage * markedda);
+            if (MArkedDebuffM == true) magicalDamage += (int)(magicalDamage * markedda);
 
             if (shieldcache < 0)//this asks if there is no more sheild left
             {
@@ -465,8 +540,13 @@ namespace Assets.Scripts.Helpers
 
             #region Character Logic
 
-            
-            if (Character.calmState == true) Dama -= (int)(Dama * Character.CalmDeBuffPercent);
+            bool CalmDebuffM = new bool();
+            List<DebuffObject> Debuffmaybe = Character.GetDebuffs();
+            foreach (var item in Debuffmaybe)
+            {
+                if (item.type == debuffType.Calm) CalmDebuffM = true;
+            }
+            if (CalmDebuffM == true) Dama -= (int)(Dama * Character.CalmDeBuffPercent);
             markedda = Character.MarkedDeBuffPerent;
             if (Character.CriticalChance == true)
             {
@@ -479,10 +559,16 @@ namespace Assets.Scripts.Helpers
             #endregion
             #region Target Logic
 
+            bool MArkedDebuffM = new bool();
+            List<DebuffObject> DebuffmaybeTar = Target.GetDebuffs();
+            foreach (var item in DebuffmaybeTar)
+            {
+                if (item.type == debuffType.Marked) MArkedDebuffM = true;
+            }
             Target.AttackSponser = Character;
             if (Target.ImmuneState == true) Dama = 0;
             if (Target.ProtectionSponser != null) Target = (Persona)Target.ProtectionSponser;
-            if (Target.markedg == true) Dama += (int)(Dama * markedda);
+            if (MArkedDebuffM == true) Dama += (int)(Dama * markedda);
 
             Target.HitCount++;
             shieldcache = Target.shield;
@@ -539,6 +625,13 @@ namespace Assets.Scripts.Helpers
 
             Target.AttackSponser = Character;// I have doubts that this should be here
 
+            bool MArkedDebuffM = new bool(); // these are the precursor logic to find if the target is marked or not
+            List<DebuffObject> DebuffmaybeTar = Target.GetDebuffs();
+            foreach (var item in DebuffmaybeTar)
+            {
+                if (item.type == debuffType.Marked) MArkedDebuffM = true;
+            }
+
             markedda = Character.MarkedDeBuffPerent;
             int roundhaspassed = 0;
             Timer Scar;
@@ -553,6 +646,7 @@ namespace Assets.Scripts.Helpers
             roundhaspassed = RoundInfo.RoundsPassed;
             //this is supposed to add to a list up to 5, of the last person to cause you damage. Its called in the constructor and hopefully runs the whole time. 
 
+           
             void Scarer(object source2, ElapsedEventArgs e)
             {
                 if (RoundInfo.RoundsPassed < roundhaspassed + 1)
@@ -561,7 +655,7 @@ namespace Assets.Scripts.Helpers
                     if (Target.ProtectionSponser != null) Target = (Persona)Target.ProtectionSponser;
                     randamage = r.Next(1, Character.CursePercent);
                     CurseattackObject.amount = randamage;
-                    if (Target.markedg == true) randamage += (int)(randamage * markedda);
+                    if (MArkedDebuffM == true) randamage += (int)(randamage * markedda);
                     if (Target.ImmuneState == true)
                     { }
                     else

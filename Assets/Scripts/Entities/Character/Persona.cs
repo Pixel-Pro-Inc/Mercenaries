@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
+using static Assets.Scripts.Models.Enums;
 
 namespace Assets.Scripts.Entities.Character
 {
@@ -41,8 +42,16 @@ namespace Assets.Scripts.Entities.Character
         public List<object> Master { get; set; }
         public List<object> Allies { get; set; }
         public List<object> Enemies { get; set; }
-        public List<BuffObject> BuffsInEffect { get; set; }
+
+        #region Combat Object Lists
+
         public List<AttackObject> AttacksGiven { get; set; }
+        public List<DefendObject> DefenceSet { get; set; }
+        public List<BuffObject> BuffsInEffect { get; set; }
+        public List<DebuffObject> DebuffsInEffect { get; set; }
+
+        #endregion
+
         public enum SpeciesType
         {
             Lion,
@@ -88,7 +97,7 @@ namespace Assets.Scripts.Entities.Character
                 }
             }
         }
-        public virtual int dodge
+        public virtual double dodge
         {
             get { return dodge; }
             set
@@ -105,7 +114,7 @@ namespace Assets.Scripts.Entities.Character
 
             }
         }
-        public virtual int Speed
+        public virtual double Speed
         {
             get { return Speed; }
             set
@@ -191,7 +200,7 @@ namespace Assets.Scripts.Entities.Character
         }
         public virtual int Damage { get; set; }
         public virtual int HitCount { get; set; }
-        public virtual int Accuracy { get; set; }
+        public virtual double Accuracy { get; set; }
         public bool LowDamage { get; set; }
         public int ExpPoints
         {
@@ -258,7 +267,6 @@ namespace Assets.Scripts.Entities.Character
         //These below have to be int cause they are used as in the Random method Random.Next()
         public int DrainPercent { get; set; }
         public int CursePercent { get; set; }
-        public int BlightAmount { get; set; }
         public bool CriticalChance { get; set; }
 
         #endregion
@@ -266,6 +274,10 @@ namespace Assets.Scripts.Entities.Character
 
         public bool ImmuneState { get; set; }
         public bool BlockState { get; set; }
+        public virtual bool ArmourState { get; private set; }
+        public virtual bool MagicResState { get; private set; }
+        public virtual bool shieldState { get; private set; }
+        public virtual bool PurifiedState { get; private set; }
 
         #endregion
         #region Buff Percent
@@ -281,7 +293,7 @@ namespace Assets.Scripts.Entities.Character
         public object AttackSponser { get; set; } // This is to store who last attacked a character
 
         #endregion
-        #region DeBUff Percent
+        #region DeBuff Percent
 
         public double SlowDeBuffPercent { get; set; }
         public double RootedDebuffPercent { get; set; }
@@ -289,11 +301,17 @@ namespace Assets.Scripts.Entities.Character
         public double ExiledDeBuffPercent { get; set; }
         public double MarkedDeBuffPerent { get; set; }
         public double CalmDeBuffPercent { get; set; }
+        public virtual int debuffChance { get; set; }
+        public virtual double BrokenGaurdDeBuffPercent { get; set; }
+        public virtual double ColdDeBuffPercent { get; set; }
+        public virtual double BlindedDeBuffPercent { get; set; }
+        public virtual double TaintedDebuffPercent { get; set; }
+        public virtual bool stunState { get; set; }
+        public virtual bool freezeState { get; set; }
 
-        public bool Weakg { get; set; } //these work for each instances weakgrip debuff
-        public bool exiledg { get; set; }// these work for each instances exiled debuff
-        public bool markedg { get; set; }
-        public bool calmState { get; set; }
+        //Yewo's Variables
+        
+        
         #endregion
 
         #endregion
@@ -362,6 +380,8 @@ namespace Assets.Scripts.Entities.Character
             NewEarnedXp = newEarnedXp;
         }
 
+        #region Attack Logic
+
         public void AddAttack(AttackObject attack)
         {
             AttacksGiven.Add(attack);
@@ -375,11 +395,20 @@ namespace Assets.Scripts.Entities.Character
             {
                 if (RoundInfo.RoundDone == true)
                 {
-                    Attack.Close();
+                    Attack.Close(); //Not really sure what this was supposed to do
                 }
             }
 
         }
+        public List<AttackObject> GetAttack(object CharacterInstance)
+        {
+            Persona meed = (Persona)CharacterInstance;
+            return meed.AttacksGiven;
+        }
+
+        #endregion
+        #region Buff Logic
+
         public void AddBuff(BuffObject buff)
         {
             BuffsInEffect.Add(buff);
@@ -393,22 +422,89 @@ namespace Assets.Scripts.Entities.Character
             {
                 if (RoundInfo.RoundDone == true)
                 {
-                    Buff.Close();
+                    Buff.Close();//Not really sure what this was supposed to do
                 }
             }
 
         }
-
         public List<BuffObject> GetBuff(object CharacterInstance)
         {
             Persona deem = (Persona)CharacterInstance;
             return deem.BuffsInEffect;
         }
-        public List<AttackObject> GetAttack(object CharacterInstance)
+
+        #endregion
+        #region Defend Logic
+
+
+        #endregion
+        #region DeBuff Logic
+
+        public void AddDebuff(DebuffObject debuffObject)
         {
-            Persona meed = (Persona)CharacterInstance;
-            return meed.AttacksGiven;
+            if (!DebuffsInEffect.Contains(debuffObject))
+                DebuffsInEffect.Add(debuffObject);
+
+            ApplyDebuff(debuffObject);
         }
+        public void RemoveDebuff(DebuffObject debuffObject)
+        {
+            //Revert First
+            DebuffsInEffect.Remove(debuffObject);
+        }
+        public void RemoveAllDebuff()
+        {
+            //Revert First
+            DebuffsInEffect.Clear();
+        }
+        public void ActiveDeBuff()
+        {
+            throw new NotImplementedException();
+        }
+        public List<DebuffObject> GetDebuffs()
+        {
+            return DebuffsInEffect;
+        }
+        public void ApplyDebuff(DebuffObject debuffObject)
+        {
+            switch (debuffObject.type)
+            {
+                case debuffType.Slow:
+                    Speed *= debuffObject.amount;
+                    break;
+                case debuffType.Rooted:
+                    dodge *= debuffObject.amount;
+                    break;
+                case debuffType.WeakGrip:
+                    break;
+                case debuffType.Exiled:
+                    break;
+                case debuffType.Calm:
+                    break;
+                case debuffType.Stun:
+                    stunState = true;
+                    //Check to see if this is active before doing anything
+                    break;
+                case debuffType.Freeze:
+                    freezeState = true;
+                    //Check to see if this is active before doing anything
+                    break;
+                case debuffType.Cold:
+                    Speed *= debuffObject.amount;
+                    dodge *= debuffObject.amount;
+                    break;
+                case debuffType.Blinded:
+                    Accuracy *= debuffObject.amount;
+                    break;
+                case debuffType.Tainted:
+                    debuffChance = (int)debuffObject.amount;
+                    break;
+            }
+        }
+        #endregion
+
+
+
 
         #endregion
         #region Combat Actions
@@ -501,8 +597,8 @@ namespace Assets.Scripts.Entities.Character
         #region Buff
 
         public void Agile(object CharacterInstance, bool state) => new Buff().Agile( CharacterInstance, state);
-        public bool PolishWeapon(object CharacterInstance) => new Buff().PolishWeapon(CharacterInstance);
-        public bool Chosen(object CharacterInstance) => new Buff().Chosen(CharacterInstance);
+        public void PolishWeapon(object CharacterInstance) => new Buff().PolishWeapon(CharacterInstance);
+        public void Chosen(object CharacterInstance) => new Buff().Chosen(CharacterInstance);
         public bool Aware(object CharacterInstance) => new Buff().Aware(CharacterInstance);
         public void OnGuard(object CharacterInstance, object TargetInstance) => new Buff().OnGuard(CharacterInstance,TargetInstance);
         public void Provoking(object CharacterInstance) => new Buff().Provoking(CharacterInstance);
@@ -514,91 +610,25 @@ namespace Assets.Scripts.Entities.Character
 
         #endregion
         #region Debuff
-
-        public bool Slow(object CharacterInstance, object TargetInstance)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Rooted(object CharacterInstance, object TargetInstance)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool WeakGrip(object CharacterInstance, object TargetInstance)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Exiled(object CharacterInstance, object TargetInstance)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Marked(object CharacterInstance, object TargetInstance)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Calm(object CharacterInstance, object TargetInstance)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool BrokenGuard(object CharacterInstance, object TargetInstance)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Burnt(object CharacterInstance, object TargetInstance)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Stun(object CharacterInstance, object TargetInstance)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Freeze(object CharacterInstance, object TargetInstance)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Cold(object CharacterInstance, object TargetInstance)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Blinded(object CharacterInstance, object TargetInstance)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Tainted(object CharacterInstance, object TargetInstance)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Sleep(object CharacterInstance, object TargetInstance)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Hungry(object CharacterInstance, object TargetInstance)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Unhealthy(object CharacterInstance, object TargetInstance)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool GodsAnger(object CharacterInstance, List<string> Allies)
-        {
-            throw new NotImplementedException();
-        }
+        
+        
+        public void Slow(object CharacterInstance, object TargetInstance) => new Debuff().Slow(CharacterInstance, TargetInstance);
+        public void Rooted(object CharacterInstance, object TargetInstance) => new Debuff().Rooted(CharacterInstance, TargetInstance);
+        public void WeakGrip(object CharacterInstance, object TargetInstance) => new Debuff().WeakGrip(CharacterInstance, TargetInstance);
+        public void Exiled(object CharacterInstance, object TargetInstance) => new Debuff().Exiled(CharacterInstance, TargetInstance);
+        public void Marked(object CharacterInstance, object TargetInstance) => new Debuff().Marked(CharacterInstance, TargetInstance);
+        public void Calm(object CharacterInstance, object TargetInstance) => new Debuff().Calm(CharacterInstance, TargetInstance);
+        public void BrokenGuard(object CharacterInstance, object TargetInstance) => new Debuff().BrokenGuard(CharacterInstance, TargetInstance);
+        public void Burnt(object CharacterInstance, object TargetInstance) => new Debuff().Burnt(CharacterInstance, TargetInstance);
+        public void Stun(object CharacterInstance, object TargetInstance) => new Debuff().Stun(CharacterInstance, TargetInstance);
+        public void Freeze(object CharacterInstance, object TargetInstance) => new Debuff().Freeze(CharacterInstance, TargetInstance);
+        public void Cold(object CharacterInstance, object TargetInstance) => new Debuff().Cold(CharacterInstance, TargetInstance);
+        public void Blinded(object CharacterInstance, object TargetInstance) => new Debuff().Blinded(CharacterInstance, TargetInstance);
+        public void Tainted(object CharacterInstance, object TargetInstance) => new Debuff().Tainted(CharacterInstance, TargetInstance);
+        public void Sleep(object CharacterInstance, object TargetInstance) => new Debuff().Sleep(CharacterInstance, TargetInstance);
+        public void Hungry(object CharacterInstance, object TargetInstance) => new Debuff().Hungry(CharacterInstance, TargetInstance);
+        public void Unhealthy(object CharacterInstance, object TargetInstance) => new Debuff().Unhealthy(CharacterInstance, TargetInstance);
+        public void GodsAnger(object CharacterInstance, List<string> Allies) => new Debuff().Slow(CharacterInstance, Allies);
 
         #endregion
 
@@ -651,11 +681,39 @@ namespace Assets.Scripts.Entities.Character
                 }
             }
         }
-        
-        #endregion
 
         #endregion
 
+        #endregion
 
+        #region Toggles
+        public void ToggleArmour(bool state, int amount)
+        {
+            ArmourState = state;
+            Armour = amount;
+        }
+        public void ToggleMagicRes(bool state, int amount)
+        {
+            MagicResState = state;
+            MagicRes = amount;
+        }
+        public void ToggleShield(bool state, int amount)
+        {
+            shieldState = state;
+            shield = amount;
+        }
+        public void TogglePurified(bool state)
+        {
+            PurifiedState = state;
+        }
+        public void ToggleBlock(bool state)
+        {
+            BlockState = state;
+        }
+        public void ToggleImmune(bool state)
+        {
+            ImmuneState = state;
+        }
+        #endregion
     }
 }

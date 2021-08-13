@@ -1,5 +1,6 @@
 ﻿
 using Assets.Scripts.Entities.Item;
+using Assets.Scripts.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +33,25 @@ namespace Assets.Scripts.Interface
         void XPIncrease(bool earnXp, int newEarnedXp);
 
         void TraitLevelUpActivation(int experienceLevel, List<ItemTemplate> Items);
+
+        #region Combat logic
+
+        public void AddAttack(AttackObject attack);
+        public List<AttackObject> GetAttack(object CharacterInstance);
+
+
+
+        public void AddBuff(BuffObject buff);
+        public List<BuffObject> GetBuff(object CharacterInstance);
+
+        public void AddDebuff(DebuffObject debuffObject);
+        public void RemoveDebuff(DebuffObject debuffObject);
+        public void RemoveAllDebuff();
+        public void ActiveDeBuff();
+        public List<DebuffObject> GetDebuffs();
+        public void ApplyDebuff(DebuffObject debuffObject);
+
+        #endregion
 
     }
 }

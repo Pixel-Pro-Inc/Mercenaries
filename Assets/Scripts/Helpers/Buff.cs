@@ -46,7 +46,7 @@ namespace Assets.Scripts.Helpers
             }
            
         }
-        public bool PolishWeapon(object CharacterInstance)
+        public void PolishWeapon(object CharacterInstance)
         {
             Persona Character = (Persona)CharacterInstance;
             bool polishWeapon = true;
@@ -72,9 +72,8 @@ namespace Assets.Scripts.Helpers
                     BuffTimer.Close();
                 }
             }
-            return polishWeapon;
         }
-        public bool Chosen(object CharacterInstance)
+        public void Chosen(object CharacterInstance)
         {
             Persona Character = (Persona)CharacterInstance;
             bool chosen=true;
@@ -101,7 +100,6 @@ namespace Assets.Scripts.Helpers
                 }
             }
 
-            return chosen;
         }
         public bool Aware(object CharacterInstance)
         {

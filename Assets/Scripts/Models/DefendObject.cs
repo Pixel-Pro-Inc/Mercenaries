@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assets.Scripts.Helpers
+namespace Assets.Scripts.Models
 {
-    public class Defend
+    public class DefendObject
     {
-        
     }
 }
