@@ -633,17 +633,17 @@ namespace Assets.Scripts.Entities.Character
         #endregion
 
         #region UniqueActons
-        public void UniqueSkill(object CharacterInstance, object TargetInstance)
+        public virtual void UniqueSkill(object CharacterInstance, object TargetInstance)
         {
             throw new NotImplementedException();
         }
 
-        public void UniqueActiveBuff(object CharacterInstance, object TargetInstance)
+        public virtual void UniqueActiveBuff(object CharacterInstance, object TargetInstance)
         {
             throw new NotImplementedException();
         }
 
-        public void UniqueActiveDeBuff(object CharacterInstance, object TargetInstance)
+        public virtual void UniqueActiveDeBuff(object CharacterInstance, object TargetInstance)
         {
             throw new NotImplementedException();
         }

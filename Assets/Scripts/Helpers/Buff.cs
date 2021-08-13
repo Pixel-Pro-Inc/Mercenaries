@@ -227,7 +227,8 @@ namespace Assets.Scripts.Helpers
             Persona Target = (Persona)TargetInstance;
 
             Target.ProtectionSponser = Character;
-            bool protector = true;
+            /*
+             bool protector = true;
             BuffObject buffObject = null;
             buffObject = new BuffObject()
             {
@@ -235,6 +236,18 @@ namespace Assets.Scripts.Helpers
                 type = buffType.Protector,
             };
             Character.AddBuff(buffObject);
+
+             */
+
+            //This here below is so that the target can get the buffobject protected and not everytime the Protected method is called
+            bool protectoed = true;
+            BuffObject buffObject = null;
+            buffObject = new BuffObject()
+            {
+                state = protectoed,
+                type = buffType.Protected,
+            };
+            Target.AddBuff(buffObject);
 
             Timer BuffTimer = new Timer();
             BuffTimer.Elapsed += new ElapsedEventHandler(protectorWait);
@@ -246,7 +259,8 @@ namespace Assets.Scripts.Helpers
             {
                 if (RoundInfo.RoundDone == true)
                 {
-                    protector = false;
+                    // protector = false;
+                    protectoed = false;
                     Target.ProtectionSponser = null;
                     BuffTimer.Close();
                 }
@@ -259,7 +273,9 @@ namespace Assets.Scripts.Helpers
             object sponser = Target;
             sponser = Target.ProtectionSponser;
 
-            bool protectoed= true;
+            //This here below was removed cause it is already called in Protector so that whenever this method is called there is no issue of unnecessary new objects
+            /*
+              bool protectoed= true;
             BuffObject buffObject = null;
             buffObject = new BuffObject()
             {
@@ -267,6 +283,8 @@ namespace Assets.Scripts.Helpers
                 type = buffType.Protected,
             };
             Target.AddBuff(buffObject);
+             */
+
 
             Timer BuffTimer = new Timer();
             BuffTimer.Elapsed += new ElapsedEventHandler(protectoedWait);
@@ -278,7 +296,6 @@ namespace Assets.Scripts.Helpers
             {
                 if (RoundInfo.RoundDone == true)
                 {
-                    protectoed = false;
                     Target.ProtectionSponser = null;
                     BuffTimer.Close();
                 }

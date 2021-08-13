@@ -242,10 +242,6 @@ namespace Assets.Scripts.Entities.Character
             }
             #endregion
         }
-        public void ActiveDeBuff()
-        {
-            throw new System.NotImplementedException();
-        }
         //Experince methods
         public override void LevelIncrease()
         {

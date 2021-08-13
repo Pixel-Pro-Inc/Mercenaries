@@ -27,7 +27,10 @@ namespace Assets.Scripts.Helpers
         
         public void Slow(object CharacterInstance, object TargetInstance)
         {
-            CreateDebuff(TargetInstance, 67, debuffType.Slow, 77); //this was just to make sure it works. Yewo is going to have to populate the method above this
+            Persona Character = (Persona)CharacterInstance;
+            Persona Target = (Persona)TargetInstance;
+            
+            CreateDebuff(TargetInstance, Character.SlowDeBuffPercent, debuffType.Slow, 77); //this was just to make sure it works. Yewo is going to have to populate the method above this
         }
 
         public void Rooted(object CharacterInstance, object TargetInstance)
