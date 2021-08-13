@@ -625,13 +625,6 @@ namespace Assets.Scripts.Helpers
 
             Target.AttackSponser = Character;// I have doubts that this should be here
 
-            bool MArkedDebuffM = new bool(); // these are the precursor logic to find if the target is marked or not
-            List<DebuffObject> DebuffmaybeTar = Target.GetDebuffs();
-            foreach (var item in DebuffmaybeTar)
-            {
-                if (item.type == debuffType.Marked) MArkedDebuffM = true;
-            }
-
             markedda = Character.MarkedDeBuffPerent;
             int roundhaspassed = 0;
             Timer Scar;
@@ -655,12 +648,10 @@ namespace Assets.Scripts.Helpers
                     if (Target.ProtectionSponser != null) Target = (Persona)Target.ProtectionSponser;
                     randamage = r.Next(1, Character.CursePercent);
                     CurseattackObject.amount = randamage;
-                    if (MArkedDebuffM == true) randamage += (int)(randamage * markedda);
                     if (Target.ImmuneState == true)
                     { }
                     else
                     {
-                        Target.HitCount++;
                         Character.MagicalDamage(Character, Target, randamage);
                     }
                 }

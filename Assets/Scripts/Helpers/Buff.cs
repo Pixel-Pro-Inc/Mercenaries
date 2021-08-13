@@ -220,7 +220,7 @@ namespace Assets.Scripts.Helpers
                 }
             }
         }
-        public void Protector(object OwnerInstance, object TargetInstance)//i am honestly debating on whether Protector is even a Buff
+        public void Protector(object OwnerInstance, object TargetInstance)//i am honestly debating on whether Protector is even a Buff especially since its called by Provoking as well
         {
 
             Persona Character = (Persona)OwnerInstance;
