@@ -295,13 +295,6 @@ namespace Assets.Scripts.Entities.Character
             }
             return damageGiven;
         }
-        public override int HealthLoss(int damageGiven)
-        {
-            Instance.Health -= damageGiven;
-            return damageGiven;
-        }
-
-
         #endregion
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts.Entities.Character;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,34 @@ namespace Assets.Scripts.Helpers
 {
     public class Defend
     {
-        
+        private Persona target;
+        public Defend(Persona _target)
+        {
+            target = _target;
+        }
+        public void Armour(bool state, int amount)
+        {
+            target.ToggleMagicRes(state, amount);
+        }
+        public void MagicalResistance(bool state, int amount)
+        {
+            target.ToggleMagicRes(state, amount);
+        }
+        public void Shield(bool state, int amount)
+        {
+            target.ToggleShield(state, amount);
+        }
+        public void Purified(bool state)
+        {
+            target.TogglePurified(state);
+        }
+        public void Block(bool state)
+        {
+            target.ToggleBlock(state);
+        }
+        public void Immune(bool state)
+        {
+            target.ToggleImmune(state);
+        }
     }
 }

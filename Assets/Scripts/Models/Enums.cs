@@ -21,6 +21,20 @@ namespace Assets.Scripts.Models
             Curse, 
             Feign
         }
+        public enum damageType
+        {
+            True, 
+            Physical, 
+            Magical, 
+            Balanced,
+            Drain,
+            OnGuard
+        }
+        public enum WhoseInControl
+        {
+            Human,
+            CPU
+        }
         public enum debuffType
         {
             Slow,

@@ -43,15 +43,6 @@ namespace Assets.Scripts.Interface
         bool Feign(object CharacterInstance, object TargetInstance);
 
         #endregion
-        #region Defend
-        void PutArmour(object TargetInstance, int amount);
-        void IncreaseMagicalResistance(object TargetInstance, int amount);
-        void ShieldUp(object TargetInstance, int amount);
-        void Purified(object TargetInstance);
-        void Block(object TargetInstance);
-        void Immune(object TargetInstance, int amountOfRounds);
-
-        #endregion
 
         #region Buff
 
@@ -88,5 +79,6 @@ namespace Assets.Scripts.Interface
        void Unhealthy(object CharacterInstance, object TargetInstance);
        void GodsAnger(object CharacterInstance, List<string> Allies);
         #endregion
+
     }
 }
