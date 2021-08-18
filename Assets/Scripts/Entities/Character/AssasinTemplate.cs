@@ -36,7 +36,7 @@ namespace Assets.Scripts.Entities.Character
                 }
             }
         }
-        public override int dodge
+        public override double dodge
         {
             get { return dodge; }
             set
@@ -53,7 +53,7 @@ namespace Assets.Scripts.Entities.Character
 
             }
         }
-        public override int Speed
+        public override double Speed
         {
             get { return Speed; }
             set
@@ -118,7 +118,7 @@ namespace Assets.Scripts.Entities.Character
 
             }
         }
-        public override int Accuracy
+        public override double Accuracy
         {
             get { return Accuracy; }
             set
@@ -204,26 +204,6 @@ namespace Assets.Scripts.Entities.Character
 
         #endregion
         #region Character Methods
-
-        //Here are the passive traits of the card themselves
-        new public void passiveTraits()
-        {
-            //Instance.EquipItem(HolyCrossItem, Instance); I dont expect this to be used at all here. It would be clled some place else, I wrrote it here to see if it would work
-            Instance.ActiveBuff();
-        }
-
-        //string CitizenOf = (string)WarriorTemplate.Kingdom.DarkSyde; // Here I was just experimenting to see how the citizenship can be set
-        //After We figure out how to set the respective variables to the specific enum value I want to use peter as a reference for other characters so we
-        //forget to include the correct and necesary info
-
-        public void ActiveBuff()
-        {
-            throw new System.NotImplementedException();
-        }
-        public void ActiveDeBuff()
-        {
-            throw new System.NotImplementedException();
-        }
         //Experince methods
         public override void LevelIncrease()
         {
@@ -278,13 +258,6 @@ namespace Assets.Scripts.Entities.Character
             }
             return damageGiven;
         }
-        public override int HealthLoss(int damageGiven)
-        {
-            Instance.Health -= damageGiven;
-            return damageGiven;
-        }
-
-
         #endregion
     }
 }

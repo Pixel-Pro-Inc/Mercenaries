@@ -8,12 +8,33 @@ using System.Timers;
 
 namespace Assets.Scripts.Entities.Character
 {
-    class MageTemplate : Persona, IMageWarrior
+    public class MageTemplate : Persona, IMageWarrior
     {
         new public static MageTemplate Instance;
-        public MageTemplate()
+        public MageTemplate(bool value)
         {
             Instance = this;
+            Foe = value;
+
+            SupportMage = false;
+
+            if (Health < 0) Health = 0;
+            if (Foe == false)
+            {
+                if (SupportMage == false)
+                {
+                    Health = 55;
+                }
+                else
+                {
+                    Health = 26;
+                }
+
+            }
+            else
+            {
+                Health = 6;
+            }
         }
 
         #region Character variables
@@ -21,7 +42,7 @@ namespace Assets.Scripts.Entities.Character
         public override string CharacterDescription { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public string BriefDescription { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
 
-        public override int Health
+        public override int Health { get; set; }/*
         {
             get { return Health; }
             set
@@ -37,14 +58,15 @@ namespace Assets.Scripts.Entities.Character
                     {
                         Health = 26;
                     }
+
                 }
                 else
                 {
                     Health = 6;
                 }
             }
-        }
-        public override int dodge
+        }*/
+        public override double dodge
         {
             get { return dodge; }
             set
@@ -68,7 +90,7 @@ namespace Assets.Scripts.Entities.Character
 
             }
         }
-        public override int Speed
+        public override double Speed
         {
             get { return Speed; }
             set
@@ -161,7 +183,7 @@ namespace Assets.Scripts.Entities.Character
 
             }
         }
-        public override int Accuracy
+        public override double Accuracy
         {
             get { return Accuracy; }
             set
@@ -262,11 +284,11 @@ namespace Assets.Scripts.Entities.Character
 
         public List<string> NaturalAllies { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public List<string> NaturalEnemies { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public override bool Foe { get { return Foe; } set { Foe = false; } }
+        public override bool Foe { get; set; }
         public bool PassiveWarriorTraits { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public override int HitCount { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public bool PassiveMageTraits { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public bool SupportMage { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public bool SupportMage { get; set; }//{ get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         #endregion
         #region Character Methods
@@ -385,13 +407,6 @@ namespace Assets.Scripts.Entities.Character
             }
             return damageGiven;
         }
-        public override int HealthLoss(int damageGiven)
-        {
-            Instance.Health -= damageGiven;
-            return damageGiven;
-        }
-
-
         #endregion
     }
 }

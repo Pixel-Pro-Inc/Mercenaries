@@ -8,6 +8,20 @@ namespace Assets.Scripts.Models
 {
     public class Enums
     {
+        public enum damageType
+        {
+            True, 
+            Physical, 
+            Magical, 
+            Balanced,
+            Drain,
+            OnGuard
+        }
+        public enum WhoseInControl
+        {
+            Human,
+            CPU
+        }
         public enum debuffType
         {
             Slow,

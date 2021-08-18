@@ -43,15 +43,6 @@ namespace Assets.Scripts.Interface
         bool Feign(object CharacterInstance, object TargetInstance);
 
         #endregion
-        #region Defend
-        void PutArmour(object TargetInstance, int amount);
-        void IncreaseMagicalResistance(object TargetInstance, int amount);
-        void ShieldUp(object TargetInstance, int amount);
-        void Purified(object TargetInstance);
-        void Block(object TargetInstance);
-        void Immune(object TargetInstance, int amountOfRounds);
-
-        #endregion
 
         #region Buff
 
@@ -67,26 +58,6 @@ namespace Assets.Scripts.Interface
         void HealVictim(object TargetInstance); //this works on anyone, not just allies
         void GodsBlessing(object CharacterInstance, List<string> Allies);// I left it as allies so that its easier to deal with but really we dont need it as a parameter
 
-        #endregion
-        #region Debuff
-        // each of these has to have logic that asks if RemoverDebufeffects == true
-        bool Slow(object CharacterInstance, object TargetInstance);
-        bool Rooted(object CharacterInstance, object TargetInstance);
-        bool WeakGrip(object CharacterInstance, object TargetInstance);
-        bool Exiled(object CharacterInstance, object TargetInstance);
-        bool Marked(object CharacterInstance, object TargetInstance);
-        bool Calm(object CharacterInstance, object TargetInstance);
-        bool BrokenGuard(object CharacterInstance, object TargetInstance);
-        bool Burnt(object CharacterInstance, object TargetInstance);
-        bool Stun(object CharacterInstance, object TargetInstance);
-        bool Freeze(object CharacterInstance, object TargetInstance);//stuns after cold applied twice
-        bool Cold(object CharacterInstance, object TargetInstance);
-        bool Blinded(object CharacterInstance, object TargetInstance);
-        bool Tainted(object CharacterInstance, object TargetInstance);
-        bool Sleep(object CharacterInstance, object TargetInstance);
-        bool Hungry(object CharacterInstance, object TargetInstance);
-        bool Unhealthy(object CharacterInstance, object TargetInstance);
-        bool GodsAnger(object CharacterInstance, List<string> Allies);
         #endregion
 
     }

@@ -7,7 +7,7 @@ using static Assets.Scripts.Models.Enums;
 
 namespace Assets.Scripts.Models
 {
-    class DebuffObject
+    public class DebuffObject
     {
         public debuffType type { get; set; }
         public double amount { get; set; }
