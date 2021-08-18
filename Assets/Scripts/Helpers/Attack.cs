@@ -28,7 +28,7 @@ namespace Assets.Scripts.Helpers
 
             if (target.ImmuneState == true)
             { }
-            else { target.HealthLoss(DamageObj.DamageValue); target.HitCount++; }
+            else { target.HealthLoss(DamageObj); target.HitCount++; }
         }
         public void PhysicalDamage(object CharacterInstance, object TargetInstance)
         {
@@ -408,7 +408,7 @@ namespace Assets.Scripts.Helpers
             Target.AttackSponser = Character;
             if (Target.ImmuneState == true)
             { }
-            else { Target.HealthLoss(hitval.DamageValue); }
+            else { Target.HealthLoss(hitval); }
 
         }
         public void Ignite(object CharacterInstance, object TargetInstance, int amount)

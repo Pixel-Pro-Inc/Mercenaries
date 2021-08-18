@@ -50,10 +50,10 @@ public class CardBehaviour : Card
                 int lionBalls = Target.Health;
                 CharacterInstance.PhysicalDamage(CharacterInstance, Target);
                 if (Target.Health < lionBalls) lionBalls -= Target.Health;
-                CharacterInstance.shieldUp(CharacterInstance, true, (int)(lionBalls * 0.3));
+                CharacterInstance.ShieldUp(CharacterInstance, true, (int)(lionBalls * 0.3));
                 foreach (var item in CharacterInstance.Allies)
                 {
-                    CharacterInstance.shieldUp(item, true, (int)(lionBalls * 0.05));
+                    CharacterInstance.ShieldUp(item, true, (int)(lionBalls * 0.05));
                 }
                 break;
             case cardName.lionSecondCard:
@@ -205,8 +205,8 @@ public class CardBehaviour : Card
                 }
                 int increaseValueforArmour = (int)(CharacterInstance.Armour * 0.05 * Armourbuffcount);
                 int increaseValueforMagi = (int)(CharacterInstance.MagicRes * 0.05 * Armourbuffcount);
-                CharacterInstance.PutArmour(CharacterInstance, increaseValueforArmour);
-                CharacterInstance.IncreaseMagicalResistance(CharacterInstance, increaseValueforMagi);
+                CharacterInstance.PutArmour(CharacterInstance,true, increaseValueforArmour);
+                CharacterInstance.IncreaseMagicalResistance(CharacterInstance, true,increaseValueforMagi);
                 break;
             case cardName.crocodileFirstCard:
                 int ver = Target.Health;
@@ -216,7 +216,7 @@ public class CardBehaviour : Card
                 break;
             case cardName.crocodileSecondCard:
                 int enemyindexCount = CharacterInstance.Enemies.Count;
-                damageObject.damageGiven = CharacterInstance.DamageGiven();
+                damageObject.DamageValue = CharacterInstance.DamageGiven();
                 int tea = UnityEngine.Random.Range(1, enemyindexCount);
                 int butter = UnityEngine.Random.Range(1, enemyindexCount);
                 Persona first = (Persona)CharacterInstance.Enemies[tea];
@@ -287,7 +287,7 @@ public class CardBehaviour : Card
                 }
                 break;
             case cardName.crocodileEighthCard:
-                damageObject.damageGiven = (int)(CharacterInstance.DamageGiven() * 0.4);
+                damageObject.DamageValue = (int)(CharacterInstance.DamageGiven() * 0.4);
                 int heCache = 0;
                 foreach (var item in CharacterInstance.Enemies)
                 {
@@ -310,19 +310,19 @@ public class CardBehaviour : Card
 
                 Persona Bullseye;// what we will actually use to work on the target
 
-                for (int i = 0; i < GameManager.Instance.characters.Count; i++) //checks through the list of characters to see which one is the targets position
+                for (int i = 0; i < GameManager.Instance.enemyCharacters.Count; i++) //checks through the list of characters to see which one is the targets position
                 {
-                    if (GameManager.Instance.characters[i].transform.GetChild(0).localPosition == Aim.transform.position)
+                    if (GameManager.Instance.enemyCharacters[i].transform.GetChild(0).localPosition == Aim.transform.position)
                     {
-                        TargetPosition = GameManager.Instance.characters[i].transform.GetChild(0).localPosition;
+                        TargetPosition = GameManager.Instance.enemyCharacters[i].transform.GetChild(0).localPosition;
                         Mozarttt = TargetPosition - new Vector3(2.0f, 0.0f, 0.0f);// the position behind the target, the different positions are separated by 2 on x axis
                     }
                 }
-                for (int i = 0; i < GameManager.Instance.characters.Count; i++) //This is so i can make sure it waits to get the position of the target first
+                for (int i = 0; i < GameManager.Instance.enemyCharacters.Count; i++) //This is so i can make sure it waits to get the position of the target first
                 {
-                    if (GameManager.Instance.characters[i].transform.GetChild(0).localPosition == Mozarttt)
+                    if (GameManager.Instance.enemyCharacters[i].transform.GetChild(0).localPosition == Mozarttt)
                     {
-                        Fire = GameManager.Instance.characters[i];
+                        Fire = GameManager.Instance.enemyCharacters[i];
                     }
                 }
                 Bullseye = Fire.GetComponent<Persona>();
@@ -452,7 +452,7 @@ public class CardBehaviour : Card
                  */
                 break;
             case cardName.salamanderNinthCard:
-                damageObject.damageGiven = CharacterInstance.DamageGiven() / 2;
+                damageObject.DamageValue = CharacterInstance.DamageGiven() / 2;
                 int eCount3 = CharacterInstance.Enemies.Count;
                 int digaoogaoo = UnityEngine.Random.Range(1, eCount3); int diguyy = UnityEngine.Random.Range(1, eCount3); //random index of the enemy
                 Persona firthealth = (Persona)CharacterInstance.Enemies[digaoogaoo]; Persona sechealths= (Persona)CharacterInstance.Enemies[diguyy];
@@ -543,11 +543,11 @@ public class CardBehaviour : Card
                 }
                 foreach (var item in CharacterInstance.Allies) getwarriors(item);
                 foreach (var item in CharacterInstance.Enemies) getwarriors(item);
-                CharacterInstance.shieldUp(CharacterInstance, true, (int)(CharacterInstance.shield*0.1)*war);
+                CharacterInstance.ShieldUp(CharacterInstance, true, (int)(CharacterInstance.shield*0.1)*war);
                 break;
             case cardName.tritonSecondCard:
                 int gethee = (int)(CharacterInstance.Life * 0.1);
-                foreach (var item in CharacterInstance.Allies) CharacterInstance.ShieldUp(item, gethee);
+                foreach (var item in CharacterInstance.Allies) CharacterInstance.ShieldUp(item, true, gethee);
                 break;
             case cardName.tritonThirdCard:
                 if (CharacterInstance.shield > 0)
@@ -558,11 +558,11 @@ public class CardBehaviour : Card
                 else { CharacterInstance.PhysicalDamage(CharacterInstance, Target); }
                 break;
             case cardName.tritonFourthCard:
-                CharacterInstance.shieldUp(CharacterInstance, true, CharacterInstance.shield * 2);
+                CharacterInstance.ShieldUp(CharacterInstance, true, CharacterInstance.shield * 2);
                 CharacterInstance.Provoking(CharacterInstance);
                 break;
             case cardName.tritonFifthCard:
-                if (CharacterInstance.shield <= 0) CharacterInstance.shieldUp(CharacterInstance, true, (int)(CharacterInstance.Health*0.15));
+                if (CharacterInstance.shield <= 0) CharacterInstance.ShieldUp(CharacterInstance, true, (int)(CharacterInstance.Health*0.15));
                 else { CharacterInstance.PhysicalDamage(CharacterInstance, Target); }
                 break;
             case cardName.tritonSixthCard:
@@ -586,7 +586,7 @@ public class CardBehaviour : Card
                     if (RoundInfo.RoundsPassed == (nextRoundmaybe + 1))//basically checks if the round has passed
                     {
                         collectiveesscence -= CharacterInstance.Health + CharacterInstance.shield + CharacterInstance.Armour;
-                        damageObject.damageGiven = collectiveesscence;
+                        damageObject.DamageValue = collectiveesscence;
                         CharacterInstance.PhysicalDamage(CharacterInstance, CharacterInstance.AttackSponser, damageObject);
                         myr2.Close();
                     }
@@ -596,12 +596,12 @@ public class CardBehaviour : Card
                 break;
             case cardName.tritonEighthCard:
                 TankWarriorTemplate trr = new TankWarriorTemplate();
-                if (CharacterInstance.shield <= 0) CharacterInstance.ShieldUp(CharacterInstance, (int)(trr.shield * 0.2));
+                if (CharacterInstance.shield <= 0) CharacterInstance.ShieldUp(CharacterInstance, true,(int)(trr.shield * 0.2));
                 if(CharacterInstance.shield >0)
                 {
                     int geeer = CharacterInstance.shield;
                     CharacterInstance.shield -= geeer; //removes all shield
-                    damageObject.damageGiven = geeer;
+                    damageObject.DamageValue = geeer;
                     CharacterInstance.PhysicalDamage(CharacterInstance, Target, damageObject);
                 }
                 break;
