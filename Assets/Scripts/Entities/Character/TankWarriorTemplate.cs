@@ -13,6 +13,7 @@ namespace Assets.Scripts.Entities.Character
         public TankWarriorTemplate()
         {
             Instance = this;
+            InitiationMethod();
         }
 
         #region Character variables
@@ -27,14 +28,7 @@ namespace Assets.Scripts.Entities.Character
             set
             {
                 if (Health < 0) _health = 0;
-                if (Foe == false)
-                {
-                    _health = 120;
-                }
-                else
-                {
-                    _health = 25;
-                }
+                _health = value;
             }
         }
 
@@ -45,14 +39,7 @@ namespace Assets.Scripts.Entities.Character
             set
             {
                 if (dodge < 0) _dodge = 0;
-                if (Foe == false)
-                {
-                    _dodge = 1;
-                }
-                else
-                {
-                    _dodge = 0;
-                }
+                _dodge = value;
             }
         }
 
@@ -63,14 +50,7 @@ namespace Assets.Scripts.Entities.Character
             set
             {
                 if (Speed < 0) _Speed = 0;
-                if (Foe == false)
-                {
-                    _Speed = 1;
-                }
-                else
-                {
-                    _Speed = 1;
-                }
+                _Speed = value;
             }
         }
 
@@ -81,14 +61,7 @@ namespace Assets.Scripts.Entities.Character
             set
             {
                 if (CritC < 0) _CritC = 0;
-                if (Foe == false)
-                {
-                    _CritC = 3;
-                }
-                else
-                {
-                    _CritC = 1;
-                }
+                _CritC = value;
             }
         }
 
@@ -98,28 +71,7 @@ namespace Assets.Scripts.Entities.Character
             get { return _Damage; }
             set
             {
-                if (Foe == false)
-                {
-                    if (LowDamage == true)
-                    {
-                        _Damage = 8;
-                    }
-                    else
-                    {
-                        _Damage = 13;
-                    }
-                }
-                else
-                {
-                    if (LowDamage == true)
-                    {
-                        _Damage = 2;
-                    }
-                    else
-                    {
-                        _Damage = 4;
-                    }
-                }
+                _Damage = value;
 
             }
         }
@@ -130,14 +82,7 @@ namespace Assets.Scripts.Entities.Character
             get { return _Accuracy; }
             set
             {
-                if (Foe == false)
-                {
-                    _Accuracy = 80;
-                }
-                else
-                {
-                    _Accuracy = 0;
-                }
+                _Accuracy = value;
                 if (Accuracy < 0) _Accuracy = 0;
             }
         }
@@ -148,14 +93,8 @@ namespace Assets.Scripts.Entities.Character
             get { return _MAgicRes; }
             set
             {
-                if (Foe == false)
-                {
-                    _MAgicRes = 5;
-                }
-                else
-                {
-                    _MAgicRes = 5;
-                }
+                _MAgicRes = value;
+
             }
         }
 
@@ -165,14 +104,7 @@ namespace Assets.Scripts.Entities.Character
             get { return _Armour; }
             set
             {
-                if (Foe == false)
-                {
-                    _Armour = 3;
-                }
-                else
-                {
-                    _Armour = 5;
-                }
+                _Armour = value;
             }
         }
 
@@ -182,19 +114,14 @@ namespace Assets.Scripts.Entities.Character
             get { return _Shield; }
             set
             {
-                if (Foe == false)
-                {
-                    _Shield = 2;
-                }
-                else
-                {
-                    _Shield = 0;
-                }
+                _Shield = value;
                 if (shield < 0) _Shield = 0;
             }
         }
 
-        
+
+        private bool _foe = false;
+        public override bool Foe { get { return _foe; } set { _foe = value; } }
         public List<string> NaturalAllies { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public List<string> NaturalEnemies { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public bool PassiveTankTraits { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
@@ -205,6 +132,117 @@ namespace Assets.Scripts.Entities.Character
         #endregion
         #region Character Methods
 
+        public void InitiationMethod()
+        {
+            #region health
+
+            if (Foe == false)
+            {
+                _health = 120;
+            }
+            else
+            {
+                _health = 25;
+            }
+            #endregion
+            #region dodge
+
+            if (Foe == false)
+            {
+                _dodge = 1;
+            }
+            else
+            {
+                _dodge = 0;
+            }
+
+            #endregion
+            #region Speed
+            if (Foe == false)
+            {
+                _Speed = 1;
+            }
+            else
+            {
+                _Speed = 1;
+            }
+            #endregion
+            #region CritC
+            if (Foe == false)
+            {
+                _CritC = 3;
+            }
+            else
+            {
+                _CritC = 1;
+            }
+
+            #endregion
+            #region Damage
+            if (Foe == false)
+            {
+                if (LowDamage == true)
+                {
+                    _Damage = 8;
+                }
+                else
+                {
+                    _Damage = 13;
+                }
+            }
+            else
+            {
+                if (LowDamage == true)
+                {
+                    _Damage = 2;
+                }
+                else
+                {
+                    _Damage = 4;
+                }
+            }
+            #endregion
+            #region Accuracy
+            if (Foe == false)
+            {
+                _Accuracy = 80;
+            }
+            else
+            {
+                _Accuracy = 0;
+            }
+            #endregion
+            #region MagicalResistance
+            if (Foe == false)
+            {
+                _MAgicRes = 5;
+            }
+            else
+            {
+                _MAgicRes = 5;
+            }
+            #endregion
+            #region Armour
+            if (Foe == false)
+            {
+                _Armour = 3;
+            }
+            else
+            {
+                _Armour = 5;
+            }
+            #endregion
+            #region Shield
+            if (Foe == false)
+            {
+                _Shield = 2;
+            }
+            else
+            {
+                _Shield = 0;
+            }
+            #endregion
+        }
         public void ActiveBuff()
         {
             #region Passive option 1 Tank

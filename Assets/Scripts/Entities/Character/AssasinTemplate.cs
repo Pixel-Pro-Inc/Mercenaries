@@ -13,6 +13,7 @@ namespace Assets.Scripts.Entities.Character
         public AssasinTemplate()
         {
             Instance = this;
+            InitiationMethod();
         }
 
         #region Character variables
@@ -27,14 +28,7 @@ namespace Assets.Scripts.Entities.Character
             set
             {
                 if (Health < 0) _health = 0;
-                if (Foe == false)
-                {
-                    _health = 50;
-                }
-                else
-                {
-                    _health = 15;
-                }
+                _health = value;
             }
         }
 
@@ -44,14 +38,7 @@ namespace Assets.Scripts.Entities.Character
             get { return _doidge; }
             set
             {
-                if (Foe == false)
-                {
-                    _doidge = 15;
-                }
-                else
-                {
-                    _doidge = 5;
-                }
+                _doidge = value;
                 if (dodge < 0) _doidge = 0;
 
             }
@@ -63,14 +50,7 @@ namespace Assets.Scripts.Entities.Character
             get { return _spped; }
             set
             {
-                if (Foe == false)
-                {
-                    _spped = 6;
-                }
-                else
-                {
-                    _spped = 5;
-                }
+                _spped = value;
                 if (Speed < 0) _spped = 0;
 
             }
@@ -82,14 +62,7 @@ namespace Assets.Scripts.Entities.Character
             get { return _Critc; }
             set
             {
-                if (Foe == false)
-                {
-                    _Critc = 10;
-                }
-                else
-                {
-                    _Critc = 5;
-                }
+                _Critc = value;
                 if (CritC < 0) _Critc = 0;
 
             }
@@ -101,28 +74,7 @@ namespace Assets.Scripts.Entities.Character
             get { return _Damage; }
             set
             {
-                if (Foe == false)
-                {
-                    if (LowDamage== true)
-                    {
-                        _Damage = 10;
-                    }
-                    else
-                    {
-                        _Damage = 10;
-                    }
-                }
-                else
-                {
-                    if (LowDamage== true)
-                    {
-                        _Damage = 1;
-                    }
-                    else
-                    {
-                        _Damage = 10;
-                    }
-                }
+                _Damage = value;
                 if (Damage < 0) _Damage = 0;
 
             }
@@ -134,14 +86,7 @@ namespace Assets.Scripts.Entities.Character
             get { return _Accuaracy; }
             set
             {
-                if (Foe == false)
-                {
-                    _Accuaracy = 100;
-                }
-                else
-                {
-                    _Accuaracy = 0;
-                }
+                _Accuaracy = value;
                 if (Accuracy < 0) _Accuaracy = 0;
             }
         }
@@ -152,14 +97,7 @@ namespace Assets.Scripts.Entities.Character
             get { return _MAgres; }
             set
             {
-                if (Foe == false)
-                {
-                    _MAgres = 3;
-                }
-                else
-                {
-                    _MAgres = 5;
-                }
+                _MAgres = value;
                 if (MagicRes < 0) _MAgres = 0;
 
             }
@@ -171,14 +109,7 @@ namespace Assets.Scripts.Entities.Character
             get { return _Armour; }
             set
             {
-                if (Foe == false)
-                {
-                    _Armour = 3;
-                }
-                else
-                {
-                    _Armour = 5;
-                }
+                _Armour = value;
                 if (Armour < 0) _Armour = 0;
 
             }
@@ -190,14 +121,7 @@ namespace Assets.Scripts.Entities.Character
             get { return _shielld; }
             set
             {
-                if (Foe == false)
-                {
-                    _shielld = 2;
-                }
-                else
-                {
-                    _shielld = 0;
-                }
+                _shielld = value;
                 if (shield < 0) _shielld = 0;
             }
         }
@@ -217,13 +141,124 @@ namespace Assets.Scripts.Entities.Character
         public List<string> NaturalEnemies { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         private bool _FOE = false;
-        public override bool Foe { get { return _FOE; } set { _FOE = false; } }
+        public override bool Foe { get { return _FOE; } set { _FOE = value; } }
         public bool PassiveWarriorTraits { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public override int HitCount { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         #endregion
         #region Character Methods
 
+        public void InitiationMethod()
+        {
+            #region health
+
+            if (Foe == false)
+            {
+                _health = 50;
+            }
+            else
+            {
+                _health = 15;
+            }
+            #endregion
+            #region dodge
+
+            if (Foe == false)
+            {
+                _doidge = 15;
+            }
+            else
+            {
+                _doidge = 5;
+            }
+
+            #endregion
+            #region Speed
+            if (Foe == false)
+            {
+                _spped = 6;
+            }
+            else
+            {
+                _spped = 5;
+            }
+            #endregion
+            #region CritC
+            if (Foe == false)
+            {
+                _Critc = 10;
+            }
+            else
+            {
+                _Critc = 5;
+            }
+
+            #endregion
+            #region Damage
+            if (Foe == false)
+            {
+                if (LowDamage == true)
+                {
+                    _Damage = 10;
+                }
+                else
+                {
+                    _Damage = 10;
+                }
+            }
+            else
+            {
+                if (LowDamage == true)
+                {
+                    _Damage = 1;
+                }
+                else
+                {
+                    _Damage = 10;
+                }
+            }
+            #endregion
+            #region Accuracy
+            if (Foe == false)
+            {
+                _Accuaracy = 100;
+            }
+            else
+            {
+                _Accuaracy = 0;
+            }
+            #endregion
+            #region MagicalResistance
+            if (Foe == false)
+            {
+                _MAgres = 3;
+            }
+            else
+            {
+                _MAgres = 5;
+            }
+            #endregion
+            #region Armour
+            if (Foe == false)
+            {
+                _Armour = 3;
+            }
+            else
+            {
+                _Armour = 5;
+            }
+            #endregion
+            #region Shield
+            if (Foe == false)
+            {
+                _shielld = 2;
+            }
+            else
+            {
+                _shielld = 0;
+            }
+            #endregion
+        }
         //Here are the passive traits of the card themselves
         new public void passiveTraits()
         {

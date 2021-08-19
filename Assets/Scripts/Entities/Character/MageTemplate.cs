@@ -14,6 +14,7 @@ namespace Assets.Scripts.Entities.Character
         public MageTemplate()
         {
             Instance = this;
+            InitiationMethod();
         }
 
         #region Character variables
@@ -21,30 +22,15 @@ namespace Assets.Scripts.Entities.Character
         public override string CharacterDescription { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public string BriefDescription { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
 
-        private int _health = 0;
+        private int _health;
         public override int Health
         {
-            get { return Health; }
             set
             {
                 if (Health < 0) _health = 0;
-                if (Foe == false)
-                {
-                    if (SupportMage == false)
-                    {
-                        _health = 55;
-                    }
-                    else
-                    {
-                        _health = 26;
-                    }
-
-                }
-                else
-                {
-                    _health = 6;
-                }
+                _health = value;
             }
+            get { return _health; }
         }
 
         private double _dodge = 0;
@@ -53,23 +39,8 @@ namespace Assets.Scripts.Entities.Character
             get { return _dodge; }
             set
             {
-                if (Foe == false)
-                {
-                    if (SupportMage == false)
-                    {
-                        _dodge = 5;
-                    }
-                    else
-                    {
-                        _dodge = 10;
-                    }
-                }
-                else
-                {
-                    _dodge = 10;
-                }
+                _dodge = value;
                 if (dodge < 0) _dodge = 0;
-
             }
         }
 
@@ -79,23 +50,8 @@ namespace Assets.Scripts.Entities.Character
             get { return _sppedd; }
             set
             {
-                if (Foe == false)
-                {
-                    if (SupportMage == false)
-                    {
-                        _sppedd = 1;
-                    }
-                    else
-                    {
-                        _sppedd = 10;
-                    }
-                }
-                else
-                {
-                    _sppedd = 1;
-                }
+                _sppedd = value;
                 if (Speed < 0) _sppedd = 0;
-
             }
         }
 
@@ -105,23 +61,8 @@ namespace Assets.Scripts.Entities.Character
             get { return _Critc; }
             set
             {
-                if (Foe == false)
-                {
-                    if (SupportMage == false)
-                    {
-                        _Critc = 2;
-                    }
-                    else
-                    {
-                        _Critc = 1;
-                    }
-                }
-                else
-                {
-                    _Critc = 1;
-                }
+                _Critc = value;
                 if (CritC < 0) _Critc = 0;
-
             }
         }
 
@@ -131,42 +72,7 @@ namespace Assets.Scripts.Entities.Character
             get { return _Damage; }
             set
             {
-                if (Foe == false)
-                {
-                    if (SupportMage == false)
-                    {
-                        if (LowDamage == true)
-                        {
-                            _Damage = 5;
-                        }
-                        else
-                        {
-                            _Damage = 25;
-                        }
-                    }
-                    else
-                    {
-                        if (LowDamage == true)
-                        {
-                            _Damage = 1;
-                        }
-                        else
-                        {
-                            _Damage = 10;
-                        }
-                    }
-                }
-                else
-                {
-                    if (LowDamage == true)
-                    {
-                        _Damage = 1;
-                    }
-                    else
-                    {
-                        _Damage = 20;
-                    }
-                }
+                _Damage = value;
                 if (Damage < 0) _Damage = 0;
 
             }
@@ -178,14 +84,7 @@ namespace Assets.Scripts.Entities.Character
             get { return _Accuaracy; }
             set
             {
-                if (Foe == false)
-                {
-                    _Accuaracy = 85;
-                }
-                else
-                {
-                    _Accuaracy = 0;
-                }
+                _Accuaracy = value;
                 if (Accuracy < 0) _Accuaracy = 0;
             }
         }
@@ -196,21 +95,7 @@ namespace Assets.Scripts.Entities.Character
             get { return _MAgres; }
             set
             {
-                if (Foe == false)
-                {
-                    if (SupportMage == false)
-                    {
-                        _MAgres = 2;
-                    }
-                    else
-                    {
-                        _MAgres = 1;
-                    }
-                }
-                else
-                {
-                    _MAgres = 0;
-                }
+                _MAgres = value;
                 if (MagicRes < 0) _MAgres = 0;
 
             }
@@ -222,21 +107,7 @@ namespace Assets.Scripts.Entities.Character
             get { return _Armour; }
             set
             {
-                if (Foe == false)
-                {
-                    if (SupportMage == false)
-                    {
-                        _Armour = 2;
-                    }
-                    else
-                    {
-                        _Armour = 1;
-                    }
-                }
-                else
-                {
-                    _Armour = 0;
-                }
+                _Armour = value;
                 if (Armour < 0) _Armour = 0;
 
             }
@@ -248,21 +119,7 @@ namespace Assets.Scripts.Entities.Character
             get { return _shield; }
             set
             {
-                if (Foe == false)
-                {
-                    if (SupportMage == false)
-                    {
-                        _shield = 2;
-                    }
-                    else
-                    {
-                        _shield = 1;
-                    }
-                }
-                else
-                {
-                    _shield = 0;
-                }
+                _shield = value;
                 if (shield < 0) _shield = 0;
             }
         }
@@ -402,6 +259,181 @@ namespace Assets.Scripts.Entities.Character
                 damageGiven = r.Next(5, 11);
             }
             return damageGiven;
+        }
+        public void InitiationMethod()
+        {
+            #region health
+            
+            if (Foe == false)
+            {
+                if (SupportMage == false)
+                {
+                    _health = 55;
+                }
+                else
+                {
+                    _health = 26;
+                }
+
+            }
+            else
+            {
+                _health = 6;
+            }
+            #endregion
+            #region dodge
+
+            if (Foe == false)
+            {
+                if (SupportMage == false)
+                {
+                    _dodge = 5;
+                }
+                else
+                {
+                    _dodge = 10;
+                }
+            }
+            else
+            {
+                _dodge = 10;
+            }
+
+            #endregion
+            #region Speed
+            if (Foe == false)
+            {
+                if (SupportMage == false)
+                {
+                    _sppedd = 1;
+                }
+                else
+                {
+                    _sppedd = 10;
+                }
+            }
+            else
+            {
+                _sppedd = 1;
+            }
+            #endregion
+            #region CritC
+            if (Foe == false)
+            {
+                if (SupportMage == false)
+                {
+                    _Critc = 2;
+                }
+                else
+                {
+                    _Critc = 1;
+                }
+            }
+            else
+            {
+                _Critc = 1;
+            }
+
+            #endregion
+            #region Damage
+            if (Foe == false)
+            {
+                if (SupportMage == false)
+                {
+                    if (LowDamage == true)
+                    {
+                        _Damage = 5;
+                    }
+                    else
+                    {
+                        _Damage = 25;
+                    }
+                }
+                else
+                {
+                    if (LowDamage == true)
+                    {
+                        _Damage = 1;
+                    }
+                    else
+                    {
+                        _Damage = 10;
+                    }
+                }
+            }
+            else
+            {
+                if (LowDamage == true)
+                {
+                    _Damage = 1;
+                }
+                else
+                {
+                    _Damage = 20;
+                }
+            }
+            #endregion
+            #region Accuracy
+            if (Foe == false)
+            {
+                _Accuaracy = 85;
+            }
+            else
+            {
+                _Accuaracy = 0;
+            }
+            #endregion
+            #region MagicalResistance
+            if (Foe == false)
+            {
+                if (SupportMage == false)
+                {
+                    _MAgres = 2;
+                }
+                else
+                {
+                    _MAgres = 1;
+                }
+            }
+            else
+            {
+                _MAgres = 0;
+            }
+            #endregion
+            #region Armour
+            if (Foe == false)
+            {
+                if (SupportMage == false)
+                {
+                    _Armour = 2;
+                }
+                else
+                {
+                    _Armour = 1;
+                }
+            }
+            else
+            {
+                _Armour = 0;
+            }
+            #endregion
+            #region Shield
+            if (Foe == false)
+            {
+                if (SupportMage == false)
+                {
+                    _shield = 2;
+                }
+                else
+                {
+                    _shield = 1;
+                }
+            }
+            else
+            {
+                _shield = 0;
+            }
+            #endregion
         }
         #endregion
     }
