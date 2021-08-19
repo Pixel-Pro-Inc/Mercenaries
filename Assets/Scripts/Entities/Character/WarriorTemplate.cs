@@ -240,9 +240,10 @@ namespace Assets.Scripts.Entities.Character
         }
         public void InitiationMethod()
         {
+            if (CharacterSpecies == SpeciesType.Enemy) _foe = true;
             #region health
 
-            if (Foe == false)
+                if (Foe == false)
             {
                 _health = 70;
             }

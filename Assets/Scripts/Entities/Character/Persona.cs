@@ -59,7 +59,14 @@ namespace Assets.Scripts.Entities.Character
             Salamander,
             Frog,
             Triton,
-            Enemy
+            Bird,
+            Parrot,
+            Insect,
+            Hippo,
+            Boar,
+            Deer,
+            Sloth,
+            Enemy// thiis here is actually used so we might as well change foe using this
         };
         public bool RemoveDebuffEffects { get; set; }
 
@@ -68,7 +75,10 @@ namespace Assets.Scripts.Entities.Character
         #region Stats
         public virtual string CharacterName { get { return CharacterName; } set { CharacterName = "UnKnown"; } }
         public virtual string CharacterDescription { get { return CharacterDescription; } set { CharacterDescription = "UnKnown"; } } //Here the personality and backstory of a unique character will be defined
-        public virtual bool Foe { get { return Foe; } set { Foe = false; } }
+        public SpeciesType CharacterSpecies { get; set; }
+
+        private bool _foe { get; set; }
+        public virtual bool Foe { get { return _foe; } set { _foe = value; } }
 
         private int _Life = 0;
         public virtual int Life

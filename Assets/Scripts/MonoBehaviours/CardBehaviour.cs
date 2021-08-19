@@ -37,7 +37,6 @@ public class CardBehaviour : Card
 
         Persona CharacterInstance = null;
         Persona Target = (Persona)TargetInstance;
-        //MageTemplate Target = (MageTemplate)TargetInstance;
 
         DamageObject damageObject = new DamageObject();
         if (GameManager.Instance.activeCharacter != null && GameManager.Instance.roundInfo.inControl == WhoseInControl.Human) CharacterInstance = GameManager.Instance.activeCharacter.person;
