@@ -9,7 +9,7 @@ namespace Assets.Scripts.Entities.Character
 {
     class RangeTemplate : Persona, IWarriorTraits
     {
-        new public RangeTemplate Instance;
+        public RangeTemplate Instance;
         public RangeTemplate()
         {
             Instance = this;
@@ -20,168 +20,185 @@ namespace Assets.Scripts.Entities.Character
         public override string CharacterDescription { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public string BriefDescription { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
 
+        private int _health = 0;
         public override int Health
         {
-            get { return Health; }
+            get { return _health; }
             set
             {
-                if (Health < 0) Health = 0;
+                if (Health < 0) _health = 0;
                 if (Foe == false)
                 {
-                    Health = 58;
+                    _health = 58;
                 }
                 else
                 {
-                    Health = 8;
+                    _health = 8;
                 }
             }
         }
+
+        private double _dodge = 0;
         public override double dodge
         {
-            get { return dodge; }
+            get { return _dodge; }
             set
             {
                 if (Foe == false)
                 {
-                    dodge = 8;
+                    _dodge = 8;
                 }
                 else
                 {
-                    dodge = 5;
+                    _dodge = 5;
                 }
-                if (dodge < 0) dodge = 0;
+                if (dodge < 0) _dodge = 0;
 
             }
         }
+
+        private double _Speed = 0;
         public override double Speed
         {
-            get { return Speed; }
+            get { return _Speed; }
             set
             {
                 if (Foe == false)
                 {
-                    Speed = 6;
+                    _Speed = 6;
                 }
                 else
                 {
-                    Speed = 7;
+                    _Speed = 7;
                 }
-                if (Speed < 0) Speed = 0;
+                if (Speed < 0) _Speed = 0;
 
             }
         }
+
+        private double _CRITc = 0;
         public override double CritC
         {
-            get { return CritC; }
+            get { return _CRITc; }
             set
             {
                 if (Foe == false)
                 {
-                    CritC = 6;
+                    _CRITc = 6;
                 }
                 else
                 {
-                    CritC = 2;
+                    _CRITc = 2;
                 }
-                if (CritC < 0) CritC = 0;
+                if (CritC < 0) _CRITc = 0;
 
             }
         }
+
+        private int _dAMAGE = 0;
         public override int Damage
         {
-            get { return Damage; }
+            get { return _dAMAGE; }
             set
             {
                 if (Foe == false)
                 {
                     if (LowDamage == true)
                     {
-                        Damage = 4;
+                        _dAMAGE = 4;
                     }
                     else
                     {
-                        Damage = 16;
+                        _dAMAGE = 16;
                     }
                 }
                 else
                 {
                     if (LowDamage == true)
                     {
-                        Damage = 2;
+                        _dAMAGE = 2;
                     }
                     else
                     {
-                        Damage = 6;
+                        _dAMAGE = 6;
                     }
                 }
-                if (Damage < 0) Damage = 0;
+                if (Damage < 0) _dAMAGE = 0;
 
             }
         }
+
+        private double _Accuracy = 0;
         public override double Accuracy
         {
-            get { return Accuracy; }
+            get { return _Accuracy; }
             set
             {
                 if (Foe == false)
                 {
-                    Accuracy = 95;
+                    _Accuracy = 95;
                 }
                 else
                 {
-                    Accuracy = 0;
+                    _Accuracy = 0;
                 }
-                if (Accuracy < 0) Accuracy = 0;
+                if (Accuracy < 0) _Accuracy = 0;
             }
         }
+
+        private int _MAgres = 0;
         public override int MagicRes
         {
-            get { return MagicRes; }
+            get { return _MAgres; }
             set
             {
                 if (Foe == false)
                 {
-                    MagicRes = 1;
+                    _MAgres = 1;
                 }
                 else
                 {
-                    MagicRes = 0;
+                    _MAgres = 0;
                 }
-                if (MagicRes < 0) MagicRes = 0;
+                if (MagicRes < 0) _MAgres = 0;
 
             }
         }
+
+        private int _Armour = 0;
         public override int Armour
         {
-            get { return Armour; }
+            get { return _Armour; }
             set
             {
                 if (Foe == false)
                 {
-                    Armour = 3;
+                    _Armour = 3;
                 }
                 else
                 {
-                    Armour = 0;
+                    _Armour = 0;
                 }
-                if (Armour < 0) Armour = 0;
+                if (Armour < 0) _Armour = 0;
 
             }
         }
+
+        private int _shield = 0;
         public override int shield
         {
-            get { return shield; }
+            get { return _shield; }
             set
             {
                 if (Foe == false)
                 {
-                    shield = 2;
+                    _shield = 2;
                 }
                 else
                 {
-                    shield = 0;
+                    _shield = 0;
                 }
-                if (shield < 0) shield = 0;
+                if (shield < 0) _shield = 0;
             }
         }
 

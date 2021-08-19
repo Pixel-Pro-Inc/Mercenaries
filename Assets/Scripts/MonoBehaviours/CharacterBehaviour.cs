@@ -50,12 +50,12 @@ namespace Assets.Scripts.MonoBehaviours
         {
             if (species == SpeciesType.Enemy)
             {
-                MageTemplate mageTemplate = new MageTemplate(true);
+                MageTemplate mageTemplate = new MageTemplate();
                 person = mageTemplate;//gameObject.AddComponent<Persona>();
             }
             else
             {
-                MageTemplate mageTemplate = new MageTemplate(false);
+                MageTemplate mageTemplate = new MageTemplate();
                 person = mageTemplate;//gameObject.AddComponent<Persona>();
             }
             
@@ -100,10 +100,10 @@ namespace Assets.Scripts.MonoBehaviours
             float health = 0;
 
             if (species != SpeciesType.Enemy)
-                health = (float)(person.Health) / (float)(new MageTemplate(false).Health);
+                health = (float)(person.Health) / (float)(new MageTemplate().Health);
 
             if (species == SpeciesType.Enemy)
-                health = (float)(person.Health) / (float)(new MageTemplate(true).Health);
+                health = (float)(person.Health) / (float)(new MageTemplate().Health);
 
             healthSlider.fillAmount = health;            
         }  

@@ -281,15 +281,6 @@ namespace Assets.Scripts.Entities.Character
          */
         //Above is the mana and stamina int
 
-       
-
-        //Yewo's Variables
-        public int debuffChance { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public double BrokenGaurdDeBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public double ColdDeBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public double BlindedDeBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public double TaintedDebuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
         #endregion
         #region Attack Percent
 
@@ -334,8 +325,13 @@ namespace Assets.Scripts.Entities.Character
         public virtual bool freezeState { get; set; }
 
         //Yewo's Variables
-        
-        
+
+        public int debuffChance { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public double BrokenGaurdDeBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public double ColdDeBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public double BlindedDeBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public double TaintedDebuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
         #endregion
 
         #endregion

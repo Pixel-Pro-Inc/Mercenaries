@@ -10,31 +10,10 @@ namespace Assets.Scripts.Entities.Character
 {
     public class MageTemplate : Persona, IMageWarrior
     {
-        new public static MageTemplate Instance;
-        public MageTemplate(bool value)
+        public static MageTemplate Instance;
+        public MageTemplate()
         {
             Instance = this;
-            Foe = value;
-
-            SupportMage = false;
-
-            if (Health < 0) Health = 0;
-            if (Foe == false)
-            {
-                if (SupportMage == false)
-                {
-                    Health = 55;
-                }
-                else
-                {
-                    Health = 26;
-                }
-
-            }
-            else
-            {
-                Health = 6;
-            }
         }
 
         #region Character variables
@@ -42,105 +21,114 @@ namespace Assets.Scripts.Entities.Character
         public override string CharacterDescription { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public string BriefDescription { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
 
-        public override int Health { get; set; }/*
+        private int _health = 0;
+        public override int Health
         {
             get { return Health; }
             set
             {
-                if (Health < 0) Health = 0;
+                if (Health < 0) _health = 0;
                 if (Foe == false)
                 {
                     if (SupportMage == false)
                     {
-                        Health = 55;
+                        _health = 55;
                     }
                     else
                     {
-                        Health = 26;
+                        _health = 26;
                     }
 
                 }
                 else
                 {
-                    Health = 6;
+                    _health = 6;
                 }
             }
-        }*/
+        }
+
+        private double _dodge = 0;
         public override double dodge
         {
-            get { return dodge; }
+            get { return _dodge; }
             set
             {
                 if (Foe == false)
                 {
                     if (SupportMage == false)
                     {
-                        dodge = 5;
+                        _dodge = 5;
                     }
                     else
                     {
-                        dodge = 10;
+                        _dodge = 10;
                     }
                 }
                 else
                 {
-                    dodge = 10;
+                    _dodge = 10;
                 }
-                if (dodge < 0) dodge = 0;
+                if (dodge < 0) _dodge = 0;
 
             }
         }
+
+        private double _sppedd = 0;
         public override double Speed
         {
-            get { return Speed; }
+            get { return _sppedd; }
             set
             {
                 if (Foe == false)
                 {
                     if (SupportMage == false)
                     {
-                        Speed = 1;
+                        _sppedd = 1;
                     }
                     else
                     {
-                        Speed = 10;
+                        _sppedd = 10;
                     }
                 }
                 else
                 {
-                    Speed = 1;
+                    _sppedd = 1;
                 }
-                if (Speed < 0) Speed = 0;
+                if (Speed < 0) _sppedd = 0;
 
             }
         }
+
+        private double _Critc = 0;
         public override double CritC
         {
-            get { return CritC; }
+            get { return _Critc; }
             set
             {
                 if (Foe == false)
                 {
                     if (SupportMage == false)
                     {
-                        CritC = 2;
+                        _Critc = 2;
                     }
                     else
                     {
-                        CritC = 1;
+                        _Critc = 1;
                     }
                 }
                 else
                 {
-                    CritC = 1;
+                    _Critc = 1;
                 }
-                if (CritC < 0) CritC = 0;
+                if (CritC < 0) _Critc = 0;
 
             }
         }
+
+        private int _Damage = 0;
         public override int Damage
         {
-            get { return Damage; }
+            get { return _Damage; }
             set
             {
                 if (Foe == false)
@@ -149,22 +137,22 @@ namespace Assets.Scripts.Entities.Character
                     {
                         if (LowDamage == true)
                         {
-                            Damage = 5;
+                            _Damage = 5;
                         }
                         else
                         {
-                            Damage = 25;
+                            _Damage = 25;
                         }
                     }
                     else
                     {
                         if (LowDamage == true)
                         {
-                            Damage = 1;
+                            _Damage = 1;
                         }
                         else
                         {
-                            Damage = 10;
+                            _Damage = 10;
                         }
                     }
                 }
@@ -172,102 +160,110 @@ namespace Assets.Scripts.Entities.Character
                 {
                     if (LowDamage == true)
                     {
-                        Damage = 1;
+                        _Damage = 1;
                     }
                     else
                     {
-                        Damage = 20;
+                        _Damage = 20;
                     }
                 }
-                if (Damage < 0) Damage = 0;
+                if (Damage < 0) _Damage = 0;
 
             }
         }
+
+        private double _Accuaracy = 0;
         public override double Accuracy
         {
-            get { return Accuracy; }
+            get { return _Accuaracy; }
             set
             {
                 if (Foe == false)
                 {
-                    Accuracy = 85;
+                    _Accuaracy = 85;
                 }
                 else
                 {
-                    Accuracy = 0;
+                    _Accuaracy = 0;
                 }
-                if (Accuracy < 0) Accuracy = 0;
+                if (Accuracy < 0) _Accuaracy = 0;
             }
         }
+
+        private int _MAgres = 0;
         public override int MagicRes
         {
-            get { return MagicRes; }
+            get { return _MAgres; }
             set
             {
                 if (Foe == false)
                 {
                     if (SupportMage == false)
                     {
-                        MagicRes = 2;
+                        _MAgres = 2;
                     }
                     else
                     {
-                        MagicRes = 1;
+                        _MAgres = 1;
                     }
                 }
                 else
                 {
-                    MagicRes = 0;
+                    _MAgres = 0;
                 }
-                if (MagicRes < 0) MagicRes = 0;
+                if (MagicRes < 0) _MAgres = 0;
 
             }
         }
+
+        private int _Armour = 0;
         public override int Armour
         {
-            get { return Armour; }
+            get { return _Armour; }
             set
             {
                 if (Foe == false)
                 {
                     if (SupportMage == false)
                     {
-                        Armour = 2;
+                        _Armour = 2;
                     }
                     else
                     {
-                        Armour = 1;
+                        _Armour = 1;
                     }
                 }
                 else
                 {
-                    Armour = 0;
+                    _Armour = 0;
                 }
-                if (Armour < 0) Armour = 0;
+                if (Armour < 0) _Armour = 0;
 
             }
         }
+
+        private int _shield = 0;
         public override int shield
         {
-            get { return shield; }
+            get { return _shield; }
             set
             {
                 if (Foe == false)
                 {
                     if (SupportMage == false)
                     {
-                        shield = 2;
+                        _shield = 2;
                     }
                     else
                     {
-                        shield = 1;
+                        _shield = 1;
                     }
                 }
                 else
                 {
-                    shield = 0;
+                    _shield = 0;
                 }
-                if (shield < 0) shield = 0;
+                if (shield < 0) _shield = 0;
             }
         }
 
@@ -284,11 +280,15 @@ namespace Assets.Scripts.Entities.Character
 
         public List<string> NaturalAllies { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public List<string> NaturalEnemies { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public override bool Foe { get; set; }
+
+        private bool _foe = false;
+        public override bool Foe { get { return _foe; } set { _foe = value; } }
         public bool PassiveWarriorTraits { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public override int HitCount { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public bool PassiveMageTraits { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public bool SupportMage { get; set; }//{ get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+        private bool _supportMage=false;
+        public bool SupportMage { get { return _supportMage; } set { _supportMage = value; } }//{ get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         #endregion
         #region Character Methods
