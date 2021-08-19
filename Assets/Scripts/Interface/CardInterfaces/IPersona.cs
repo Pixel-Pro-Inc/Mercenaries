@@ -36,20 +36,20 @@ namespace Assets.Scripts.Interface
 
         #region Combat logic
 
-        public void AddAttack(AttackObject attack);
-        public List<AttackObject> GetAttack(object CharacterInstance);
+        void AddAttack(AttackObject attack);
+        List<AttackObject> GetAttack(object CharacterInstance);
 
 
 
-        public void AddBuff(BuffObject buff);
-        public List<BuffObject> GetBuff(object CharacterInstance);
+        void AddBuff(BuffObject buff);
+        List<BuffObject> GetBuff(object CharacterInstance);
 
-        public void AddDebuff(DebuffObject debuffObject);
-        public void RemoveDebuff(DebuffObject debuffObject);
-        public void RemoveAllDebuff();
-        public void ActiveDeBuff();
-        public List<DebuffObject> GetDebuffs();
-        public void ApplyDebuff(DebuffObject debuffObject);
+        void AddDebuff(DebuffObject debuffObject);
+        void RemoveDebuff(DebuffObject debuffObject);
+        void RemoveAllDebuff();
+        void ActiveDeBuff();
+        List<DebuffObject> GetDebuffs();
+        void ApplyDebuff(DebuffObject debuffObject);
 
         #endregion
 

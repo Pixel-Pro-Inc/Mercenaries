@@ -55,8 +55,8 @@ namespace Assets.Scripts.MonoBehaviours
             }
             else
             {
-                MageTemplate mageTemplate = new MageTemplate();
-                person = mageTemplate;//gameObject.AddComponent<Persona>();
+                WarriorTemplate warriorTemplate = new WarriorTemplate();
+                person = warriorTemplate;//gameObject.AddComponent<Persona>();
             }
             
         }
