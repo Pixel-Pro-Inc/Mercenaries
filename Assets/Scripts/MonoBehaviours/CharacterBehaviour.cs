@@ -18,6 +18,7 @@ namespace Assets.Scripts.MonoBehaviours
         public GameObject parent;
         public Vector3 Goto;
         public SpeciesType species;
+        public MasterCharacterList Everyone;
         public Image Deck;
         public bool turnUsed;
 
@@ -48,6 +49,68 @@ namespace Assets.Scripts.MonoBehaviours
         }
         private void Start()
         {
+
+            switch (Everyone)
+            {
+                case MasterCharacterList.Peter:
+                    break;
+                case MasterCharacterList.Mister_Glubglub:
+                    WarriorTemplate MisterGlub = new WarriorTemplate();
+                    MisterGlub.CharacterName = "Mister_Glubglub";
+                    MisterGlub.CharacterDescription = "He is a fish. What did you expect?";
+
+                    List<object> allied = new List<object> { GameManager.Instance.playerCharacters };
+                    MisterGlub.Allies.AddRange(allied);
+                    List<object> Enemied = new List<object> { GameManager.Instance.enemyCharacters };
+                    MisterGlub.Enemies.AddRange(Enemied);
+
+                    //Right now below these have been set to be species affinities but they seem to be originaliy invisioned to be COmbat classes
+                    List<SpeciesType> NaturalAllied = new List<SpeciesType> { SpeciesType.Frog, SpeciesType.Fish };
+                    MisterGlub.NaturalAllies.AddRange(NaturalAllied);
+                    List<SpeciesType> Naturalenemied = new List<SpeciesType> { SpeciesType.Crocodile, SpeciesType.Lion };
+                    MisterGlub.NaturalEnemies.AddRange(Naturalenemied);
+
+                    MisterGlub.Foe = false;
+
+                    person = MisterGlub;//gameObject.AddComponent<Persona>();
+                    break;
+                case MasterCharacterList.Mister_Froggo:
+                    break;
+                case MasterCharacterList.Mister_Salaboned:
+                    break;
+                case MasterCharacterList.Mister_Lizzacorn:
+                    break;
+                case MasterCharacterList.Mister_Liodin:
+                    break;
+                case MasterCharacterList.Mister_Lacrox:
+                    break;
+                case MasterCharacterList.Mister_Birbarcher:
+                    break;
+                case MasterCharacterList.Mister_PirateParrot:
+                    break;
+                case MasterCharacterList.Mister_SilverSkull:
+                    break;
+                case MasterCharacterList.Mister_Mantis:
+                    break;
+                case MasterCharacterList.Mister_Hippo:
+                    break;
+                case MasterCharacterList.HammerHead:
+                    break;
+                case MasterCharacterList.GreatWhite:
+                    break;
+                case MasterCharacterList.SpiderCrustacean:
+                    break;
+                case MasterCharacterList.NecroBoar:
+                    break;
+                case MasterCharacterList.ElderStag:
+                    break;
+                case MasterCharacterList.DevilBird:
+                    break;
+                case MasterCharacterList.DragonSloth:
+                    break;
+                default:
+                    break;
+            }
             if (species == SpeciesType.Enemy)
             {
                 MageTemplate mageTemplate = new MageTemplate();
@@ -58,7 +121,7 @@ namespace Assets.Scripts.MonoBehaviours
                 WarriorTemplate warriorTemplate = new WarriorTemplate();
                 person = warriorTemplate;//gameObject.AddComponent<Persona>();
             }
-            
+
         }
         public void OnMouseDown()
         {

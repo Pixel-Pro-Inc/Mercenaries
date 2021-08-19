@@ -17,9 +17,10 @@ namespace Assets.Scripts.Entities.Character
             InitiationMethod();
         }
         #region Character variables
-        public override string CharacterName { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public override string CharacterDescription { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public string BriefDescription { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+        public override string CharacterName { get; set; }
+        public override string CharacterDescription { get; set; }
+        private string _brief="Controller-(Debuffer)";
+        public string BriefDescription { get { return _brief; } set { _brief = value; } }
 
         private int _health = 0;
         public override int Health
@@ -137,8 +138,8 @@ namespace Assets.Scripts.Entities.Character
          */
 
 
-        public List<string> NaturalAllies { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public List<string> NaturalEnemies { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public List<SpeciesType> NaturalAllies { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public List<SpeciesType> NaturalEnemies { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         private bool _foe = false;
         public override bool Foe { get { return _foe; } set { _foe = value; } }
