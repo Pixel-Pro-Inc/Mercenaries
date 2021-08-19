@@ -9,7 +9,7 @@ namespace Assets.Scripts.Entities.Character
 {
     class WarriorTemplate:Persona,IWarriorTraits
     {
-        new public static WarriorTemplate Instance;
+        public WarriorTemplate Instance;
         public WarriorTemplate()
         {
             Instance = this;
@@ -20,168 +20,185 @@ namespace Assets.Scripts.Entities.Character
         public override string CharacterDescription { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public string BriefDescription { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
 
+        private int _health = 0;
         public override int Health
         {
-            get { return Health; }
+            get { return _health; }
             set
             {
-                if (Health < 0) Health = 0;
+                if (Health < 0) _health = 0;
                 if (Foe == false)
                 {
-                    Health = 70;
+                    _health = 70;
                 }
                 else
                 {
-                    Health = 15;
+                    _health = 15;
                 }
             }
         }
+
+        private double _dodge = 0;
         public override double dodge
         {
-            get { return dodge; }
+            get { return _dodge; }
             set
             {
                 if (Foe == false)
                 {
-                    dodge = 6;
+                    _dodge = 6;
                 }
                 else
                 {
-                    dodge = 0;
+                    _dodge = 0;
                 }
-                if (dodge < 0) dodge = 0;
+                if (dodge < 0) _dodge = 0;
 
             }
         }
+
+        private double _speed = 0;
         public override double Speed
         {
-            get { return Speed; }
+            get { return _speed; }
             set
             {
                 if (Foe == false)
                 {
-                    Speed = 10;
+                    _speed = 10;
                 }
                 else
                 {
-                    Speed = 1;
+                    _speed = 1;
                 }
-                if (Speed < 0) Speed = 0;
+                if (Speed < 0) _speed = 0;
 
             }
         }
+
+        private double _CritC = 0;
         public override double CritC
         {
-            get { return CritC; }
+            get { return _CritC; }
             set
             {
                 if (Foe == false)
                 {
-                    CritC = 6;
+                    _CritC = 6;
                 }
                 else
                 {
-                    CritC = 1;
+                    _CritC = 1;
                 }
-                if (CritC < 0) CritC = 0;
+                if (CritC < 0) _CritC = 0;
 
             }
         }
+
+        private int _Damage = 0;
         public override int Damage
         {
-            get { return Damage; }
+            get { return _Damage; }
             set
             {
                 if (Foe == false)
                 {
                     if (LowDamage == true)
                     {
-                        Damage = 14;
+                        _Damage = 14;
                     }
                     else
                     {
-                        Damage = 19;
+                        _Damage = 19;
                     }
                 }
                 else
                 {
                     if (LowDamage == true)
                     {
-                        Damage = 3;
+                        _Damage = 3;
                     }
                     else
                     {
-                        Damage = 6;
+                        _Damage = 6;
                     }
                 }
-                if (Damage < 0) Damage = 0;
+                if (Damage < 0) _Damage = 0;
 
             }
         }
+
+        private double _Accuracy = 0;
         public override double Accuracy
         {
-            get { return Accuracy; }
+            get { return _Accuracy; }
             set
             {
                 if (Foe == false)
                 {
-                    Accuracy = 95;
+                    _Accuracy = 95;
                 }
                 else
                 {
-                    Accuracy = 0;
+                    _Accuracy = 0;
                 }
-                if (Accuracy < 0) Accuracy = 0;
+                if (Accuracy < 0) _Accuracy = 0;
             }
         }
+
+        private int _MAgres = 0;
         public override int MagicRes
         {
-            get { return MagicRes; }
+            get { return _MAgres; }
             set
             {
                 if (Foe == false)
                 {
-                    MagicRes = 2;
+                    _MAgres = 2;
                 }
                 else
                 {
-                    MagicRes = 0;
+                    _MAgres = 0;
                 }
-                if (MagicRes < 0) MagicRes = 0;
+                if (MagicRes < 0) _MAgres = 0;
 
             }
         }
+
+        private int _Armour = 0;
         public override int Armour
         {
-            get { return Armour; }
+            get { return _Armour; }
             set
             {
                 if (Foe == false)
                 {
-                    Armour = 2;
+                    _Armour = 2;
                 }
                 else
                 {
-                    Armour = 0;
+                    _Armour = 0;
                 }
-                if (Armour < 0) Armour = 0;
+                if (Armour < 0) _Armour = 0;
 
             }
         }
+
+        private int _Shield = 0;
         public override int shield
         {
-            get { return shield; }
+            get { return _Shield; }
             set
             {
                 if (Foe == false)
                 {
-                    shield = 2;
+                    _Shield = 2;
                 }
                 else
                 {
-                    shield = 0;
+                    _Shield = 0;
                 }
-                if (shield < 0) shield = 0;
+                if (shield < 0) _Shield = 0;
             }
         }
 
@@ -198,7 +215,8 @@ namespace Assets.Scripts.Entities.Character
 
         public List<string> NaturalAllies { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public List<string> NaturalEnemies { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public override bool Foe { get { return Foe; } set { Foe = false; } }
+        private bool _foe = false;
+        public override bool Foe { get { return _foe; } set { _foe = false; } }
         public bool PassiveWarriorTraits { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public override int HitCount { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
@@ -241,10 +259,6 @@ namespace Assets.Scripts.Entities.Character
                 StackCount = 5;
             }
             #endregion
-        }
-        public void ActiveDeBuff()
-        {
-            throw new System.NotImplementedException();
         }
         //Experince methods
         public override void LevelIncrease()

@@ -33,7 +33,7 @@ namespace Assets.Scripts.Interface
         void PhysicalDamage(object CharacterInstance, object TargetInstance, DamageObject damageObject);
         void MagicalDamage(object CharacterInstance, object TargetInstance);
         void MagicalDamage(object CharacterInstance, object TargetInstance, int amount); //This was given amont because in a few cards the amount actually changes by an specfic number
-        void TrueDamage(object TargetInstance, DamageObject DamageObj);
+        void TrueDamage(object CharacterInstance, object TargetInstance, DamageObject DamageObj);
         void Drain(object CharacterInstance, object TargetInstance);
         void Ignite(object CharacterInstance, object TargetInstance, int amount);// Ignite and blight have amount cause the use MAical damage
         void Bleed(object CharacterInstance, object TargetInstance);
@@ -46,18 +46,38 @@ namespace Assets.Scripts.Interface
 
         #region Buff
 
-        void Agile(object CharacterInstance);
-        bool PolishWeapon();
-        bool Chosen();
-        bool Aware();
+        void Agile(object CharacterInstance, bool state);
+        void PolishWeapon(object CharacterInstance);
+        void Chosen(object CharacterInstance);
+        bool Aware(object CharacterInstance);
         void OnGuard(object CharacterInstance, object TargetInstance);//only works to be on guard to a specific person
         void Provoking(object CharacterInstance); //this takes the character and uses the protector() method and its list of allies as targets
         void Protector(object OwnerInstance, object TargetInstance); //this asks like a contract. The person who will protectand the protected. eg Protector( instance,Mister Froggo)
         object Protected(object TargetInstance);//If hit, protector will take damage instead. but this isn't really given how damagegiven works. needs to be changed
         void Revigorate(object TargetInstance);
-        void HealVictim(object TargetInstance); //this works on anyone, not just allies
+        void HealVictim(object CharacterInstance, object TargetInstance); //this works on anyone, not just allies
         void GodsBlessing(object CharacterInstance, List<string> Allies);// I left it as allies so that its easier to deal with but really we dont need it as a parameter
 
+        #endregion
+        #region Debuff
+        // each of these has to have logic that asks if RemoverDebufeffects == true
+       void Slow(object CharacterInstance, object TargetInstance);
+       void Rooted(object CharacterInstance, object TargetInstance);
+       void WeakGrip(object CharacterInstance, object TargetInstance);
+       void Exiled(object CharacterInstance, object TargetInstance);
+       void Marked(object CharacterInstance, object TargetInstance);
+       void Calm(object CharacterInstance, object TargetInstance);
+       void BrokenGuard(object CharacterInstance, object TargetInstance);
+       void Burnt(object CharacterInstance, object TargetInstance);
+       void Stun(object CharacterInstance, object TargetInstance);
+       void Freeze(object CharacterInstance, object TargetInstance);//stuns after cold applied twice
+       void Cold(object CharacterInstance, object TargetInstance);
+       void Blinded(object CharacterInstance, object TargetInstance);
+       void Tainted(object CharacterInstance, object TargetInstance);
+       void Sleep(object CharacterInstance, object TargetInstance);
+       void Hungry(object CharacterInstance, object TargetInstance);
+       void Unhealthy(object CharacterInstance, object TargetInstance);
+       void GodsAnger(object CharacterInstance, List<string> Allies);
         #endregion
 
     }

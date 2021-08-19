@@ -42,6 +42,15 @@ namespace Assets.Scripts.Entities.Character
         public List<object> Allies { get; set; }
         public List<object> Enemies { get; set; }
 
+        #region Combat Object Lists
+
+        public List<AttackObject> AttacksGiven { get; set; }
+        public List<DefendObject> DefenceSet { get; set; }
+        public List<BuffObject> BuffsInEffect { get; set; }
+        public List<DebuffObject> DebuffsInEffect { get; set; }
+
+        #endregion
+
         public enum SpeciesType
         {
             Lion,
@@ -52,7 +61,7 @@ namespace Assets.Scripts.Entities.Character
             Triton,
             Enemy
         };
-        bool RemoveDebuffEffects { get; set; }
+        public bool RemoveDebuffEffects { get; set; }
 
         #endregion
         #region Character Traits
@@ -60,6 +69,19 @@ namespace Assets.Scripts.Entities.Character
         public virtual string CharacterName { get { return CharacterName; } set { CharacterName = "UnKnown"; } }
         public virtual string CharacterDescription { get { return CharacterDescription; } set { CharacterDescription = "UnKnown"; } } //Here the personality and backstory of a unique character will be defined
         public virtual bool Foe { get { return Foe; } set { Foe = false; } }
+
+        private int _Life = 0;
+        public virtual int Life
+        {
+            get { return _Life; }
+            set
+            {
+                if (Life < 0) _Life = 0;
+                _Life = value;
+                _Life = Health;
+            }
+        }
+
         private int _health = 0;
         public virtual int Health
         {
@@ -69,14 +91,15 @@ namespace Assets.Scripts.Entities.Character
                 if (Health < 0) Health = 0;
                 if (Foe == false)
                 {
-                    Health = 0;
+                    _health = 0;
                 }
                 else
                 {
-                    Health = 0;
+                    _health = 0;
                 }
             }
         }
+
         private double _dodge = 0;
         public virtual double dodge
         {
@@ -85,16 +108,17 @@ namespace Assets.Scripts.Entities.Character
             {
                 if (Foe == false)
                 {
-                    dodge = 0;
+                    _dodge = 0;
                 }
                 else
                 {
-                    dodge = 0;
+                    _dodge = 0;
                 }
-                if (dodge < 0) dodge = 0;
+                if (dodge < 0) _dodge = 0;
 
             }
         }
+
         private double _speed = 0;
         public virtual double Speed
         {
@@ -103,16 +127,17 @@ namespace Assets.Scripts.Entities.Character
             {
                 if (Foe == false)
                 {
-                    Speed = 0;
+                    _speed = 0;
                 }
                 else
                 {
-                    Speed = 0;
+                    _speed = 0;
                 }
-                if (Speed < 0) Speed = 0;
+                if (Speed < 0) _speed = 0;
 
             }
         }
+
         private double _CritC = 0;
         public virtual double CritC
         {
@@ -121,16 +146,17 @@ namespace Assets.Scripts.Entities.Character
             {
                 if (Foe == false)
                 {
-                    CritC = 0;
+                    _CritC = 0;
                 }
                 else
                 {
-                    CritC = 0;
+                    _CritC = 0;
                 }
-                if (CritC < 0) CritC = 0;
+                if (CritC < 0) _CritC = 0;
 
             }
         }
+
         private int _magicRes = 0;
         public virtual int MagicRes
         {
@@ -139,16 +165,17 @@ namespace Assets.Scripts.Entities.Character
             {
                 if (Foe == false)
                 {
-                    MagicRes = 0;
+                    _magicRes = 0;
                 }
                 else
                 {
-                    MagicRes = 0;
+                    _magicRes = 0;
                 }
-                if (MagicRes < 0) MagicRes = 0;
+                if (MagicRes < 0) _magicRes = 0;
 
             }
         }
+
         private int _armour = 0;
         public virtual int Armour
         {
@@ -157,16 +184,17 @@ namespace Assets.Scripts.Entities.Character
             {
                 if (Foe == false)
                 {
-                    Armour = 0;
+                    _armour = 0;
                 }
                 else
                 {
-                    Armour = 0;
+                    _armour = 0;
                 }
-                if (Armour < 0) Armour = 0;
+                if (Armour < 0) _armour = 0;
 
             }
         }
+
         private int _shield = 0;
         public virtual int shield
         {
@@ -175,19 +203,21 @@ namespace Assets.Scripts.Entities.Character
             {
                 if (Foe == false)
                 {
-                    shield = 0;
+                    _shield = 0;
                 }
                 else
                 {
-                    shield = 0;
+                    _shield = 0;
                 }
-                if (shield < 0) shield = 0;
+                if (shield < 0) _shield = 0;
             }
         }
+
         public virtual int Damage { get; set; }
         public virtual int HitCount { get; set; }
         public virtual double Accuracy { get; set; }
         public bool LowDamage { get; set; }
+
         private int _expPoints = 0;
         public int ExpPoints
         {
@@ -196,15 +226,16 @@ namespace Assets.Scripts.Entities.Character
             {
                 if (RoundInfo.RoundDone == true/*This means characters can level up durning battle*/)
                 {
-                    ExpPoints += NewEarnedXp;
+                    _expPoints += NewEarnedXp;
                 }
                 if (ExpPoints > 1000)
                 {
                     LevelIncrease();
-                    ExpPoints -= 1000;
+                    _expPoints -= 1000;
                 }
             }
         }
+
         private int _NewExpoint = 0;
         public int NewEarnedXp
         {
@@ -214,14 +245,15 @@ namespace Assets.Scripts.Entities.Character
                 if (NewEarnedXp < 0) NewEarnedXp = 0;
                 if (EarnedXp == true)
                 {
-                    NewEarnedXp = NewEarnedXp;
+                    _NewExpoint = NewEarnedXp;
                 }
                 else
                 {
-                    NewEarnedXp = 0;
+                    _NewExpoint = 0;
                 }
             }
         }
+
         private bool _EarnedXp = false;
         public bool EarnedXp
         {
@@ -230,10 +262,11 @@ namespace Assets.Scripts.Entities.Character
             {
                 if (RoundInfo.RoundDone == false/*This means characters can level up durning battle*/)
                 {
-                    EarnedXp = false;
+                    _EarnedXp = false;
                 }
             }
         } //This bool is made true when XPIncrease is fired and should be made of when sessionOver is true
+
         internal int ExperienceLevel { get { return ExperienceLevel; } set { if (ExperienceLevel < 0) ExperienceLevel = 0; } }
 
         /*
@@ -248,37 +281,23 @@ namespace Assets.Scripts.Entities.Character
          */
         //Above is the mana and stamina int
 
-        public virtual bool Weakg { get; set; } //these work for each instances weakgrip debuff
-        public virtual bool exiledg { get; set; }// these work for each instances exiled debuff
-        public virtual bool markedg { get; set; }
-        public virtual bool calmState { get; set; }
-        public virtual bool stunState { get; set; }
-        public virtual bool freezeState { get; set; }
-
-        //Yewo's Variables
-        public virtual bool ArmourState { get; private set; }
-        public virtual bool MagicResState { get; private set; }
-        public virtual bool shieldState { get; private set; }
-        public virtual bool PurifiedState { get; private set; }
-        public virtual int debuffChance { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public virtual double BrokenGaurdDeBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public virtual double ColdDeBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public virtual double BlindedDeBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public virtual double TaintedDebuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
         #endregion
         #region Attack Percent
 
         //These below have to be int cause they are used as in the Random method Random.Next()
         public int DrainPercent { get; set; }
         public int CursePercent { get; set; }
-        public int BlightAmount { get; set; }
+        public bool CriticalChance { get; set; }
 
         #endregion
         #region Defend Percent
 
         public bool ImmuneState { get; set; }
         public bool BlockState { get; set; }
+        public virtual bool ArmourState { get; private set; }
+        public virtual bool MagicResState { get; private set; }
+        public virtual bool shieldState { get; private set; }
+        public virtual bool PurifiedState { get; private set; }
 
         #endregion
         #region Buff Percent
@@ -294,7 +313,7 @@ namespace Assets.Scripts.Entities.Character
         public object AttackSponser { get; set; } // This is to store who last attacked a character
 
         #endregion
-        #region DeBUff Percent
+        #region DeBuff Percent
 
         public double SlowDeBuffPercent { get; set; }
         public double RootedDeBuffPercent { get; set; }
@@ -302,7 +321,16 @@ namespace Assets.Scripts.Entities.Character
         public double ExiledDeBuffPercent { get; set; }
         public double MarkedDeBuffPerent { get; set; }
         public double CalmDeBuffPercent { get; set; }
+        public virtual bool stunState { get; set; }
+        public virtual bool freezeState { get; set; }
 
+        //Yewo's Variables
+
+        public int debuffChance { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public double BrokenGaurdDeBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public double ColdDeBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public double BlindedDeBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public double TaintedDebuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         #endregion
 
@@ -327,11 +355,11 @@ namespace Assets.Scripts.Entities.Character
         }
         public virtual void HealthLoss(DamageObject damageObject)
         {
-            int damageGiven = damageObject.damageGiven;
-            damageType source = damageObject.type;
+            int damageGiven = damageObject.DamageValue;
+            AttackType source = damageObject.type;
 
             //My Implementation of Armour
-            if (ArmourState && source == damageType.Physical)
+            if (ArmourState && source == AttackType.PhysicalDamage)
             {
                 if (damageGiven >= Armour)
                 {
@@ -346,7 +374,7 @@ namespace Assets.Scripts.Entities.Character
             }
 
             //My Implementation of Magical Damage Resistance
-            if (MagicResState && source == damageType.Magical)
+            if (MagicResState && source == AttackType.MagicalDamage)
             {
                 if (damageGiven >= MagicRes)
                 {
@@ -361,7 +389,7 @@ namespace Assets.Scripts.Entities.Character
             }
 
             //My Implementation of shield
-            if (shieldState && source == damageType.Physical)
+            if (shieldState && source == AttackType.PhysicalDamage)
             {
                 if (damageGiven >= shield)
                 {
@@ -376,7 +404,7 @@ namespace Assets.Scripts.Entities.Character
             }
 
             //My Implementation of Block
-            if (BlockState && source == damageType.Physical)
+            if (BlockState && source == AttackType.PhysicalDamage)
             {
                 damageGiven = 0;
             }
@@ -432,437 +460,163 @@ namespace Assets.Scripts.Entities.Character
             NewEarnedXp = newEarnedXp;
         }
 
+        #region Attack Logic
 
-        #endregion
-        #region Debuff
-        #region variables
-        public List<DebuffObject> debuffs = new List<DebuffObject>();
-
-        #endregion
-        public virtual void AddDebuff(DebuffObject debuffObject)
+        public void AddAttack(AttackObject attack)
         {
-            if (!debuffs.Contains(debuffObject))
-                debuffs.Add(debuffObject);
+            AttacksGiven.Add(attack);
+            Timer Attack = new Timer();
+            Attack.Elapsed += new ElapsedEventHandler(Attacker);
+            // Set it to go off every one seconds
+            Attack.Interval = 1000;
+            // And start it        
+            Attack.Enabled = true;
+            void Attacker(object source2, ElapsedEventArgs e)
+            {
+                if (RoundInfo.RoundDone == true)
+                {
+                    Attack.Close(); //Not really sure what this was supposed to do
+                }
+            }
+
+        }
+        public List<AttackObject> GetAttack(object CharacterInstance)
+        {
+            Persona meed = (Persona)CharacterInstance;
+            return meed.AttacksGiven;
+        }
+
+        #endregion
+        #region Buff Logic
+
+        public void AddBuff(BuffObject buff)
+        {
+            BuffsInEffect.Add(buff);
+            Timer Buff = new Timer();
+            Buff.Elapsed += new ElapsedEventHandler(Buffer);
+            // Set it to go off every one seconds
+            Buff.Interval = 1000;
+            // And start it        
+            Buff.Enabled = true;
+            void Buffer(object source2, ElapsedEventArgs e)
+            {
+                if (RoundInfo.RoundDone == true)
+                {
+                    Buff.Close();//Not really sure what this was supposed to do
+                }
+            }
+
+        }
+        public List<BuffObject> GetBuff(object CharacterInstance)
+        {
+            Persona deem = (Persona)CharacterInstance;
+            return deem.BuffsInEffect;
+        }
+
+        #endregion
+        #region Defend Logic
+
+
+        #endregion
+        #region DeBuff Logic
+
+        public void AddDebuff(DebuffObject debuffObject)
+        {
+            if (!DebuffsInEffect.Contains(debuffObject))
+                DebuffsInEffect.Add(debuffObject);
 
             ApplyDebuff(debuffObject);
         }
-        public virtual void RemoveDebuff(DebuffObject debuffObject)
+        public void RemoveDebuff(DebuffObject debuffObject)
         {
             //Revert First
-            debuffs.Remove(debuffObject);
+            DebuffsInEffect.Remove(debuffObject);
         }
-        public virtual void RemoveAllDebuff()
+        public void RemoveAllDebuff()
         {
             //Revert First
-            debuffs.Clear();
+            DebuffsInEffect.Clear();
         }
-        public virtual void ActiveDeBuff()
+        public void ActiveDeBuff()
         {
             throw new NotImplementedException();
         }
-        public virtual List<DebuffObject> GetDebuffs()
+        public List<DebuffObject> GetDebuffs()
         {
-            return debuffs;
+            return DebuffsInEffect;
         }
-        public virtual void ApplyDebuff(DebuffObject debuffObject)
+        public void ApplyDebuff(DebuffObject debuffObject)
         {
             switch (debuffObject.type)
             {
                 case debuffType.Slow:
-                    Speed *= debuffObject.amount;
                     break;
                 case debuffType.Rooted:
-                    dodge *= debuffObject.amount;
                     break;
                 case debuffType.WeakGrip:
                     break;
                 case debuffType.Exiled:
                     break;
+                case debuffType.Marked:
+                    break;
                 case debuffType.Calm:
                     break;
+                case debuffType.BrokenGaurd:
+                    break;
+                case debuffType.Burnt:
+                    break;
                 case debuffType.Stun:
-                    stunState = true;
-                    //Check to see if this is active before doing anything
                     break;
                 case debuffType.Freeze:
-                    freezeState = true;
-                    //Check to see if this is active before doing anything
                     break;
                 case debuffType.Cold:
-                    Speed *= debuffObject.amount;
-                    dodge *= debuffObject.amount;
                     break;
                 case debuffType.Blinded:
-                    Accuracy *= debuffObject.amount;
                     break;
                 case debuffType.Tainted:
-                    debuffChance = (int)debuffObject.amount;
+                    break;
+                case debuffType.Sleep:
+                    break;
+                case debuffType.Hungry:
+                    break;
+                case debuffType.Healthy:
+                    break;
+                case debuffType.UnHealthy:
+                    break;
+                case debuffType.GodsAnger:
+                    break;
+                default:
                     break;
             }
         }
+        #endregion
+
+
+
+
         #endregion
         #region Combat Actions
 
         #region Attack
 
-        public void TrueDamage(object TargetInstance, DamageObject DamageObj)
-        {
-            Persona target = (Persona)TargetInstance;
-            target.HealthLoss(DamageObj);
-        }
-        public void PhysicalDamage(object CharacterInstance, object TargetInstance)
-        {
-            int physicalDamage = 0;
+        public void TrueDamage(object CharacterInstance, object TargetInstance, DamageObject DamageObj) => new Attack().TrueDamage(CharacterInstance,TargetInstance,DamageObj);
+        public void PhysicalDamage(object CharacterInstance, object TargetInstance) => new Attack().PhysicalDamage(CharacterInstance,TargetInstance);
+        public void PhysicalDamage(object CharacterInstance, object TargetInstance, DamageObject damageObject) => new Attack().PhysicalDamage(CharacterInstance, TargetInstance, damageObject);// this is so someone can put a tailored value
+        public void MagicalDamage(object CharacterInstance, object TargetInstance) => new Attack().MagicalDamage(CharacterInstance, TargetInstance);
+        public void MagicalDamage(object CharacterInstance, object TargetInstance, int amount) => new Attack().MagicalDamage(CharacterInstance, TargetInstance,amount);
+        public void Drain(object CharacterInstance, object TargetInstance) => new Attack().Drain(CharacterInstance, TargetInstance);
+        public void Ignite(object CharacterInstance, object TargetInstance, int amount) => new Attack().Ignite(CharacterInstance, TargetInstance, amount);
+        public void Bleed(object CharacterInstance, object TargetInstance) => new Attack().Bleed(CharacterInstance, TargetInstance);
+        public void Blight(object CharacterInstance, object TargetInstance, int amountOfRounds, int amountOfDamage) => new Attack().Blight(CharacterInstance, TargetInstance,amountOfRounds,amountOfDamage);
+        public void BalancedDamage(object CharacterInstance, object TargetInstance) => new Attack().BalancedDamage(CharacterInstance, TargetInstance);
+        public void Curse(object CharacterInstance, object TargetInstance) => new Attack().Curse(CharacterInstance, TargetInstance);
+        public bool Feign(object CharacterInstance, object TargetInstance) => new Attack().Feign(CharacterInstance, TargetInstance);
 
-            Persona Character = (Persona)CharacterInstance;
-            Persona Target = (Persona)TargetInstance;
-            
-            DamageObject hitval = new DamageObject();
-            hitval.type = damageType.Physical;
-
-            #region Character Logic
-
-            physicalDamage = Character.DamageGiven();
-            Debug.Log(physicalDamage);
-
-            if (Character.PolishWeapon() == true) physicalDamage += (int)(physicalDamage * Character.PowerBuffPercent);// this is to work the polish buff
-
-            //My Implementation of Weak Grip
-            for (int i = 0; i < debuffs.Count; i++)
-            {
-                if (debuffs[i].type == debuffType.WeakGrip)
-                    physicalDamage = (int)((double)physicalDamage * debuffs[i].amount);
-            }
-
-            //My Implementation of Calm
-            for (int i = 0; i < debuffs.Count; i++)
-            {
-                if (debuffs[i].type == debuffType.Calm)
-                    physicalDamage = (int)((double)physicalDamage * debuffs[i].amount);
-            }
-
-            #endregion
-            #region Target Logic
-
-            Target.AttackSponser = Character;
-            if (Target.ProtectionSponser != null) Target = (Persona)Target.ProtectionSponser;
-
-            hitval.damageGiven = physicalDamage;
-
-            TrueDamage(Target, hitval);
-            Target.ProtectionSponser = null;
-            #endregion
-
-        }
-        public void PhysicalDamage(object CharacterInstance, object TargetInstance, DamageObject damageObject)
-        {
-            int physicalDamage = 0;
-
-            Persona Character = (Persona)CharacterInstance;
-            Persona Target = (Persona)TargetInstance;
-
-            #region Character Logic
-
-            physicalDamage = damageObject.damageGiven;
-            damageObject.type = damageType.Physical;
-
-            if (Character.PolishWeapon() == true) physicalDamage += (int)(physicalDamage * Character.PowerBuffPercent);// this is to work the polish buff
-
-            //My Implementation of Weak Grip
-            for (int i = 0; i < debuffs.Count; i++)
-            {
-                if (debuffs[i].type == debuffType.WeakGrip)
-                    physicalDamage = (int)((double)physicalDamage * debuffs[i].amount);
-            }
-
-            //My Implementation of Calm
-            for (int i = 0; i < debuffs.Count; i++)
-            {
-                if (debuffs[i].type == debuffType.Calm)
-                    physicalDamage = (int)((double)physicalDamage * debuffs[i].amount);
-            }
-            #endregion
-            #region Target Logic
-
-            Target.AttackSponser = Character;
-            if (Target.ProtectionSponser != null) Target = (Persona)Target.ProtectionSponser;
-
-            Target.TrueDamage(Target, damageObject);
-            Target.ProtectionSponser = null;
-            #endregion
-
-        }// this is so someone can put a tailored value
-        public void MagicalDamage(object CharacterInstance, object TargetInstance)
-        {
-            int magicalDamage = 0;
-
-            Persona Character = (Persona)CharacterInstance;
-            Persona Target = (Persona)TargetInstance;
-            DamageObject hitval = new DamageObject();
-            hitval.type = damageType.Magical;
-
-            #region Character Logic
-
-            magicalDamage = Character.DamageGiven();
-            if (Character.Chosen() == true) magicalDamage += (int)(magicalDamage * Character.MagiBuffPercent);
-
-            //My Implementation of Exiled
-            for (int i = 0; i < debuffs.Count; i++)
-            {
-                if (debuffs[i].type == debuffType.Exiled)
-                    magicalDamage = (int)((double)magicalDamage * debuffs[i].amount);
-            }
-
-            //My Implementation of Calm
-            for (int i = 0; i < debuffs.Count; i++)
-            {
-                if (debuffs[i].type == debuffType.Calm)
-                    magicalDamage = (int)((double)magicalDamage * debuffs[i].amount);
-            }
-            #endregion
-            #region Target Logic
-
-            Target.AttackSponser = Character; //for Onguard()
-            
-            if (Target.ProtectionSponser != null) Target = (Persona)Target.ProtectionSponser;
-
-            hitval.damageGiven = magicalDamage;
-
-            TrueDamage(Target, hitval);
-            Target.ProtectionSponser = null;
-            #endregion
-
-        }
-        public void MagicalDamage(object CharacterInstance, object TargetInstance, int amount)
-        {
-            int magicalDamage = 0;
-
-            Persona Character = (Persona)CharacterInstance;
-            Persona Target = (Persona)TargetInstance;
-            DamageObject hitval = new DamageObject();
-            hitval.type = damageType.Magical;
-
-            #region Character Logic
-
-            magicalDamage = amount;
-
-            if (Character.Chosen() == true) magicalDamage += (int)(magicalDamage * Character.MagiBuffPercent);
-
-            //My Implementation of Exiled
-            for (int i = 0; i < debuffs.Count; i++)
-            {
-                if (debuffs[i].type == debuffType.Exiled)
-                    magicalDamage = (int)((double)magicalDamage * debuffs[i].amount);
-            }
-
-            //My Implementation of Calm
-            for (int i = 0; i < debuffs.Count; i++)
-            {
-                if (debuffs[i].type == debuffType.Calm)
-                    magicalDamage = (int)((double)magicalDamage * debuffs[i].amount);
-            }
-            #endregion
-            #region Target Logic
-
-            Target.AttackSponser = Character; //for Onguard()
-            
-            if (Target.ProtectionSponser != null) Target = (Persona)Target.ProtectionSponser;
-
-            hitval.damageGiven = magicalDamage;
-
-            TrueDamage(Target, hitval);
-
-            Target.ProtectionSponser = null;
-            #endregion
-
-        }
-        public void Drain(object CharacterInstance, object TargetInstance)
-        {
-            Persona Character = (Persona)CharacterInstance;
-            Persona Target = (Persona)TargetInstance;
-
-            DamageObject hitval = new DamageObject();
-            hitval.type = damageType.Drain;
-            hitval.damageGiven = Target.Health * Character.DrainPercent;
-            Target.AttackSponser = Character;
-
-            Target.HealthLoss(hitval);
-        }
-        public void Ignite(object CharacterInstance, object TargetInstance, int amount)
-        {
-            Persona Target = (Persona)TargetInstance;
-            bool howmany = RoundInfo.RoundDone;
-            int count = 0;
-            if (howmany != RoundInfo.RoundDone)
-            { 
-                count++; 
-                howmany = RoundInfo.RoundDone;
-            }
-            if (count == 2)
-            {
-                if (Target.ImmuneState == true)
-                { }
-                else
-                {
-                    MagicalDamage(CharacterInstance, TargetInstance, amount);
-                }
-            }
-                
-        }
-        public void Bleed(object CharacterInstance, object TargetInstance)
-        {
-            Persona Target = (Persona)TargetInstance;
-            if (Target.ImmuneState == true)
-            { }
-            else { if (RoundInfo.RoundDone == true) PhysicalDamage(CharacterInstance, TargetInstance); }
-            
-        }
-        public void Blight(object CharacterInstance, object TargetInstance, int amountOfRounds, int amountOfDamage)
-        {
-            Persona Character = (Persona)CharacterInstance;
-            Persona Target = (Persona)TargetInstance;
-
-            int countofroundsineffect = 0;
-            int Numberroun = RoundInfo.RoundsPassed;
-
-            Timer Choisss;
-            Choisss = new Timer();
-            // Tell the timer what to do when it elapses
-            Choisss.Elapsed += new ElapsedEventHandler(Maaama);
-            // Set it to go off every one seconds
-            Choisss.Interval = 1000;
-            // And start it        
-            Choisss.Enabled = true;
-            void Maaama(object source2, ElapsedEventArgs e)
-            {
-                if (RoundInfo.RoundsPassed > Numberroun)
-                {
-
-                    Numberroun = RoundInfo.RoundsPassed;
-                    countofroundsineffect++;
-                    if (Target.ImmuneState == true)
-                    { }
-                    else
-                    {
-                        MagicalDamage(CharacterInstance, TargetInstance, amountOfDamage);
-                    }
-                }
-                if (countofroundsineffect >= amountOfRounds) Choisss.Close();
-            }
-        }
-        public void BalancedDamage(object CharacterInstance, object TargetInstance)
-        {
-            int Dama = 0; //this should have just been damage but i guess i failed. it should be
-            int shieldcache = 0;
-            int armourcahe = 0;
-            int magrescache = 0;
-            double markedda = 0;
-
-            Persona Character = (Persona)CharacterInstance;
-            Persona Target = (Persona)TargetInstance;
-            DamageObject hitval = new DamageObject();
-            hitval.type = damageType.Balanced;
-
-            #region Character Logic
-
-            Dama = Character.DamageGiven();
-            if (Character.calmState == true) Dama -= (int)(Dama * Character.CalmDeBuffPercent);
-            markedda = Character.MarkedDeBuffPerent;
-
-            #endregion
-            #region Target Logic
-
-            Target.AttackSponser = Character;
-            if (Target.ImmuneState == true) Dama = 0;
-            if (Target.ProtectionSponser != null) Target = (Persona)Target.ProtectionSponser;
-            if (Target.markedg == true) Dama += (int)(Dama * markedda);
-            shieldcache = Target.shield;
-            armourcahe = Target.Armour;
-            magrescache = Target.MagicRes;
-            shieldcache -= Dama; Target.shield -= Dama;
-            //the code below ensures that the sheild is removed first
-            if (shieldcache < 0)//this asks if there is no more sheild left
-            {
-                armourcahe += shieldcache / 2;// here the negative value adds with the positive- following negative number addition laws i hope
-                if (armourcahe < 0)//this asks if there is no more armour left
-                {
-                    Target.Armour = 0; // this makes sure armour is zero
-                    hitval.damageGiven = Math.Abs(armourcahe);
-                    Character.TrueDamage(Target, hitval); //This removes the health of the target
-                }
-                else { Target.Armour = armourcahe; }
-
-                magrescache += shieldcache / 2;// here the negative value adds with the positive- following negative number addition laws i hope
-                if (magrescache < 0)//this asks if there is no more armour left
-                {
-                    Target.MagicRes = 0;
-                    hitval.damageGiven = Math.Abs(magrescache);
-                    Character.TrueDamage(Target, hitval); //This removes the health of the target
-                }
-                else { Target.MagicRes = magrescache; }
-            }
-            else
-            {
-                Target.shield = shieldcache; //this shouldn't be here at all but imleaving it here just in case
-            }
-            Target.ProtectionSponser = null;
-            #endregion
-
-        }
-        public void Curse(object CharacterInstance, object TargetInstance)
-        {
-            int randamage = 0;
-            double markedda = 0;
-
-            Persona Character = (Persona)CharacterInstance;
-            Persona Target = (Persona)TargetInstance;
-            DamageObject hitval = new DamageObject();
-            hitval.type = damageType.Magical;
-
-            Target.AttackSponser = Character;// I have doubts that this should be here
-
-            markedda = Character.MarkedDeBuffPerent;
-            int roundhaspassed = 0;
-            Timer Scar;
-            Scar = new Timer();
-            // Tell the timer what to do when it elapses
-            Scar.Elapsed += new ElapsedEventHandler(Scarer);
-            // Set it to go off every one seconds
-            Scar.Interval = 1000;
-            // And start it        
-            Scar.Enabled = true;
-            
-            roundhaspassed = RoundInfo.RoundsPassed;
-            //this is supposed to add to a list up to 5, of the last person to cause you damage. Its called in the constructor and hopefully runs the whole time. 
-
-            void Scarer(object source2, ElapsedEventArgs e)
-            {
-                if(RoundInfo.RoundsPassed<roundhaspassed+1)
-                {
-                    Random r = new Random();
-                    if (Target.ProtectionSponser != null) Target = (Persona)Target.ProtectionSponser;
-                    randamage = r.Next(1, Character.CursePercent);
-                    if (Target.markedg == true) randamage += (int)(randamage * markedda);
-                    if (Target.ImmuneState == true)
-                    { }
-                    else
-                    {
-                        Character.MagicalDamage(Character, Target, randamage);
-                    }
-                }
-            }
-        }
-
-        public bool Feign(object CharacterInstance, object TargetInstance)
-        {
-            throw new NotImplementedException();
-        }
-       
         #endregion
         #region Defend
         public void PutArmour(object TargetInstance, bool state, int amount) => new Defend((Persona)TargetInstance).Armour(state, amount);
         public void IncreaseMagicalResistance(object TargetInstance, bool state, int amount) => new Defend((Persona)TargetInstance).MagicalResistance(state, amount);
-        public void shieldUp(object TargetInstance, bool state, int amount) => new Defend((Persona)TargetInstance).Shield(state, amount);
+        public void ShieldUp(object TargetInstance, bool state, int amount) => new Defend((Persona)TargetInstance).Shield(state, amount);
         public void Purified(object TargetInstance, bool state) => new Defend((Persona)TargetInstance).Purified(state);
         public void Block(object TargetInstance, bool state) => new Defend((Persona)TargetInstance).Block(state);
         public void Immune(object TargetInstance, bool state) => new Defend((Persona)TargetInstance).Immune(state);
@@ -870,186 +624,53 @@ namespace Assets.Scripts.Entities.Character
         #endregion
 
         #region Buff
-        public void Agile(object CharacterInstance)
-        {
-            int agileCache = 0;
 
-            Persona Character = (Persona)CharacterInstance;
-            agileCache = (int)(Character.dodge * Character.AgileBUffPercent);
-            Character.dodge += agileCache;
-            agileCache = -agileCache;
-            if (RoundInfo.RoundDone == true) Character.dodge += agileCache;
-        }
-        public bool PolishWeapon()
-        {
-            bool polishWeapon;
-            if (RoundInfo.RoundDone == true) polishWeapon = false;
-            else { polishWeapon = true; }
-
-            return polishWeapon;
-        }
-        public bool Chosen()
-        {
-            bool chosen;
-            if (RoundInfo.RoundDone == true) chosen = false;
-            else { chosen = true; }
-
-            return chosen;
-        }
-        public bool Aware()
-        {
-            bool Aware;
-            if (RoundInfo.RoundDone == true) Aware = false;
-            else { Aware = true; }
-
-            return Aware;
-        }
-        public void OnGuard(object CharacterInstance, object TargetInstance)
-        {
-            int standbyhealth = 0;
-            int storedhealth = 0;
-            int count = 0;
-
-            Persona Character = (Persona)CharacterInstance;
-            Persona Target = (Persona)TargetInstance;
-            int damage1 = 0;
-            Timer myTimer2;
-            myTimer2 = new Timer();
-            // Tell the timer what to do when it elapses
-            myTimer2.Elapsed += new ElapsedEventHandler(myEvent);
-            // Set it to go off every five seconds
-            myTimer2.Interval = 5000;
-            // And start it        
-            myTimer2.Enabled = true;
-
-            void myEvent(object source2, ElapsedEventArgs e) //this checks if the characterhealth changes
-            {
-                while (RoundInfo.RoundDone == false)
-                {
-                    standbyhealth = Character.Health;
-                    damage1 = (int)(Character.DamageGiven() * Character.counterAttackPercent);
-                }
-            }
-            if (count == 0)//this is to store the initial health
-            {
-                storedhealth = standbyhealth;
-                count++;
-            }
-            else
-            {
-                if ((storedhealth != standbyhealth) && (RoundInfo.RoundDone = true)) //if the health changes and the round finished
-                {
-                    Target.PhysicalDamage(Target, Target.AttackSponser); //This is to attack the person who hit him
-                    Target.AttackSponser = null;
-                    DamageObject damageObject = new DamageObject();
-                    damageObject.type = damageType.OnGuard;
-                    damageObject.damageGiven = damage1;
-                    Target.HealthLoss(damageObject);
-                    count = 0;
-                }
-
-            }
-        }
-        public void Provoking(object CharacterInstance)
-        {
-            Persona Character = (Persona)CharacterInstance;
-            object scapegoat = Character;
-            scapegoat = Character.Allies.Any();
-            Random r = new Random();
-            double chanceDa = r.Next(1, 101) ;
-            if (chanceDa <= Character.ProvokingBuffPercent)
-            {
-                Protector(CharacterInstance, scapegoat);
-            }
-        }
-        public void Protector(object OwnerInstance, object TargetInstance)
-        {
-            Persona Character = (Persona)OwnerInstance;
-            Persona Target = (Persona)TargetInstance;
-
-            Target.ProtectionSponser = Character;
-            if (RoundInfo.RoundDone == true) Target.ProtectionSponser = null;
-        }
-        public object Protected(object TargetInstance)// this is to return the protector
-        {
-            Persona Target = (Persona)TargetInstance;
-            object sponser = Target;
-            //here logic must ask who is the persons proctector
-            sponser = Target.ProtectionSponser;
-            return sponser;
-        }
-        public void Revigorate(object TargetInstance)
-        {
-            Persona Target = (Persona)TargetInstance;
-            Target.RemoveDebuffEffects = true;
-            //in every Debuff there will be a removeBuff==false, but of course it will ask first if it equals true
-        }
-        public void HealVictim(object TargetInstance)
-        {
-            int HealingCache = 0;
-            Persona Target = (Persona)TargetInstance;
-            HealingCache = (int)(Target.Health * Target.HealBuffPercent);
-            Target.Health += HealingCache;
-        }
-        public void GodsBlessing(object CharacterInstance, List<string> Allies)
-        {
-            throw new NotImplementedException();
-        }
+        public void Agile(object CharacterInstance, bool state) => new Buff().Agile( CharacterInstance, state);
+        public void PolishWeapon(object CharacterInstance) => new Buff().PolishWeapon(CharacterInstance);
+        public void Chosen(object CharacterInstance) => new Buff().Chosen(CharacterInstance);
+        public bool Aware(object CharacterInstance) => new Buff().Aware(CharacterInstance);
+        public void OnGuard(object CharacterInstance, object TargetInstance) => new Buff().OnGuard(CharacterInstance,TargetInstance);
+        public void Provoking(object CharacterInstance) => new Buff().Provoking(CharacterInstance);
+        public void Protector(object OwnerInstance, object TargetInstance) => new Buff().Protector(OwnerInstance,TargetInstance);
+        public object Protected(object TargetInstance) => new Buff().Protected(TargetInstance);
+        public void Revigorate(object TargetInstance) => new Buff().Revigorate(TargetInstance);
+        public void HealVictim(object CharacterInstance, object TargetInstance) => new Buff().HealVictim(CharacterInstance,TargetInstance);
+        public void GodsBlessing(object CharacterInstance, List<string> Allies) => new Buff().GodsBlessing(CharacterInstance, Allies);
 
         #endregion
         #region Debuff
-        public void Slow(object CharacterInstance, object TargetInstance, int lifeTime) => new Debuff().CreateDebuff(TargetInstance, ((Persona)CharacterInstance).SlowDeBuffPercent, debuffType.Slow, lifeTime);
-        public void Rooted(object CharacterInstance, object TargetInstance, int lifeTime) => new Debuff().CreateDebuff(TargetInstance, ((Persona)CharacterInstance).RootedDeBuffPercent, debuffType.Rooted, lifeTime);
-        public void WeakGrip(object CharacterInstance, object TargetInstance, int lifeTime) => new Debuff().CreateDebuff(TargetInstance, ((Persona)CharacterInstance).WeakGripDeBuffPercent, debuffType.WeakGrip, lifeTime);
-        public void Exiled(object CharacterInstance, object TargetInstance, int lifeTime) => new Debuff().CreateDebuff(TargetInstance, ((Persona)CharacterInstance).ExiledDeBuffPercent, debuffType.Exiled, lifeTime);
-        public void Marked(object TargetInstance) { }
-        public void Calm(object CharacterInstance, object TargetInstance, int lifeTime) => new Debuff().CreateDebuff(TargetInstance, ((Persona)CharacterInstance).CalmDeBuffPercent, debuffType.Calm, lifeTime);
-        public void BrokenGuard(object CharacterInstance, object TargetInstance, int lifeTime) => new Debuff().CreateDebuff(TargetInstance, ((Persona)CharacterInstance).BrokenGaurdDeBuffPercent, debuffType.BrokenGaurd, lifeTime);
-        public void Burnt(object CharacterInstance, object TargetInstance) { }
+        public void Slow(object CharacterInstance, object TargetInstance) => new Debuff().Slow(CharacterInstance, TargetInstance);
+        public void Rooted(object CharacterInstance, object TargetInstance) => new Debuff().Rooted(CharacterInstance, TargetInstance);
+        public void WeakGrip(object CharacterInstance, object TargetInstance) => new Debuff().WeakGrip(CharacterInstance, TargetInstance);
+        public void Exiled(object CharacterInstance, object TargetInstance) => new Debuff().Exiled(CharacterInstance, TargetInstance);
+        public void Marked(object CharacterInstance, object TargetInstance) => new Debuff().Marked(CharacterInstance, TargetInstance);
+        public void Calm(object CharacterInstance, object TargetInstance) => new Debuff().Calm(CharacterInstance, TargetInstance);
+        public void BrokenGuard(object CharacterInstance, object TargetInstance) => new Debuff().BrokenGuard(CharacterInstance, TargetInstance);
+        public void Burnt(object CharacterInstance, object TargetInstance) => new Debuff().Burnt(CharacterInstance, TargetInstance);
+        public void Stun(object CharacterInstance, object TargetInstance) => new Debuff().Stun(CharacterInstance, TargetInstance);
+        public void Freeze(object CharacterInstance, object TargetInstance) => new Debuff().Freeze(CharacterInstance, TargetInstance);
+        public void Cold(object CharacterInstance, object TargetInstance) => new Debuff().Cold(CharacterInstance, TargetInstance);
+        public void Blinded(object CharacterInstance, object TargetInstance) => new Debuff().Blinded(CharacterInstance, TargetInstance);
+        public void Tainted(object CharacterInstance, object TargetInstance) => new Debuff().Tainted(CharacterInstance, TargetInstance);
+        public void Sleep(object CharacterInstance, object TargetInstance) => new Debuff().Sleep(CharacterInstance, TargetInstance);
+        public void Hungry(object CharacterInstance, object TargetInstance) => new Debuff().Hungry(CharacterInstance, TargetInstance);
+        public void Unhealthy(object CharacterInstance, object TargetInstance) => new Debuff().Unhealthy(CharacterInstance, TargetInstance);
+        public void GodsAnger(object CharacterInstance, List<string> Allies) => new Debuff().Slow(CharacterInstance, Allies);
 
-        public void Stun(object CharacterInstance, object TargetInstance, int lifeTime) => new Debuff().CreateDebuff(TargetInstance, 0, debuffType.Stun, lifeTime);
-
-        public void Freeze(object CharacterInstance, object TargetInstance, int lifeTime) => new Debuff().CreateDebuff(TargetInstance, 0, debuffType.Freeze, lifeTime);
-
-        public void Cold(object CharacterInstance, object TargetInstance, int lifeTime) => new Debuff().CreateDebuff(TargetInstance, ((Persona)CharacterInstance).ColdDeBuffPercent, debuffType.Cold, lifeTime);
-
-        public void Blinded(object CharacterInstance, object TargetInstance, int lifeTime) => new Debuff().CreateDebuff(TargetInstance, ((Persona)CharacterInstance).BlindedDeBuffPercent, debuffType.Blinded, lifeTime);
-
-        public void Tainted(object CharacterInstance, object TargetInstance, int lifeTime) => new Debuff().CreateDebuff(TargetInstance, ((Persona)CharacterInstance).TaintedDebuffPercent, debuffType.Tainted, lifeTime);
-
-        public bool Sleep(object CharacterInstance, object TargetInstance)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Hungry(object CharacterInstance, object TargetInstance)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Unhealthy(object CharacterInstance, object TargetInstance)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool GodsAnger(object CharacterInstance, List<string> Allies)
-        {
-            throw new NotImplementedException();
-        }
         #endregion
 
         #region UniqueActons
-        public void UniqueSkill(object CharacterInstance, object TargetInstance)
+        public virtual void UniqueSkill(object CharacterInstance, object TargetInstance)
         {
             throw new NotImplementedException();
         }
 
-        public void UniqueActiveBuff(object CharacterInstance, object TargetInstance)
+        public virtual void UniqueActiveBuff(object CharacterInstance, object TargetInstance)
         {
             throw new NotImplementedException();
         }
 
-        public void UniqueActiveDeBuff(object CharacterInstance, object TargetInstance)
+        public virtual void UniqueActiveDeBuff(object CharacterInstance, object TargetInstance)
         {
             throw new NotImplementedException();
         }
