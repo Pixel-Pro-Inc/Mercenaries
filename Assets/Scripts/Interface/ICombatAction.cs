@@ -59,26 +59,5 @@ namespace Assets.Scripts.Interface
         void GodsBlessing(object CharacterInstance, List<string> Allies);// I left it as allies so that its easier to deal with but really we dont need it as a parameter
 
         #endregion
-        #region Debuff
-        // each of these has to have logic that asks if RemoverDebufeffects == true
-       void Slow(object CharacterInstance, object TargetInstance);
-       void Rooted(object CharacterInstance, object TargetInstance);
-       void WeakGrip(object CharacterInstance, object TargetInstance);
-       void Exiled(object CharacterInstance, object TargetInstance);
-       void Marked(object CharacterInstance, object TargetInstance);
-       void Calm(object CharacterInstance, object TargetInstance);
-       void BrokenGuard(object CharacterInstance, object TargetInstance);
-       void Burnt(object CharacterInstance, object TargetInstance);
-       void Stun(object CharacterInstance, object TargetInstance);
-       void Freeze(object CharacterInstance, object TargetInstance);//stuns after cold applied twice
-       void Cold(object CharacterInstance, object TargetInstance);
-       void Blinded(object CharacterInstance, object TargetInstance);
-       void Tainted(object CharacterInstance, object TargetInstance);
-       void Sleep(object CharacterInstance, object TargetInstance);
-       void Hungry(object CharacterInstance, object TargetInstance);
-       void Unhealthy(object CharacterInstance, object TargetInstance);
-       void GodsAnger(object CharacterInstance, List<string> Allies);
-        #endregion
-
     }
 }

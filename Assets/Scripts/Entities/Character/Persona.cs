@@ -2,6 +2,7 @@
 using Assets.Scripts.Helpers;
 using Assets.Scripts.Interface;
 using Assets.Scripts.Models;
+using Assets.Scripts.MonoBehaviours;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,8 @@ namespace Assets.Scripts.Entities.Character
             if(RoundInfo.GameInSession==true) BlackList();// this is to make a sequence of enemies who last hit you up to five
         }
 
+        public virtual CharacterBehaviour characterBehaviour { get; set; }
+
         #region GivenCharacterTraits
 
         public enum Kingdom { FarWest, MiddleEarth, DarkSyde };
@@ -38,16 +41,16 @@ namespace Assets.Scripts.Entities.Character
             HammerHead, GreatWhite, SpiderCrustacean, NecroBoar, ElderStag, DevilBird, DragonSloth
             #endregion
         }
-        public List<object> Master { get; set; }
-        public List<object> Allies { get; set; }
-        public List<object> Enemies { get; set; }
+        public List<object> Master = new List<object>();
+        public List<object> Allies = new List<object>();
+        public List<object> Enemies = new List<object>();
 
         #region Combat Object Lists
 
-        public List<AttackObject> AttacksGiven { get; set; }
-        public List<DefendObject> DefenceSet { get; set; }
-        public List<BuffObject> BuffsInEffect { get; set; }
-        public List<DebuffObject> DebuffsInEffect { get; set; }
+        public List<AttackObject> AttacksGiven = new List<AttackObject>();
+        public List<DefendObject> DefenceSet = new List<DefendObject>();
+        public List<BuffObject> BuffsInEffect = new List<BuffObject>();
+        public List<DebuffObject> DebuffsInEffect = new List<DebuffObject>();
 
         #endregion
 
@@ -639,23 +642,44 @@ namespace Assets.Scripts.Entities.Character
 
         #endregion
         #region Debuff
-        public void Slow(object CharacterInstance, object TargetInstance) => new Debuff().Slow(CharacterInstance, TargetInstance);
-        public void Rooted(object CharacterInstance, object TargetInstance) => new Debuff().Rooted(CharacterInstance, TargetInstance);
-        public void WeakGrip(object CharacterInstance, object TargetInstance) => new Debuff().WeakGrip(CharacterInstance, TargetInstance);
-        public void Exiled(object CharacterInstance, object TargetInstance) => new Debuff().Exiled(CharacterInstance, TargetInstance);
-        public void Marked(object CharacterInstance, object TargetInstance) => new Debuff().Marked(CharacterInstance, TargetInstance);
-        public void Calm(object CharacterInstance, object TargetInstance) => new Debuff().Calm(CharacterInstance, TargetInstance);
-        public void BrokenGuard(object CharacterInstance, object TargetInstance) => new Debuff().BrokenGuard(CharacterInstance, TargetInstance);
-        public void Burnt(object CharacterInstance, object TargetInstance) => new Debuff().Burnt(CharacterInstance, TargetInstance);
-        public void Stun(object CharacterInstance, object TargetInstance) => new Debuff().Stun(CharacterInstance, TargetInstance);
-        public void Freeze(object CharacterInstance, object TargetInstance) => new Debuff().Freeze(CharacterInstance, TargetInstance);
-        public void Cold(object CharacterInstance, object TargetInstance) => new Debuff().Cold(CharacterInstance, TargetInstance);
-        public void Blinded(object CharacterInstance, object TargetInstance) => new Debuff().Blinded(CharacterInstance, TargetInstance);
-        public void Tainted(object CharacterInstance, object TargetInstance) => new Debuff().Tainted(CharacterInstance, TargetInstance);
-        public void Sleep(object CharacterInstance, object TargetInstance) => new Debuff().Sleep(CharacterInstance, TargetInstance);
-        public void Hungry(object CharacterInstance, object TargetInstance) => new Debuff().Hungry(CharacterInstance, TargetInstance);
-        public void Unhealthy(object CharacterInstance, object TargetInstance) => new Debuff().Unhealthy(CharacterInstance, TargetInstance);
-        public void GodsAnger(object CharacterInstance, List<string> Allies) => new Debuff().Slow(CharacterInstance, Allies);
+        public void Slow(object CharacterInstance, object TargetInstance, int lifeTime) => new Debuff().CreateDebuff(TargetInstance, ((Persona)CharacterInstance).SlowDeBuffPercent, debuffType.Slow, lifeTime);
+        public void Rooted(object CharacterInstance, object TargetInstance, int lifeTime) => new Debuff().CreateDebuff(TargetInstance, ((Persona)CharacterInstance).RootedDeBuffPercent, debuffType.Rooted, lifeTime);
+        public void WeakGrip(object CharacterInstance, object TargetInstance, int lifeTime) => new Debuff().CreateDebuff(TargetInstance, ((Persona)CharacterInstance).WeakGripDeBuffPercent, debuffType.WeakGrip, lifeTime);
+        public void Exiled(object CharacterInstance, object TargetInstance, int lifeTime) => new Debuff().CreateDebuff(TargetInstance, ((Persona)CharacterInstance).ExiledDeBuffPercent, debuffType.Exiled, lifeTime);
+        public void Marked(object TargetInstance) { }
+        public void Calm(object CharacterInstance, object TargetInstance, int lifeTime) => new Debuff().CreateDebuff(TargetInstance, ((Persona)CharacterInstance).CalmDeBuffPercent, debuffType.Calm, lifeTime);
+        public void BrokenGuard(object CharacterInstance, object TargetInstance, int lifeTime) => new Debuff().CreateDebuff(TargetInstance, ((Persona)CharacterInstance).BrokenGaurdDeBuffPercent, debuffType.BrokenGaurd, lifeTime);
+        public void Burnt(object CharacterInstance, object TargetInstance) { }
+
+        public void Stun(object CharacterInstance, object TargetInstance, int lifeTime) => new Debuff().CreateDebuff(TargetInstance, 0, debuffType.Stun, lifeTime);
+
+        public void Freeze(object CharacterInstance, object TargetInstance, int lifeTime) => new Debuff().CreateDebuff(TargetInstance, 0, debuffType.Freeze, lifeTime);
+
+        public void Cold(object CharacterInstance, object TargetInstance, int lifeTime) => new Debuff().CreateDebuff(TargetInstance, ((Persona)CharacterInstance).ColdDeBuffPercent, debuffType.Cold, lifeTime);
+
+        public void Blinded(object CharacterInstance, object TargetInstance, int lifeTime) => new Debuff().CreateDebuff(TargetInstance, ((Persona)CharacterInstance).BlindedDeBuffPercent, debuffType.Blinded, lifeTime);
+
+        public void Tainted(object CharacterInstance, object TargetInstance, int lifeTime) => new Debuff().CreateDebuff(TargetInstance, ((Persona)CharacterInstance).TaintedDebuffPercent, debuffType.Tainted, lifeTime);
+
+        public bool Sleep(object CharacterInstance, object TargetInstance)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Hungry(object CharacterInstance, object TargetInstance)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Unhealthy(object CharacterInstance, object TargetInstance)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool GodsAnger(object CharacterInstance, List<string> Allies)
+        {
+            throw new NotImplementedException();
+        }
 
         #endregion
 

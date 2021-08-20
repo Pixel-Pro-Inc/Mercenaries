@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using static Assets.Scripts.Models.Enums;
 
 namespace Assets.Scripts.MonoBehaviours
 {
@@ -18,6 +19,9 @@ namespace Assets.Scripts.MonoBehaviours
         public RoundInfo roundInfo;
         public CharacterBehaviour activeCharacter;
         public CharacterBehaviour activeEnemy;
+
+        public Sprite[] debuffs;
+        public GameObject effect;
 
         private void Awake()
         {
@@ -70,6 +74,68 @@ namespace Assets.Scripts.MonoBehaviours
                     }
                     break;
             }
+        }
+
+        public void InstantiateEffect(debuffType type, CharacterBehaviour target)
+        {
+            switch (type)
+            {
+                case debuffType.Slow:
+                    break;
+                case debuffType.Rooted:
+                    SpawnEffect(target.gameObject.transform, debuffs[15]);
+                    break;
+                case debuffType.WeakGrip:
+                    SpawnEffect(target.gameObject.transform, debuffs[17]);
+                    break;
+                case debuffType.Exiled:
+                    SpawnEffect(target.gameObject.transform, debuffs[13]);
+                    break;
+                case debuffType.Marked:
+                    
+                    break;
+                case debuffType.Calm:
+                    SpawnEffect(target.gameObject.transform, debuffs[5]);
+                    break;
+                case debuffType.BrokenGaurd:
+                    SpawnEffect(target.gameObject.transform, debuffs[14]);
+                    break;
+                case debuffType.Burnt:
+                    SpawnEffect(target.gameObject.transform, debuffs[4]);
+                    break;
+                case debuffType.Stun:
+                    SpawnEffect(target.gameObject.transform, debuffs[16]);
+                    break;
+                case debuffType.Freeze:
+                    SpawnEffect(target.gameObject.transform, debuffs[12]);
+                    break;
+                case debuffType.Cold:
+                    SpawnEffect(target.gameObject.transform, debuffs[8]);
+                    break;
+                case debuffType.Blinded:
+                    SpawnEffect(target.gameObject.transform, debuffs[3]);
+                    break;
+                case debuffType.Tainted:
+                    break;
+                case debuffType.Sleep:
+                    break;
+                case debuffType.Hungry:
+                    break;
+                case debuffType.Healthy:
+                    break;
+                case debuffType.UnHealthy:
+                    break;
+                case debuffType.GodsAnger:
+                    break;
+                default:
+                    break;
+            }
+        }
+        void SpawnEffect(Transform character, Sprite sprite)
+        {
+            GameObject x = Instantiate(effect, character);
+            x.GetComponent<SpriteRenderer>().sprite = sprite;
+            x.transform.localScale = new Vector3(0f, 0f, -1f);
         }
     }
 }

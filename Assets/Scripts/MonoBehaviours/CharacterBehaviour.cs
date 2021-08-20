@@ -58,11 +58,13 @@ namespace Assets.Scripts.MonoBehaviours
                 WarriorTemplate warriorTemplate = new WarriorTemplate();
                 person = warriorTemplate;//gameObject.AddComponent<Persona>();
             }
+
+            person.characterBehaviour = this;
             
         }
         public void OnMouseDown()
         {
-            if (!turnUsed)
+            if (!turnUsed && !CardDescriptionManager.Instance.cardDetailsView.activeSelf)
                 if (species != SpeciesType.Enemy)
                 {
                     Transform _transform = parent.transform.parent.transform;
