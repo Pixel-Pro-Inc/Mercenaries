@@ -41,6 +41,45 @@ namespace Assets.Scripts.Helpers
                     }
                     break;
                 case MasterCharacterList.GreatWhite:
+                    int healdamage = new int();
+                    int[] ycount = new int[Character.Enemies.Count];// these store the initial values of health of enemies
+                    int[] Zcount = new int[Character.Enemies.Count];// these store the new values of health enemies
+                    for (int i = 0; i < Character.Enemies.Count; i++) //this is to store the health of each enemy
+                    {
+                        Persona indiv = (Persona)Character.Enemies[i];
+                        ycount[i] = indiv.Health;
+                        Zcount[i] = ycount[i];
+                    }
+                    while (Character.Health <= (int)(Character.Life * 0.15))
+                    {
+                        for (int i = 0; i < Character.Enemies.Count; i++) //this here is meant to constantly check the health values
+                        {
+                            Persona ego = (Persona)Character.Enemies[i];
+                            Zcount[i] = ego.Health;
+                        }
+                        for (int i = 0; i < Character.Enemies.Count; i++)//this is meant to actually do the logic
+                        {
+                            Persona tribe = (Persona)Character.Enemies[i]; //this is cause we need each enemies attacksponser info to see if it matches
+                            if ((ycount[i] != Zcount[i]) && ((Persona)tribe.AttackSponser == Character))// checks health and attack sponser
+                            {
+                                healdamage += ycount[i] - Zcount[i];
+                            }
+                            if (ycount[i] != Zcount[i])
+                            {
+                                ycount[i] = Zcount[i]; //this is so if someone else affected their heal, it will change the health array appropriatly
+                            }
+                        }
+                        Character.HealVictim(Character, Character);
+                    }
+                    while ((Character.Health <= (int)(Character.Life * 0.5)) && (Character.Health > (int)(Character.Life * 0.25)))
+                    {
+                        //here im thinking it checks if the stun in the list of debuffs and if true, with a 50% chance it will reverse the effect. But im not sure how yewo intends to reverse effects
+                    }
+                    while (Character.Health > (int)(Character.Life * 0.5))
+                    {
+                        Character.AgileBUffPercent = 0.5;
+                        Character.Agile(Character, true);
+                    }
                     break;
                 case MasterCharacterList.SpiderCrustacean:
                     break;

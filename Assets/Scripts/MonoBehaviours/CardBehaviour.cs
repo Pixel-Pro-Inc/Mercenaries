@@ -254,7 +254,7 @@ public class CardBehaviour : Card
 
                 void fifth(object source2, ElapsedEventArgs e)
                 {
-                    for (int i = 0; i < CharacterInstance.Enemies.Count; i++) //this here is meant to only populate the z array without finding anything new
+                    for (int i = 0; i < CharacterInstance.Enemies.Count; i++)  //this here is meant to constantly check the health values
                     {
                         Persona ego = (Persona)CharacterInstance.Enemies[i];
                         Zcount[i] = ego.Health;
@@ -264,11 +264,16 @@ public class CardBehaviour : Card
                         Persona tribe = (Persona)CharacterInstance.Enemies[i]; //this is cause we need each enemies attacksponser info to see if it matches
                         if ((ycount[i] != Zcount[i]) && ((Persona)tribe.AttackSponser == CharacterInstance))// checks health and attack sponser
                         {
-                            if(RoundInfo.RoundsPassed >= roundcout + 2)//basically polishes for this and the next turn, so this round+enemyround+nextroundafter
+                            ycount[i] = Zcount[i];
+                            if (RoundInfo.RoundsPassed >= roundcout + 2)//basically polishes for this and the next turn, so this round+enemyround+nextroundafter
                             {
                                 CharacterInstance.PolishWeapon(CharacterInstance);
                             }
                             if (RoundInfo.RoundsPassed == roundcout + 2) Bethoven.Close();
+                        }
+                        if (ycount[i] != Zcount[i])
+                        {
+                            ycount[i] = Zcount[i]; //this is so if someone else affected their heal, it will change the health array appropriatly
                         }
                     }
                 }

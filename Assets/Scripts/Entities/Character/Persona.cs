@@ -645,6 +645,7 @@ namespace Assets.Scripts.Entities.Character
         public object Protected(object TargetInstance) => new Buff().Protected(TargetInstance);
         public void Revigorate(object TargetInstance) => new Buff().Revigorate(TargetInstance);
         public void HealVictim(object CharacterInstance, object TargetInstance) => new Buff().HealVictim(CharacterInstance,TargetInstance);
+        public void HealVictim(object TargetInstance, int damageobj) => new Buff().HealVictim(TargetInstance, damageobj);
         public void GodsBlessing(object CharacterInstance, List<string> Allies) => new Buff().GodsBlessing(CharacterInstance, Allies);
 
         #endregion
