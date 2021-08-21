@@ -308,7 +308,9 @@ namespace Assets.Scripts.Entities.Character
         public virtual bool MagicResState { get; private set; }
         public virtual bool shieldState { get; private set; }
         public virtual bool PurifiedState { get; private set; }
-
+        public double defenceArmourPercentage { get; set; } //this is made cause there were tailored values that are used
+        public double defenceMagresPercentage { get; set; }
+        public double defenceSheildPercentage { get; set; }
         #endregion
         #region Buff Percent
 

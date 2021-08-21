@@ -82,6 +82,27 @@ namespace Assets.Scripts.Helpers
                     }
                     break;
                 case MasterCharacterList.SpiderCrustacean:
+                    int storedhealth = Character.Health;
+                    int dmaGi=0;
+                    foreach (object item in Character.Allies)
+                    {
+                        Persona friend = (Persona)item;
+                        if (friend.Health!=0)
+                        {
+                            Character.defenceArmourPercentage += 0.1;
+                            Character.defenceMagresPercentage += 0.1;
+                        }
+                    }
+                    while (RoundInfo.GameInSession==true)
+                    {
+                        if (storedhealth!=Character.Health)
+                        {
+                            dmaGi=(int)((Character.Health - storedhealth) * 0.1);
+                            DamageObject errand = new DamageObject { DamageValue=dmaGi};
+                            Character.TrueDamage(Character, Character.AttackSponser, errand);
+                            storedhealth = Character.Health;
+                        }
+                    }
                     break;
                 case MasterCharacterList.NecroBoar:
                     break;
@@ -118,6 +139,9 @@ namespace Assets.Scripts.Helpers
                     Character.TrueDamage(CharacterInstance, Character.Enemies[tea], damageobj);
                     break;
                 case MasterCharacterList.SpiderCrustacean:
+                    Character.PhysicalDamage(Character, Target);
+                    Character.CalmDeBuffPercent = 0.2;
+                    Character.Calm(Character, Target);
                     break;
                 case MasterCharacterList.NecroBoar:
                     break;
@@ -158,19 +182,37 @@ namespace Assets.Scripts.Helpers
 
                     break;
                 case MasterCharacterList.GreatWhite:
-                    foreach (object item in Character.Enemies)
+                    
+                    foreach (object item in Character.Allies)
+                    {
+                        Persona villian = (Persona)item;
+                        foreach (AttackObject attack in villian.GetAttack(villian))
+                        {
+                            if ((attack.type == Enums.AttackType.Bleed) &&(attack.Victim==(object)villian)) //this basically asks if someone is bleeding by the hand of a villian
+                            {
+                                Character.CriticalChance = true; Character.PhysicalDamage(Character, Target);
+                                Target.Armour -= (int)(Target.Armour * 0.5);
+                                break;// so it stops checking for more bleeding attackObjects with this villan
+                            }
+                        }
+                    }
+                    foreach (object item in Character.Enemies) //I put this here cause i think the shark will attack anyone it smells having bleeding. Even itself and friends
                     {
                         Persona hero = (Persona)item;
                         foreach (AttackObject attack in hero.GetAttack(hero))
                         {
-                            if (attack.type == Enums.AttackType.Bleed)
+                            if ((attack.type == Enums.AttackType.Bleed) && (attack.Victim == (object)hero)) //this basically asks if someone is bleeding by the hand of a hero
                             {
-                                break;// so it stops checking for more stun Debuffs
+                                Character.CriticalChance = true; Character.PhysicalDamage(Character, Target);
+                                Target.Armour -= (int)(Target.Armour * 0.5);
+                                break;// so it stops checking for more bleeding attackObjects with this hero
                             }
                         }
                     }
                     break;
                 case MasterCharacterList.SpiderCrustacean:
+                    Character.BrokenGaurdDeBuffPercent = 0.2;
+                    Character.BrokenGuard(Character,Target);
                     break;
                 case MasterCharacterList.NecroBoar:
                     break;
@@ -205,6 +247,8 @@ namespace Assets.Scripts.Helpers
                 case MasterCharacterList.GreatWhite:
                     break;
                 case MasterCharacterList.SpiderCrustacean:
+                    //go in the shell animation
+                    Character.PutArmour(Character, true, (int)(Character.Armour * 0.8));
                     break;
                 case MasterCharacterList.NecroBoar:
                     break;

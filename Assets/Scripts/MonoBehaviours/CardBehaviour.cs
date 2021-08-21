@@ -63,7 +63,8 @@ public class CardBehaviour : Card
                 int lionBalls2 = Target.Health;
                 CharacterInstance.PhysicalDamage(CharacterInstance, Target);
                 if (Target.Health < lionBalls2) lionBalls2 -= Target.Health;
-                CharacterInstance.MagicRes += (int)(lionBalls2 * 0.1); CharacterInstance.Armour+= (int)(lionBalls2 * 0.1);
+                CharacterInstance.IncreaseMagicalResistance(CharacterInstance, true, (int)(lionBalls2 * 0.1));
+                CharacterInstance.PutArmour(CharacterInstance,true, (int)(lionBalls2 * 0.1));
                 break;
             case cardName.lionFourthCard:
                 CharacterInstance.PhysicalDamage(CharacterInstance, Target);
@@ -84,9 +85,12 @@ public class CardBehaviour : Card
                     fried.dodge += dog=(int)(fried.dodge * 0.05);
                     fried.Speed += spit=(int)(fried.Speed * 0.05);
                     fried.CritC += crrr=(int)(fried.CritC * 0.05);
-                    fried.MagicRes += Maga=(int)(fried.MagicRes * 0.05);
-                    fried.Armour += Love=(int)(fried.Armour * 0.05);
-                    fried.shield += bass=(int)(fried.shield * 0.05);
+                    Maga=(int)(fried.MagicRes * 0.05);
+                    fried.IncreaseMagicalResistance(fried, true, Maga);
+                    Love = (int)(fried.Armour * 0.05);
+                    fried.PutArmour(fried, true, Love);
+                    bass = (int)(fried.shield * 0.05);
+                    fried.ShieldUp(fried, true, bass);
                     fried.Accuracy += acc=(int)(fried.Accuracy * 0.05);
                 }
                 void totaldramaIsland(object source2, ElapsedEventArgs e)
@@ -153,7 +157,7 @@ public class CardBehaviour : Card
                         //CharacterInstance.Stun(CharacterInstance, item);
                         if (true/*Item.stunned==true*/) stunnedNumber++; //we dont know if the person is stunned or not
                     }
-                    CharacterInstance.shield += (int)(CharacterInstance.shield * 0.1 * stunnedNumber);
+                    CharacterInstance.ShieldUp(CharacterInstance, true, (int)(CharacterInstance.shield * 0.1 * stunnedNumber));
                 }
                 break;
             case cardName.lionSeventhCard:
@@ -165,9 +169,12 @@ public class CardBehaviour : Card
                     fried.dodge -= dog2 = (int)(fried.dodge * 0.05);
                     fried.Speed -= spit2 = (int)(fried.Speed * 0.05);
                     fried.CritC -= crrr2 = (int)(fried.CritC * 0.05);
-                    fried.MagicRes -= Maga2 = (int)(fried.MagicRes * 0.05);
-                    fried.Armour -= Lov2e = (int)(fried.Armour * 0.05);
-                    fried.shield -= bass2 = (int)(fried.shield * 0.05);
+                    Maga2 = (int)(fried.MagicRes * 0.05);
+                    fried.IncreaseMagicalResistance(fried, true, Maga2);
+                    Lov2e = (int)(fried.Armour * 0.05);
+                    fried.PutArmour(fried, true, Lov2e);
+                    bass2 = (int)(fried.shield * 0.05);
+                    fried.ShieldUp(fried, true, bass2);
                     fried.Accuracy -= acc2 = (int)(fried.Accuracy * 0.05);
                     CharacterInstance.PowerBuffPercent = 0.1;
                     CharacterInstance.PolishWeapon(CharacterInstance);
@@ -424,12 +431,12 @@ public class CardBehaviour : Card
                     if (RoundInfo.RoundsPassed ==roundcount+1)
                     {
                         CharacterInstance.Health -= (int)(CharacterInstance.Health * 0.1);
-                        CharacterInstance.Armour += (int)(CharacterInstance.Armour * 0.1) * 2;
+                        CharacterInstance.PutArmour(CharacterInstance, true, (int)(CharacterInstance.Armour * 0.1) * 2);
                     }
                     if (RoundInfo.RoundsPassed == roundcount + 2)
                     {
                         CharacterInstance.Health -= (int)(CharacterInstance.Health * 0.1);
-                        CharacterInstance.Armour += (int)(CharacterInstance.Armour * 0.1) * 2;
+                        CharacterInstance.PutArmour(CharacterInstance, true, (int)(CharacterInstance.Armour * 0.1) * 2);
                         my.Close();
                     }
                 }
@@ -610,14 +617,14 @@ public class CardBehaviour : Card
                 }
                 break;
             case cardName.tritonNinthCard:
-                CharacterInstance.shield += CharacterInstance.shield;
+                CharacterInstance.ShieldUp(CharacterInstance, true, CharacterInstance.shield);
                 int enemycount = 0;
                 foreach (var item in CharacterInstance.Enemies)
                 {
                     Persona i = (Persona)item;
                     if (i.Health > 0) enemycount++;
                 }
-                CharacterInstance.shield += (int)(CharacterInstance.shield*0.1*enemycount);
+                CharacterInstance.ShieldUp(CharacterInstance, true, (int)(CharacterInstance.shield * 0.1 * enemycount));
                 break;
             default:
                 break;
