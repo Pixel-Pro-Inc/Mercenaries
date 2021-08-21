@@ -69,7 +69,7 @@ namespace Assets.Scripts.Helpers
                                 ycount[i] = Zcount[i]; //this is so if someone else affected their heal, it will change the health array appropriatly
                             }
                         }
-                        Character.HealVictim(Character, Character);
+                        Character.HealVictim(Character, healdamage);
                     }
                     while ((Character.Health <= (int)(Character.Life * 0.5)) && (Character.Health > (int)(Character.Life * 0.25)))
                     {
@@ -112,6 +112,10 @@ namespace Assets.Scripts.Helpers
                     }
                     break;
                 case MasterCharacterList.GreatWhite:
+                    int enemyindexCount = Character.Enemies.Count;
+                    damageobj.DamageValue = Character.DamageGiven();
+                    int tea = UnityEngine.Random.Range(1, enemyindexCount);
+                    Character.TrueDamage(CharacterInstance, Character.Enemies[tea], damageobj);
                     break;
                 case MasterCharacterList.SpiderCrustacean:
                     break;
@@ -154,6 +158,17 @@ namespace Assets.Scripts.Helpers
 
                     break;
                 case MasterCharacterList.GreatWhite:
+                    foreach (object item in Character.Enemies)
+                    {
+                        Persona hero = (Persona)item;
+                        foreach (AttackObject attack in hero.GetAttack(hero))
+                        {
+                            if (attack.type == Enums.AttackType.Bleed)
+                            {
+                                break;// so it stops checking for more stun Debuffs
+                            }
+                        }
+                    }
                     break;
                 case MasterCharacterList.SpiderCrustacean:
                     break;

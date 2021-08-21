@@ -22,7 +22,8 @@ namespace Assets.Scripts.Helpers
             {
                 state = true,
                 type = AttackType.TrueDamage,
-                amount = DamageObj.DamageValue
+                amount = DamageObj.DamageValue,
+                Victim = target
             };
             Character.AttacksGiven.Add(attackObject);
 
@@ -50,7 +51,8 @@ namespace Assets.Scripts.Helpers
             {
                 state = true,
                 type = AttackType.PhysicalDamage,
-                amount = hitval.DamageValue
+                amount = hitval.DamageValue,
+                Victim = Target
             };
             Character.AttacksGiven.Add(attackObject);
 
@@ -91,7 +93,7 @@ namespace Assets.Scripts.Helpers
                 if (item.type == debuffType.Marked) MArkedDebuffM = true;
             }
             Target.AttackSponser = Character;
-            if (Target.ProtectionSponser != null) Target = (Persona)Target.ProtectionSponser;
+            if (Target.ProtectionSponser != null) Target = (Persona)Target.ProtectionSponser; attackObject.Victim = Target;
             if (MArkedDebuffM == true) physicalDamage += (int)(physicalDamage * markedda);
             if (Target.BlockState == true)
             {
@@ -141,7 +143,8 @@ namespace Assets.Scripts.Helpers
             {
                 state = true,
                 type = AttackType.PhysicalDamage,
-                amount = damageObject.DamageValue
+                amount = damageObject.DamageValue,
+                Victim= Target
             };
             Character.AttacksGiven.Add(attackObject);
 
@@ -182,7 +185,7 @@ namespace Assets.Scripts.Helpers
                 if (item.type == debuffType.Marked) MArkedDebuffM = true;
             }
             Target.AttackSponser = Character;
-            if (Target.ProtectionSponser != null) Target = (Persona)Target.ProtectionSponser;
+            if (Target.ProtectionSponser != null) Target = (Persona)Target.ProtectionSponser; attackObject.Victim = Target;
             if (MArkedDebuffM == true) physicalDamage += (int)(physicalDamage * markedda);
             if (Target.BlockState == true)
             {
@@ -235,7 +238,8 @@ namespace Assets.Scripts.Helpers
             {
                 state = true,
                 type = AttackType.MagicalDamage,
-                amount = hitval.DamageValue
+                amount = hitval.DamageValue,
+                Victim = Target
             };
             Character.AttacksGiven.Add(attackObject);
 
@@ -280,7 +284,7 @@ namespace Assets.Scripts.Helpers
             magrescache = Target.MagicRes;
             if (Target.ImmuneState == true) magicalDamage = 0;
             shieldcache -= magicalDamage; Target.shield -= magicalDamage;
-            if (Target.ProtectionSponser != null) Target = (Persona)Target.ProtectionSponser;
+            if (Target.ProtectionSponser != null) Target = (Persona)Target.ProtectionSponser; attackObject.Victim = Target;
             if (MArkedDebuffM == true) magicalDamage += (int)(magicalDamage * markedda);
 
             if (shieldcache < 0)//this asks if there is no more sheild left
@@ -320,7 +324,8 @@ namespace Assets.Scripts.Helpers
             {
                 state = true,
                 type = AttackType.MagicalDamage,
-                amount = hitval.DamageValue
+                amount = hitval.DamageValue,
+                Victim = Target
             };
             Character.AttacksGiven.Add(attackObject);
 
@@ -365,7 +370,7 @@ namespace Assets.Scripts.Helpers
             magrescache = Target.MagicRes;
             if (Target.ImmuneState == true) magicalDamage = 0;
             shieldcache -= magicalDamage; Target.shield -= magicalDamage;
-            if (Target.ProtectionSponser != null) Target = (Persona)Target.ProtectionSponser;
+            if (Target.ProtectionSponser != null) Target = (Persona)Target.ProtectionSponser; attackObject.Victim = Target;
             if (MArkedDebuffM == true) magicalDamage += (int)(magicalDamage * markedda);
 
             if (shieldcache < 0)//this asks if there is no more sheild left
@@ -401,7 +406,8 @@ namespace Assets.Scripts.Helpers
             {
                 state = true,
                 type = AttackType.Drain,
-                amount = hitval.DamageValue
+                amount = hitval.DamageValue,
+                Victim = Target
             };
             Character.AttacksGiven.Add(attackObject);
 
@@ -425,7 +431,8 @@ namespace Assets.Scripts.Helpers
             {
                 state = true,
                 type = AttackType.Ignite,
-                amount = hitval.DamageValue
+                amount = hitval.DamageValue,
+                Victim = Target
             };
             Character.AttacksGiven.Add(attackObject);
 
@@ -460,6 +467,7 @@ namespace Assets.Scripts.Helpers
             {
                 state = true,
                 type = AttackType.Bleed,
+                Victim = Target
             };
             Character.AttacksGiven.Add(attackObject);
 
@@ -481,6 +489,7 @@ namespace Assets.Scripts.Helpers
             {
                 state = true,
                 type = AttackType.Bleed,
+                Victim = Target
             };
             Character.AttacksGiven.Add(attackObject);
 
@@ -503,7 +512,8 @@ namespace Assets.Scripts.Helpers
                 state = true,
                 type = AttackType.Blight,
                 amount = amountOfDamage,
-                roundsActive = amountOfRounds
+                roundsActive = amountOfRounds,
+                Victim = Target
             };
             Character.AttacksGiven.Add(attackObject);
 
@@ -555,7 +565,8 @@ namespace Assets.Scripts.Helpers
             {
                 state = true,
                 type = AttackType.BalancedDamage,
-                amount = Dama
+                amount = Dama,
+                Victim = Target
             };
             Character.AttacksGiven.Add(attackObject);
 
@@ -588,7 +599,7 @@ namespace Assets.Scripts.Helpers
             }
             Target.AttackSponser = Character;
             if (Target.ImmuneState == true) Dama = 0;
-            if (Target.ProtectionSponser != null) Target = (Persona)Target.ProtectionSponser;
+            if (Target.ProtectionSponser != null) Target = (Persona)Target.ProtectionSponser; attackObject.Victim = Target;
             if (MArkedDebuffM == true) Dama += (int)(Dama * markedda);
 
             Target.HitCount++;
@@ -640,7 +651,8 @@ namespace Assets.Scripts.Helpers
             CurseattackObject = new AttackObject()
             {
                 state = true,
-                type = AttackType.Curse
+                type = AttackType.Curse,
+                Victim = Target
             };
             Character.AttacksGiven.Add(CurseattackObject);
 
@@ -666,7 +678,7 @@ namespace Assets.Scripts.Helpers
                 if (RoundInfo.RoundsPassed < roundhaspassed + 1)
                 {
                     Random r = new Random();
-                    if (Target.ProtectionSponser != null) Target = (Persona)Target.ProtectionSponser;
+                    if (Target.ProtectionSponser != null) Target = (Persona)Target.ProtectionSponser; CurseattackObject.Victim = Target;
                     randamage = r.Next(1, Character.CursePercent);
                     CurseattackObject.amount = randamage;
                     if (Target.ImmuneState == true)
