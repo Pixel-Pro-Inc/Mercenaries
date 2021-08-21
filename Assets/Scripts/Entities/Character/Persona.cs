@@ -688,6 +688,11 @@ namespace Assets.Scripts.Entities.Character
             throw new NotImplementedException();
         }
 
+        public void Revive(object TargetInstance) //This should be called by the NecroBoars UniqueSkill
+        {
+            Persona Target = (Persona)TargetInstance;
+            Target.Health = Target.Life;
+        }
         #endregion
         #region Non-Mentioned Methods
 

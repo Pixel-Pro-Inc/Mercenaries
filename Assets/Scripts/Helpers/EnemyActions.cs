@@ -105,6 +105,61 @@ namespace Assets.Scripts.Helpers
                     }
                     break;
                 case MasterCharacterList.NecroBoar:
+                    int[] storedalliedHealth = new int[Character.Allies.Count];
+                    int bleedCount = new int();
+                    for (int i = 0; i < Character.Allies.Count; i++)
+                    {
+                        Persona villian = (Persona)Character.Allies[i];
+                        storedalliedHealth[i]= villian.Health;
+                    }
+                    int[] CollectedalliedHealth = storedalliedHealth;
+                    foreach (object item in Character.Enemies)
+                    {
+                        Persona heros = (Persona)item;
+                        foreach (AttackObject attack in heros.GetAttack(heros))
+                        {
+                            if ((attack.type == Enums.AttackType.Bleed) && (attack.Victim == (object)Character)&&(attack.state==true)) //this basically asks if someone is bleeding by the hand of a villian
+                            {
+                                bleedCount++;
+                            }
+                        }
+                    }
+                    Timer Boom; Boom = new Timer(); Boom.Elapsed += new ElapsedEventHandler(Punch);  Boom.Interval = 1000; Boom.Enabled = true;
+                    void Punch(object source2, ElapsedEventArgs e)
+                    {
+                        for (int i = 0; i < Character.Allies.Count; i++)
+                        {
+                            Persona villian = (Persona)Character.Allies[i];
+                            CollectedalliedHealth[i] = villian.Health;
+
+                            if (storedalliedHealth[i]!=CollectedalliedHealth[i])
+                            {
+                                storedalliedHealth[i] = CollectedalliedHealth[i];
+                                if ((CollectedalliedHealth[i] == 0)&&(bleedCount%2==0))
+                                {
+                                    Character.UniqueSkill(Character, Character.Allies[i]);
+                                    //this is supposed to revive the object. I though im not sure how plan to handle death.
+                                    //As i stands the uniqueSkill of NecroBoar is to Revive Allies
+                                    bleedCount -= 2;
+                                }
+                                foreach (object item in Character.Enemies)
+                                {
+                                    Persona heros = (Persona)item;
+                                    foreach (AttackObject attack in heros.GetAttack(heros))
+                                    {
+                                        if ((attack.type == Enums.AttackType.Bleed) &&  (attack.state == true)) //this basically asks if someone is bleeding by the hand of a villian
+                                        {
+                                            attack.state =false;
+                                        }
+                                    }
+                                }
+
+                            }
+                        }
+
+                        if (RoundInfo.GameInSession == false) Boom.Close();
+                    }
+
                     break;
                 case MasterCharacterList.ElderStag:
                     break;
@@ -144,6 +199,17 @@ namespace Assets.Scripts.Helpers
                     Character.Calm(Character, Target);
                     break;
                 case MasterCharacterList.NecroBoar:
+                    int RoundsDone = new int(); RoundsDone = RoundInfo.RoundsPassed; int count = 0;
+                    Timer myr2; myr2 = new Timer(); myr2.Elapsed += new ElapsedEventHandler(myEt); myr2.Interval = 1000; myr2.Enabled = true;
+                    void myEt(object source2, ElapsedEventArgs e)
+                    {
+                        if (RoundsDone!=RoundInfo.RoundsPassed&& count<3)
+                        {
+                            RoundsDone = RoundInfo.RoundsPassed;
+                            Character.Bleed(Character, Target);
+                            count++;
+                        }
+                    }
                     break;
                 case MasterCharacterList.ElderStag:
                     break;
@@ -215,6 +281,21 @@ namespace Assets.Scripts.Helpers
                     Character.BrokenGuard(Character,Target);
                     break;
                 case MasterCharacterList.NecroBoar:
+                    foreach (AttackObject attack in Target.GetAttack(Target))
+                    {
+                        if ((attack.type == Enums.AttackType.Bleed) && (attack.state == true)) //this basically asks if someone is bleeding 
+                        {
+                            Character.PowerBuffPercent = 0.5;
+                            Character.PhysicalDamage(Character, Target);
+                            foreach (var item in Character.Enemies)
+                            {
+                                Persona victim = (Persona)item;
+                                if(victim!=Target) Character.Bleed(Character, victim);
+                            }
+                            break;
+                        }
+                        else { Character.PhysicalDamage(Character, Target); }
+                    }
                     break;
                 case MasterCharacterList.ElderStag:
                     break;
@@ -251,6 +332,28 @@ namespace Assets.Scripts.Helpers
                     Character.PutArmour(Character, true, (int)(Character.Armour * 0.8));
                     break;
                 case MasterCharacterList.NecroBoar:
+                    DamageObject damdamda = new DamageObject { DamageValue = Character.DamageGiven()};
+                    Character.PhysicalDamage(Character, Target, damdamda);
+                    int woisbleeding = 0;
+                    foreach (object item in Character.Enemies) //I put this here cause i think the shark will attack anyone it smells having bleeding. Even itself and friends
+                    {
+                        Persona hero = (Persona)item;
+                        foreach (AttackObject attack in hero.GetAttack(hero))
+                        {
+                            if ((attack.type == Enums.AttackType.Bleed)&& attack.state==true)
+                            {
+                                woisbleeding++;
+                                break;
+                            }
+                        }
+                    }
+                    if (woisbleeding==Character.Enemies.Count)
+                    {
+                        foreach (var item in Character.Enemies)
+                        {
+                            Character.Ignite(Character, item, damdamda.DamageValue);
+                        }
+                    }
                     break;
                 case MasterCharacterList.ElderStag:
                     break;

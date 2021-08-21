@@ -460,7 +460,14 @@ namespace Assets.Scripts.MonoBehaviours
         #region EnemyCode
         public void EnemyAttack()
         {
-            EnemyActions Villiany = new EnemyActions();// since the dont use cards here is where their actions will be found
+            EnemyActions Villiany = new EnemyActions();// since they dont use cards here is where their actions will be found
+
+            /*
+             Ai logic would be put here.
+
+            It will call Villiany.PassiveEnemyAbility(Villian); first
+            then depending on health of enemies or aallies, health of the boss or all that good good it will fire Villiany.Attack1(), 2 or 3. Whatever makes sense
+             */
 
             CardBehaviour cardBehaviour = new CardBehaviour();
 
