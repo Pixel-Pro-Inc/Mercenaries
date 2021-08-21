@@ -468,6 +468,27 @@ namespace Assets.Scripts.Helpers
             else { if (RoundInfo.RoundDone == true) PhysicalDamage(CharacterInstance, TargetInstance); }
 
         }
+        public void Bleed(object CharacterInstance, object TargetInstance, DamageObject damageObject)
+        {
+            Persona Character = (Persona)CharacterInstance;
+            Persona Target = (Persona)TargetInstance;
+
+            DamageObject hitval = new DamageObject();
+            hitval.DamageTrait = DamageObject.DamageVersion.Physical;
+
+            AttackObject attackObject = null;
+            attackObject = new AttackObject()
+            {
+                state = true,
+                type = AttackType.Bleed,
+            };
+            Character.AttacksGiven.Add(attackObject);
+
+            if (Target.ImmuneState == true)
+            { }
+            else { if (RoundInfo.RoundDone == true) PhysicalDamage(CharacterInstance, TargetInstance, damageObject); }
+
+        }// check reference foe explaination
         public void Blight(object CharacterInstance, object TargetInstance, int amountOfRounds, int amountOfDamage)
         {
             Persona Character = (Persona)CharacterInstance;

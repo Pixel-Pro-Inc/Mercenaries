@@ -13,16 +13,25 @@ namespace Assets.Scripts.Helpers
     {
         void CreateDebuff(object TargetInstance, double debuffPercent, debuffType type, int lifeTime) //this would prolly be the last thing thats called in the method
         {
-            DebuffObject debuffObject = new DebuffObject()
+            Persona Target = (Persona)TargetInstance;
+            if (Target.ImmuneState==true)
             {
-                state = true,
-                type = type,
-                amount = debuffPercent,
-                lifeTime = lifeTime,
-                roundsActive = 0
-            };
+                //immune animation
+                //this is necesarry!! because i dont want to create objects that could be counted in some methods when the effects wont even ensue
+            }
+            else
+            {
+                DebuffObject debuffObject = new DebuffObject()
+                {
+                    state = true,
+                    type = type,
+                    amount = debuffPercent,
+                    lifeTime = lifeTime,
+                    roundsActive = 0
+                };
 
-            ((Persona)TargetInstance).AddDebuff(debuffObject);
+                Target.AddDebuff(debuffObject);
+            }
         }
         
         public void Slow(object CharacterInstance, object TargetInstance)

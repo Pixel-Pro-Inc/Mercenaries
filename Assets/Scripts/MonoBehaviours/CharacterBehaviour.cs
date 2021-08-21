@@ -9,6 +9,7 @@ using UnityEngine.UI;
 using Assets.Scripts.Entities.Character;
 using Random = UnityEngine.Random;
 using static Assets.Scripts.Models.Enums;
+using Assets.Scripts.Helpers;
 
 namespace Assets.Scripts.MonoBehaviours
 {
@@ -269,8 +270,8 @@ namespace Assets.Scripts.MonoBehaviours
                     HammerHead.CharacterDescription = "Look me in the eye and say that again";
                     HammerHead.CharacterSpecies = SpeciesType.Fish;
 
-                    HammerHead.Allies.AddRange(GameManager.Instance.playerCharacters);
-                    HammerHead.Enemies.AddRange(GameManager.Instance.enemyCharacters);
+                    HammerHead.Allies.AddRange(GameManager.Instance.enemyCharacters);
+                    HammerHead.Enemies.AddRange(GameManager.Instance.playerCharacters);
 
                     //Right now below these have been set to be species affinities but they seem to be originaliy invisioned to be COmbat classes
                     List<SpeciesType> NaturalAlliedHammerHead = new List<SpeciesType> { SpeciesType.Frog, SpeciesType.Fish };
@@ -288,8 +289,8 @@ namespace Assets.Scripts.MonoBehaviours
                     GreatWhite.CharacterDescription = "Oh my god, my teeth are killing me";
                     GreatWhite.CharacterSpecies = SpeciesType.Fish;
 
-                    GreatWhite.Allies.AddRange(GameManager.Instance.playerCharacters);
-                    GreatWhite.Enemies.AddRange(GameManager.Instance.enemyCharacters);
+                    GreatWhite.Allies.AddRange(GameManager.Instance.enemyCharacters);
+                    GreatWhite.Enemies.AddRange(GameManager.Instance.playerCharacters);
 
                     //Right now below these have been set to be species affinities but they seem to be originaliy invisioned to be COmbat classes
                     List<SpeciesType> NaturalAlliedGreatWhite = new List<SpeciesType> { SpeciesType.Frog, SpeciesType.Fish };
@@ -307,8 +308,8 @@ namespace Assets.Scripts.MonoBehaviours
                     SpiderCrustacean.CharacterDescription = "......";
                     SpiderCrustacean.CharacterSpecies = SpeciesType.Fish;
 
-                    SpiderCrustacean.Allies.AddRange(GameManager.Instance.playerCharacters);
-                    SpiderCrustacean.Enemies.AddRange(GameManager.Instance.enemyCharacters);
+                    SpiderCrustacean.Allies.AddRange(GameManager.Instance.enemyCharacters);
+                    SpiderCrustacean.Enemies.AddRange(GameManager.Instance.playerCharacters);
 
                     //Right now below these have been set to be species affinities but they seem to be originaliy invisioned to be COmbat classes
                     List<SpeciesType> NaturalAlliedSpiderCrustacean = new List<SpeciesType> { SpeciesType.Frog, SpeciesType.Fish };
@@ -326,8 +327,8 @@ namespace Assets.Scripts.MonoBehaviours
                     NecroBoar.CharacterDescription = "Call me atheist, but I dont believe in the Last Supper";
                     NecroBoar.CharacterSpecies = SpeciesType.Boar;
 
-                    NecroBoar.Allies.AddRange(GameManager.Instance.playerCharacters);
-                    NecroBoar.Enemies.AddRange(GameManager.Instance.enemyCharacters);
+                    NecroBoar.Allies.AddRange(GameManager.Instance.enemyCharacters);
+                    NecroBoar.Enemies.AddRange(GameManager.Instance.playerCharacters);
 
                     //Right now below these have been set to be species affinities but they seem to be originaliy invisioned to be COmbat classes
                     List<SpeciesType> NaturalAlliedNecroBoar = new List<SpeciesType> { SpeciesType.Frog, SpeciesType.Fish };
@@ -345,8 +346,8 @@ namespace Assets.Scripts.MonoBehaviours
                     ElderStag.CharacterDescription = "My Eternal core spews cold hatred and pure darkness......(just like mothers words *sadness*)";
                     ElderStag.CharacterSpecies = SpeciesType.Deer;
 
-                    ElderStag.Allies.AddRange(GameManager.Instance.playerCharacters);
-                    ElderStag.Enemies.AddRange(GameManager.Instance.enemyCharacters);
+                    ElderStag.Allies.AddRange(GameManager.Instance.enemyCharacters);
+                    ElderStag.Enemies.AddRange(GameManager.Instance.playerCharacters);
 
                     //Right now below these have been set to be species affinities but they seem to be originaliy invisioned to be COmbat classes
                     List<SpeciesType> NaturalAlliedElderStag = new List<SpeciesType> { SpeciesType.Frog, SpeciesType.Fish };
@@ -364,8 +365,8 @@ namespace Assets.Scripts.MonoBehaviours
                     DevilBird.CharacterDescription = "SQUUACCK!";
                     DevilBird.CharacterSpecies = SpeciesType.Bird;
 
-                    DevilBird.Allies.AddRange(GameManager.Instance.playerCharacters);
-                    DevilBird.Enemies.AddRange(GameManager.Instance.enemyCharacters);
+                    DevilBird.Allies.AddRange(GameManager.Instance.enemyCharacters);
+                    DevilBird.Enemies.AddRange(GameManager.Instance.playerCharacters);
 
                     //Right now below these have been set to be species affinities but they seem to be originaliy invisioned to be COmbat classes
                     List<SpeciesType> NaturalAlliedDevilBird = new List<SpeciesType> { SpeciesType.Frog, SpeciesType.Fish };
@@ -383,8 +384,8 @@ namespace Assets.Scripts.MonoBehaviours
                     DragonSloth.CharacterDescription = "W..a..i..t....u....p..y...o...u....g....u";
                     DragonSloth.CharacterSpecies = SpeciesType.Sloth;
 
-                    DragonSloth.Allies.AddRange(GameManager.Instance.playerCharacters);
-                    DragonSloth.Enemies.AddRange(GameManager.Instance.enemyCharacters);
+                    DragonSloth.Allies.AddRange(GameManager.Instance.enemyCharacters);
+                    DragonSloth.Enemies.AddRange(GameManager.Instance.playerCharacters);
 
                     //Right now below these have been set to be species affinities but they seem to be originaliy invisioned to be COmbat classes
                     List<SpeciesType> NaturalAlliedDragonSloth = new List<SpeciesType> { SpeciesType.Frog, SpeciesType.Fish };
@@ -459,6 +460,8 @@ namespace Assets.Scripts.MonoBehaviours
         #region EnemyCode
         public void EnemyAttack()
         {
+            EnemyActions Villiany = new EnemyActions();// since the dont use cards here is where their actions will be found
+
             CardBehaviour cardBehaviour = new CardBehaviour();
 
             cardName[] array = (cardName[])(cardName.GetValues(typeof(cardName)));

@@ -366,10 +366,9 @@ namespace Assets.Scripts.Entities.Character
         public virtual void HealthLoss(DamageObject damageObject)
         {
             int damageGiven = damageObject.DamageValue;
-            AttackType source = damageObject.type;
-
-            //My Implementation of Armour
-            if (ArmourState && source == AttackType.PhysicalDamage)
+            /*
+             My guy if you read through my code in Attack you'll find that this was aleady done
+             if (ArmourState && source == AttackType.PhysicalDamage)
             {
                 if (damageGiven >= Armour)
                 {
@@ -383,7 +382,7 @@ namespace Assets.Scripts.Entities.Character
                 }
             }
 
-            //My Implementation of Magical Damage Resistance
+
             if (MagicResState && source == AttackType.MagicalDamage)
             {
                 if (damageGiven >= MagicRes)
@@ -397,8 +396,6 @@ namespace Assets.Scripts.Entities.Character
                     MagicRes -= damageGiven;
                 }
             }
-
-            //My Implementation of shield
             if (shieldState && source == AttackType.PhysicalDamage)
             {
                 if (damageGiven >= shield)
@@ -418,6 +415,8 @@ namespace Assets.Scripts.Entities.Character
             {
                 damageGiven = 0;
             }
+
+             */
 
             //My Implementation of Immune
             if (ImmuneState)
@@ -617,6 +616,7 @@ namespace Assets.Scripts.Entities.Character
         public void Drain(object CharacterInstance, object TargetInstance) => new Attack().Drain(CharacterInstance, TargetInstance);
         public void Ignite(object CharacterInstance, object TargetInstance, int amount) => new Attack().Ignite(CharacterInstance, TargetInstance, amount);
         public void Bleed(object CharacterInstance, object TargetInstance) => new Attack().Bleed(CharacterInstance, TargetInstance);
+        public void Bleed(object CharacterInstance, object TargetInstance, DamageObject damageObject)=> new Attack().Bleed(CharacterInstance, TargetInstance,damageObject); // this is an overload that acts just like physicalDamage overload for a tailors value pulled in
         public void Blight(object CharacterInstance, object TargetInstance, int amountOfRounds, int amountOfDamage) => new Attack().Blight(CharacterInstance, TargetInstance,amountOfRounds,amountOfDamage);
         public void BalancedDamage(object CharacterInstance, object TargetInstance) => new Attack().BalancedDamage(CharacterInstance, TargetInstance);
         public void Curse(object CharacterInstance, object TargetInstance) => new Attack().Curse(CharacterInstance, TargetInstance);
