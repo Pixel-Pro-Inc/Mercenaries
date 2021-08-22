@@ -14,7 +14,7 @@ namespace Assets.Scripts.Models
         {
             True, Physical, Magical, Balanced
         }
-        public int DamageValue { get; set; }
-        public object DamageTrait;
+        public int DamageValue { get; set; } 
+        public DamageVersion DamageTrait;
     }
 }

@@ -142,7 +142,7 @@ namespace Assets.Scripts.Entities.Character
         private bool _foe = false;
         public override bool Foe { get { return _foe; } set { _foe = value; } }
         public bool PassiveWarriorTraits { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public override int HitCount { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public override int HitCount { get; set; }
         public bool PassiveMageTraits { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         private bool _supportMage=false;

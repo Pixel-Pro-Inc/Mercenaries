@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Entities.Character;
 using Assets.Scripts.Models;
+using Assets.Scripts.MonoBehaviours;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,17 +12,10 @@ namespace Assets.Scripts.Helpers
 {
     public class Debuff
     {
-        void CreateDebuff(object TargetInstance, double debuffPercent, debuffType type, int lifeTime) //this would prolly be the last thing thats called in the method
+        public void CreateDebuff(object TargetInstance, double debuffPercent, debuffType type, int lifeTime) //this would prolly be the last thing thats called in the method
         {
-            Persona Target = (Persona)TargetInstance;
-            if (Target.ImmuneState==true)
-            {
-                //immune animation
-                //this is necesarry!! because i dont want to create objects that could be counted in some methods when the effects wont even ensue
-            }
-            else
-            {
-                DebuffObject debuffObject = new DebuffObject()
+            Persona Target = (Persona)TargetInstance;            
+          DebuffObject debuffObject = new DebuffObject()
                 {
                     state = true,
                     type = type,
@@ -29,82 +23,8 @@ namespace Assets.Scripts.Helpers
                     lifeTime = lifeTime,
                     roundsActive = 0
                 };
-
-                Target.AddDebuff(debuffObject);
-            }
-        }
-        
-        public void Slow(object CharacterInstance, object TargetInstance)
-        {
-            Persona Character = (Persona)CharacterInstance;
-            Persona Target = (Persona)TargetInstance;
-            
-            CreateDebuff(TargetInstance, Character.SlowDeBuffPercent, debuffType.Slow, 77); //this was just to make sure it works. Yewo is going to have to populate the method above this
-        }
-
-        public void Rooted(object CharacterInstance, object TargetInstance)
-        {
-            throw new NotImplementedException();
-        }
-        public void WeakGrip(object CharacterInstance, object TargetInstance)
-        {
-            throw new NotImplementedException();
-        }
-        public void Exiled(object CharacterInstance, object TargetInstance)
-        {
-            throw new NotImplementedException();
-        }
-        public void Marked(object CharacterInstance, object TargetInstance)
-        {
-            throw new NotImplementedException();
-        }
-        public void Calm(object CharacterInstance, object TargetInstance)
-        {
-            throw new NotImplementedException();
-        }
-        public void BrokenGuard(object CharacterInstance, object TargetInstance)
-        {
-            throw new NotImplementedException();
-        }
-        public void Burnt(object CharacterInstance, object TargetInstance)
-        {
-            throw new NotImplementedException();
-        }
-        public void Stun(object CharacterInstance, object TargetInstance)
-        {
-            throw new NotImplementedException();
-        }
-        public void Freeze(object CharacterInstance, object TargetInstance)
-        {
-            throw new NotImplementedException();
-        }
-        public void Cold(object CharacterInstance, object TargetInstance)
-        {
-            throw new NotImplementedException();
-        }
-        public void Blinded(object CharacterInstance, object TargetInstance)
-        {
-            throw new NotImplementedException();
-        }
-        public void Tainted(object CharacterInstance, object TargetInstance)
-        {
-            throw new NotImplementedException();
-        }
-        public void Sleep(object CharacterInstance, object TargetInstance)
-        {
-            throw new NotImplementedException();
-        }
-        public void Hungry(object CharacterInstance, object TargetInstance)
-        {
-            throw new NotImplementedException();
-        }
-        public void Unhealthy(object CharacterInstance, object TargetInstance)
-        {
-            throw new NotImplementedException();
-        }
-        public void GodsAnger(object CharacterInstance, List<string> Allies)
-        {
-            throw new NotImplementedException();
+          Target.AddDebuff(debuffObject);
+          GameManager.Instance.InstantiateEffect(debuffObject.type, ((Persona)TargetInstance).characterBehaviour);
         }
     }
 }

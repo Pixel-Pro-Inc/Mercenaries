@@ -50,7 +50,7 @@ namespace Assets.Scripts.MonoBehaviours
         }
         private void Start()
         {
-
+            person.characterBehaviour = this;
             switch (Everyone)
             {
                 case MasterCharacterList.Peter:
@@ -403,7 +403,7 @@ namespace Assets.Scripts.MonoBehaviours
         }
         public void OnMouseDown()
         {
-            if (!turnUsed)
+            if (!turnUsed && !CardDescriptionManager.Instance.cardDetailsView.activeSelf)
                 if (species != SpeciesType.Enemy)
                 {
                     Transform _transform = parent.transform.parent.transform;
