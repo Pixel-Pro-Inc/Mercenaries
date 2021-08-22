@@ -62,7 +62,14 @@ namespace Assets.Scripts.Entities.Character
             Salamander,
             Frog,
             Triton,
-            Enemy
+            Bird,
+            Parrot,
+            Insect,
+            Hippo,
+            Boar,
+            Deer,
+            Sloth,
+            Enemy// thiis here is actually used so we might as well change foe using this
         };
         public bool RemoveDebuffEffects { get; set; }
 
@@ -71,7 +78,10 @@ namespace Assets.Scripts.Entities.Character
         #region Stats
         public virtual string CharacterName { get { return CharacterName; } set { CharacterName = "UnKnown"; } }
         public virtual string CharacterDescription { get { return CharacterDescription; } set { CharacterDescription = "UnKnown"; } } //Here the personality and backstory of a unique character will be defined
-        public virtual bool Foe { get { return Foe; } set { Foe = false; } }
+        public SpeciesType CharacterSpecies { get; set; }
+
+        private bool _foe { get; set; }
+        public virtual bool Foe { get { return _foe; } set { _foe = value; } }
 
         private int _Life = 0;
         public virtual int Life
@@ -301,7 +311,9 @@ namespace Assets.Scripts.Entities.Character
         public virtual bool MagicResState { get; private set; }
         public virtual bool shieldState { get; private set; }
         public virtual bool PurifiedState { get; private set; }
-
+        public double defenceArmourPercentage { get; set; } //this is made cause there were tailored values that are used
+        public double defenceMagresPercentage { get; set; }
+        public double defenceSheildPercentage { get; set; }
         #endregion
         #region Buff Percent
 
@@ -359,10 +371,9 @@ namespace Assets.Scripts.Entities.Character
         public virtual void HealthLoss(DamageObject damageObject)
         {
             int damageGiven = damageObject.DamageValue;
-            AttackType source = damageObject.type;
-
-            //My Implementation of Armour
-            if (ArmourState && source == AttackType.PhysicalDamage)
+            /*
+             My guy if you read through my code in Attack you'll find that this was aleady done
+             if (ArmourState && source == AttackType.PhysicalDamage)
             {
                 if (damageGiven >= Armour)
                 {
@@ -376,7 +387,7 @@ namespace Assets.Scripts.Entities.Character
                 }
             }
 
-            //My Implementation of Magical Damage Resistance
+
             if (MagicResState && source == AttackType.MagicalDamage)
             {
                 if (damageGiven >= MagicRes)
@@ -390,8 +401,6 @@ namespace Assets.Scripts.Entities.Character
                     MagicRes -= damageGiven;
                 }
             }
-
-            //My Implementation of shield
             if (shieldState && source == AttackType.PhysicalDamage)
             {
                 if (damageGiven >= shield)
@@ -411,6 +420,8 @@ namespace Assets.Scripts.Entities.Character
             {
                 damageGiven = 0;
             }
+
+             */
 
             //My Implementation of Immune
             if (ImmuneState)
@@ -610,6 +621,7 @@ namespace Assets.Scripts.Entities.Character
         public void Drain(object CharacterInstance, object TargetInstance) => new Attack().Drain(CharacterInstance, TargetInstance);
         public void Ignite(object CharacterInstance, object TargetInstance, int amount) => new Attack().Ignite(CharacterInstance, TargetInstance, amount);
         public void Bleed(object CharacterInstance, object TargetInstance) => new Attack().Bleed(CharacterInstance, TargetInstance);
+        public void Bleed(object CharacterInstance, object TargetInstance, DamageObject damageObject)=> new Attack().Bleed(CharacterInstance, TargetInstance,damageObject); // this is an overload that acts just like physicalDamage overload for a tailors value pulled in
         public void Blight(object CharacterInstance, object TargetInstance, int amountOfRounds, int amountOfDamage) => new Attack().Blight(CharacterInstance, TargetInstance,amountOfRounds,amountOfDamage);
         public void BalancedDamage(object CharacterInstance, object TargetInstance) => new Attack().BalancedDamage(CharacterInstance, TargetInstance);
         public void Curse(object CharacterInstance, object TargetInstance) => new Attack().Curse(CharacterInstance, TargetInstance);
@@ -638,6 +650,7 @@ namespace Assets.Scripts.Entities.Character
         public object Protected(object TargetInstance) => new Buff().Protected(TargetInstance);
         public void Revigorate(object TargetInstance) => new Buff().Revigorate(TargetInstance);
         public void HealVictim(object CharacterInstance, object TargetInstance) => new Buff().HealVictim(CharacterInstance,TargetInstance);
+        public void HealVictim(object TargetInstance, int damageobj) => new Buff().HealVictim(TargetInstance, damageobj);
         public void GodsBlessing(object CharacterInstance, List<string> Allies) => new Buff().GodsBlessing(CharacterInstance, Allies);
 
         #endregion
@@ -699,6 +712,11 @@ namespace Assets.Scripts.Entities.Character
             throw new NotImplementedException();
         }
 
+        public void Revive(object TargetInstance) //This should be called by the NecroBoars UniqueSkill
+        {
+            Persona Target = (Persona)TargetInstance;
+            Target.Health = Target.Life;
+        }
         #endregion
         #region Non-Mentioned Methods
 

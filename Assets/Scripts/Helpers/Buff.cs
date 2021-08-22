@@ -316,6 +316,11 @@ namespace Assets.Scripts.Helpers
             HealingCache = (int)(Target.Health * Character.HealBuffPercent);
             Target.Health += HealingCache;
         }
+        public void HealVictim(object TargetInstance, int damageobj)
+        {
+            Persona Target = (Persona)TargetInstance;
+            Target.Health += damageobj;
+        }
         public void GodsBlessing(object CharacterInstance, List<string> Allies)
         {
             throw new NotImplementedException();

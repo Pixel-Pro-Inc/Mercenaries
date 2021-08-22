@@ -17,9 +17,10 @@ namespace Assets.Scripts.Entities.Character
         }
 
         #region Character variables
-        public override string CharacterName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public override string CharacterDescription { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public string BriefDescription { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public override string CharacterName { get; set; }
+        public override string CharacterDescription { get; set; }
+        private string _brief="Tank";
+        public string BriefDescription { get { return _brief; } set { _brief = value; } }
 
         private int _health = 0;
         public override int Health
@@ -122,8 +123,8 @@ namespace Assets.Scripts.Entities.Character
 
         private bool _foe = false;
         public override bool Foe { get { return _foe; } set { _foe = value; } }
-        public List<string> NaturalAllies { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public List<string> NaturalEnemies { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public List<SpeciesType> NaturalAllies { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public List<SpeciesType> NaturalEnemies { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public bool PassiveTankTraits { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public override int HitCount { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public bool PassiveWarriorTraits { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
@@ -134,6 +135,7 @@ namespace Assets.Scripts.Entities.Character
 
         public void InitiationMethod()
         {
+            if (CharacterSpecies == SpeciesType.Enemy) _foe = true;
             #region health
 
             if (Foe == false)

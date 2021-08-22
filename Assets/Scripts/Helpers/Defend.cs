@@ -16,14 +16,17 @@ namespace Assets.Scripts.Helpers
         }
         public void Armour(bool state, int amount)
         {
+            amount = (int)(amount * target.defenceArmourPercentage);
             target.ToggleMagicRes(state, amount);
         }
         public void MagicalResistance(bool state, int amount)
         {
+            amount = (int)(amount * target.defenceMagresPercentage);
             target.ToggleMagicRes(state, amount);
         }
         public void Shield(bool state, int amount)
         {
+            amount = (int)(amount * target.defenceSheildPercentage);
             target.ToggleShield(state, amount);
         }
         public void Purified(bool state)

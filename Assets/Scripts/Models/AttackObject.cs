@@ -14,5 +14,6 @@ namespace Assets.Scripts.Models
         public bool state { get; set; }
         public int roundsActive { get; set; }
         public int lifeTime { get; set; }
+        public object Victim { get; set; }
     }
 }
