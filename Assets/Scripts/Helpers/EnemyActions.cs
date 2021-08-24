@@ -137,7 +137,7 @@ namespace Assets.Scripts.Helpers
                                 storedalliedHealth[i] = CollectedalliedHealth[i];
                                 if ((CollectedalliedHealth[i] == 0)&&(bleedCount%2==0))
                                 {
-                                    Character.UniqueSkill(Character, Character.Allies[i]);
+                                    Character.UniqueSkill(Character, villian);
                                     //this is supposed to revive the object. I though im not sure how plan to handle death.
                                     //As i stands the uniqueSkill of NecroBoar is to Revive Allies
                                     bleedCount -= 2;
@@ -162,8 +162,48 @@ namespace Assets.Scripts.Helpers
 
                     break;
                 case MasterCharacterList.ElderStag:
+                    for (int i = 0; i < GameManager.Instance.enemyCharacters.Count; i++)
+                    {
+                        if (GameManager.Instance.enemyCharacters[i].GetComponentInChildren<CharacterBehaviour>().turnUsed == false)
+                        {
+                            Timer Siccsa; Siccsa = new Timer(); Siccsa.Elapsed += new ElapsedEventHandler(Gitar); Siccsa.Interval = 1000; Siccsa.Enabled = true;
+                            void Gitar(object source2, ElapsedEventArgs e)
+                            {
+                                if (GameManager.Instance.enemyCharacters[i].GetComponentInChildren<CharacterBehaviour>().turnUsed == true)
+                                {
+                                    GameManager.Instance.enemyCharacters[i].GetComponentInChildren<Persona>().Health += (int)(GameManager.Instance.enemyCharacters[i].GetComponentInChildren<Persona>().Life * 0.1);
+                                }
+                            }
+                            //this is a passive trait so the timer should't close
+                        }
+                    }
                     break;
                 case MasterCharacterList.DevilBird:
+                    double collectMagic = 0; int cout = 0;
+                    Timer Jesu; Jesu = new Timer(); Jesu.Elapsed += new ElapsedEventHandler(Komm); Jesu.Interval = 1000; Jesu.Enabled = true;
+                    void Komm(object source2, ElapsedEventArgs e)
+                    {
+                        for (int i = 0; i < GameManager.Instance.enemyCharacters.Count; i++)
+                        {
+                            if ((GameManager.Instance.enemyCharacters[i].GetComponentInChildren<CharacterBehaviour>().turnUsed == false) && (Character == GameManager.Instance.enemyCharacters[i])&&cout==0)
+                            {
+                                Character.MagiBuffPercent += 0.05; collectMagic += 0.05;
+                                Character.Chosen(Character);
+                                cout++; // this is so it only performs the above statements once per turn
+                                if (collectMagic%0.15==0)
+                                {
+                                    Character.Curse(Character, Character.Enemies[UnityEngine.Random.Range(0, Character.Enemies.Count)]);
+                                    Character.Curse(Character, Character.Enemies[UnityEngine.Random.Range(0, Character.Enemies.Count)]);
+                                }
+                            }
+                            if ((GameManager.Instance.enemyCharacters[i].GetComponentInChildren<CharacterBehaviour>().turnUsed == true) && (Character == GameManager.Instance.enemyCharacters[i]) && cout == 1)
+                            {
+                                cout--;// this is so it goes back to inital state
+                            }
+                        }
+                    }
+                    //this is a passive trait so the timer should't close
+                    
                     break;
                 case MasterCharacterList.DragonSloth:
                     break;
@@ -184,7 +224,7 @@ namespace Assets.Scripts.Helpers
                     foreach (object item in Character.Enemies)
                     {
                         PhysicalDamage(Character, item);
-                        Tainted(Character, item);
+                        Tainted(Character, item,1);
                     }
                     break;
                 case MasterCharacterList.GreatWhite:
@@ -196,7 +236,7 @@ namespace Assets.Scripts.Helpers
                 case MasterCharacterList.SpiderCrustacean:
                     Character.PhysicalDamage(Character, Target);
                     Character.CalmDeBuffPercent = 0.2;
-                    Character.Calm(Character, Target);
+                    Character.Calm(Character, Target,1);
                     break;
                 case MasterCharacterList.NecroBoar:
                     int RoundsDone = new int(); RoundsDone = RoundInfo.RoundsPassed; int count = 0;
@@ -209,11 +249,43 @@ namespace Assets.Scripts.Helpers
                             Character.Bleed(Character, Target);
                             count++;
                         }
+                        if (count == 3) myr2.Close();
                     }
                     break;
                 case MasterCharacterList.ElderStag:
+                    int ElderFist = (int)(Character.DamageGiven()*0.4);
+                    Persona Face = (Persona)Character.Enemies[UnityEngine.Random.Range(0, Character.Enemies.Count)];
+                    Persona Face2 = (Persona)Character.Enemies[UnityEngine.Random.Range(0, Character.Enemies.Count)];
+                    Persona Face3 = (Persona)Character.Enemies[UnityEngine.Random.Range(0, Character.Enemies.Count)];
+                    List<Persona> Faces = new List<Persona> { Face, Face2, Face3 };
+                    foreach (var item in Faces)
+                    {
+                        Character.MagicalDamage(Character, item, ElderFist);
+                    }
+                    foreach (var item in Character.Allies)
+                    {
+                        Persona fRIEND = (Persona)item;
+                        fRIEND.Speed += (int)(fRIEND.Speed*0.1);
+                    }
                     break;
                 case MasterCharacterList.DevilBird:
+                    object fVictim = Character.Enemies[UnityEngine.Random.Range(0, Character.Enemies.Count)];
+                    object SVictim = Character.Enemies[UnityEngine.Random.Range(0, Character.Enemies.Count)];
+                    int roundsbaby = RoundInfo.RoundsPassed;
+                    Character.Rooted(Character, fVictim, 1); Character.Burnt(Character, fVictim);
+                    Character.Rooted(Character, SVictim, 1); Character.Burnt(Character, SVictim);
+
+                    Timer summer; summer = new Timer(); summer.Elapsed += new ElapsedEventHandler(vivaldiiii); summer.Interval = 1000; summer.Enabled = true;
+                    void vivaldiiii(object source2, ElapsedEventArgs e)
+                    {
+                        if (roundsbaby+1 == RoundInfo.RoundsPassed)
+                        {
+                            Character.Burnt(Character, fVictim);
+                            Character.Burnt(Character, SVictim);
+                            summer.Close();
+                        }
+                    }
+                    
                     break;
                 case MasterCharacterList.DragonSloth:
                     break;
@@ -233,7 +305,7 @@ namespace Assets.Scripts.Helpers
                     int speedCount = 0;
                     foreach (object item in Character.Enemies)
                     {
-                        Character.Stun(Character, item);
+                        Character.Stun(Character, item,1);
                         Persona hero = (Persona)item;
                         foreach (DebuffObject debuff in hero.GetDebuffs())
                         {
@@ -278,7 +350,7 @@ namespace Assets.Scripts.Helpers
                     break;
                 case MasterCharacterList.SpiderCrustacean:
                     Character.BrokenGaurdDeBuffPercent = 0.2;
-                    Character.BrokenGuard(Character,Target);
+                    Character.BrokenGuard(Character,Target,1);
                     break;
                 case MasterCharacterList.NecroBoar:
                     foreach (AttackObject attack in Target.GetAttack(Target))
@@ -298,8 +370,23 @@ namespace Assets.Scripts.Helpers
                     }
                     break;
                 case MasterCharacterList.ElderStag:
+                    int storedhealth = new int(); int count = 0; int lowest = new int();
+                    for (int i = 0; i < Character.Allies.Count; i++)
+                    {
+                        Persona friend = (Persona)Character.Allies[i];
+                        if (count == 0)
+                        { storedhealth = friend.Health; count++; }
+                        else
+                        if (storedhealth > friend.Health)
+                        {
+                            lowest = i; storedhealth = friend.Health;
+                        }
+                    }
+                    Persona weak = (Persona)Character.Allies[lowest];
+                    weak.Health += weak.Health;
                     break;
                 case MasterCharacterList.DevilBird:
+                    Character.UniqueSkill(Character, Target); Character.Sleep(Character, Target);
                     break;
                 case MasterCharacterList.DragonSloth:
                     break;
@@ -356,8 +443,31 @@ namespace Assets.Scripts.Helpers
                     }
                     break;
                 case MasterCharacterList.ElderStag:
+                    int mAch = RoundInfo.RoundsPassed;
+                    Timer oboe; oboe = new Timer(); oboe.Elapsed += new ElapsedEventHandler(violin); oboe.Interval = 1000; oboe.Enabled = true;
+                    void violin(object source2, ElapsedEventArgs e)
+                    {
+                        if (mAch+1 ==RoundInfo.RoundsPassed)
+                        {
+                            // Waiting for them to explain
+                        }
+                    }
+                   
                     break;
                 case MasterCharacterList.DevilBird:
+                    object fVictim = Character.Enemies[UnityEngine.Random.Range(0, Character.Enemies.Count)]; object sVictim = Character.Enemies[UnityEngine.Random.Range(0, Character.Enemies.Count)]; 
+                    object fTHIRDVictim = Character.Enemies[UnityEngine.Random.Range(0, Character.Enemies.Count)]; object foutrVictim = Character.Allies[UnityEngine.Random.Range(0, Character.Enemies.Count)];// because he also hurts his friend
+                    List<object> heros = new List<object> { fVictim, sVictim, fTHIRDVictim };
+                    foreach (var item in heros)
+                    {
+                        Character.MagicalDamage(Character, item);
+                    }
+                    Persona Expendable = (Persona)foutrVictim;
+                    int storedhealth = Expendable.Health;
+                    int damageede = (int)(Character.DamageGiven() * 0.5);
+                    Character.MagicalDamage(Character, foutrVictim, damageede);
+                    Character.HealVictim(Character, storedhealth- Expendable.Health); 
+
                     break;
                 case MasterCharacterList.DragonSloth:
                     break;
