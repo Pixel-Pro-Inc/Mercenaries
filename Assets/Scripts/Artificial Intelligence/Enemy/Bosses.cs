@@ -102,7 +102,68 @@ public class Bosses
 
     void StrategicAttack()
     {
+        bool fired = false;
 
+        if (!fired)
+        {
+            for (int i = 0; i < opponents.Count; i++)
+            {
+                if (opponents[i].Health < (opponents[i].Life * .8f))
+                {
+                    enemyActions.PhysicalAttacks();
+
+                    fired = true;
+                    i = opponents.Count;
+                }
+            }
+        }
+
+        if (!fired)
+        {
+            for (int i = 0; i < opponents.Count; i++)
+            {
+                if (opponents[i].Health < (opponents[i].Life * .6f))
+                {
+                    enemyActions.MagicalAttacks();
+
+                    fired = true;
+                    i = opponents.Count;
+                }
+            }
+        }
+
+        if (!fired)
+        {
+            for (int i = 0; i < opponents.Count; i++)
+            {
+                if (opponents[i].Health < (opponents[i].Life * .4f))
+                {
+                    enemyActions.TrueDamageAttacks();
+
+                    fired = true;
+                    i = opponents.Count;
+                }
+            }
+        }
+
+        if (!fired)
+        {
+            for (int i = 0; i < opponents.Count; i++)
+            {
+                if (opponents[i].GetDebuffs().Count == 0)
+                {
+                    enemyActions.Debuffs();
+
+                    fired = true;
+                    i = opponents.Count;
+                }
+            }
+        }
+
+        if (!fired)
+        {
+            //enemyActions.Buffs();
+        }
     }
 
     bool SlotMachine(float chance)
