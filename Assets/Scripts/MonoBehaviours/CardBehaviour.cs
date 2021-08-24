@@ -536,13 +536,14 @@ public class CardBehaviour : Card
                 break;
             case cardName.tritonFirstCard:
                 int war=0;
-                Action<object> getwarriors(object warrs)
+                foreach (var item in CharacterInstance.Allies) 
                 {
-                    if ((warrs.GetType() == typeof(WarriorTemplate)) || (warrs.GetType() == typeof(TankWarriorTemplate))) war++;
-                    return (Action<object>)warrs;
+                    if ((item.GetType() == typeof(WarriorTemplate)) || (item.GetType() == typeof(TankWarriorTemplate))) war++;
                 }
-                foreach (var item in CharacterInstance.Allies) getwarriors(item);
-                foreach (var item in GameManager.Instance.enemyCharacters) getwarriors(item);
+                foreach (var item in GameManager.Instance.enemyCharacters) 
+                {
+                    if ((item.GetType() == typeof(WarriorTemplate)) || (item.GetType() == typeof(TankWarriorTemplate))) war++;
+                }
                 CharacterInstance.ShieldUp(CharacterInstance, true, (int)(CharacterInstance.shield*0.1)*war);
                 break;
             case cardName.tritonSecondCard:

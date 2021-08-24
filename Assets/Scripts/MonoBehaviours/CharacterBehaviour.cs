@@ -49,14 +49,14 @@ namespace Assets.Scripts.MonoBehaviours
 
         }
         private void Start()
-        {
-            person.characterBehaviour = this;
+        {            
             switch (Everyone)
             {
-                case MasterCharacterList.Peter:
+                case MasterCharacterList.Peter:                    
+                    //
                     break;
                 case MasterCharacterList.Mister_Glubglub:
-                    WarriorTemplate MisterGlub = new WarriorTemplate();
+                    WarriorTemplate MisterGlub = gameObject.AddComponent<WarriorTemplate>();
                     MisterGlub.CharacterName = "Mister_Glubglub";
                     MisterGlub.CharacterDescription = "He is a fish. What did you expect?";
                     MisterGlub.CharacterSpecies = SpeciesType.Fish;  
@@ -66,16 +66,16 @@ namespace Assets.Scripts.MonoBehaviours
 
                     //Right now below these have been set to be species affinities but they seem to be originaliy invisioned to be COmbat classes
                     List<SpeciesType> NaturalAlliedGlub = new List<SpeciesType> { SpeciesType.Frog, SpeciesType.Fish };
-                    MisterGlub.NaturalAllies.AddRange(NaturalAlliedGlub);
+                    MisterGlub.NaturalAllies = NaturalAlliedGlub;
                     List<SpeciesType> NaturalenemiedGlub = new List<SpeciesType> { SpeciesType.Crocodile, SpeciesType.Lion };
-                    MisterGlub.NaturalEnemies.AddRange(NaturalenemiedGlub);
+                    MisterGlub.NaturalEnemies = NaturalenemiedGlub;
 
                     MisterGlub.Foe = false;
 
-                    person = MisterGlub;//gameObject.AddComponent<Persona>();
+                    person = (Persona)MisterGlub;//gameObject.AddComponent<Persona>();
                     break;
                 case MasterCharacterList.Mister_Froggo:
-                    MageTemplate MisterFroggo = new MageTemplate();
+                    MageTemplate MisterFroggo = gameObject.AddComponent<MageTemplate>();
                     MisterFroggo.CharacterName = "Mister_Froggo";
                     MisterFroggo.CharacterDescription = "Ribbit, ribbit, Keroo, Ribbit";
                     MisterFroggo.CharacterSpecies = SpeciesType.Frog;
@@ -85,16 +85,16 @@ namespace Assets.Scripts.MonoBehaviours
 
                     //Right now below these have been set to be species affinities but they seem to be originaliy invisioned to be COmbat classes
                     List<SpeciesType> NaturalAlliedFroggo = new List<SpeciesType> { SpeciesType.Frog, SpeciesType.Fish };
-                    MisterFroggo.NaturalAllies.AddRange(NaturalAlliedFroggo);
+                    MisterFroggo.NaturalAllies = NaturalAlliedFroggo;
                     List<SpeciesType> NaturalenemiedFroggo = new List<SpeciesType> { SpeciesType.Crocodile, SpeciesType.Salamander };
-                    MisterFroggo.NaturalEnemies.AddRange(NaturalenemiedFroggo);
+                    MisterFroggo.NaturalEnemies = NaturalenemiedFroggo;
 
                     MisterFroggo.Foe = false;
 
                     person = MisterFroggo;//gameObject.AddComponent<Persona>();
                     break;
                 case MasterCharacterList.Mister_Salaboned:
-                    TankWarriorTemplate MisterSalaboned = new TankWarriorTemplate();
+                    TankWarriorTemplate MisterSalaboned = gameObject.AddComponent<TankWarriorTemplate>();
                     MisterSalaboned.CharacterName = "Mister_Salaboned";
                     MisterSalaboned.CharacterDescription = "A man plagued by demonic shadows. After discovering forbiden gray magic, he uses his skill to reach his deepest desire, no matter the cost";
                     MisterSalaboned.CharacterSpecies = SpeciesType.Salamander;
@@ -104,16 +104,16 @@ namespace Assets.Scripts.MonoBehaviours
 
                     //Right now below these have been set to be species affinities but they seem to be originaliy invisioned to be COmbat classes
                     List<SpeciesType> NaturalAlliedSala = new List<SpeciesType> { SpeciesType.Triton };
-                    MisterSalaboned.NaturalAllies.AddRange(NaturalAlliedSala);
+                    MisterSalaboned.NaturalAllies = NaturalAlliedSala;
                     List<SpeciesType> NaturalenemiedSala = new List<SpeciesType> { SpeciesType.Lion };
-                    MisterSalaboned.NaturalEnemies.AddRange(NaturalenemiedSala);
+                    MisterSalaboned.NaturalEnemies = NaturalenemiedSala;
 
                     MisterSalaboned.Foe = false;
 
                     person = MisterSalaboned;//gameObject.AddComponent<Persona>();
                     break;
                 case MasterCharacterList.Mister_Lizzacorn:
-                    WarriorTemplate MisterLizzacorn = new WarriorTemplate();
+                    WarriorTemplate MisterLizzacorn = gameObject.AddComponent<WarriorTemplate>();
                     MisterLizzacorn.CharacterName = "Mister_Lizzacorn";
                     MisterLizzacorn.CharacterDescription = "I'm not being defensive, you are!";
                     MisterLizzacorn.CharacterSpecies = SpeciesType.Triton;
@@ -123,16 +123,16 @@ namespace Assets.Scripts.MonoBehaviours
 
                     //Right now below these have been set to be species affinities but they seem to be originaliy invisioned to be COmbat classes
                     List<SpeciesType> NaturalAlliedLizza = new List<SpeciesType> { SpeciesType.Salamander, SpeciesType.Triton };
-                    MisterLizzacorn.NaturalAllies.AddRange(NaturalAlliedLizza);
+                    MisterLizzacorn.NaturalAllies = NaturalAlliedLizza;
                     List<SpeciesType> NaturalenemiedLizza = new List<SpeciesType> { SpeciesType.Crocodile };
-                    MisterLizzacorn.NaturalEnemies.AddRange(NaturalenemiedLizza);
+                    MisterLizzacorn.NaturalEnemies = NaturalenemiedLizza;
 
                     MisterLizzacorn.Foe = false;
 
                     person = MisterLizzacorn;//gameObject.AddComponent<Persona>();
                     break;
                 case MasterCharacterList.Mister_Liodin:
-                    WarriorTemplate MisterLiodin = new WarriorTemplate();
+                    WarriorTemplate MisterLiodin = gameObject.AddComponent<WarriorTemplate>();
                     MisterLiodin.CharacterName = "Mister_Liodin";
                     MisterLiodin.CharacterDescription = "Yes, thats correct. Everything the Light touches";
                     MisterLiodin.CharacterSpecies = SpeciesType.Lion;
@@ -142,16 +142,16 @@ namespace Assets.Scripts.MonoBehaviours
 
                     //Right now below these have been set to be species affinities but they seem to be originaliy invisioned to be COmbat classes
                     List<SpeciesType> NaturalAlliedLiodin = new List<SpeciesType> { SpeciesType.Lion, SpeciesType.Salamander };
-                    MisterLiodin.NaturalAllies.AddRange(NaturalAlliedLiodin);
+                    MisterLiodin.NaturalAllies = NaturalAlliedLiodin;
                     List<SpeciesType> NaturalenemiedLiodin = new List<SpeciesType> { SpeciesType.Triton, SpeciesType.Crocodile };
-                    MisterLiodin.NaturalEnemies.AddRange(NaturalenemiedLiodin);
+                    MisterLiodin.NaturalEnemies = NaturalenemiedLiodin;
 
                     MisterLiodin.Foe = false;
 
                     person = MisterLiodin;//gameObject.AddComponent<Persona>();
                     break;
                 case MasterCharacterList.Mister_Lacrox:
-                    WarriorTemplate MisterLacrox = new WarriorTemplate();
+                    WarriorTemplate MisterLacrox = gameObject.AddComponent<WarriorTemplate>();
                     MisterLacrox.CharacterName = "Mister_Lacrox";
                     MisterLacrox.CharacterDescription = "Nani?!Kotowaru!";
                     MisterLacrox.CharacterSpecies = SpeciesType.Crocodile;
@@ -161,16 +161,16 @@ namespace Assets.Scripts.MonoBehaviours
 
                     //Right now below these have been set to be species affinities but they seem to be originaliy invisioned to be COmbat classes
                     List<SpeciesType> NaturalAlliedLacrox = new List<SpeciesType> { };
-                    MisterLacrox.NaturalAllies.AddRange(NaturalAlliedLacrox);
+                    MisterLacrox.NaturalAllies = NaturalAlliedLacrox;
                     List<SpeciesType> NaturalenemiedLAcrox = new List<SpeciesType> { SpeciesType.Salamander, SpeciesType.Lion };
-                    MisterLacrox.NaturalEnemies.AddRange(NaturalenemiedLAcrox);
+                    MisterLacrox.NaturalEnemies = NaturalenemiedLAcrox;
 
                     MisterLacrox.Foe = false;
 
                     person = MisterLacrox;//gameObject.AddComponent<Persona>();
                     break;
                 case MasterCharacterList.Mister_Birbarcher:
-                    RangeTemplate MisterBirbarcher = new RangeTemplate();
+                    RangeTemplate MisterBirbarcher = gameObject.AddComponent<RangeTemplate>();
                     MisterBirbarcher.CharacterName = "Mister_Birbarcher";
                     MisterBirbarcher.CharacterDescription = "Has anyone seen any female elves here? Nevermind.....";
                     MisterBirbarcher.CharacterSpecies = SpeciesType.Fish;
@@ -180,16 +180,16 @@ namespace Assets.Scripts.MonoBehaviours
 
                     //Right now below these have been set to be species affinities but they seem to be originaliy invisioned to be COmbat classes
                     List<SpeciesType> NaturalAlliedBircher = new List<SpeciesType> { SpeciesType.Frog, SpeciesType.Fish };
-                    MisterBirbarcher.NaturalAllies.AddRange(NaturalAlliedBircher);
+                    MisterBirbarcher.NaturalAllies = NaturalAlliedBircher;
                     List<SpeciesType> NaturalenemiedBircher = new List<SpeciesType> { SpeciesType.Crocodile, SpeciesType.Lion };
-                    MisterBirbarcher.NaturalEnemies.AddRange(NaturalenemiedBircher);
+                    MisterBirbarcher.NaturalEnemies = NaturalenemiedBircher;
 
                     MisterBirbarcher.Foe = false;
 
                     person = MisterBirbarcher;//gameObject.AddComponent<Persona>();
                     break;
                 case MasterCharacterList.Mister_PirateParrot:
-                    ControllerTemplate MisterPirateParrot = new ControllerTemplate();
+                    ControllerTemplate MisterPirateParrot = gameObject.AddComponent<ControllerTemplate>();
                     MisterPirateParrot.CharacterName = "Mister_PirateParrot";
                     MisterPirateParrot.CharacterDescription = "Say cracker one more time, I dare ya.....";
                     MisterPirateParrot.CharacterSpecies = SpeciesType.Parrot;
@@ -199,16 +199,16 @@ namespace Assets.Scripts.MonoBehaviours
 
                     //Right now below these have been set to be species affinities but they seem to be originaliy invisioned to be COmbat classes
                     List<SpeciesType> NaturalAlliedPirate = new List<SpeciesType> { SpeciesType.Frog, SpeciesType.Fish };
-                    MisterPirateParrot.NaturalAllies.AddRange(NaturalAlliedPirate);
+                    MisterPirateParrot.NaturalAllies = NaturalAlliedPirate;
                     List<SpeciesType> NaturalenemiedPirate = new List<SpeciesType> { SpeciesType.Crocodile, SpeciesType.Lion };
-                    MisterPirateParrot.NaturalEnemies.AddRange(NaturalenemiedPirate);
+                    MisterPirateParrot.NaturalEnemies = NaturalenemiedPirate;
 
                     MisterPirateParrot.Foe = false;
 
                     person = MisterPirateParrot;//gameObject.AddComponent<Persona>();
                     break;
                 case MasterCharacterList.Mister_SilverSkull:
-                    WarriorTemplate MisterSilverSkull = new WarriorTemplate();
+                    WarriorTemplate MisterSilverSkull = gameObject.AddComponent<WarriorTemplate>();
                     MisterSilverSkull.CharacterName = "Mister_SilverSkull";
                     MisterSilverSkull.CharacterDescription = "Oh where am I from? Earth...";
                     MisterSilverSkull.CharacterSpecies = SpeciesType.Triton;
@@ -220,14 +220,14 @@ namespace Assets.Scripts.MonoBehaviours
                     List<SpeciesType> NaturalAlliedSkull = new List<SpeciesType> { SpeciesType.Salamander, SpeciesType.Triton };
                     MisterSilverSkull.NaturalAllies.AddRange(NaturalAlliedSkull);
                     List<SpeciesType> NaturalenemiedSkul = new List<SpeciesType> { SpeciesType.Crocodile };
-                    MisterSilverSkull.NaturalEnemies.AddRange(NaturalenemiedSkul);
+                    MisterSilverSkull.NaturalEnemies = NaturalenemiedSkul;
 
                     MisterSilverSkull.Foe = false;
 
                     person = MisterSilverSkull;//gameObject.AddComponent<Persona>();
                     break;
                 case MasterCharacterList.Mister_Mantis:
-                    WarriorTemplate MisterMantis = new WarriorTemplate();
+                    WarriorTemplate MisterMantis = gameObject.AddComponent<WarriorTemplate>();
                     MisterMantis.CharacterName = "Mister_Mantis";
                     MisterMantis.CharacterDescription = "No youre thinking of my cousin, Mantis. He is the REAL dragon warrior. Obviously....";
                     MisterMantis.CharacterSpecies = SpeciesType.Insect;
@@ -237,16 +237,16 @@ namespace Assets.Scripts.MonoBehaviours
 
                     //Right now below these have been set to be species affinities but they seem to be originaliy invisioned to be COmbat classes
                     List<SpeciesType> NaturalAlliedMAntis = new List<SpeciesType> { SpeciesType.Frog, SpeciesType.Fish };
-                    MisterMantis.NaturalAllies.AddRange(NaturalAlliedMAntis);
+                    MisterMantis.NaturalAllies = NaturalAlliedMAntis;
                     List<SpeciesType> NaturalenemiedMAntis = new List<SpeciesType> { SpeciesType.Crocodile, SpeciesType.Lion };
-                    MisterMantis.NaturalEnemies.AddRange(NaturalenemiedMAntis);
+                    MisterMantis.NaturalEnemies = NaturalenemiedMAntis;
 
                     MisterMantis.Foe = false;
 
                     person = MisterMantis;//gameObject.AddComponent<Persona>();
                     break;
                 case MasterCharacterList.Mister_Hippo:
-                    WarriorTemplate MisterHippo = new WarriorTemplate();
+                    WarriorTemplate MisterHippo = gameObject.AddComponent<WarriorTemplate>();
                     MisterHippo.CharacterName = "Mister_Hippo";
                     MisterHippo.CharacterDescription = "Is it hot in here? I some space. *huffing* No stop seriously, give me room. *Huffing intensifies* I'm not kidding get aWAY FR";
                     MisterHippo.CharacterSpecies = SpeciesType.Hippo;
@@ -256,16 +256,16 @@ namespace Assets.Scripts.MonoBehaviours
 
                     //Right now below these have been set to be species affinities but they seem to be originaliy invisioned to be COmbat classes
                     List<SpeciesType> NaturalAlliedHippo = new List<SpeciesType> { SpeciesType.Frog, SpeciesType.Fish };
-                    MisterHippo.NaturalAllies.AddRange(NaturalAlliedHippo);
+                    MisterHippo.NaturalAllies = NaturalAlliedHippo;
                     List<SpeciesType> NaturalenemiedHippo = new List<SpeciesType> { SpeciesType.Crocodile, SpeciesType.Lion };
-                    MisterHippo.NaturalEnemies.AddRange(NaturalenemiedHippo);
+                    MisterHippo.NaturalEnemies = NaturalenemiedHippo;
 
                     MisterHippo.Foe = false;
 
                     person = MisterHippo;//gameObject.AddComponent<Persona>();
                     break;
                 case MasterCharacterList.HammerHead:
-                    WarriorTemplate HammerHead = new WarriorTemplate();
+                    WarriorTemplate HammerHead = gameObject.AddComponent<WarriorTemplate>();
                     HammerHead.CharacterName = "HammerHead";
                     HammerHead.CharacterDescription = "Look me in the eye and say that again";
                     HammerHead.CharacterSpecies = SpeciesType.Fish;
@@ -275,16 +275,16 @@ namespace Assets.Scripts.MonoBehaviours
 
                     //Right now below these have been set to be species affinities but they seem to be originaliy invisioned to be COmbat classes
                     List<SpeciesType> NaturalAlliedHammerHead = new List<SpeciesType> { SpeciesType.Frog, SpeciesType.Fish };
-                    HammerHead.NaturalAllies.AddRange(NaturalAlliedHammerHead);
+                    HammerHead.NaturalAllies = NaturalAlliedHammerHead;
                     List<SpeciesType> NaturalenemiedHammerHead = new List<SpeciesType> { SpeciesType.Crocodile, SpeciesType.Lion };
-                    HammerHead.NaturalEnemies.AddRange(NaturalenemiedHammerHead);
+                    HammerHead.NaturalEnemies = NaturalenemiedHammerHead;
 
                     HammerHead.Foe = true;
 
                     person = HammerHead;//gameObject.AddComponent<Persona>();
                     break;
                 case MasterCharacterList.GreatWhite:
-                    WarriorTemplate GreatWhite = new WarriorTemplate();
+                    WarriorTemplate GreatWhite = gameObject.AddComponent<WarriorTemplate>();
                     GreatWhite.CharacterName = "GreatWhite";
                     GreatWhite.CharacterDescription = "Oh my god, my teeth are killing me";
                     GreatWhite.CharacterSpecies = SpeciesType.Fish;
@@ -294,16 +294,16 @@ namespace Assets.Scripts.MonoBehaviours
 
                     //Right now below these have been set to be species affinities but they seem to be originaliy invisioned to be COmbat classes
                     List<SpeciesType> NaturalAlliedGreatWhite = new List<SpeciesType> { SpeciesType.Frog, SpeciesType.Fish };
-                    GreatWhite.NaturalAllies.AddRange(NaturalAlliedGreatWhite);
+                    GreatWhite.NaturalAllies = NaturalAlliedGreatWhite;
                     List<SpeciesType> NaturalenemiedGreatWhite = new List<SpeciesType> { SpeciesType.Crocodile, SpeciesType.Lion };
-                    GreatWhite.NaturalEnemies.AddRange(NaturalAlliedGreatWhite);
+                    GreatWhite.NaturalEnemies = NaturalAlliedGreatWhite;
 
                     GreatWhite.Foe = true;
 
                     person = GreatWhite;//gameObject.AddComponent<Persona>();
                     break;
                 case MasterCharacterList.SpiderCrustacean:
-                    WarriorTemplate SpiderCrustacean = new WarriorTemplate();
+                    WarriorTemplate SpiderCrustacean = gameObject.AddComponent<WarriorTemplate>();
                     SpiderCrustacean.CharacterName = "SpiderCrustacean";
                     SpiderCrustacean.CharacterDescription = "......";
                     SpiderCrustacean.CharacterSpecies = SpeciesType.Fish;
@@ -313,16 +313,16 @@ namespace Assets.Scripts.MonoBehaviours
 
                     //Right now below these have been set to be species affinities but they seem to be originaliy invisioned to be COmbat classes
                     List<SpeciesType> NaturalAlliedSpiderCrustacean = new List<SpeciesType> { SpeciesType.Frog, SpeciesType.Fish };
-                    SpiderCrustacean.NaturalAllies.AddRange(NaturalAlliedSpiderCrustacean);
+                    SpiderCrustacean.NaturalAllies = NaturalAlliedSpiderCrustacean;
                     List<SpeciesType> NaturalenemiedSpiderCrustacean = new List<SpeciesType> { SpeciesType.Crocodile, SpeciesType.Lion };
-                    SpiderCrustacean.NaturalEnemies.AddRange(NaturalenemiedSpiderCrustacean);
+                    SpiderCrustacean.NaturalEnemies = NaturalenemiedSpiderCrustacean;
 
                     SpiderCrustacean.Foe = true;
 
                     person = SpiderCrustacean;//gameObject.AddComponent<Persona>();
                     break;
                 case MasterCharacterList.NecroBoar:
-                    WarriorTemplate NecroBoar = new WarriorTemplate();
+                    WarriorTemplate NecroBoar = gameObject.AddComponent<WarriorTemplate>();
                     NecroBoar.CharacterName = "NecroBoar";
                     NecroBoar.CharacterDescription = "Call me atheist, but I dont believe in the Last Supper";
                     NecroBoar.CharacterSpecies = SpeciesType.Boar;
@@ -332,16 +332,16 @@ namespace Assets.Scripts.MonoBehaviours
 
                     //Right now below these have been set to be species affinities but they seem to be originaliy invisioned to be COmbat classes
                     List<SpeciesType> NaturalAlliedNecroBoar = new List<SpeciesType> { SpeciesType.Frog, SpeciesType.Fish };
-                    NecroBoar.NaturalAllies.AddRange(NaturalAlliedNecroBoar);
+                    NecroBoar.NaturalAllies = NaturalAlliedNecroBoar;
                     List<SpeciesType> NaturalenemiedNecroBoar = new List<SpeciesType> { SpeciesType.Crocodile, SpeciesType.Lion };
-                    NecroBoar.NaturalEnemies.AddRange(NaturalenemiedNecroBoar);
+                    NecroBoar.NaturalEnemies = NaturalenemiedNecroBoar;
 
                     NecroBoar.Foe = true;
 
                     person = NecroBoar;//gameObject.AddComponent<Persona>();
                     break;
                 case MasterCharacterList.ElderStag:
-                    MageTemplate ElderStag = new MageTemplate();
+                    MageTemplate ElderStag = gameObject.AddComponent<MageTemplate>();
                     ElderStag.CharacterName = "ElderStag";
                     ElderStag.CharacterDescription = "My Eternal core spews cold hatred and pure darkness......(just like mothers words *sadness*)";
                     ElderStag.CharacterSpecies = SpeciesType.Deer;
@@ -351,16 +351,16 @@ namespace Assets.Scripts.MonoBehaviours
 
                     //Right now below these have been set to be species affinities but they seem to be originaliy invisioned to be COmbat classes
                     List<SpeciesType> NaturalAlliedElderStag = new List<SpeciesType> { SpeciesType.Frog, SpeciesType.Fish };
-                    ElderStag.NaturalAllies.AddRange(NaturalAlliedElderStag);
+                    ElderStag.NaturalAllies = NaturalAlliedElderStag;
                     List<SpeciesType> NaturalenemiedElderStag = new List<SpeciesType> { SpeciesType.Crocodile, SpeciesType.Lion };
-                    ElderStag.NaturalEnemies.AddRange(NaturalenemiedElderStag);
+                    ElderStag.NaturalEnemies = NaturalenemiedElderStag;
 
                     ElderStag.Foe = true;
 
                     person = ElderStag;//gameObject.AddComponent<Persona>();
                     break;
                 case MasterCharacterList.DevilBird:
-                    MageTemplate DevilBird = new MageTemplate();
+                    MageTemplate DevilBird = gameObject.AddComponent<MageTemplate>();
                     DevilBird.CharacterName = "DevilBird";
                     DevilBird.CharacterDescription = "SQUUACCK!";
                     DevilBird.CharacterSpecies = SpeciesType.Bird;
@@ -370,16 +370,16 @@ namespace Assets.Scripts.MonoBehaviours
 
                     //Right now below these have been set to be species affinities but they seem to be originaliy invisioned to be COmbat classes
                     List<SpeciesType> NaturalAlliedDevilBird = new List<SpeciesType> { SpeciesType.Frog, SpeciesType.Fish };
-                    DevilBird.NaturalAllies.AddRange(NaturalAlliedDevilBird);
+                    DevilBird.NaturalAllies = NaturalAlliedDevilBird;
                     List<SpeciesType> NaturalenemiedDevilBird = new List<SpeciesType> { SpeciesType.Crocodile, SpeciesType.Lion };
-                    DevilBird.NaturalEnemies.AddRange(NaturalenemiedDevilBird);
+                    DevilBird.NaturalEnemies = NaturalenemiedDevilBird;
 
                     DevilBird.Foe = true;
 
                     person = DevilBird;//gameObject.AddComponent<Persona>();
                     break;
                 case MasterCharacterList.DragonSloth:
-                    ControllerTemplate DragonSloth = new ControllerTemplate();
+                    ControllerTemplate DragonSloth = gameObject.AddComponent<ControllerTemplate>();
                     DragonSloth.CharacterName = "DragonSloth";
                     DragonSloth.CharacterDescription = "W..a..i..t....u....p..y...o...u....g....u";
                     DragonSloth.CharacterSpecies = SpeciesType.Sloth;
@@ -389,9 +389,9 @@ namespace Assets.Scripts.MonoBehaviours
 
                     //Right now below these have been set to be species affinities but they seem to be originaliy invisioned to be COmbat classes
                     List<SpeciesType> NaturalAlliedDragonSloth = new List<SpeciesType> { SpeciesType.Frog, SpeciesType.Fish };
-                    DragonSloth.NaturalAllies.AddRange(NaturalAlliedDragonSloth);
+                    DragonSloth.NaturalAllies = NaturalAlliedDragonSloth;
                     List<SpeciesType> NaturalenemiedDragonSloth = new List<SpeciesType> { SpeciesType.Crocodile, SpeciesType.Lion };
-                    DragonSloth.NaturalEnemies.AddRange(NaturalenemiedDragonSloth);
+                    DragonSloth.NaturalEnemies = NaturalenemiedDragonSloth;
 
                     DragonSloth.Foe = true;
 
@@ -400,6 +400,7 @@ namespace Assets.Scripts.MonoBehaviours
                 default:
                     break;
             }
+            person.characterBehaviour = this;
         }
         public void OnMouseDown()
         {
@@ -457,7 +458,7 @@ namespace Assets.Scripts.MonoBehaviours
             GetComponent<SpriteRenderer>().color = color;
         }
 
-        #region EnemyCode
+        #region Enemy Code
         public void EnemyAttack()
         {
             EnemyActions Villiany = new EnemyActions();// since they dont use cards here is where their actions will be found
@@ -469,13 +470,13 @@ namespace Assets.Scripts.MonoBehaviours
             then depending on health of enemies or aallies, health of the boss or all that good good it will fire Villiany.Attack1(), 2 or 3. Whatever makes sense
              */
 
-            CardBehaviour cardBehaviour = new CardBehaviour();
+            /*CardBehaviour cardBehaviour = new CardBehaviour();
 
             cardName[] array = (cardName[])(cardName.GetValues(typeof(cardName)));
             cardBehaviour.cardname = array[Random.Range(0, array.Length)];
             cardBehaviour.species = SpeciesType.Enemy; 
 
-            cardBehaviour.OnAction(GameManager.Instance.activeCharacter.person);
+            cardBehaviour.OnAction(GameManager.Instance.activeCharacter.person);*/
 
             turnUsed = true;
             GameManager.Instance.CheckRoundDone();

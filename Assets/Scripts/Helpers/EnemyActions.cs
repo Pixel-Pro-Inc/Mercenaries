@@ -13,7 +13,7 @@ using static Assets.Scripts.Models.Enums;
 
 namespace Assets.Scripts.Helpers
 {
-    class EnemyActions: Persona,IEnemyAction
+    class EnemyActions: Persona, IEnemyAction
     {
         MasterCharacterList EnemyNames;
         Persona CharacterInstance = null;
@@ -29,7 +29,7 @@ namespace Assets.Scripts.Helpers
                     while (Character.Health <= (int)(Character.Life * 0.25))
                     {
                         int fordo = RoundInfo.RoundsPassed;
-                        Character.PowerBuffPercent   = 2;
+                        Character.PowerBuffPercent = 2;
                         if (RoundInfo.RoundsPassed>fordo)
                         {
                             Character.PolishWeapon(Character);
@@ -316,7 +316,7 @@ namespace Assets.Scripts.Helpers
                 default:
                     break;
             }
-        }
+        } //Physical
         public void Attack2(object TargetInstance)
         {
             if (GameManager.Instance.activeEnemy != null && GameManager.Instance.roundInfo.inControl == WhoseInControl.CPU)
@@ -429,7 +429,7 @@ namespace Assets.Scripts.Helpers
                 default:
                     break;
             }
-        }
+        } //Magical
         public void Attack3(object TargetInstance)
         {
             if (GameManager.Instance.activeEnemy != null && GameManager.Instance.roundInfo.inControl == WhoseInControl.CPU)
@@ -542,6 +542,103 @@ namespace Assets.Scripts.Helpers
                             Character.Stun(Character, item, 1);
                         }
                     }
+                    break;
+                default:
+                    break;
+            }
+        } //True Damage
+
+        public void MagicalAttacks()
+        {
+
+        }
+        public void PhysicalAttacks()
+        {
+
+        }
+        public void TrueDamageAttacks()
+        {
+
+        }
+        public void Debuffs()
+        {
+
+        }
+        public void Heal()
+        {
+            switch (EnemyNames)
+            {
+                case MasterCharacterList.HammerHead:
+                    foreach (object item in Character.Enemies)
+                    {
+                        PhysicalDamage(Character, item);
+                        Tainted(Character, item, 1);
+                    }
+                    break;
+                case MasterCharacterList.GreatWhite:
+                    int enemyindexCount = Character.Enemies.Count;
+                    damageobj.DamageValue = Character.DamageGiven();
+                    int tea = UnityEngine.Random.Range(1, enemyindexCount);
+                    Character.TrueDamage(CharacterInstance, Character.Enemies[tea], damageobj);
+                    break;
+                case MasterCharacterList.SpiderCrustacean:
+                    Character.PhysicalDamage(Character, Target);
+                    Character.CalmDeBuffPercent = 0.2;
+                    Character.Calm(Character, Target, 1);
+                    break;
+                case MasterCharacterList.NecroBoar:
+                    int RoundsDone = new int(); RoundsDone = RoundInfo.RoundsPassed; int count = 0;
+                    Timer myr2; myr2 = new Timer(); myr2.Elapsed += new ElapsedEventHandler(myEt); myr2.Interval = 1000; myr2.Enabled = true;
+                    void myEt(object source2, ElapsedEventArgs e)
+                    {
+                        if (RoundsDone != RoundInfo.RoundsPassed && count < 3)
+                        {
+                            RoundsDone = RoundInfo.RoundsPassed;
+                            Character.Bleed(Character, Target);
+                            count++;
+                        }
+                        if (count == 3) myr2.Close();
+                    }
+                    break;
+                case MasterCharacterList.ElderStag:
+                    int ElderFist = (int)(Character.DamageGiven() * 0.4);
+                    Persona Face = (Persona)Character.Enemies[UnityEngine.Random.Range(0, Character.Enemies.Count)];
+                    Persona Face2 = (Persona)Character.Enemies[UnityEngine.Random.Range(0, Character.Enemies.Count)];
+                    Persona Face3 = (Persona)Character.Enemies[UnityEngine.Random.Range(0, Character.Enemies.Count)];
+                    List<Persona> Faces = new List<Persona> { Face, Face2, Face3 };
+                    foreach (var item in Faces)
+                    {
+                        Character.MagicalDamage(Character, item, ElderFist);
+                    }
+                    foreach (var item in Character.Allies)
+                    {
+                        Persona fRIEND = (Persona)item;
+                        fRIEND.Speed += (int)(fRIEND.Speed * 0.1);
+                    }
+                    break;
+                case MasterCharacterList.DevilBird:
+                    object fVictim = Character.Enemies[UnityEngine.Random.Range(0, Character.Enemies.Count)];
+                    object SVictim = Character.Enemies[UnityEngine.Random.Range(0, Character.Enemies.Count)];
+                    int roundsbaby = RoundInfo.RoundsPassed;
+                    Character.Rooted(Character, fVictim, 1); Character.Burnt(Character, fVictim);
+                    Character.Rooted(Character, SVictim, 1); Character.Burnt(Character, SVictim);
+
+                    Timer summer; summer = new Timer(); summer.Elapsed += new ElapsedEventHandler(vivaldiiii); summer.Interval = 1000; summer.Enabled = true;
+                    void vivaldiiii(object source2, ElapsedEventArgs e)
+                    {
+                        if (roundsbaby + 1 == RoundInfo.RoundsPassed)
+                        {
+                            Character.Burnt(Character, fVictim);
+                            Character.Burnt(Character, SVictim);
+                            summer.Close();
+                        }
+                    }
+
+                    break;
+                case MasterCharacterList.DragonSloth:
+                    Persona Deictim = (Persona)Character.Enemies[UnityEngine.Random.Range(0, Character.Enemies.Count)];
+                    Character.PhysicalDamage(Character, Deictim);
+                    Deictim.dodge -= 5;
                     break;
                 default:
                     break;

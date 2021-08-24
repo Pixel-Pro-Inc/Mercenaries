@@ -8,12 +8,12 @@ namespace Assets.Scripts.Entities.Item
 {
     class HolyCrossTemplate : ItemTemplate
     {
-        public override string ItemName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public override string ItemDescription { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public override int Owner { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public override object Ownertype { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public override bool Relic { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public override bool BeingUsed { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public override string ItemName { get; set; }
+        public override string ItemDescription { get; set; }
+        public override int Owner { get; set; }
+        public override object Ownertype { get; set; }
+        public override bool Relic { get; set; }
+        public override bool BeingUsed { get; set; }
 
         #region ItemActions
         public override bool ActivationRequireMent(object CharacterInstance)

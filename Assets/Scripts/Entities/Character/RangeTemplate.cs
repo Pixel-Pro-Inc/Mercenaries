@@ -138,12 +138,12 @@ namespace Assets.Scripts.Entities.Character
          */
 
 
-        public List<SpeciesType> NaturalAllies { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public List<SpeciesType> NaturalEnemies { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public List<SpeciesType> NaturalAllies { get; set; }
+        public List<SpeciesType> NaturalEnemies { get; set; }
         private bool _foe { get; set; }
         public override bool Foe { get { return _foe; } set { _foe = value; } }
-        public bool PassiveWarriorTraits { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public override int HitCount { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public bool PassiveWarriorTraits { get; set; }
+        public override int HitCount { get; set; }
 
         #endregion
         #region Character Methods

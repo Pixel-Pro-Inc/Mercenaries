@@ -341,11 +341,11 @@ namespace Assets.Scripts.Entities.Character
 
         //Yewo's Variables
 
-        public int debuffChance { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public double BrokenGaurdDeBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public double ColdDeBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public double BlindedDeBuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public double TaintedDebuffPercent { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public int debuffChance { get; set; }
+        public double BrokenGaurdDeBuffPercent { get; set; }
+        public double ColdDeBuffPercent { get; set; }
+        public double BlindedDeBuffPercent { get; set; }
+        public double TaintedDebuffPercent { get; set; }
 
         #endregion
 

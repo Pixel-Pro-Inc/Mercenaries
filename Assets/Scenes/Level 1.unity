@@ -724,7 +724,7 @@ GameObject:
   - component: {fileID: 465661576}
   - component: {fileID: 465661577}
   m_Layer: 0
-  m_Name: Parent - Triton
+  m_Name: Parent - Salamander
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1071,6 +1071,7 @@ MonoBehaviour:
   parent: {fileID: 0}
   Goto: {x: 0, y: 0, z: 0}
   species: 2
+  Everyone: 1
   Deck: {fileID: 0}
   turnUsed: 0
   person: {fileID: 0}
@@ -1557,7 +1558,7 @@ GameObject:
   - component: {fileID: 634181959}
   - component: {fileID: 634181960}
   m_Layer: 0
-  m_Name: Parent - Salamander
+  m_Name: Parent - Triton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1770,7 +1771,8 @@ MonoBehaviour:
   - {x: -1, y: -1.6, z: 1}
   parent: {fileID: 0}
   Goto: {x: 0, y: 0, z: 0}
-  species: 5
+  species: 3
+  Everyone: 4
   Deck: {fileID: 0}
   turnUsed: 0
   person: {fileID: 0}
@@ -1900,7 +1902,8 @@ MonoBehaviour:
   - {x: -1, y: -1.6, z: 1}
   parent: {fileID: 0}
   Goto: {x: 0, y: 0, z: 0}
-  species: 6
+  species: 13
+  Everyone: 16
   Deck: {fileID: 0}
   turnUsed: 0
   person: {fileID: 0}
@@ -3237,6 +3240,7 @@ MonoBehaviour:
   parent: {fileID: 0}
   Goto: {x: 0, y: 0, z: 0}
   species: 1
+  Everyone: 6
   Deck: {fileID: 0}
   turnUsed: 0
   person: {fileID: 0}
@@ -3590,7 +3594,8 @@ MonoBehaviour:
   - {x: -1, y: -1.6, z: 1}
   parent: {fileID: 0}
   Goto: {x: 0, y: 0, z: 0}
-  species: 3
+  species: 5
+  Everyone: 3
   Deck: {fileID: 0}
   turnUsed: 0
   person: {fileID: 0}

@@ -25,7 +25,7 @@ namespace Assets.Scripts.Entities.Character
         private int _health = 0;
         public override int Health
         {
-            get { return Health; }
+            get { return _health; }
             set
             {
                 if (Health < 0) _health = 0;
@@ -123,11 +123,11 @@ namespace Assets.Scripts.Entities.Character
 
         private bool _foe = false;
         public override bool Foe { get { return _foe; } set { _foe = value; } }
-        public List<SpeciesType> NaturalAllies { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public List<SpeciesType> NaturalEnemies { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public bool PassiveTankTraits { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public override int HitCount { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public bool PassiveWarriorTraits { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public List<SpeciesType> NaturalAllies { get; set; }
+        public List<SpeciesType> NaturalEnemies { get; set; }
+        public bool PassiveTankTraits { get; set; }
+        public override int HitCount { get; set; }
+        public bool PassiveWarriorTraits { get; set; }
 
 
         #endregion
