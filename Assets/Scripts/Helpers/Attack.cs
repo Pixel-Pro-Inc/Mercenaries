@@ -103,6 +103,9 @@ namespace Assets.Scripts.Helpers
             }
 
             Target.HitCount++;
+            Random bitter = new Random();
+            int sweet = bitter.Next(1, 101);
+            if (sweet < Character.dodge) physicalDamage = 0;
             shieldcache = Target.shield;
             armourcahe = Target.Armour;
             shieldcache -= physicalDamage; Target.shield -= physicalDamage;//this will make shield=0 if the physical damage is too much
@@ -195,6 +198,9 @@ namespace Assets.Scripts.Helpers
             }
 
             Target.HitCount++;
+            Random bitter = new Random();
+            int sweet = bitter.Next(1, 101);
+            if (sweet < Character.dodge) physicalDamage = 0;
             shieldcache = Target.shield;
             armourcahe = Target.Armour;
             shieldcache -= physicalDamage; Target.shield -= physicalDamage;//this will make shield=0 if the physical damage is too much
@@ -280,6 +286,9 @@ namespace Assets.Scripts.Helpers
             }
             Target.AttackSponser = Character; //for Onguard()
             Target.HitCount++;
+            Random Papaer = new Random();
+            int thin = Papaer.Next(1, 101);
+            if (thin < Character.dodge) magicalDamage =0; //this is to implement dodge.
             shieldcache = Target.shield;
             magrescache = Target.MagicRes;
             if (Target.ImmuneState == true) magicalDamage = 0;
@@ -366,6 +375,9 @@ namespace Assets.Scripts.Helpers
             }
             Target.AttackSponser = Character; //for Onguard()
             Target.HitCount++;
+            Random Papaer = new Random();
+            int thin = Papaer.Next(1, 101);
+            if (thin < Character.dodge) magicalDamage = 0;
             shieldcache = Target.shield;
             magrescache = Target.MagicRes;
             if (Target.ImmuneState == true) magicalDamage = 0;
@@ -603,6 +615,9 @@ namespace Assets.Scripts.Helpers
             if (MArkedDebuffM == true) Dama += (int)(Dama * markedda);
 
             Target.HitCount++;
+            Random bitter = new Random();
+            int sweet = bitter.Next(1, 101);
+            if (sweet < Character.dodge) Dama = 0;
             shieldcache = Target.shield;
             armourcahe = Target.Armour;
             magrescache = Target.MagicRes;

@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Assets.Scripts.MonoBehaviours;
 using Assets.Scripts.Models;
+using UnityEngine;
 
 namespace Assets.Scripts.Helpers
 {
@@ -206,12 +207,26 @@ namespace Assets.Scripts.Helpers
                     
                     break;
                 case MasterCharacterList.DragonSloth:
+                    Vector3[] herpositions = new Vector3[GameManager.Instance.playerCharacters.Count];
+                    for (int i = 0; i < GameManager.Instance.playerCharacters.Count; i++)
+                    {
+                        herpositions=GameManager.Instance.playerCharacters[i].GetComponentInChildren<CharacterBehaviour>().positions;
+                    }
+                    herpositions.Reverse(); // here is how they switch positions or rather the fucntion that makes it possible
+                    for (int i = 0; i < GameManager.Instance.playerCharacters.Count; i++)
+                    {
+                        GameManager.Instance.playerCharacters[i].GetComponentInChildren<CharacterBehaviour>().positions[i] = herpositions[i];
+                    }
+                    foreach (var item in Character.Enemies)
+                    {
+                        Persona hero = (Persona)item;
+                        hero.dodge -= (int)(hero.dodge*0.1);
+                    }
                     break;
                 default:
                     break;
             }
         }
-
         public void Attack1(object CharacterInstance, object TargetInstance)
         {
             Persona Character = (Persona)CharacterInstance;
@@ -288,6 +303,9 @@ namespace Assets.Scripts.Helpers
                     
                     break;
                 case MasterCharacterList.DragonSloth:
+                    Persona Deictim = (Persona)Character.Enemies[UnityEngine.Random.Range(0, Character.Enemies.Count)];
+                    Character.PhysicalDamage(Character, Deictim);
+                    Deictim.dodge -= 5;
                     break;
                 default:
                     break;
@@ -389,6 +407,17 @@ namespace Assets.Scripts.Helpers
                     Character.UniqueSkill(Character, Target); Character.Sleep(Character, Target);
                     break;
                 case MasterCharacterList.DragonSloth:
+                    if (Target.dodge==0)
+                    {
+                        damageobj.DamageValue = (int)(Character.DamageGiven() * 0.25);
+                        Character.PhysicalDamage(Character, Target, damageobj);
+                        if (UnityEngine.Random.Range(0, 100)<50)
+                        {
+                            Character.PhysicalDamage(Character, Target);
+                        }
+                        
+                    }
+                    
                     break;
                 default:
                     break;
@@ -470,6 +499,15 @@ namespace Assets.Scripts.Helpers
 
                     break;
                 case MasterCharacterList.DragonSloth:
+                    Character.PhysicalDamage(Character, Target);
+                    Target.dodge -= (int)(Target.dodge * 0.05);
+                    if (Target.dodge==0)
+                    {
+                        foreach (var item in Character.Enemies)
+                        {
+                            Character.Stun(Character, item, 1);
+                        }
+                    }
                     break;
                 default:
                     break;
