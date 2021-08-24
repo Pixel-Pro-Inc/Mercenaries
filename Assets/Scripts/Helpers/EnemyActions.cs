@@ -9,15 +9,19 @@ using System.Threading.Tasks;
 using Assets.Scripts.MonoBehaviours;
 using Assets.Scripts.Models;
 using UnityEngine;
+using static Assets.Scripts.Models.Enums;
 
 namespace Assets.Scripts.Helpers
 {
     class EnemyActions: Persona,IEnemyAction
     {
         MasterCharacterList EnemyNames;
-        public void PassiveEnemyAbility(object CharacterInstance)
+        Persona CharacterInstance = null;
+        public void PassiveEnemyAbility()
         {
-            Persona Character= (Persona)CharacterInstance;
+            if (GameManager.Instance.activeEnemy != null && GameManager.Instance.roundInfo.inControl == WhoseInControl.CPU)
+            { CharacterInstance = GameManager.Instance.activeEnemy.person; }
+            Persona Character= CharacterInstance;
             switch (EnemyNames)
             {
                 case MasterCharacterList.HammerHead:
@@ -227,9 +231,11 @@ namespace Assets.Scripts.Helpers
                     break;
             }
         }
-        public void Attack1(object CharacterInstance, object TargetInstance)
+        public void Attack1(object TargetInstance)
         {
-            Persona Character = (Persona)CharacterInstance;
+            if (GameManager.Instance.activeEnemy != null && GameManager.Instance.roundInfo.inControl == WhoseInControl.CPU)
+            { CharacterInstance = GameManager.Instance.activeEnemy.person; }
+            Persona Character = CharacterInstance;
             Persona Target = (Persona)TargetInstance;
             DamageObject damageobj = new DamageObject();
 
@@ -311,9 +317,11 @@ namespace Assets.Scripts.Helpers
                     break;
             }
         }
-        public void Attack2(object CharacterInstance, object TargetInstance)
+        public void Attack2(object TargetInstance)
         {
-            Persona Character = (Persona)CharacterInstance;
+            if (GameManager.Instance.activeEnemy != null && GameManager.Instance.roundInfo.inControl == WhoseInControl.CPU)
+            { CharacterInstance = GameManager.Instance.activeEnemy.person; }
+            Persona Character = CharacterInstance;
             Persona Target = (Persona)TargetInstance;
             DamageObject damageobj = new DamageObject();
 
@@ -415,7 +423,6 @@ namespace Assets.Scripts.Helpers
                         {
                             Character.PhysicalDamage(Character, Target);
                         }
-                        
                     }
                     
                     break;
@@ -423,9 +430,11 @@ namespace Assets.Scripts.Helpers
                     break;
             }
         }
-        public void Attack3(object CharacterInstance, object TargetInstance)
+        public void Attack3(object TargetInstance)
         {
-            Persona Character = (Persona)CharacterInstance;
+            if (GameManager.Instance.activeEnemy != null && GameManager.Instance.roundInfo.inControl == WhoseInControl.CPU)
+            { CharacterInstance = GameManager.Instance.activeEnemy.person; }
+            Persona Character = CharacterInstance;
             Persona Target = (Persona)TargetInstance;
             DamageObject damageobj = new DamageObject();
             switch (EnemyNames)
@@ -442,6 +451,15 @@ namespace Assets.Scripts.Helpers
                     
                     break;
                 case MasterCharacterList.GreatWhite:
+                    damageobj.DamageValue = (int)(Character.DamageGiven() * 0.2);
+                    foreach (object item in Character.Enemies)
+                    {
+                        Persona hero = (Persona)item;
+                        Character.PhysicalDamage(Character, hero, damageobj);
+                        hero.Speed *= 0.5;
+                        Character.BreakArmour(hero, (int)(hero.Armour * 0.5));
+                    }
+                    Character.PowerBuffPercent = 0.1;
                     break;
                 case MasterCharacterList.SpiderCrustacean:
                     //go in the shell animation
@@ -472,14 +490,30 @@ namespace Assets.Scripts.Helpers
                     }
                     break;
                 case MasterCharacterList.ElderStag:
-                    int mAch = RoundInfo.RoundsPassed;
+                    int mAch = RoundInfo.RoundsPassed; int count = 0;
                     Timer oboe; oboe = new Timer(); oboe.Elapsed += new ElapsedEventHandler(violin); oboe.Interval = 1000; oboe.Enabled = true;
                     void violin(object source2, ElapsedEventArgs e)
                     {
-                        if (mAch+1 ==RoundInfo.RoundsPassed)
+                        if (mAch <RoundInfo.RoundsPassed&& count<=2)
                         {
-                            // Waiting for them to explain
+                            mAch = RoundInfo.RoundsPassed;
+                            foreach (var item in Character.Allies)
+                            {
+                                Persona villian = (Persona)item;
+                                villian.Speed += (int)(villian.Speed * 0.2);
+                            }
                         }
+                        if (mAch < RoundInfo.RoundsPassed && count <= 1)
+                        {
+                            mAch = RoundInfo.RoundsPassed;
+                            foreach (var item in Character.Allies)
+                            {
+                                Persona villian = (Persona)item;
+                                villian.PowerBuffPercent = 0.5; villian.MagiBuffPercent = 0.5;
+                                villian.PolishWeapon(villian); villian.Chosen(villian);
+                            }
+                        }
+                        if (RoundInfo.RoundDone == true) count++;
                     }
                    
                     break;

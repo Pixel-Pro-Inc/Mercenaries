@@ -552,7 +552,7 @@ public class CardBehaviour : Card
             case cardName.tritonThirdCard:
                 if (CharacterInstance.shield > 0)
                 {
-                    CharacterInstance.PowerBuffPercent = 2; CharacterInstance.PolishWeapon(CharacterInstance);
+                    CharacterInstance.PowerBuffPercent = 1; CharacterInstance.PolishWeapon(CharacterInstance);
                     CharacterInstance.PhysicalDamage(CharacterInstance, Target);
                 }
                 else { CharacterInstance.PhysicalDamage(CharacterInstance, Target); }

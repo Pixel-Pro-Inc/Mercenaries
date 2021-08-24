@@ -8,9 +8,9 @@ namespace Assets.Scripts.Interface
 {
     interface IEnemyAction
     {
-        void PassiveEnemyAbility(object CharacterInstance);
-        void Attack1(object CharacterInstance, object TargetInstance);
-        void Attack2(object CharacterInstance, object TargetInstance);
-        void Attack3(object CharacterInstance, object TargetInstance);
+        void PassiveEnemyAbility();
+        void Attack1(object TargetInstance);
+        void Attack2(object TargetInstance);
+        void Attack3(object TargetInstance);
     }
 }
