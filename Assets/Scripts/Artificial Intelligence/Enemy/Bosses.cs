@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Entities.Character;
 using Assets.Scripts.Helpers;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,12 +28,16 @@ public class Bosses
     #endregion
 
     Persona myStats;
+    public static Bosses Instance;
     List<Persona> opponents = new List<Persona>();
     EnemyActions enemyActions = new EnemyActions();
+
     public Bosses(Persona _MyStats, List<Persona> _Opponents)
     {
+        Instance = this;
         myStats = _MyStats;
         opponents.AddRange(_Opponents);
+        enemyActions.PassiveEnemyAbility();
     }
     public void Decision() //Play Style Decision
     {
@@ -65,7 +70,6 @@ public class Bosses
             count++;
         }        
     }
-
     void BlindAttack()
     {
         int r = Random.Range(0, 4);
@@ -73,33 +77,31 @@ public class Bosses
         switch (r)
         {
             case 0:
-                enemyActions.MagicalAttacks();
+                enemyActions.MagicalAttacks(opponents.Any());
                 break;
             case 1:
-                enemyActions.PhysicalAttacks();
+                enemyActions.PhysicalAttacks(opponents.Any());
                 break;
             case 2:
-                enemyActions.TrueDamageAttacks();
+                enemyActions.TrueDamageAttacks(opponents.Any());
                 break;
             case 3:
-                enemyActions.Debuffs();
+                enemyActions.Debuffs(opponents.Any());
                 break;
         }
     }
-
     void DefenseBiasedAttack()
     {
         if ((myStats.Health / myStats.Life) < healthThreshold)
         {
-            //Heal
-            enemyActions.Heal();
+            //BUff involves healing, cause it is not always possible to heal
+            enemyActions.Buff(opponents.Any());
         }
         else
         {
             Decision(); //Try another strategy
         }
     }
-
     void StrategicAttack()
     {
         bool fired = false;
@@ -110,7 +112,7 @@ public class Bosses
             {
                 if (opponents[i].Health < (opponents[i].Life * .8f))
                 {
-                    enemyActions.PhysicalAttacks();
+                    enemyActions.PhysicalAttacks(opponents.Any());
 
                     fired = true;
                     i = opponents.Count;
@@ -124,7 +126,7 @@ public class Bosses
             {
                 if (opponents[i].Health < (opponents[i].Life * .6f))
                 {
-                    enemyActions.MagicalAttacks();
+                    enemyActions.MagicalAttacks(opponents.Any());
 
                     fired = true;
                     i = opponents.Count;
@@ -138,7 +140,7 @@ public class Bosses
             {
                 if (opponents[i].Health < (opponents[i].Life * .4f))
                 {
-                    enemyActions.TrueDamageAttacks();
+                    enemyActions.TrueDamageAttacks(opponents.Any());
 
                     fired = true;
                     i = opponents.Count;
@@ -152,7 +154,7 @@ public class Bosses
             {
                 if (opponents[i].GetDebuffs().Count == 0)
                 {
-                    enemyActions.Debuffs();
+                    enemyActions.Debuffs(opponents.Any());
 
                     fired = true;
                     i = opponents.Count;
@@ -165,7 +167,6 @@ public class Bosses
             //enemyActions.Buffs();
         }
     }
-
     bool SlotMachine(float chance)
     {
         int max = (int)(1f / chance);
