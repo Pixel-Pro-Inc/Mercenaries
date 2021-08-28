@@ -225,7 +225,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 12}
+  m_AnchoredPosition: {x: 0, y: 10}
   m_SizeDelta: {x: 2, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &14170200
@@ -800,7 +800,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 12}
+  m_AnchoredPosition: {x: 0, y: 8}
   m_SizeDelta: {x: 2, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &469272881
@@ -1214,7 +1214,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 12}
+  m_AnchoredPosition: {x: 0, y: 9}
   m_SizeDelta: {x: 2, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &549343043
@@ -1528,25 +1528,24 @@ MonoBehaviour:
   activeCharacter: {fileID: 1522216990}
   activeEnemy: {fileID: 0}
   debuffs:
-  - {fileID: 21300000, guid: 829be45d6a3a0ad47aeb731e15c7973e, type: 3}
-  - {fileID: 21300000, guid: 4c2942ff66dd9e241bb52c4e83c08598, type: 3}
-  - {fileID: 21300000, guid: 1b7a05a4a1dd1c7449a3e0ee7f60192f, type: 3}
-  - {fileID: 21300000, guid: a613121c28d2c9747aed0ede033f5e5e, type: 3}
-  - {fileID: 21300000, guid: 2630701ce754e5348a7ddf0da9d48885, type: 3}
-  - {fileID: 21300000, guid: 8693ccddbd395074eb75b13e2d950784, type: 3}
-  - {fileID: 21300000, guid: 610967105b6f5274aab43f6132c30d8e, type: 3}
-  - {fileID: 21300000, guid: e42542402e57be4449b142f261355bdb, type: 3}
-  - {fileID: 21300000, guid: bd90d71ffb664c644aa57880218abcd7, type: 3}
-  - {fileID: 21300000, guid: 18ba511bc05924541b7b656f7739ba46, type: 3}
-  - {fileID: 21300000, guid: 1be600d0ee1f2fa4d9cb2cab62324ef9, type: 3}
-  - {fileID: 21300000, guid: df8da80e3cdad3947975e541e81d46c3, type: 3}
-  - {fileID: 21300000, guid: 565eef2e11faf3a4092a6b8b3fbf4fb3, type: 3}
-  - {fileID: 21300000, guid: 10f5ac9286bdc6f4ea8bbe67d02356ef, type: 3}
-  - {fileID: 21300000, guid: 7d4c958a3e47b0b4a92b36e8b910bcf5, type: 3}
-  - {fileID: 21300000, guid: 1504a3f7983afa44284513b8684439bd, type: 3}
-  - {fileID: 21300000, guid: 4e04501ce0030ae4a9bbb988c7797793, type: 3}
-  - {fileID: 21300000, guid: f844500443dac6344aaf5b5e667ac6c3, type: 3}
-  effect: {fileID: 386677906159656135, guid: 1e034ed55f736c04e804f7fa08144f73, type: 3}
+  - {fileID: 7562443655388633985, guid: e3c65e2663e408642998c7af9fa070c4, type: 3}
+  - {fileID: 7562443655388633985, guid: e3c65e2663e408642998c7af9fa070c4, type: 3}
+  - {fileID: 7562443655388633985, guid: e3c65e2663e408642998c7af9fa070c4, type: 3}
+  - {fileID: 7562443655388633985, guid: e3c65e2663e408642998c7af9fa070c4, type: 3}
+  - {fileID: 7562443655388633985, guid: e3c65e2663e408642998c7af9fa070c4, type: 3}
+  - {fileID: 7562443655388633985, guid: e3c65e2663e408642998c7af9fa070c4, type: 3}
+  - {fileID: 7562443655388633985, guid: e3c65e2663e408642998c7af9fa070c4, type: 3}
+  - {fileID: 7562443655388633985, guid: e3c65e2663e408642998c7af9fa070c4, type: 3}
+  - {fileID: 7562443655388633985, guid: e3c65e2663e408642998c7af9fa070c4, type: 3}
+  - {fileID: 7562443655388633985, guid: e3c65e2663e408642998c7af9fa070c4, type: 3}
+  - {fileID: 7562443655388633985, guid: e3c65e2663e408642998c7af9fa070c4, type: 3}
+  - {fileID: 7562443655388633985, guid: e3c65e2663e408642998c7af9fa070c4, type: 3}
+  - {fileID: 7562443655388633985, guid: e3c65e2663e408642998c7af9fa070c4, type: 3}
+  - {fileID: 7562443655388633985, guid: e3c65e2663e408642998c7af9fa070c4, type: 3}
+  - {fileID: 7562443655388633985, guid: e3c65e2663e408642998c7af9fa070c4, type: 3}
+  - {fileID: 7562443655388633985, guid: e3c65e2663e408642998c7af9fa070c4, type: 3}
+  - {fileID: 7562443655388633985, guid: e3c65e2663e408642998c7af9fa070c4, type: 3}
+  - {fileID: 7562443655388633985, guid: e3c65e2663e408642998c7af9fa070c4, type: 3}
 --- !u!1 &634181958
 GameObject:
   m_ObjectHideFlags: 0
@@ -1813,6 +1812,7 @@ GameObject:
   - component: {fileID: 809300056}
   - component: {fileID: 809300055}
   - component: {fileID: 809300057}
+  - component: {fileID: 809300058}
   m_Layer: 0
   m_Name: 5.2
   m_TagString: Untagged
@@ -1876,7 +1876,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 809300054}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 9.977873, y: 1.904238, z: 0.7040146}
+  m_LocalPosition: {x: 9.977873, y: 2.3, z: 0.7040146}
   m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
   m_Children:
   - {fileID: 2058738249}
@@ -1907,6 +1907,29 @@ MonoBehaviour:
   Deck: {fileID: 0}
   turnUsed: 0
   person: {fileID: 0}
+--- !u!114 &809300058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 809300054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5cdb6e5ad797d04f8a9e76289fd8a22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blindAttack: 0.9
+  defenseBiasedAttack: 0.001
+  strategicAttack: 0.05
+  debuffLikelyHood: 0.01
+  bruteForce: 0.9
+  magicalForce: 0.9
+  trueForce: 0.9
+  buffLikelyHood: 0.01
+  healthThreshold: 0.6
+  myStats: {fileID: 0}
+  opponents: []
 --- !u!1 &835163861
 GameObject:
   m_ObjectHideFlags: 0
@@ -2730,7 +2753,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 12}
+  m_AnchoredPosition: {x: 0, y: 9}
   m_SizeDelta: {x: 2, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1245344485
@@ -3165,7 +3188,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1522216987}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5, y: 0, z: 5}
+  m_LocalPosition: {x: -5, y: 2.6, z: 5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 549343042}

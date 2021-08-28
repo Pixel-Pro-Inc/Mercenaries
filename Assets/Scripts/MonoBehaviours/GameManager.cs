@@ -20,8 +20,7 @@ namespace Assets.Scripts.MonoBehaviours
         public CharacterBehaviour activeCharacter;
         public CharacterBehaviour activeEnemy;
 
-        public Sprite[] debuffs;
-        public GameObject effect;
+        public GameObject[] debuffs;
 
         private void Awake()
         {
@@ -91,8 +90,7 @@ namespace Assets.Scripts.MonoBehaviours
                 case debuffType.Exiled:
                     SpawnEffect(target.gameObject.transform, debuffs[13]);
                     break;
-                case debuffType.Marked:
-                    
+                case debuffType.Marked:                    
                     break;
                 case debuffType.Calm:
                     SpawnEffect(target.gameObject.transform, debuffs[5]);
@@ -131,11 +129,18 @@ namespace Assets.Scripts.MonoBehaviours
                     break;
             }
         }
-        void SpawnEffect(Transform character, Sprite sprite)
+        int blockEffect = 0;
+        void SpawnEffect(Transform character, GameObject effect)
         {
-            GameObject x = Instantiate(effect, character);
-            x.GetComponent<SpriteRenderer>().sprite = sprite;
-            x.transform.localScale = new Vector3(0f, 0f, -1f);
+            if(blockEffect == 0)
+            {
+                Vector3 location = new Vector3(character.position.x, effect.transform.position.y, -1f);
+
+                GameObject x = Instantiate(effect, location, Quaternion.identity);
+                x.transform.SetParent(character);
+
+                blockEffect = 1;
+            }            
         }
     }
 }

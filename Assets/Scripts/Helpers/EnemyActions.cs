@@ -17,6 +17,8 @@ namespace Assets.Scripts.Helpers
     {
         MasterCharacterList EnemyNames;
         Persona CharacterInstance = null;
+
+        public Bosses bossesScript;
         public void PassiveEnemyAbility()
         {
             if (GameManager.Instance.activeEnemy != null && GameManager.Instance.roundInfo.inControl == WhoseInControl.CPU)
@@ -676,7 +678,7 @@ namespace Assets.Scripts.Helpers
                     Character.UniqueSkill(Character, Target); Character.Sleep(Character, Target);
                     break;
                 default:
-                    Bosses.Instance.Decision();
+                    bossesScript.Decision();
                     break;
             }
         }
@@ -766,7 +768,7 @@ namespace Assets.Scripts.Helpers
                     Deictim.dodge -= 5;
                     break;
                 default:
-                    Bosses.Instance.Decision();
+                    bossesScript.Decision();
                     break;
             }
         }
@@ -798,7 +800,7 @@ namespace Assets.Scripts.Helpers
                     Character.TrueDamage(CharacterInstance, Character.Enemies[tea], damageobj);
                     break;
                 default:
-                    Bosses.Instance.Decision();
+                    bossesScript.Decision();
                     break;
             }
         }
@@ -928,7 +930,7 @@ namespace Assets.Scripts.Helpers
                     }
                     break;
                 default:
-                    Bosses.Instance.Decision();
+                    bossesScript.Decision();
                     break;
             }
         }
@@ -1056,7 +1058,7 @@ namespace Assets.Scripts.Helpers
                     }
                     break;
                 default:
-                    Bosses.Instance.Decision();
+                    bossesScript.Decision();
                     break;
             }
         }

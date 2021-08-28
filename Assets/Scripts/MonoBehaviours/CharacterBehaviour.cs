@@ -497,29 +497,17 @@ namespace Assets.Scripts.MonoBehaviours
         #region Enemy Code
         public void EnemyAttack()
         {
-            switch (person.EnemyType)
+            Bosses bossScript = GetComponent<Bosses>();
+
+            List<Persona> opps = new List<Persona>();
+            for (int i = 0; i < GameManager.Instance.playerCharacters.Count; i++)
             {
-                case enemyType.Boss:
-                    
-                    gameObject.GetComponent<Bosses>().Decision();
-                    //I don't like whats happening above here, the fact that we had to make mystats public. Yewo has to tell me how this works
-                    break;
-                case enemyType.Elite:
-                    gameObject.AddComponent<Elite>(); //This should be added when the enemy is first instanciated. Not here
-                    //gameObject.GetComponent<Elite>().Decision();
-                    break;
-                case enemyType.Normal:
-                    gameObject.AddComponent<Normal>();//This should be added when the enemy is first instanciated. Not here
-                    //gameObject.GetComponent<Normal>().Decision();
-                    break;
-                case enemyType.Minion:
-                    gameObject.AddComponent<Minions>();//This should be added when the enemy is first instanciated. Not here
-                    //gameObject.GetComponent<Minions>().Decision();
-                    break;
-                default:
-                    break;
+                opps.Add(GameManager.Instance.playerCharacters[i].GetComponentInChildren<CharacterBehaviour>().person);
             }
             
+            bossScript.SetBosses(person, opps);
+            bossScript.Decision();
+
             turnUsed = true;
             GameManager.Instance.CheckRoundDone();
         }
