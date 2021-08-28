@@ -231,7 +231,9 @@ namespace Assets.Scripts.Helpers
                     break;
             }
         }
-        public void Attack1(object TargetInstance)
+        #region Unused code
+        /*
+         public void Attack1(object TargetInstance)
         {
             if (GameManager.Instance.activeEnemy != null && GameManager.Instance.roundInfo.inControl == WhoseInControl.CPU)
             { CharacterInstance = GameManager.Instance.activeEnemy.person; }
@@ -245,7 +247,7 @@ namespace Assets.Scripts.Helpers
                     foreach (object item in Character.Enemies)
                     {
                         PhysicalDamage(Character, item);
-                        Tainted(Character, item,1);
+                        Tainted(Character, item, 1);
                     }
                     break;
                 case MasterCharacterList.GreatWhite:
@@ -257,14 +259,14 @@ namespace Assets.Scripts.Helpers
                 case MasterCharacterList.SpiderCrustacean:
                     Character.PhysicalDamage(Character, Target);
                     Character.CalmDeBuffPercent = 0.2;
-                    Character.Calm(Character, Target,1);
+                    Character.Calm(Character, Target, 1);
                     break;
                 case MasterCharacterList.NecroBoar:
                     int RoundsDone = new int(); RoundsDone = RoundInfo.RoundsPassed; int count = 0;
                     Timer myr2; myr2 = new Timer(); myr2.Elapsed += new ElapsedEventHandler(myEt); myr2.Interval = 1000; myr2.Enabled = true;
                     void myEt(object source2, ElapsedEventArgs e)
                     {
-                        if (RoundsDone!=RoundInfo.RoundsPassed&& count<3)
+                        if (RoundsDone != RoundInfo.RoundsPassed && count < 3)
                         {
                             RoundsDone = RoundInfo.RoundsPassed;
                             Character.Bleed(Character, Target);
@@ -274,7 +276,7 @@ namespace Assets.Scripts.Helpers
                     }
                     break;
                 case MasterCharacterList.ElderStag:
-                    int ElderFist = (int)(Character.DamageGiven()*0.4);
+                    int ElderFist = (int)(Character.DamageGiven() * 0.4);
                     Persona Face = (Persona)Character.Enemies[UnityEngine.Random.Range(0, Character.Enemies.Count)];
                     Persona Face2 = (Persona)Character.Enemies[UnityEngine.Random.Range(0, Character.Enemies.Count)];
                     Persona Face3 = (Persona)Character.Enemies[UnityEngine.Random.Range(0, Character.Enemies.Count)];
@@ -286,7 +288,7 @@ namespace Assets.Scripts.Helpers
                     foreach (var item in Character.Allies)
                     {
                         Persona fRIEND = (Persona)item;
-                        fRIEND.Speed += (int)(fRIEND.Speed*0.1);
+                        fRIEND.Speed += (int)(fRIEND.Speed * 0.1);
                     }
                     break;
                 case MasterCharacterList.DevilBird:
@@ -299,14 +301,14 @@ namespace Assets.Scripts.Helpers
                     Timer summer; summer = new Timer(); summer.Elapsed += new ElapsedEventHandler(vivaldiiii); summer.Interval = 1000; summer.Enabled = true;
                     void vivaldiiii(object source2, ElapsedEventArgs e)
                     {
-                        if (roundsbaby+1 == RoundInfo.RoundsPassed)
+                        if (roundsbaby + 1 == RoundInfo.RoundsPassed)
                         {
                             Character.Burnt(Character, fVictim);
                             Character.Burnt(Character, SVictim);
                             summer.Close();
                         }
                     }
-                    
+
                     break;
                 case MasterCharacterList.DragonSloth:
                     Persona Deictim = (Persona)Character.Enemies[UnityEngine.Random.Range(0, Character.Enemies.Count)];
@@ -316,7 +318,7 @@ namespace Assets.Scripts.Helpers
                 default:
                     break;
             }
-        } 
+        }
         public void Attack2(object TargetInstance)
         {
             if (GameManager.Instance.activeEnemy != null && GameManager.Instance.roundInfo.inControl == WhoseInControl.CPU)
@@ -331,11 +333,11 @@ namespace Assets.Scripts.Helpers
                     int speedCount = 0;
                     foreach (object item in Character.Enemies)
                     {
-                        Character.Stun(Character, item,1);
+                        Character.Stun(Character, item, 1);
                         Persona hero = (Persona)item;
                         foreach (DebuffObject debuff in hero.GetDebuffs())
                         {
-                            if (debuff.type==Enums.debuffType.Stun)
+                            if (debuff.type == Enums.debuffType.Stun)
                             {
                                 speedCount++;
                                 break;// so it stops checking for more stun Debuffs
@@ -346,13 +348,13 @@ namespace Assets.Scripts.Helpers
 
                     break;
                 case MasterCharacterList.GreatWhite:
-                    
+
                     foreach (object item in Character.Allies)
                     {
                         Persona villian = (Persona)item;
                         foreach (AttackObject attack in villian.GetAttack(villian))
                         {
-                            if ((attack.type == Enums.AttackType.Bleed) &&(attack.Victim==(object)villian)) //this basically asks if someone is bleeding by the hand of a villian
+                            if ((attack.type == Enums.AttackType.Bleed) && (attack.Victim == (object)villian)) //this basically asks if someone is bleeding by the hand of a villian
                             {
                                 Character.CriticalChance = true; Character.PhysicalDamage(Character, Target);
                                 Target.Armour -= (int)(Target.Armour * 0.5);
@@ -376,7 +378,7 @@ namespace Assets.Scripts.Helpers
                     break;
                 case MasterCharacterList.SpiderCrustacean:
                     Character.BrokenGaurdDeBuffPercent = 0.2;
-                    Character.BrokenGuard(Character,Target,1);
+                    Character.BrokenGuard(Character, Target, 1);
                     break;
                 case MasterCharacterList.NecroBoar:
                     foreach (AttackObject attack in Target.GetAttack(Target))
@@ -388,7 +390,7 @@ namespace Assets.Scripts.Helpers
                             foreach (var item in Character.Enemies)
                             {
                                 Persona victim = (Persona)item;
-                                if(victim!=Target) Character.Bleed(Character, victim);
+                                if (victim != Target) Character.Bleed(Character, victim);
                             }
                             break;
                         }
@@ -415,16 +417,16 @@ namespace Assets.Scripts.Helpers
                     Character.UniqueSkill(Character, Target); Character.Sleep(Character, Target);
                     break;
                 case MasterCharacterList.DragonSloth:
-                    if (Target.dodge==0)
+                    if (Target.dodge == 0)
                     {
                         damageobj.DamageValue = (int)(Character.DamageGiven() * 0.25);
                         Character.PhysicalDamage(Character, Target, damageobj);
-                        if (UnityEngine.Random.Range(0, 100)<50)
+                        if (UnityEngine.Random.Range(0, 100) < 50)
                         {
                             Character.PhysicalDamage(Character, Target);
                         }
                     }
-                    
+
                     break;
                 default:
                     break;
@@ -448,7 +450,7 @@ namespace Assets.Scripts.Helpers
                         damageobj.DamageValue = (int)(theDama * 0.35);
                         Character.Bleed(Character, item, damageobj);
                     }
-                    
+
                     break;
                 case MasterCharacterList.GreatWhite:
                     damageobj.DamageValue = (int)(Character.DamageGiven() * 0.2);
@@ -481,7 +483,7 @@ namespace Assets.Scripts.Helpers
                         Ecount2[i] = indiv2.shield;
                         Fcount2[i] = (int)indiv2.Accuracy;
                     }
-                    while (RoundInfo.RoundsPassed <= rou+1)
+                    while (RoundInfo.RoundsPassed <= rou + 1)
                     {
                         for (int i = 0; i < Character.Enemies.Count; i++) //this here is meant to constantly check the health values
                         {
@@ -494,7 +496,7 @@ namespace Assets.Scripts.Helpers
                     }
                     break;
                 case MasterCharacterList.NecroBoar:
-                    DamageObject damdamda = new DamageObject { DamageValue = Character.DamageGiven()};
+                    DamageObject damdamda = new DamageObject { DamageValue = Character.DamageGiven() };
                     Character.PhysicalDamage(Character, Target, damdamda);
                     int woisbleeding = 0;
                     foreach (object item in Character.Enemies) //I put this here cause i think the shark will attack anyone it smells having bleeding. Even itself and friends
@@ -502,14 +504,14 @@ namespace Assets.Scripts.Helpers
                         Persona hero = (Persona)item;
                         foreach (AttackObject attack in hero.GetAttack(hero))
                         {
-                            if ((attack.type == Enums.AttackType.Bleed)&& attack.state==true)
+                            if ((attack.type == Enums.AttackType.Bleed) && attack.state == true)
                             {
                                 woisbleeding++;
                                 break;
                             }
                         }
                     }
-                    if (woisbleeding==Character.Enemies.Count)
+                    if (woisbleeding == Character.Enemies.Count)
                     {
                         foreach (var item in Character.Enemies)
                         {
@@ -522,7 +524,7 @@ namespace Assets.Scripts.Helpers
                     Timer oboe; oboe = new Timer(); oboe.Elapsed += new ElapsedEventHandler(violin); oboe.Interval = 1000; oboe.Enabled = true;
                     void violin(object source2, ElapsedEventArgs e)
                     {
-                        if (mAch <RoundInfo.RoundsPassed&& count<=2)
+                        if (mAch < RoundInfo.RoundsPassed && count <= 2)
                         {
                             mAch = RoundInfo.RoundsPassed;
                             foreach (var item in Character.Allies)
@@ -543,10 +545,10 @@ namespace Assets.Scripts.Helpers
                         }
                         if (RoundInfo.RoundDone == true) count++;
                     }
-                   
+
                     break;
                 case MasterCharacterList.DevilBird:
-                    object fVictim = Character.Enemies[UnityEngine.Random.Range(0, Character.Enemies.Count)]; object sVictim = Character.Enemies[UnityEngine.Random.Range(0, Character.Enemies.Count)]; 
+                    object fVictim = Character.Enemies[UnityEngine.Random.Range(0, Character.Enemies.Count)]; object sVictim = Character.Enemies[UnityEngine.Random.Range(0, Character.Enemies.Count)];
                     object fTHIRDVictim = Character.Enemies[UnityEngine.Random.Range(0, Character.Enemies.Count)]; object foutrVictim = Character.Allies[UnityEngine.Random.Range(0, Character.Enemies.Count)];// because he also hurts his friend
                     List<object> heros = new List<object> { fVictim, sVictim, fTHIRDVictim };
                     foreach (var item in heros)
@@ -557,13 +559,13 @@ namespace Assets.Scripts.Helpers
                     int storedhealth = Expendable.Health;
                     int damageede = (int)(Character.DamageGiven() * 0.5);
                     Character.MagicalDamage(Character, foutrVictim, damageede);
-                    Character.HealVictim(Character, storedhealth- Expendable.Health); 
+                    Character.HealVictim(Character, storedhealth - Expendable.Health);
 
                     break;
                 case MasterCharacterList.DragonSloth:
                     Character.PhysicalDamage(Character, Target);
                     Target.dodge -= (int)(Target.dodge * 0.05);
-                    if (Target.dodge==0)
+                    if (Target.dodge == 0)
                     {
                         foreach (var item in Character.Enemies)
                         {
@@ -575,7 +577,10 @@ namespace Assets.Scripts.Helpers
                     break;
             }
         }
+         */
+        #endregion
 
+        //the code below doesnt have all the names cause sometime the Boss simply doesnt have that ability so decision is called to try again as a default
         public void MagicalAttacks(object TargetInstance)
         {
             if (GameManager.Instance.activeEnemy != null && GameManager.Instance.roundInfo.inControl == WhoseInControl.CPU)
@@ -586,20 +591,26 @@ namespace Assets.Scripts.Helpers
 
             switch (EnemyNames)
             {
-
-                case MasterCharacterList.HammerHead:
-                    break;
-                case MasterCharacterList.GreatWhite:
-                    break;
-                case MasterCharacterList.SpiderCrustacean:
-                    break;
-                case MasterCharacterList.NecroBoar:
-                    break;
                 case MasterCharacterList.ElderStag:
+                    //Attack 1
+                    int ElderFist = (int)(Character.DamageGiven() * 0.4);
+                    Persona Face = (Persona)Character.Enemies[UnityEngine.Random.Range(0, Character.Enemies.Count)];
+                    Persona Face2 = (Persona)Character.Enemies[UnityEngine.Random.Range(0, Character.Enemies.Count)];
+                    Persona Face3 = (Persona)Character.Enemies[UnityEngine.Random.Range(0, Character.Enemies.Count)];
+                    List<Persona> Faces = new List<Persona> { Face, Face2, Face3 };
+                    foreach (var item in Faces)
+                    {
+                        Character.MagicalDamage(Character, item, ElderFist);
+                    }
+                    foreach (var item in Character.Allies)
+                    {
+                        Persona fRIEND = (Persona)item;
+                        fRIEND.Speed += (int)(fRIEND.Speed * 0.1);
+                    }
                     break;
                 case MasterCharacterList.DevilBird:
-                    break;
-                case MasterCharacterList.DragonSloth:
+                    //Attack 2
+                    Character.UniqueSkill(Character, Target); Character.Sleep(Character, Target);
                     break;
                 default:
                     Bosses.Instance.Decision();
@@ -671,12 +682,25 @@ namespace Assets.Scripts.Helpers
                     
                     break;
                 case MasterCharacterList.NecroBoar:
-                    break;
-                case MasterCharacterList.ElderStag:
-                    break;
-                case MasterCharacterList.DevilBird:
+                    //Attack 1
+                    int RoundsDone = new int(); RoundsDone = RoundInfo.RoundsPassed; int count = 0;
+                    Timer myr2; myr2 = new Timer(); myr2.Elapsed += new ElapsedEventHandler(myEt); myr2.Interval = 1000; myr2.Enabled = true;
+                    void myEt(object source2, ElapsedEventArgs e)
+                    {
+                        if (RoundsDone != RoundInfo.RoundsPassed && count < 3)
+                        {
+                            RoundsDone = RoundInfo.RoundsPassed;
+                            Character.Bleed(Character, Target);
+                            count++;
+                        }
+                        if (count == 3) myr2.Close();
+                    }
                     break;
                 case MasterCharacterList.DragonSloth:
+                    //Attack 1
+                    Persona Deictim = (Persona)Character.Enemies[UnityEngine.Random.Range(0, Character.Enemies.Count)];
+                    Character.PhysicalDamage(Character, Deictim);
+                    Deictim.dodge -= 5;
                     break;
                 default:
                     Bosses.Instance.Decision();
@@ -692,7 +716,6 @@ namespace Assets.Scripts.Helpers
             DamageObject damageobj = new DamageObject();
             switch (EnemyNames)
             {
-
                 case MasterCharacterList.HammerHead:
                     //Attack 3
                     int theDama = Character.DamageGiven();
@@ -711,16 +734,6 @@ namespace Assets.Scripts.Helpers
                     int tea = UnityEngine.Random.Range(1, enemyindexCount);
                     Character.TrueDamage(CharacterInstance, Character.Enemies[tea], damageobj);
                     break;
-                case MasterCharacterList.SpiderCrustacean:
-                    break;
-                case MasterCharacterList.NecroBoar:
-                    break;
-                case MasterCharacterList.ElderStag:
-                    break;
-                case MasterCharacterList.DevilBird:
-                    break;
-                case MasterCharacterList.DragonSloth:
-                    break;
                 default:
                     Bosses.Instance.Decision();
                     break;
@@ -735,7 +748,6 @@ namespace Assets.Scripts.Helpers
             DamageObject damageobj = new DamageObject();
             switch (EnemyNames)
             {
-
                 case MasterCharacterList.HammerHead:
                     //Attack 1
                     foreach (object item in Character.Enemies)
@@ -789,12 +801,60 @@ namespace Assets.Scripts.Helpers
                     }
                     break;
                 case MasterCharacterList.NecroBoar:
-                    break;
-                case MasterCharacterList.ElderStag:
+                    //Attack 3
+                    DamageObject damdamda = new DamageObject { DamageValue = Character.DamageGiven() };
+                    Character.PhysicalDamage(Character, Target, damdamda);
+                    int woisbleeding = 0;
+                    foreach (object item in Character.Enemies) //I put this here cause i think the shark will attack anyone it smells having bleeding. Even itself and friends
+                    {
+                        Persona hero = (Persona)item;
+                        foreach (AttackObject attack in hero.GetAttack(hero))
+                        {
+                            if ((attack.type == Enums.AttackType.Bleed) && attack.state == true)
+                            {
+                                woisbleeding++;
+                                break;
+                            }
+                        }
+                    }
+                    if (woisbleeding == Character.Enemies.Count)
+                    {
+                        foreach (var item in Character.Enemies)
+                        {
+                            Character.Ignite(Character, item, damdamda.DamageValue);
+                        }
+                    }
                     break;
                 case MasterCharacterList.DevilBird:
+                    //Attack 1
+                    object fVictim = Character.Enemies[UnityEngine.Random.Range(0, Character.Enemies.Count)];
+                    object SVictim = Character.Enemies[UnityEngine.Random.Range(0, Character.Enemies.Count)];
+                    int roundsbaby = RoundInfo.RoundsPassed;
+                    Character.Rooted(Character, fVictim, 1); Character.Burnt(Character, fVictim);
+                    Character.Rooted(Character, SVictim, 1); Character.Burnt(Character, SVictim);
+
+                    Timer summer; summer = new Timer(); summer.Elapsed += new ElapsedEventHandler(vivaldiiii); summer.Interval = 1000; summer.Enabled = true;
+                    void vivaldiiii(object source2, ElapsedEventArgs e)
+                    {
+                        if (roundsbaby + 1 == RoundInfo.RoundsPassed)
+                        {
+                            Character.Burnt(Character, fVictim);
+                            Character.Burnt(Character, SVictim);
+                            summer.Close();
+                        }
+                    }
                     break;
                 case MasterCharacterList.DragonSloth:
+                    //Attack 3
+                    Character.PhysicalDamage(Character, Target);
+                    Target.dodge -= (int)(Target.dodge * 0.05);
+                    if (Target.dodge == 0)
+                    {
+                        foreach (var item in Character.Enemies)
+                        {
+                            Character.Stun(Character, item, 1);
+                        }
+                    }
                     break;
                 default:
                     Bosses.Instance.Decision();
@@ -810,7 +870,6 @@ namespace Assets.Scripts.Helpers
             DamageObject damageobj = new DamageObject();
             switch (EnemyNames)
             {
-               
                 case MasterCharacterList.HammerHead:
                     //Attack 2
                     int speedCount = 0;
@@ -830,17 +889,100 @@ namespace Assets.Scripts.Helpers
                     Character.Speed += (int)(Character.Speed * 0.1 * speedCount);
 
                     break;
-                case MasterCharacterList.GreatWhite:
-                    break;
-                case MasterCharacterList.SpiderCrustacean:
-                    break;
                 case MasterCharacterList.NecroBoar:
+                    //Attack 2
+                    foreach (AttackObject attack in Target.GetAttack(Target))
+                    {
+                        if ((attack.type == Enums.AttackType.Bleed) && (attack.state == true)) //this basically asks if someone is bleeding 
+                        {
+                            Character.PowerBuffPercent = 0.5;
+                            Character.PhysicalDamage(Character, Target);
+                            foreach (var item in Character.Enemies)
+                            {
+                                Persona victim = (Persona)item;
+                                if (victim != Target) Character.Bleed(Character, victim);
+                            }
+                            break;
+                        }
+                        else { Character.PhysicalDamage(Character, Target); }
+                    }
                     break;
                 case MasterCharacterList.ElderStag:
+                    int canceDa3 = UnityEngine.Random.Range(0, 101);
+                    if (canceDa3 > 50)
+                    {
+                        //Attack 2
+                        int storedhealth = new int(); int count = 0; int lowest = new int();
+                        for (int i = 0; i < Character.Allies.Count; i++)
+                        {
+                            Persona friend = (Persona)Character.Allies[i];
+                            if (count == 0)
+                            { storedhealth = friend.Health; count++; }
+                            else
+                            if (storedhealth > friend.Health)
+                            {
+                                lowest = i; storedhealth = friend.Health;
+                            }
+                        }
+                        Persona weak = (Persona)Character.Allies[lowest];
+                        weak.Health += weak.Health;
+                    }
+                    else
+                    {
+                        //Attack 3
+                        int mAch = RoundInfo.RoundsPassed; int count = 0;
+                        Timer oboe; oboe = new Timer(); oboe.Elapsed += new ElapsedEventHandler(violin); oboe.Interval = 1000; oboe.Enabled = true;
+                        void violin(object source2, ElapsedEventArgs e)
+                        {
+                            if (mAch < RoundInfo.RoundsPassed && count <= 2)
+                            {
+                                mAch = RoundInfo.RoundsPassed;
+                                foreach (var item in Character.Allies)
+                                {
+                                    Persona villian = (Persona)item;
+                                    villian.Speed += (int)(villian.Speed * 0.2);
+                                }
+                            }
+                            if (mAch < RoundInfo.RoundsPassed && count <= 1)
+                            {
+                                mAch = RoundInfo.RoundsPassed;
+                                foreach (var item in Character.Allies)
+                                {
+                                    Persona villian = (Persona)item;
+                                    villian.PowerBuffPercent = 0.5; villian.MagiBuffPercent = 0.5;
+                                    villian.PolishWeapon(villian); villian.Chosen(villian);
+                                }
+                            }
+                            if (RoundInfo.RoundDone == true) count++;
+                        }
+                    }
                     break;
                 case MasterCharacterList.DevilBird:
+                    //Attack 3
+                    object fVictim = Character.Enemies[UnityEngine.Random.Range(0, Character.Enemies.Count)]; object sVictim = Character.Enemies[UnityEngine.Random.Range(0, Character.Enemies.Count)];
+                    object fTHIRDVictim = Character.Enemies[UnityEngine.Random.Range(0, Character.Enemies.Count)]; object foutrVictim = Character.Allies[UnityEngine.Random.Range(0, Character.Enemies.Count)];// because he also hurts his friend
+                    List<object> heros = new List<object> { fVictim, sVictim, fTHIRDVictim };
+                    foreach (var item in heros)
+                    {
+                        Character.MagicalDamage(Character, item);
+                    }
+                    Persona Expendable = (Persona)foutrVictim;
+                    int storedhealth2 = Expendable.Health;
+                    int damageede = (int)(Character.DamageGiven() * 0.5);
+                    Character.MagicalDamage(Character, foutrVictim, damageede);
+                    Character.HealVictim(Character, storedhealth2 - Expendable.Health);
                     break;
                 case MasterCharacterList.DragonSloth:
+                    //Attack 2
+                    if (Target.dodge == 0)
+                    {
+                        damageobj.DamageValue = (int)(Character.DamageGiven() * 0.25);
+                        Character.PhysicalDamage(Character, Target, damageobj);
+                        if (UnityEngine.Random.Range(0, 100) < 50)
+                        {
+                            Character.PhysicalDamage(Character, Target);
+                        }
+                    }
                     break;
                 default:
                     Bosses.Instance.Decision();

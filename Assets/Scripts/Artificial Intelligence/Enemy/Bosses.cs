@@ -42,17 +42,18 @@ public class Bosses
     public void Decision() //Play Style Decision
     {
         int k = 0;
-        int count = 0;
+        int count = 0; 
         while (k == 0)
         {
+            count = Random.Range(1, 101);
             bool fired = false;
-            if (count % 2 == 0)
+            if (count % 2 == 0) //Searches for even
                 fired = SlotMachine(blindAttack);
 
-            if (count % 3 == 0)
+            if (count % 3 == 0) //Searches for odd since od is just even +1
                 fired = SlotMachine(defenseBiasedAttack);
 
-            if (count % 4 == 0)
+            if (count % 2 != 0&& count % 3 != 0) //Searches for prime
                 fired = SlotMachine(strategicAttack);
 
             if (fired)
@@ -63,11 +64,11 @@ public class Bosses
                 if (count % 3 == 0) // defense Biased Attack
                     DefenseBiasedAttack();
 
-                if (count % 4 == 0) // strategic Attack
+                if (count % 2 != 0 && count % 3 != 0) // strategic Attack
                     StrategicAttack();
+                k++;
             }
 
-            count++;
         }        
     }
     void BlindAttack()
@@ -95,7 +96,7 @@ public class Bosses
         if ((myStats.Health / myStats.Life) < healthThreshold)
         {
             //BUff involves healing, cause it is not always possible to heal
-            enemyActions.Buff(opponents.Any());
+            enemyActions.Buff(myStats);
         }
         else
         {
@@ -112,10 +113,10 @@ public class Bosses
             {
                 if (opponents[i].Health < (opponents[i].Life * .8f))
                 {
-                    enemyActions.PhysicalAttacks(opponents.Any());
+                    enemyActions.PhysicalAttacks(opponents[i]);
 
                     fired = true;
-                    i = opponents.Count;
+                    i = opponents.Count; //You could have just had a break statement here but i guess this also works
                 }
             }
         }
@@ -126,7 +127,7 @@ public class Bosses
             {
                 if (opponents[i].Health < (opponents[i].Life * .6f))
                 {
-                    enemyActions.MagicalAttacks(opponents.Any());
+                    enemyActions.MagicalAttacks(opponents[i]);
 
                     fired = true;
                     i = opponents.Count;
@@ -140,7 +141,7 @@ public class Bosses
             {
                 if (opponents[i].Health < (opponents[i].Life * .4f))
                 {
-                    enemyActions.TrueDamageAttacks(opponents.Any());
+                    enemyActions.TrueDamageAttacks(opponents[i]);
 
                     fired = true;
                     i = opponents.Count;
@@ -154,7 +155,7 @@ public class Bosses
             {
                 if (opponents[i].GetDebuffs().Count == 0)
                 {
-                    enemyActions.Debuffs(opponents.Any());
+                    enemyActions.Debuffs(opponents[i]);
 
                     fired = true;
                     i = opponents.Count;
@@ -164,15 +165,20 @@ public class Bosses
 
         if (!fired)
         {
-            //enemyActions.Buffs();
+            //enemyActions.Buffs(); This isnt really necessary cause we already have something to meet this end in DefenceBAisedStrategy
+        }
+        if (!fired)
+        {
+            Decision(); //Try another strategy. !! This is necessary cause there should be no such thing as inaction, it has to keep trying to do something until something fires cause sometimes a boss might not have some of these mehods
+            fired = true;
         }
     }
     bool SlotMachine(float chance)
     {
         int max = (int)(1f / chance);
-        int n = Random.Range(0, max + 1);
+        int n = Random.Range(1, max + 1); //I changed this to one cause say the percentage is 100%, n will have to be within 1 and 2, which will be it will choose only 1
 
-        if (n == 0)
+        if (n == 1)
         {
             return true;
         }
