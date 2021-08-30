@@ -466,19 +466,24 @@ public class CardBehaviour : Card
                 damageObject.DamageValue = CharacterInstance.DamageGiven();
                 int puuley = UnityEngine.Random.Range(0, enemyCount);
                 int levvrr = UnityEngine.Random.Range(0, enemyCount);
-                Persona firstone = GameManager.Instance.enemyCharacters[puuley].GetComponentInChildren<CharacterBehaviour>().person;
-                Persona secondone = GameManager.Instance.enemyCharacters[levvrr].GetComponentInChildren<CharacterBehaviour>().person;
-                CharacterInstance.TrueDamage(CharacterInstance, firstone, damageObject);
+                if (GameManager.Instance.enemyCharacters.Count>1)
+                {
+                    Persona firstone = GameManager.Instance.enemyCharacters[puuley].GetComponentInChildren<CharacterBehaviour>().person;
+                    Persona secondone = GameManager.Instance.enemyCharacters[levvrr].GetComponentInChildren<CharacterBehaviour>().person;
+                    CharacterInstance.TrueDamage(CharacterInstance, firstone, damageObject);
+                    damageObject.DamageValue = CharacterInstance.DamageGiven();
+                    CharacterInstance.TrueDamage(CharacterInstance, secondone, damageObject);
+                }
+                Persona firstone2 = GameManager.Instance.enemyCharacters[puuley].GetComponentInChildren<CharacterBehaviour>().person;
                 damageObject.DamageValue = CharacterInstance.DamageGiven();
-                CharacterInstance.TrueDamage(CharacterInstance, secondone, damageObject);
-
+                CharacterInstance.TrueDamage(CharacterInstance, firstone2, damageObject);
                 
                  int numberofDebuff= new int();
                  foreach (var item in GameManager.Instance.enemyCharacters)
-                {
+                 {
                     Persona judas= item.GetComponent<CharacterBehaviour>().person;
                     numberofDebuff+=judas.GetDebuffs().Count;
-                }
+                 }
                 CharacterInstance.Health+= (int)(CharacterInstance.Life*0.02*numberofDebuff);
                  
                 break;
