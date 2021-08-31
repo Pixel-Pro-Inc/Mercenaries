@@ -572,7 +572,9 @@ public class CardBehaviour : Card
                 CharacterInstance.Blight(CharacterInstance, Sgrudge, 2, CharacterInstance.DamageGiven());
                 break;
             case cardName.frogEighthCard:
-                CharacterInstance.PhysicalDamage(CharacterInstance, Target);
+                int damageDealt = CharacterInstance.DamageGiven(); //needed later in this switch case
+                damageObject.DamageValue = damageDealt;
+                CharacterInstance.PhysicalDamage(CharacterInstance, Target, damageObject);
                 bool didyougethim = false;
                 foreach (var Individual in CharacterInstance.Allies)
                 {
@@ -648,7 +650,6 @@ public class CardBehaviour : Card
                 }
                 if (didyougethim == false)// basically if blighted isnt currently active on target
                 {
-                    int damageDealt = CharacterInstance.DamageGiven();
                     CharacterInstance.Blight(CharacterInstance, Target, 5, damageDealt);
                     CharacterInstance.HealVictim(CharacterInstance, (int)(damageDealt * 0.5));
                     foreach (var item in CharacterInstance.Allies)
