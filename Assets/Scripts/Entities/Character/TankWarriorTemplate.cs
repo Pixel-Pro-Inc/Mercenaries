@@ -126,7 +126,15 @@ namespace Assets.Scripts.Entities.Character
         public List<SpeciesType> NaturalAllies { get; set; }
         public List<SpeciesType> NaturalEnemies { get; set; }
         public bool PassiveTankTraits { get; set; }
-        public override int HitCount { get; set; }
+        public override int HitCount
+        {
+            get { return _HitCount; }
+            set
+            {
+                _HitCount = value;
+                if (_HitCount < 0) _HitCount = 0;
+            }
+        }
         public bool PassiveWarriorTraits { get; set; }
 
 

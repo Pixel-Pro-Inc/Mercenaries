@@ -309,7 +309,7 @@ public class CardBehaviour : Card
                 if(Target.Health==0)
                 {
                     int enemyindexCount2 = GameManager.Instance.enemyCharacters.Count;
-                    int bread = UnityEngine.Random.Range(1, enemyindexCount2);
+                    int bread = UnityEngine.Random.Range(0, enemyindexCount2);
                     CharacterInstance.Bleed(CharacterInstance, GameManager.Instance.enemyCharacters[bread]);
                 }
                 break;
@@ -439,7 +439,7 @@ public class CardBehaviour : Card
                 Debug.Log("Not done or special card");
                 break;
             case cardName.salamanderSecondCard:
-                int eggplant = UnityEngine.Random.Range(1, CharacterInstance.Enemies.Count); int peach = UnityEngine.Random.Range(1, CharacterInstance.Enemies.Count);
+                int eggplant = UnityEngine.Random.Range(0, CharacterInstance.Enemies.Count); int peach = UnityEngine.Random.Range(0, CharacterInstance.Enemies.Count);
                 if (CharacterInstance.Enemies.Count==1)
                 {
                     CharacterInstance.PhysicalDamage(CharacterInstance, CharacterInstance.Enemies[eggplant]);

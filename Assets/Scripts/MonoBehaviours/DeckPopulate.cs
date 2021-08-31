@@ -117,7 +117,7 @@ public class DeckPopulate : MonoBehaviour
                 int ran = 0;
                 while (k == 0)
                 {
-                    ran = Random.Range(0, sprites.Count);
+                    ran = Random.Range(1, sprites.Count);
                     if (!usedCards.Contains(ran))
                     {
                         usedCards.Add(ran);

@@ -316,7 +316,7 @@ namespace Assets.Scripts.Helpers
                 case MasterCharacterList.GreatWhite:
                     int enemyindexCount = Character.Enemies.Count;
                     damageobj.DamageValue = Character.DamageGiven();
-                    int tea = UnityEngine.Random.Range(1, enemyindexCount);
+                    int tea = UnityEngine.Random.Range(0, enemyindexCount);
                     Character.TrueDamage(CharacterInstance, Character.Enemies[tea], damageobj);
                     break;
                 case MasterCharacterList.SpiderCrustacean:
@@ -484,7 +484,7 @@ namespace Assets.Scripts.Helpers
                     {
                         damageobj.DamageValue = (int)(Character.DamageGiven() * 0.25);
                         Character.PhysicalDamage(Character, Target, damageobj);
-                        if (UnityEngine.Random.Range(0, 100) < 50)
+                        if (UnityEngine.Random.Range(1, 100) < 50)
                         {
                             Character.PhysicalDamage(Character, Target);
                         }
@@ -794,7 +794,7 @@ namespace Assets.Scripts.Helpers
                     //Attack 1
                     int enemyindexCount = Character.Enemies.Count;
                     damageobj.DamageValue = Character.DamageGiven();
-                    int tea = UnityEngine.Random.Range(1, enemyindexCount);
+                    int tea = UnityEngine.Random.Range(0, enemyindexCount);
                     Character.TrueDamage(CharacterInstance, Character.Enemies[tea], damageobj);
                     break;
                 default:
@@ -979,7 +979,7 @@ namespace Assets.Scripts.Helpers
                     }
                     break;
                 case MasterCharacterList.ElderStag:
-                    int canceDa3 = UnityEngine.Random.Range(0, 101);
+                    int canceDa3 = UnityEngine.Random.Range(1, 101);
                     if (canceDa3 > 50)
                     {
                         //Attack 2
@@ -1049,7 +1049,7 @@ namespace Assets.Scripts.Helpers
                     {
                         damageobj.DamageValue = (int)(Character.DamageGiven() * 0.25);
                         Character.PhysicalDamage(Character, Target, damageobj);
-                        if (UnityEngine.Random.Range(0, 100) < 50)
+                        if (UnityEngine.Random.Range(1, 100) < 50)
                         {
                             Character.PhysicalDamage(Character, Target);
                         }

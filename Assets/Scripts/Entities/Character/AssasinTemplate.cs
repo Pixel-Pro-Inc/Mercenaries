@@ -144,7 +144,15 @@ namespace Assets.Scripts.Entities.Character
         //private bool _FOE = false;
         public override bool Foe { get { return _foe; } set { _foe = value; } }
         public bool PassiveWarriorTraits { get; set; }
-        public override int HitCount { get; set; }
+        public override int HitCount
+        {
+            get { return _HitCount; }
+            set
+            {
+                _HitCount = value;
+                if (_HitCount < 0) _HitCount = 0;
+            }
+        }
 
         #endregion
         #region Character Methods

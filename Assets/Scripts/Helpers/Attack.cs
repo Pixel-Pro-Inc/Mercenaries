@@ -694,7 +694,7 @@ namespace Assets.Scripts.Helpers
                 {
                     Random r = new Random();
                     if (Target.ProtectionSponser != null) Target = (Persona)Target.ProtectionSponser; CurseattackObject.Victim = Target;
-                    randamage = r.Next(1, Character.CursePercent);
+                    randamage = r.Next(1, Character.CurseMaxint);
                     CurseattackObject.amount = randamage;
                     if (Target.ImmuneState == true)
                     { }

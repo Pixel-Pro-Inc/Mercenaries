@@ -227,6 +227,8 @@ namespace Assets.Scripts.Entities.Character
         }
         internal int _Damage = 0;
         public virtual int Damage { get; set; }
+
+        internal int _HitCount = 0;
         public virtual int HitCount { get; set; }
         internal double _Accuracy = 0;
         public virtual double Accuracy { get; set; }
@@ -300,7 +302,7 @@ namespace Assets.Scripts.Entities.Character
 
         //These below have to be int cause they are used as in the Random method Random.Next()
         public int DrainPercent { get; set; }
-        public int CursePercent { get; set; }
+        public int CurseMaxint { get; set; }
         public bool CriticalChance { get; set; }
 
         #endregion
