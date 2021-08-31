@@ -572,7 +572,91 @@ public class CardBehaviour : Card
                 CharacterInstance.Blight(CharacterInstance, Sgrudge, 2, CharacterInstance.DamageGiven());
                 break;
             case cardName.frogEighthCard:
-                Debug.Log("Abel can do this one, he just forgot");
+                CharacterInstance.PhysicalDamage(CharacterInstance, Target);
+                bool didyougethim = false;
+                foreach (var Individual in CharacterInstance.Allies)
+                {
+                    Persona goodietwoshoes = (Persona)Individual;
+                    foreach (AttackObject item in goodietwoshoes.GetAttack(goodietwoshoes))
+                    {
+                        if (item.type == AttackType.Blight && item.state == true/*this is important cause we only want active blight*/ && (object)item.Victim == Target)
+                        {
+                            didyougethim = true;
+                            foreach (DebuffObject serves in Target.GetDebuffs())
+                            {
+                                switch (serves.type)
+                                {
+                                    case debuffType.Slow:
+                                        CharacterInstance.Slow(CharacterInstance, Target, 1);
+                                        break;
+                                    case debuffType.Rooted:
+                                        CharacterInstance.Rooted(CharacterInstance, Target, 1);
+                                        break;
+                                    case debuffType.WeakGrip:
+                                        CharacterInstance.WeakGrip(CharacterInstance, Target, 1);
+                                        break;
+                                    case debuffType.Exiled:
+                                        CharacterInstance.Exiled(CharacterInstance, Target, 1);
+                                        break;
+                                    case debuffType.Marked:
+                                        CharacterInstance.Marked(Target);
+                                        break;
+                                    case debuffType.Calm:
+                                        CharacterInstance.Calm(CharacterInstance, Target, 1);
+                                        break;
+                                    case debuffType.BrokenGaurd:
+                                        CharacterInstance.BrokenGuard(CharacterInstance, Target, 1);
+                                        break;
+                                    case debuffType.Burnt:
+                                        CharacterInstance.Burnt(CharacterInstance, Target);
+                                        break;
+                                    case debuffType.Stun:
+                                        CharacterInstance.Stun(CharacterInstance, Target, 1);
+                                        break;
+                                    case debuffType.Freeze:
+                                        CharacterInstance.Freeze(CharacterInstance, Target, 1);
+                                        break;
+                                    case debuffType.Cold:
+                                        CharacterInstance.Cold(CharacterInstance, Target, 1);
+                                        break;
+                                    case debuffType.Blinded:
+                                        CharacterInstance.Blinded(CharacterInstance, Target, 1);
+                                        break;
+                                    case debuffType.Tainted:
+                                        CharacterInstance.Tainted(CharacterInstance, Target, 1);
+                                        break;
+                                    case debuffType.Sleep:
+                                        CharacterInstance.Sleep(CharacterInstance, Target);
+                                        break;
+                                    case debuffType.Hungry:
+                                        CharacterInstance.Hungry(CharacterInstance, Target);
+                                        break;
+                                    case debuffType.UnHealthy:
+                                        CharacterInstance.Unhealthy(CharacterInstance, Target);
+                                        break;
+                                    case debuffType.GodsAnger:
+                                        CharacterInstance.GodsAnger(CharacterInstance, Target.Allies);
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                            break; //so it stops check the rest of attacks for that hero
+                        }
+                    }
+                    if (didyougethim == true) break; //so it stops checking the rest of the heros
+                }
+                if (didyougethim == false)// basically if blighted isnt currently active on target
+                {
+                    int damageDealt = CharacterInstance.DamageGiven();
+                    CharacterInstance.Blight(CharacterInstance, Target, 5, damageDealt);
+                    CharacterInstance.HealVictim(CharacterInstance, (int)(damageDealt * 0.5));
+                    foreach (var item in CharacterInstance.Allies)
+                    {
+                        CharacterInstance.HealVictim(item, (int)(damageDealt * 0.25));
+                    }
+                }
+
                 break;
             case cardName.frogNinthCard:
                 int totalEnemyHealth = 0;

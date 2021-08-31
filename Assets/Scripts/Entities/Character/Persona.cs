@@ -687,7 +687,7 @@ namespace Assets.Scripts.Entities.Character
             throw new NotImplementedException();
         }
 
-        public bool GodsAnger(object CharacterInstance, List<string> Allies)
+        public bool GodsAnger(object CharacterInstance, List<object> Allies)
         {
             throw new NotImplementedException();
         }
