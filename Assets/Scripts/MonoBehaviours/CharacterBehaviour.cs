@@ -490,6 +490,8 @@ namespace Assets.Scripts.MonoBehaviours
         }
         public void DrawExtraCard()
         {
+            turnUsed = false;
+            //does the next card addition
             Debug.Log("Yewo, you were to finish this method. Its supposed to give character 1 extra action");
         }
     }

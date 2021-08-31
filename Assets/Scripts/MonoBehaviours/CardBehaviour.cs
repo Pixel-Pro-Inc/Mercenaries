@@ -229,9 +229,16 @@ public class CardBehaviour : Card
                 int butter = UnityEngine.Random.Range(0, enemyindexCount);
                 Persona first = GameManager.Instance.enemyCharacters[tea].GetComponentInChildren<CharacterBehaviour>().person;
                 Persona second = GameManager.Instance.enemyCharacters[butter].GetComponentInChildren<CharacterBehaviour>().person;
-                CharacterInstance.TrueDamage(CharacterInstance,first, damageObject);
-                damageObject.DamageValue = CharacterInstance.DamageGiven();
-                CharacterInstance.TrueDamage(CharacterInstance, second, damageObject);
+                if (enemyindexCount==1)
+                {
+                    CharacterInstance.TrueDamage(CharacterInstance, first, damageObject);
+                }
+                else
+                {
+                    CharacterInstance.TrueDamage(CharacterInstance, first, damageObject);
+                    damageObject.DamageValue = CharacterInstance.DamageGiven();
+                    CharacterInstance.TrueDamage(CharacterInstance, second, damageObject);
+                }
                 break;
             case cardName.crocodileThirdCard:
                 CharacterInstance.PhysicalDamage(CharacterInstance, Target);
@@ -251,6 +258,16 @@ public class CardBehaviour : Card
                     Persona indiv = GameManager.Instance.enemyCharacters[i].GetComponentInChildren<CharacterBehaviour>().person;
                     ycount[i] = indiv.Health;
                 }
+
+                void CrodocidleFith()
+                {
+                    while (RoundInfo.RoundsPassed <= roundcout + 2)//basically polishes for this and the next turn, so this round+enemyround+nextroundafter
+                    {
+                        CharacterInstance.PolishWeapon(CharacterInstance);
+                    }
+                }
+                System.Threading.ThreadStart CrodocidleFithThread = new System.Threading.ThreadStart(CrodocidleFith);
+                System.Threading.Thread CrodocidleFithchildThread3 = new System.Threading.Thread(CrodocidleFithThread);
 
                 Timer Bethoven;
                 Bethoven = new Timer();
@@ -273,12 +290,14 @@ public class CardBehaviour : Card
                         Persona tribe = GameManager.Instance.enemyCharacters[i].GetComponentInChildren<CharacterBehaviour>().person; //this is cause we need each enemies attacksponser info to see if it matches
                         if ((ycount[i] != Zcount[i]) && ((Persona)tribe.AttackSponser == CharacterInstance))// checks health and attack sponser
                         {
-                            if(RoundInfo.RoundsPassed >= roundcout + 2)//basically polishes for this and the next turn, so this round+enemyround+nextroundafter
-                            {
-                                CharacterInstance.PolishWeapon(CharacterInstance);
-                            }
-                            if (RoundInfo.RoundsPassed == roundcout + 2) Bethoven.Close();
+                            CrodocidleFithchildThread3.Start();
+                            
                         }
+                    }
+                    if (RoundInfo.RoundsPassed == roundcout + 2)
+                    {
+                        Bethoven.Close();
+                        CrodocidleFithchildThread3.Abort();
                     }
                 }
                 break;
@@ -305,8 +324,14 @@ public class CardBehaviour : Card
                 CharacterInstance.Health += heCache;
                 break;
             case cardName.crocodileNinthCard:
-                CharacterInstance.Speed += CharacterInstance.Speed;
-                if(RoundInfo.RoundDone==true) CharacterInstance.Speed -= CharacterInstance.Speed;
+                double slight= CharacterInstance.Speed;
+                CharacterInstance.Speed += slight;
+                Timer Chpin; Chpin = new Timer();Chpin.Elapsed += new ElapsedEventHandler(impro); Chpin.Interval = 1000; Chpin.Enabled = true;
+                void impro(object source2, ElapsedEventArgs e)
+                {
+                    if (RoundInfo.RoundDone == true) CharacterInstance.Speed -= slight; Chpin.Close();
+                }
+                
                 break;
             case cardName.fishFirstCard:
 
@@ -367,12 +392,9 @@ public class CardBehaviour : Card
 
                 void dria(object source2, ElapsedEventArgs e)
                 {
-                    if (RoundInfo.RoundsPassed <= getem)
-                    {
-                        CharacterInstance.GetComponentInChildren<CharacterBehaviour>().turnUsed = true;
-                    }
-                    else
-                    {
+                    if (RoundInfo.RoundsPassed == getem)
+                    { 
+                        CharacterInstance.GetComponent<CharacterBehaviour>().DrawExtraCard();
                         mytocon.Close();
                     }
                 }
@@ -396,7 +418,7 @@ public class CardBehaviour : Card
                 break;
             case cardName.fishSeventhCard:
                 
-                 int buffCount= Target.GetDebuffs().Count;
+                int buffCount= Target.GetDebuffs().Count;
                 damageObject.DamageValue = CharacterInstance.DamageGiven()*5;
                 if(buffCount != 0)
                 {
@@ -417,14 +439,35 @@ public class CardBehaviour : Card
                 Debug.Log("Not done or special card");
                 break;
             case cardName.salamanderSecondCard:
-                int eggplant = UnityEngine.Random.Range(1, 101); int peach = UnityEngine.Random.Range(1, 101);
-                CharacterInstance.PhysicalDamage(CharacterInstance, CharacterInstance.Enemies[eggplant]); CharacterInstance.PhysicalDamage(CharacterInstance, CharacterInstance.Enemies[peach]);
-                int saint = RoundInfo.RoundsPassed;
-                if (RoundInfo.RoundsPassed==saint+1)
+                int eggplant = UnityEngine.Random.Range(1, CharacterInstance.Enemies.Count); int peach = UnityEngine.Random.Range(1, CharacterInstance.Enemies.Count);
+                if (CharacterInstance.Enemies.Count==1)
                 {
-                    CharacterInstance.GetComponent<CharacterBehaviour>().DrawExtraCard();
+                    CharacterInstance.PhysicalDamage(CharacterInstance, CharacterInstance.Enemies[eggplant]);
                 }
+                else
+                {
+                    CharacterInstance.PhysicalDamage(CharacterInstance, CharacterInstance.Enemies[eggplant]); CharacterInstance.PhysicalDamage(CharacterInstance, CharacterInstance.Enemies[peach]);
+                }
+                int saint = RoundInfo.RoundsPassed;
+                Timer Crazy;
+                Crazy = new Timer();
+                // Tell the timer what to do when it elapses
+                Crazy.Elapsed += new ElapsedEventHandler(Midnight);
+                //Set it to go off every one seconds
+                Crazy.Interval = 1000;
+                // And start it        
+                Crazy.Enabled = true;
 
+                void Midnight(object source2, ElapsedEventArgs e)
+                {
+                    if (RoundInfo.RoundsPassed == saint + 1)
+                    {
+                        CharacterInstance.GetComponent<CharacterBehaviour>().DrawExtraCard();
+                    }
+                }
+                int pathogen= (int)(0.95 * CharacterInstance.Life);
+                CharacterInstance.Life-= pathogen;
+                CharacterInstance.Health -= pathogen;
                 break;
             case cardName.salamanderThirdCard:
                 CharacterInstance.PhysicalDamage(CharacterInstance, Target);
@@ -436,9 +479,18 @@ public class CardBehaviour : Card
                 int breadTRA = UnityEngine.Random.Range(0, enemyindexCount3); int cond = UnityEngine.Random.Range(0, enemyindexCount3);
                 object fiaas = GameManager.Instance.enemyCharacters[breadTRA].GetComponentInChildren<CharacterBehaviour>().person;
                 object aallss = GameManager.Instance.enemyCharacters[cond].GetComponentInChildren<CharacterBehaviour>().person;
-                CharacterInstance.PhysicalDamage(CharacterInstance, fiaas); CharacterInstance.WeakGrip(CharacterInstance, fiaas, 1);
-                CharacterInstance.PhysicalDamage(CharacterInstance, aallss); CharacterInstance.WeakGrip(CharacterInstance, aallss, 1);
+
+                if (enemyindexCount3==1)
+                {
+                    CharacterInstance.PhysicalDamage(CharacterInstance, fiaas); CharacterInstance.WeakGrip(CharacterInstance, fiaas, 1);
+                }
+                else
+                {
+                    CharacterInstance.PhysicalDamage(CharacterInstance, fiaas); CharacterInstance.WeakGrip(CharacterInstance, fiaas, 1);
+                    CharacterInstance.PhysicalDamage(CharacterInstance, aallss); CharacterInstance.WeakGrip(CharacterInstance, aallss, 1);
+                }
                 CharacterInstance.Health -= (int)(CharacterInstance.Life * 0.05); //cause apparently it costs 5% of the max health which i assume is the health of a warrior
+
                 break;
             case cardName.salamanderFifthCard:
                 Debug.Log("Not done or special card");
@@ -451,7 +503,9 @@ public class CardBehaviour : Card
                  */
                 break;
             case cardName.salamanderSeventhCard:
-                int roundcount = RoundInfo.RoundsPassed;
+                int roundcount = RoundInfo.RoundsPassed; int healthdrain = (int)(CharacterInstance.Health * 0.1);
+                CharacterInstance.Health -= healthdrain;
+                CharacterInstance.Armour += healthdrain * 2;
 
                 Timer my;
                 my = new Timer();
@@ -466,13 +520,8 @@ public class CardBehaviour : Card
                 {
                     if (RoundInfo.RoundsPassed ==roundcount+1)
                     {
-                        CharacterInstance.Health -= (int)(CharacterInstance.Health * 0.1);
-                        CharacterInstance.Armour += (int)(CharacterInstance.Armour * 0.1) * 2;
-                    }
-                    if (RoundInfo.RoundsPassed == roundcount + 2)
-                    {
-                        CharacterInstance.Health -= (int)(CharacterInstance.Health * 0.1);
-                        CharacterInstance.Armour += (int)(CharacterInstance.Armour * 0.1) * 2;
+                        CharacterInstance.Health -= healthdrain;
+                        CharacterInstance.Armour += healthdrain * 2; 
                         my.Close();
                     }
                 }
@@ -507,9 +556,14 @@ public class CardBehaviour : Card
                 damageObject.DamageValue = CharacterInstance.DamageGiven() / 2;
                 int eCount3 = GameManager.Instance.enemyCharacters.Count;
                 int digaoogaoo = UnityEngine.Random.Range(0, eCount3); int diguyy = UnityEngine.Random.Range(0, eCount3); //random index of the enemy
-                Persona firthealth = GameManager.Instance.enemyCharacters[digaoogaoo].GetComponentInChildren<CharacterBehaviour>().person; Persona sechealths= GameManager.Instance.enemyCharacters[diguyy].GetComponentInChildren<CharacterBehaviour>().person;
-                CharacterInstance.PhysicalDamage(CharacterInstance, firthealth, damageObject); CharacterInstance.PhysicalDamage(CharacterInstance, sechealths, damageObject);
-                CharacterInstance.WeakGrip(CharacterInstance, firthealth, 1); CharacterInstance.WeakGrip(CharacterInstance, sechealths, 1);
+                Persona firthealth = GameManager.Instance.enemyCharacters[digaoogaoo].GetComponentInChildren<CharacterBehaviour>().person; Persona sechealths = GameManager.Instance.enemyCharacters[diguyy].GetComponentInChildren<CharacterBehaviour>().person;
+
+                if (GameManager.Instance.enemyCharacters.Count > 1)
+                {
+                    CharacterInstance.PhysicalDamage(CharacterInstance, firthealth, damageObject); CharacterInstance.PhysicalDamage(CharacterInstance, sechealths, damageObject);
+                    CharacterInstance.WeakGrip(CharacterInstance, firthealth, 1); CharacterInstance.WeakGrip(CharacterInstance, sechealths, 1);
+                }
+                CharacterInstance.PhysicalDamage(CharacterInstance, firthealth, damageObject); CharacterInstance.WeakGrip(CharacterInstance, firthealth, 1);
                 break;
             case cardName.frogFirstCard:
                 float bacon = UnityEngine.Random.Range(1, 101);
@@ -553,23 +607,43 @@ public class CardBehaviour : Card
                 CharacterInstance.Blight(CharacterInstance, TargetInstance, 4, CharacterInstance.DamageGiven());
                 break;
             case cardName.frogFifthCard:
-                object firstgrudge = CharacterInstance.RevengeDa.IndexOf(3);
-                object Secondgrudge = CharacterInstance.RevengeDa.IndexOf(4);
-                CharacterInstance.Stun(CharacterInstance, firstgrudge, 1); CharacterInstance.MagicalDamage(CharacterInstance, firstgrudge, 1);
-                CharacterInstance.Stun(CharacterInstance, Secondgrudge, 1); CharacterInstance.MagicalDamage(CharacterInstance, Secondgrudge, 1);
+                int ene=CharacterInstance.RevengeDa.Count;
+                if (ene>1)
+                {
+                    object firstgrudge = CharacterInstance.RevengeDa.IndexOf(ene - 1);
+                    object Secondgrudge = CharacterInstance.RevengeDa.IndexOf(ene-2);
+                    CharacterInstance.Stun(CharacterInstance, firstgrudge, 1); CharacterInstance.MagicalDamage(CharacterInstance, firstgrudge, 1);
+                    CharacterInstance.Stun(CharacterInstance, Secondgrudge, 1); CharacterInstance.MagicalDamage(CharacterInstance, Secondgrudge, 1);
+
+                }
+                else
+                {
+                    object firstgrudge = CharacterInstance.RevengeDa.IndexOf(ene - 1);
+                    CharacterInstance.Stun(CharacterInstance, firstgrudge, 1); CharacterInstance.MagicalDamage(CharacterInstance, firstgrudge, 1);
+                }
                 break;
             case cardName.frogSixthCard:
                 Debug.Log("Not done or special card");
                 CharacterInstance.GetComponent<CharacterBehaviour>().DrawExtraCard();
                 break;
             case cardName.frogSeventhCard:
-                object fgrudge = CharacterInstance.RevengeDa.IndexOf(0);
-                object Sgrudge = CharacterInstance.RevengeDa.IndexOf(1);
-                CharacterInstance.Stun(CharacterInstance, fgrudge, 1);
-                CharacterInstance.Stun(CharacterInstance, Sgrudge, 1);
-                CharacterInstance.PutArmour(CharacterInstance, true, (int)(CharacterInstance.Armour * 0.1));
-                CharacterInstance.Blight(CharacterInstance, fgrudge, 2, CharacterInstance.DamageGiven());
-                CharacterInstance.Blight(CharacterInstance, Sgrudge, 2, CharacterInstance.DamageGiven());
+                int enee3 = CharacterInstance.RevengeDa.Count;
+                object fgrudge2 = CharacterInstance.RevengeDa.IndexOf(0);
+                object Sgrudge2 = CharacterInstance.RevengeDa.IndexOf(1);
+                if (enee3 > 1)
+                {
+                    CharacterInstance.Stun(CharacterInstance, fgrudge2, 1);
+                    CharacterInstance.Stun(CharacterInstance, Sgrudge2, 1);
+                    CharacterInstance.PutArmour(CharacterInstance, true, (int)(CharacterInstance.Armour * 0.1));
+                    CharacterInstance.Blight(CharacterInstance, fgrudge2, 2, CharacterInstance.DamageGiven());
+                    CharacterInstance.Blight(CharacterInstance, Sgrudge2, 2, CharacterInstance.DamageGiven());
+                }
+                else
+                {
+                    CharacterInstance.Stun(CharacterInstance, fgrudge2, 1);
+                    CharacterInstance.PutArmour(CharacterInstance, true, (int)(CharacterInstance.Armour * 0.1));
+                    CharacterInstance.Blight(CharacterInstance, Sgrudge2, 2, CharacterInstance.DamageGiven());
+                }
                 break;
             case cardName.frogEighthCard:
                 int damageDealt = CharacterInstance.DamageGiven(); //needed later in this switch case
@@ -668,7 +742,7 @@ public class CardBehaviour : Card
                 {
                     Persona enemy= item.GetComponentInChildren<CharacterBehaviour>().person;
                     indienemyhealth = enemy.Health;
-                    if(count==0)lowestenemy = enemy;  count++;
+                    if(count==0)lowestenemy = enemy;  count++; //Necessary since lowestenemy hasn't been set yet
                     if (indienemyhealth < lowestenemy.Health) lowestenemy = enemy;
                     totalEnemyHealth += enemy.Health;
                 }
