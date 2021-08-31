@@ -22,7 +22,7 @@ namespace Assets.Scripts.Entities.Character
         private string _brief="Controller-(Debuffer)";
         public string BriefDescription { get { return _brief; } set { _brief = value; } }
 
-        private int _health = 0;
+        //private int _health = 0;
         public override int Health
         {
             get { return _health; }
@@ -33,7 +33,7 @@ namespace Assets.Scripts.Entities.Character
             }
         }
 
-        private double _dodge = 0;
+        //private double _dodge = 0;
         public override double dodge
         {
             get { return _dodge; }
@@ -45,7 +45,7 @@ namespace Assets.Scripts.Entities.Character
             }
         }
 
-        private double _speed=0;
+        //private double _speed=0;
         public override double Speed
         {
             get { return _speed; }
@@ -57,7 +57,7 @@ namespace Assets.Scripts.Entities.Character
             }
         }
 
-        private double _CritC = 0;
+        //private double _CritC = 0;
         public override double CritC
         {
             get { return _CritC; }
@@ -69,7 +69,7 @@ namespace Assets.Scripts.Entities.Character
             }
         }
 
-        private int _Damage = 0;
+        //private int _Damage = 0;
         public override int Damage
         {
             get { return _Damage; }
@@ -81,7 +81,7 @@ namespace Assets.Scripts.Entities.Character
             }
         }
 
-        private double _Accuracy = 0;
+        //private double _Accuracy = 0;
         public override double Accuracy
         {
             get { return _Accuracy; }
@@ -92,38 +92,38 @@ namespace Assets.Scripts.Entities.Character
             }
         }
 
-        private int _magres = 0;
+        //private int _magres = 0;
         public override int MagicRes
         {
-            get { return _magres; }
+            get { return _magicRes; }
             set
             {
-                _magres = value;
-                if (MagicRes < 0) _magres = 0;
+                _magicRes = value;
+                if (MagicRes < 0) _magicRes = 0;
 
             }
         }
 
-        private int _Armour = 0;
+        //private int _Armour = 0;
         public override int Armour
         {
-            get { return _Armour; }
+            get { return _armour; }
             set
             {
-                _magres = value;
-                if (Armour < 0) _Armour = 0;
+                _armour = value;
+                if (Armour < 0) _armour = 0;
 
             }
         }
 
-        private int _sheild = 0;
+        //private int _sheild = 0;
         public override int shield
         {
-            get { return _sheild; }
+            get { return _shield; }
             set
             {
-                _sheild = value;
-                if (shield < 0) _sheild = 0;
+                _shield = value;
+                if (shield < 0) _shield = 0;
             }
         }
 
@@ -141,7 +141,7 @@ namespace Assets.Scripts.Entities.Character
         public List<SpeciesType> NaturalAllies { get; set; }
         public List<SpeciesType> NaturalEnemies { get; set; }
 
-        private bool _foe = false;
+        //private bool _foe = false;
         public override bool Foe { get { return _foe; } set { _foe = value; } }
         public bool PassiveWarriorTraits { get; set; }
         public override int HitCount { get; set; }
@@ -235,31 +235,31 @@ namespace Assets.Scripts.Entities.Character
             #region MagicalResistance
             if (Foe == false)
             {
-                _magres = 1;
+                _magicRes = 1;
             }
             else
             {
-                _magres = 3;
+                _magicRes = 3;
             }
             #endregion
             #region Armour
             if (Foe == false)
             {
-                _Armour = 1;
+                _armour = 1;
             }
             else
             {
-                _Armour = 3;
+                _armour = 3;
             }
             #endregion
             #region Shield
             if (Foe == false)
             {
-                _sheild = 2;
+                _shield = 2;
             }
             else
             {
-                _sheild = 0;
+                _shield = 0;
             }
             #endregion
         }

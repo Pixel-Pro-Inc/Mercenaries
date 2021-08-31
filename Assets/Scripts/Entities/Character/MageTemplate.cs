@@ -23,7 +23,7 @@ namespace Assets.Scripts.Entities.Character
         private string _brief="Mage";
         public string BriefDescription { get { return _brief; } set { _brief = value; } }
 
-        private int _health;
+        //private int _health;
         public override int Health
         {
             set
@@ -34,7 +34,7 @@ namespace Assets.Scripts.Entities.Character
             get { return _health; }
         }
 
-        private double _dodge = 0;
+        //private double _dodge = 0;
         public override double dodge
         {
             get { return _dodge; }
@@ -45,29 +45,29 @@ namespace Assets.Scripts.Entities.Character
             }
         }
 
-        private double _sppedd = 0;
+        //private double _sppedd = 0;
         public override double Speed
         {
-            get { return _sppedd; }
+            get { return _speed; }
             set
             {
-                _sppedd = value;
-                if (Speed < 0) _sppedd = 0;
+                _speed = value;
+                if (Speed < 0) _speed = 0;
             }
         }
 
-        private double _Critc = 0;
+        //private double _Critc = 0;
         public override double CritC
         {
-            get { return _Critc; }
+            get { return _CritC; }
             set
             {
-                _Critc = value;
-                if (CritC < 0) _Critc = 0;
+                _CritC = value;
+                if (CritC < 0) _CritC = 0;
             }
         }
 
-        private int _Damage = 0;
+        //private int _Damage = 0;
         public override int Damage
         {
             get { return _Damage; }
@@ -79,42 +79,42 @@ namespace Assets.Scripts.Entities.Character
             }
         }
 
-        private double _Accuaracy = 0;
+        //private double _Accuaracy = 0;
         public override double Accuracy
         {
-            get { return _Accuaracy; }
+            get { return _Accuracy; }
             set
             {
-                _Accuaracy = value;
-                if (Accuracy < 0) _Accuaracy = 0;
+                _Accuracy = value;
+                if (Accuracy < 0) _Accuracy = 0;
             }
         }
 
-        private int _MAgres = 0;
+        //private int _MAgres = 0;
         public override int MagicRes
         {
-            get { return _MAgres; }
+            get { return _magicRes; }
             set
             {
-                _MAgres = value;
-                if (MagicRes < 0) _MAgres = 0;
+                _magicRes = value;
+                if (MagicRes < 0) _magicRes = 0;
 
             }
         }
 
-        private int _Armour = 0;
+        //private int _Armour = 0;
         public override int Armour
         {
-            get { return _Armour; }
+            get { return _armour; }
             set
             {
-                _Armour = value;
-                if (Armour < 0) _Armour = 0;
+                _armour = value;
+                if (Armour < 0) _armour = 0;
 
             }
         }
 
-        private int _shield = 0;
+        //private int _shield = 0;
         public override int shield
         {
             get { return _shield; }
@@ -139,7 +139,7 @@ namespace Assets.Scripts.Entities.Character
         public List<SpeciesType> NaturalAllies { get; set; }
         public List<SpeciesType> NaturalEnemies { get; set; }
 
-        private bool _foe = false;
+        //private bool _foe = false;
         public override bool Foe { get { return _foe; } set { _foe = value; } }
         public bool PassiveWarriorTraits { get; set; }
         public override int HitCount { get; set; }
@@ -307,16 +307,16 @@ namespace Assets.Scripts.Entities.Character
             {
                 if (SupportMage == false)
                 {
-                    _sppedd = 1;
+                    _speed = 1;
                 }
                 else
                 {
-                    _sppedd = 10;
+                    _speed = 10;
                 }
             }
             else
             {
-                _sppedd = 1;
+                _speed = 1;
             }
             #endregion
             #region CritC
@@ -324,16 +324,16 @@ namespace Assets.Scripts.Entities.Character
             {
                 if (SupportMage == false)
                 {
-                    _Critc = 2;
+                    _CritC = 2;
                 }
                 else
                 {
-                    _Critc = 1;
+                    _CritC = 1;
                 }
             }
             else
             {
-                _Critc = 1;
+                _CritC = 1;
             }
 
             #endregion
@@ -378,11 +378,11 @@ namespace Assets.Scripts.Entities.Character
             #region Accuracy
             if (Foe == false)
             {
-                _Accuaracy = 85;
+                _Accuracy = 85;
             }
             else
             {
-                _Accuaracy = 0;
+                _Accuracy = 0;
             }
             #endregion
             #region MagicalResistance
@@ -390,16 +390,16 @@ namespace Assets.Scripts.Entities.Character
             {
                 if (SupportMage == false)
                 {
-                    _MAgres = 2;
+                    _magicRes = 2;
                 }
                 else
                 {
-                    _MAgres = 1;
+                    _magicRes = 1;
                 }
             }
             else
             {
-                _MAgres = 0;
+                _magicRes = 0;
             }
             #endregion
             #region Armour
@@ -407,16 +407,16 @@ namespace Assets.Scripts.Entities.Character
             {
                 if (SupportMage == false)
                 {
-                    _Armour = 2;
+                    _armour = 2;
                 }
                 else
                 {
-                    _Armour = 1;
+                    _armour = 1;
                 }
             }
             else
             {
-                _Armour = 0;
+                _armour = 0;
             }
             #endregion
             #region Shield

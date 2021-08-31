@@ -22,7 +22,7 @@ namespace Assets.Scripts.Entities.Character
         private string _brief="Assasin";
         public string BriefDescription { get { return _brief; } set { _brief = value; } }
 
-        private int _health = 0;
+        //private int _health = 0;
         public override int Health
         {
             get { return _health; }
@@ -33,43 +33,43 @@ namespace Assets.Scripts.Entities.Character
             }
         }
 
-        private double _doidge = 0;
+        //private double _doidge = 0;
         public override double dodge
         {
-            get { return _doidge; }
+            get { return _dodge; }
             set
             {
-                _doidge = value;
-                if (dodge < 0) _doidge = 0;
+                _dodge = value;
+                if (dodge < 0) _dodge = 0;
 
             }
         }
 
-        private double _spped = 0;
+        //private double _spped = 0;
         public override double Speed
         {
-            get { return _spped; }
+            get { return _speed; }
             set
             {
-                _spped = value;
-                if (Speed < 0) _spped = 0;
+                _speed = value;
+                if (Speed < 0) _speed = 0;
 
             }
         }
 
-        private double _Critc = 0;
+        //private double _Critc = 0;
         public override double CritC
         {
-            get { return _Critc; }
+            get { return _CritC; }
             set
             {
-                _Critc = value;
-                if (CritC < 0) _Critc = 0;
+                _CritC = value;
+                if (CritC < 0) _CritC = 0;
 
             }
         }
 
-        private int _Damage = 0;
+        //private int _Damage = 0;
         public override int Damage
         {
             get { return _Damage; }
@@ -81,49 +81,49 @@ namespace Assets.Scripts.Entities.Character
             }
         }
 
-        private double _Accuaracy = 0;
+        //private double _Accuaracy = 0;
         public override double Accuracy
         {
-            get { return _Accuaracy; }
+            get { return _Accuracy; }
             set
             {
-                _Accuaracy = value;
-                if (Accuracy < 0) _Accuaracy = 0;
+                _Accuracy = value;
+                if (Accuracy < 0) _Accuracy = 0;
             }
         }
 
-        private int _MAgres = 0;
+        //private int _MAgres = 0;
         public override int MagicRes
         {
-            get { return _MAgres; }
+            get { return _magicRes; }
             set
             {
-                _MAgres = value;
-                if (MagicRes < 0) _MAgres = 0;
+                _magicRes = value;
+                if (MagicRes < 0) _magicRes = 0;
 
             }
         }
 
-        private int _Armour = 0;
+        //private int _Armour = 0;
         public override int Armour
         {
-            get { return _Armour; }
+            get { return _armour; }
             set
             {
-                _Armour = value;
-                if (Armour < 0) _Armour = 0;
+                _armour = value;
+                if (Armour < 0) _armour = 0;
 
             }
         }
 
-        private int _shielld = 0;
+        //private int _shielld = 0;
         public override int shield
         {
-            get { return _shielld; }
+            get { return _shield; }
             set
             {
-                _shielld = value;
-                if (shield < 0) _shielld = 0;
+                _shield = value;
+                if (shield < 0) _shield = 0;
             }
         }
 
@@ -141,8 +141,8 @@ namespace Assets.Scripts.Entities.Character
         public List<SpeciesType> NaturalAllies { get; set; }
         public List<SpeciesType> NaturalEnemies { get; set; }
 
-        private bool _FOE = false;
-        public override bool Foe { get { return _FOE; } set { _FOE = value; } }
+        //private bool _FOE = false;
+        public override bool Foe { get { return _foe; } set { _foe = value; } }
         public bool PassiveWarriorTraits { get; set; }
         public override int HitCount { get; set; }
 
@@ -151,7 +151,7 @@ namespace Assets.Scripts.Entities.Character
 
         public void InitiationMethod()
         {
-            if (CharacterSpecies == SpeciesType.Enemy) _FOE = true;
+            if (CharacterSpecies == SpeciesType.Enemy) _foe = true;
             #region health
 
             if (Foe == false)
@@ -167,32 +167,32 @@ namespace Assets.Scripts.Entities.Character
 
             if (Foe == false)
             {
-                _doidge = 15;
+                _dodge = 15;
             }
             else
             {
-                _doidge = 5;
+                _dodge = 5;
             }
 
             #endregion
             #region Speed
             if (Foe == false)
             {
-                _spped = 6;
+                _speed = 6;
             }
             else
             {
-                _spped = 5;
+                _speed = 5;
             }
             #endregion
             #region CritC
             if (Foe == false)
             {
-                _Critc = 10;
+                _CritC = 10;
             }
             else
             {
-                _Critc = 5;
+                _CritC = 5;
             }
 
             #endregion
@@ -223,41 +223,41 @@ namespace Assets.Scripts.Entities.Character
             #region Accuracy
             if (Foe == false)
             {
-                _Accuaracy = 100;
+                _Accuracy = 100;
             }
             else
             {
-                _Accuaracy = 0;
+                _Accuracy = 0;
             }
             #endregion
             #region MagicalResistance
             if (Foe == false)
             {
-                _MAgres = 3;
+                _magicRes = 3;
             }
             else
             {
-                _MAgres = 5;
+                _magicRes = 5;
             }
             #endregion
             #region Armour
             if (Foe == false)
             {
-                _Armour = 3;
+                _armour = 3;
             }
             else
             {
-                _Armour = 5;
+                _armour = 5;
             }
             #endregion
             #region Shield
             if (Foe == false)
             {
-                _shielld = 2;
+                _shield = 2;
             }
             else
             {
-                _shielld = 0;
+                _shield = 0;
             }
             #endregion
         }

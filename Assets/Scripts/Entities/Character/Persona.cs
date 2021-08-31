@@ -80,10 +80,10 @@ namespace Assets.Scripts.Entities.Character
         public virtual string CharacterDescription { get { return CharacterDescription; } set { CharacterDescription = "UnKnown"; } } //Here the personality and backstory of a unique character will be defined
         public SpeciesType CharacterSpecies { get; set; }
 
-        private bool _foe { get; set; }
+        internal bool _foe { get; set; }
         public virtual bool Foe { get { return _foe; } set { _foe = value; } }
 
-        private int _Life = 0;
+        internal int _Life = 0;
         public virtual int Life
         {
             get { return _Life; }
@@ -95,7 +95,7 @@ namespace Assets.Scripts.Entities.Character
             }
         }
 
-        private int _health = 0;
+        internal int _health = 0;
         public virtual int Health
         {
             get { return _health; }
@@ -113,7 +113,7 @@ namespace Assets.Scripts.Entities.Character
             }
         }
 
-        private double _dodge = 0;
+        internal double _dodge = 0;
         public virtual double dodge
         {
             get { return _dodge; }
@@ -132,7 +132,7 @@ namespace Assets.Scripts.Entities.Character
             }
         }
 
-        private double _speed = 0;
+        internal double _speed = 0;
         public virtual double Speed
         {
             get { return _speed; }
@@ -151,7 +151,7 @@ namespace Assets.Scripts.Entities.Character
             }
         }
 
-        private double _CritC = 0;
+        internal double _CritC = 0;
         public virtual double CritC
         {
             get { return _CritC; }
@@ -170,7 +170,7 @@ namespace Assets.Scripts.Entities.Character
             }
         }
 
-        private int _magicRes = 0;
+        internal int _magicRes = 0;
         public virtual int MagicRes
         {
             get { return _magicRes; }
@@ -189,7 +189,7 @@ namespace Assets.Scripts.Entities.Character
             }
         }
 
-        private int _armour = 0;
+        internal int _armour = 0;
         public virtual int Armour
         {
             get { return _armour; }
@@ -208,7 +208,7 @@ namespace Assets.Scripts.Entities.Character
             }
         }
 
-        private int _shield = 0;
+        internal int _shield = 0;
         public virtual int shield
         {
             get { return _shield; }
@@ -225,13 +225,14 @@ namespace Assets.Scripts.Entities.Character
                 if (shield < 0) _shield = 0;
             }
         }
-
+        internal int _Damage = 0;
         public virtual int Damage { get; set; }
         public virtual int HitCount { get; set; }
+        internal double _Accuracy = 0;
         public virtual double Accuracy { get; set; }
         public bool LowDamage { get; set; }
 
-        private int _expPoints = 0;
+        internal int _expPoints = 0;
         public int ExpPoints
         {
             get { return _expPoints; }
@@ -249,7 +250,7 @@ namespace Assets.Scripts.Entities.Character
             }
         }
 
-        private int _NewExpoint = 0;
+        internal int _NewExpoint = 0;
         public int NewEarnedXp
         {
             get { return _NewExpoint; }
@@ -267,7 +268,7 @@ namespace Assets.Scripts.Entities.Character
             }
         }
 
-        private bool _EarnedXp = false;
+        internal bool _EarnedXp = false;
         public bool EarnedXp
         {
             get { return _EarnedXp; }
@@ -604,9 +605,6 @@ namespace Assets.Scripts.Entities.Character
             }
         }
         #endregion
-
-
-
 
         #endregion
         #region Combat Actions

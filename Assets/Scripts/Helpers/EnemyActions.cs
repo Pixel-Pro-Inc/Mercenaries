@@ -5,11 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Assets.Scripts.MonoBehaviours;
 using Assets.Scripts.Models;
 using UnityEngine;
 using static Assets.Scripts.Models.Enums;
+using System.Threading;
 
 namespace Assets.Scripts.Helpers
 {
@@ -25,25 +25,52 @@ namespace Assets.Scripts.Helpers
             switch (EnemyNames)
             {
                 case MasterCharacterList.HammerHead:
-
-                    while (Character.Health <= (int)(Character.Life * 0.25))
+                    //I'm using threads here cause it seems like the program stalls when one of theseis not met. So im utilizing parrallelization
+                    void passive1()
                     {
-                        int fordo = RoundInfo.RoundsPassed;
-                        Character.PowerBuffPercent = 2;
-                        if (RoundInfo.RoundsPassed>fordo)
+                        while (Character.Health > (int)(Character.Life * 0.5))
                         {
-                            Character.PolishWeapon(Character);
+                            Character.AgileBUffPercent = 0.5;
+                            Character.Agile(Character, true);
                         }
                     }
-                    while ((Character.Health <= (int)(Character.Life * 0.5)) && (Character.Health > (int)(Character.Life * 0.25)))
+                    void passive2()
                     {
-                        //here im thinking it checks if the stun in the list of debuffs and if true, with a 50% chance it will reverse the effect. But im not sure how yewo intends to reverse effects
+                        while ((Character.Health <= (int)(Character.Life * 0.5)) && (Character.Health > (int)(Character.Life * 0.25)))
+                        {
+                            //here im thinking it checks if the stun in the list of debuffs and if true, with a 50% chance it will reverse the effect. But im not sure how yewo intends to reverse effects
+                            Debug.Log("Yewo, you need to create the reverse deuff method for this to work");
+                        }
                     }
-                    while (Character.Health >(int)(Character.Life * 0.5))
+                    void passive3()
                     {
-                        Character.AgileBUffPercent = 0.5;
-                        Character.Agile(Character, true);
+                        while (Character.Health <= (int)(Character.Life * 0.25))
+                        {
+                            int fordo = RoundInfo.RoundsPassed;
+                            Character.PowerBuffPercent = 2;
+                            if (RoundInfo.RoundsPassed > fordo)
+                            {
+                                Character.PolishWeapon(Character);
+                            }
+                        }
                     }
+
+                    ThreadStart passiveEffect1 = new ThreadStart(passive1);
+                    Thread childThread1 = new Thread(passiveEffect1);
+                    childThread1.Start();
+                    childThread1.Abort(); //i have abort call immeditaly after cause it want to remove the thread so we dont have the mutliple threads at the same time
+                    //i just want a sinlge adjusent thread at a time, for performance sake
+
+                    ThreadStart passiveEffect2 = new ThreadStart(passive2);
+                    Thread childThread2 = new Thread(passiveEffect1);
+                    childThread2.Start();
+                    childThread2.Abort();
+
+                    ThreadStart passiveEffect3 = new ThreadStart(passive3);
+                    Thread childThread3 = new Thread(passiveEffect3);
+                    childThread3.Start();
+                    childThread3.Abort();
+
                     break;
                 case MasterCharacterList.GreatWhite:
                     int healdamage = new int();
@@ -55,36 +82,63 @@ namespace Assets.Scripts.Helpers
                         ycount[i] = indiv.Health;
                         Zcount[i] = ycount[i];
                     }
-                    while (Character.Health <= (int)(Character.Life * 0.15))
+                    void GreatWhitepassive1()
                     {
-                        for (int i = 0; i < Character.Enemies.Count; i++) //this here is meant to constantly check the health values
+                        while (Character.Health > (int)(Character.Life * 0.5))
                         {
-                            Persona ego = (Persona)Character.Enemies[i];
-                            Zcount[i] = ego.Health;
+                            Character.AgileBUffPercent = 0.5;
+                            Character.Agile(Character, true);
                         }
-                        for (int i = 0; i < Character.Enemies.Count; i++)//this is meant to actually do the logic
+                    }
+                    void GreatWhitepassive2()
+                    {
+                        while ((Character.Health <= (int)(Character.Life * 0.5)) && (Character.Health > (int)(Character.Life * 0.25)))
                         {
-                            Persona tribe = (Persona)Character.Enemies[i]; //this is cause we need each enemies attacksponser info to see if it matches
-                            if ((ycount[i] != Zcount[i]) && ((Persona)tribe.AttackSponser == Character))// checks health and attack sponser
-                            {
-                                healdamage += ycount[i] - Zcount[i];
-                            }
-                            if (ycount[i] != Zcount[i])
-                            {
-                                ycount[i] = Zcount[i]; //this is so if someone else affected their heal, it will change the health array appropriatly
-                            }
+                            //here im thinking it checks if the stun in the list of debuffs and if true, with a 50% chance it will reverse the effect. But im not sure how yewo intends to reverse effects
+                            Debug.Log("Yewo, you need to create the reverse deuff method for this to work");
                         }
-                        Character.HealVictim(Character, healdamage);
                     }
-                    while ((Character.Health <= (int)(Character.Life * 0.5)) && (Character.Health > (int)(Character.Life * 0.25)))
+                    void GreatWhitepassive3()
                     {
-                        //here im thinking it checks if the stun in the list of debuffs and if true, with a 50% chance it will reverse the effect. But im not sure how yewo intends to reverse effects
+                        while (Character.Health <= (int)(Character.Life * 0.15))
+                        {
+                            for (int i = 0; i < Character.Enemies.Count; i++) //this here is meant to constantly check the health values
+                            {
+                                Persona ego = (Persona)Character.Enemies[i];
+                                Zcount[i] = ego.Health;
+                            }
+                            for (int i = 0; i < Character.Enemies.Count; i++)//this is meant to actually do the logic
+                            {
+                                Persona tribe = (Persona)Character.Enemies[i]; //this is cause we need each enemies attacksponser info to see if it matches
+                                if ((ycount[i] != Zcount[i]) && ((Persona)tribe.AttackSponser == Character))// checks health and attack sponser
+                                {
+                                    healdamage += ycount[i] - Zcount[i];
+                                }
+                                if (ycount[i] != Zcount[i])
+                                {
+                                    ycount[i] = Zcount[i]; //this is so if someone else affected their heal, it will change the health array appropriatly
+                                }
+                            }
+                            Character.HealVictim(Character, healdamage);
+                        }
                     }
-                    while (Character.Health > (int)(Character.Life * 0.5))
-                    {
-                        Character.AgileBUffPercent = 0.5;
-                        Character.Agile(Character, true);
-                    }
+
+                    ThreadStart GreatWhitepassiveEffect1 = new ThreadStart(GreatWhitepassive1);
+                    Thread GreatWhitechildThread1 = new Thread(GreatWhitepassiveEffect1);
+                    GreatWhitechildThread1.Start();
+                    GreatWhitechildThread1.Abort(); //i have abort call immeditaly after cause it want to remove the thread so we dont have the mutliple threads at the same time
+                    //i just want a sinlge adjusent thread at a time, for performance sake
+
+                    ThreadStart GreatWhitepassiveEffect2 = new ThreadStart(GreatWhitepassive2);
+                    Thread GreatWhitechildThread2 = new Thread(GreatWhitepassiveEffect1);
+                    GreatWhitechildThread2.Start();
+                    GreatWhitechildThread2.Abort();
+
+                    ThreadStart GreatWhitepassiveEffect3 = new ThreadStart(GreatWhitepassive3);
+                    Thread GreatWhitechildThread3 = new Thread(GreatWhitepassiveEffect3);
+                    GreatWhitechildThread3.Start();
+                    GreatWhitechildThread3.Abort();
+
                     break;
                 case MasterCharacterList.SpiderCrustacean:
                     int storedhealth = Character.Health;
@@ -98,16 +152,25 @@ namespace Assets.Scripts.Helpers
                             Character.defenceMagresPercentage += 0.1;
                         }
                     }
-                    while (RoundInfo.GameInSession==true)
+
+                    void SpiderCrustaceanpassive1()
                     {
-                        if (storedhealth!=Character.Health)
+                        while (RoundInfo.GameInSession == true)
                         {
-                            dmaGi=(int)((Character.Health - storedhealth) * 0.1);
-                            DamageObject errand = new DamageObject { DamageValue=dmaGi};
-                            Character.TrueDamage(Character, Character.AttackSponser, errand);
-                            storedhealth = Character.Health;
+                            if (storedhealth != Character.Health)
+                            {
+                                dmaGi = (int)((Character.Health - storedhealth) * 0.1);
+                                DamageObject errand = new DamageObject { DamageValue = dmaGi };
+                                Character.TrueDamage(Character, Character.AttackSponser, errand);
+                                storedhealth = Character.Health;
+                            }
                         }
                     }
+                    ThreadStart SpiderCrustaceanpassiveEffect3 = new ThreadStart(SpiderCrustaceanpassive1);
+                    Thread SpiderCrustaceanchildThread3 = new Thread(SpiderCrustaceanpassiveEffect3);
+                    SpiderCrustaceanchildThread3.Start();
+                    SpiderCrustaceanchildThread3.Abort();
+
                     break;
                 case MasterCharacterList.NecroBoar:
                     int[] storedalliedHealth = new int[Character.Allies.Count];
@@ -129,7 +192,7 @@ namespace Assets.Scripts.Helpers
                             }
                         }
                     }
-                    Timer Boom; Boom = new Timer(); Boom.Elapsed += new ElapsedEventHandler(Punch);  Boom.Interval = 1000; Boom.Enabled = true;
+                    System.Timers.Timer Boom; Boom = new System.Timers.Timer(); Boom.Elapsed += new ElapsedEventHandler(Punch);  Boom.Interval = 1000; Boom.Enabled = true;
                     void Punch(object source2, ElapsedEventArgs e)
                     {
                         for (int i = 0; i < Character.Allies.Count; i++)
@@ -171,7 +234,7 @@ namespace Assets.Scripts.Helpers
                     {
                         if (GameManager.Instance.enemyCharacters[i].GetComponentInChildren<CharacterBehaviour>().turnUsed == false)
                         {
-                            Timer Siccsa; Siccsa = new Timer(); Siccsa.Elapsed += new ElapsedEventHandler(Gitar); Siccsa.Interval = 1000; Siccsa.Enabled = true;
+                            System.Timers.Timer Siccsa; Siccsa = new System.Timers.Timer(); Siccsa.Elapsed += new ElapsedEventHandler(Gitar); Siccsa.Interval = 1000; Siccsa.Enabled = true;
                             void Gitar(object source2, ElapsedEventArgs e)
                             {
                                 if (GameManager.Instance.enemyCharacters[i].GetComponentInChildren<CharacterBehaviour>().turnUsed == true)
@@ -185,7 +248,7 @@ namespace Assets.Scripts.Helpers
                     break;
                 case MasterCharacterList.DevilBird:
                     double collectMagic = 0; int cout = 0;
-                    Timer Jesu; Jesu = new Timer(); Jesu.Elapsed += new ElapsedEventHandler(Komm); Jesu.Interval = 1000; Jesu.Enabled = true;
+                    System.Timers.Timer Jesu; Jesu = new System.Timers.Timer(); Jesu.Elapsed += new ElapsedEventHandler(Komm); Jesu.Interval = 1000; Jesu.Enabled = true;
                     void Komm(object source2, ElapsedEventArgs e)
                     {
                         for (int i = 0; i < GameManager.Instance.enemyCharacters.Count; i++)
@@ -684,7 +747,7 @@ namespace Assets.Scripts.Helpers
                 case MasterCharacterList.NecroBoar:
                     //Attack 1
                     int RoundsDone = new int(); RoundsDone = RoundInfo.RoundsPassed; int count = 0;
-                    Timer myr2; myr2 = new Timer(); myr2.Elapsed += new ElapsedEventHandler(myEt); myr2.Interval = 1000; myr2.Enabled = true;
+                    System.Timers.Timer  myr2; myr2 = new System.Timers.Timer (); myr2.Elapsed += new ElapsedEventHandler(myEt); myr2.Interval = 1000; myr2.Enabled = true;
                     void myEt(object source2, ElapsedEventArgs e)
                     {
                         if (RoundsDone != RoundInfo.RoundsPassed && count < 3)
@@ -788,17 +851,25 @@ namespace Assets.Scripts.Helpers
                         Ecount2[i] = indiv2.shield;
                         Fcount2[i] = (int)indiv2.Accuracy;
                     }
-                    while (RoundInfo.RoundsPassed <= rou + 1)
+                    void SpiderCrustaceanDebuff1()
                     {
-                        for (int i = 0; i < Character.Enemies.Count; i++) //this here is meant to constantly check the health values
+                        while (RoundInfo.RoundsPassed <= rou + 1)
                         {
-                            Persona ego = (Persona)Character.Enemies[i];
-                            ego.Health= ycount2[i]; ego.dodge = Zcount2[i];
-                            ego.Speed = Acount2[i]; ego.CritC = Bcount2[i];
-                            ego.MagicRes = Ccount2[i]; ego.Armour = Dcount2[i];
-                            ego.shield = Ecount2[i]; ego.Accuracy = Fcount2[i];
+                            for (int i = 0; i < Character.Enemies.Count; i++) //this here is meant to constantly check the health values
+                            {
+                                Persona ego = (Persona)Character.Enemies[i];
+                                ego.Health = ycount2[i]; ego.dodge = Zcount2[i];
+                                ego.Speed = Acount2[i]; ego.CritC = Bcount2[i];
+                                ego.MagicRes = Ccount2[i]; ego.Armour = Dcount2[i];
+                                ego.shield = Ecount2[i]; ego.Accuracy = Fcount2[i];
+                            }
                         }
                     }
+                    ThreadStart SpiderCrustaceanDebuffEffect1 = new ThreadStart(SpiderCrustaceanDebuff1);
+                    Thread SpiderCrustaceanchildThread1 = new Thread(SpiderCrustaceanDebuffEffect1);
+                    SpiderCrustaceanchildThread1.Start();
+                    SpiderCrustaceanchildThread1.Abort();
+                    
                     break;
                 case MasterCharacterList.NecroBoar:
                     //Attack 3
@@ -833,7 +904,7 @@ namespace Assets.Scripts.Helpers
                     Character.Rooted(Character, fVictim, 1); Character.Burnt(Character, fVictim);
                     Character.Rooted(Character, SVictim, 1); Character.Burnt(Character, SVictim);
 
-                    Timer summer; summer = new Timer(); summer.Elapsed += new ElapsedEventHandler(vivaldiiii); summer.Interval = 1000; summer.Enabled = true;
+                    System.Timers.Timer  summer; summer = new System.Timers.Timer (); summer.Elapsed += new ElapsedEventHandler(vivaldiiii); summer.Interval = 1000; summer.Enabled = true;
                     void vivaldiiii(object source2, ElapsedEventArgs e)
                     {
                         if (roundsbaby + 1 == RoundInfo.RoundsPassed)
@@ -931,7 +1002,7 @@ namespace Assets.Scripts.Helpers
                     {
                         //Attack 3
                         int mAch = RoundInfo.RoundsPassed; int count = 0;
-                        Timer oboe; oboe = new Timer(); oboe.Elapsed += new ElapsedEventHandler(violin); oboe.Interval = 1000; oboe.Enabled = true;
+                        System.Timers.Timer  oboe; oboe = new System.Timers.Timer (); oboe.Elapsed += new ElapsedEventHandler(violin); oboe.Interval = 1000; oboe.Enabled = true;
                         void violin(object source2, ElapsedEventArgs e)
                         {
                             if (mAch < RoundInfo.RoundsPassed && count <= 2)

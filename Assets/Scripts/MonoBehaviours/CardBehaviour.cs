@@ -356,9 +356,25 @@ public class CardBehaviour : Card
                 break;
             case cardName.fishFifthCard:
                 CharacterInstance.PhysicalDamage(CharacterInstance, Target); int getem = RoundInfo.RoundsPassed + 1;
-                while (RoundInfo.RoundsPassed<= getem)
+                Timer mytocon;
+                mytocon = new Timer();
+                // Tell the timer what to do when it elapses
+                mytocon.Elapsed += new ElapsedEventHandler(dria);
+                // Set it to go off every one seconds
+                mytocon.Interval = 1000;
+                // And start it        
+                mytocon.Enabled = true;
+
+                void dria(object source2, ElapsedEventArgs e)
                 {
-                    CharacterInstance.GetComponentInChildren<CharacterBehaviour>().turnUsed = true;
+                    if (RoundInfo.RoundsPassed <= getem)
+                    {
+                        CharacterInstance.GetComponentInChildren<CharacterBehaviour>().turnUsed = true;
+                    }
+                    else
+                    {
+                        mytocon.Close();
+                    }
                 }
                 break;
             case cardName.fishSixthCard:
