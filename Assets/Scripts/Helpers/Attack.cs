@@ -39,7 +39,9 @@ namespace Assets.Scripts.Helpers
             double markedda = 0;
 
             Persona Character = (Persona)CharacterInstance;
+            UnityEngine.Debug.Log("almost there");
             Persona Target = (Persona)TargetInstance;
+            UnityEngine.Debug.Log("Its working, what the fuck");
             physicalDamage = Character.DamageGiven();
 
             DamageObject hitval = new DamageObject();

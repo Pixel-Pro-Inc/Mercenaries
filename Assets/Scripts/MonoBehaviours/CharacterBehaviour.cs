@@ -270,6 +270,8 @@ namespace Assets.Scripts.MonoBehaviours
                     HammerHead.CharacterDescription = "Look me in the eye and say that again";
                     HammerHead.CharacterSpecies = SpeciesType.Fish;
                     HammerHead.EnemyType = enemyType.Boss;
+                    gameObject.AddComponent<Bosses>();
+
 
                     HammerHead.Allies.AddRange(GameManager.Instance.enemyCharacters);
                     HammerHead.Enemies.AddRange(GameManager.Instance.playerCharacters);
@@ -290,6 +292,7 @@ namespace Assets.Scripts.MonoBehaviours
                     GreatWhite.CharacterDescription = "Oh my god, my teeth are killing me";
                     GreatWhite.CharacterSpecies = SpeciesType.Fish;
                     GreatWhite.EnemyType = enemyType.Boss;
+                    gameObject.AddComponent<Bosses>();
 
                     GreatWhite.Allies.AddRange(GameManager.Instance.enemyCharacters);
                     GreatWhite.Enemies.AddRange(GameManager.Instance.playerCharacters);
@@ -310,6 +313,7 @@ namespace Assets.Scripts.MonoBehaviours
                     SpiderCrustacean.CharacterDescription = "......";
                     SpiderCrustacean.CharacterSpecies = SpeciesType.Fish;
                     SpiderCrustacean.EnemyType = enemyType.Boss;
+                    gameObject.AddComponent<Bosses>();
 
                     SpiderCrustacean.Allies.AddRange(GameManager.Instance.enemyCharacters);
                     SpiderCrustacean.Enemies.AddRange(GameManager.Instance.playerCharacters);
@@ -330,6 +334,7 @@ namespace Assets.Scripts.MonoBehaviours
                     NecroBoar.CharacterDescription = "Call me atheist, but I dont believe in the Last Supper";
                     NecroBoar.CharacterSpecies = SpeciesType.Boar;
                     NecroBoar.EnemyType = enemyType.Boss;
+                    gameObject.AddComponent<Bosses>();
 
                     NecroBoar.Allies.AddRange(GameManager.Instance.enemyCharacters);
                     NecroBoar.Enemies.AddRange(GameManager.Instance.playerCharacters);
@@ -350,6 +355,7 @@ namespace Assets.Scripts.MonoBehaviours
                     ElderStag.CharacterDescription = "My Eternal core spews cold hatred and pure darkness......(just like mothers words *sadness*)";
                     ElderStag.CharacterSpecies = SpeciesType.Deer;
                     ElderStag.EnemyType = enemyType.Boss;
+                    gameObject.AddComponent<Bosses>();
 
                     ElderStag.Allies.AddRange(GameManager.Instance.enemyCharacters);
                     ElderStag.Enemies.AddRange(GameManager.Instance.playerCharacters);
@@ -370,6 +376,7 @@ namespace Assets.Scripts.MonoBehaviours
                     DevilBird.CharacterDescription = "SQUUACCK!";
                     DevilBird.CharacterSpecies = SpeciesType.Bird;
                     DevilBird.EnemyType = enemyType.Boss;
+                    gameObject.AddComponent<Bosses>();
 
                     DevilBird.Allies.AddRange(GameManager.Instance.enemyCharacters);
                     DevilBird.Enemies.AddRange(GameManager.Instance.playerCharacters);
@@ -390,6 +397,7 @@ namespace Assets.Scripts.MonoBehaviours
                     DragonSloth.CharacterDescription = "W..a..i..t....u....p..y...o...u....g....u";
                     DragonSloth.CharacterSpecies = SpeciesType.Sloth;
                     DragonSloth.EnemyType = enemyType.Boss;
+                    gameObject.AddComponent<Bosses>();
 
                     DragonSloth.Allies.AddRange(GameManager.Instance.enemyCharacters);
                     DragonSloth.Enemies.AddRange(GameManager.Instance.playerCharacters);
@@ -471,8 +479,15 @@ namespace Assets.Scripts.MonoBehaviours
             switch (person.EnemyType)
             {
                 case enemyType.Boss:
-                    gameObject.AddComponent<Bosses>();
+                    List<Persona> heros= new List<Persona>();
+                    for (int i = 0; i < GameManager.Instance.playerCharacters.Count; i++)
+                    {
+                        heros.Add(GameManager.Instance.playerCharacters[i].GetComponentInChildren<Persona>());
+                    }
+                    gameObject.GetComponent<Bosses>().opponents = heros;
+                    gameObject.GetComponent<Bosses>().myStats = person;
                     gameObject.GetComponent<Bosses>().Decision();
+                    //I don't like whats happening above here, the fact that we had to make mystats public. Yewo has to tell me how this works
                     break;
                 case enemyType.Elite:
                     gameObject.AddComponent<Elite>();

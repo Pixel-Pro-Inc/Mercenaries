@@ -27,9 +27,9 @@ public class Bosses:MonoBehaviour
     public double healthThreshold; // Percentage
     #endregion
 
-    Persona myStats;
+    public Persona myStats;
     public static Bosses Instance;
-    List<Persona> opponents = new List<Persona>();
+    public List<Persona> opponents = new List<Persona>();
     EnemyActions enemyActions = new EnemyActions();
 
     public Bosses(Persona _MyStats, List<Persona> _Opponents)

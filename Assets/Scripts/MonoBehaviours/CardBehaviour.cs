@@ -364,6 +364,7 @@ public class CardBehaviour : Card
                 
                 break;
             case cardName.fishSecondCard:
+                Debug.Log("We made it up to here, lets see if physcial doesnt damage");
                 CharacterInstance.PhysicalDamage(CharacterInstance, Target);
                 break;
             case cardName.fishThirdCard:
