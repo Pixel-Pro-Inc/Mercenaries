@@ -118,5 +118,12 @@ namespace Assets.Scripts.Models
             tritonEighthCard,
             tritonNinthCard,
         }
+        public enum enemyType
+        {
+            Boss,
+            Elite,
+            Normal,
+            Minion
+        }
     }
 }

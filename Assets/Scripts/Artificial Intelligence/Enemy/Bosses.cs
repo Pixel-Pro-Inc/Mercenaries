@@ -5,7 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bosses
+public class Bosses:MonoBehaviour
 {
     #region Tendencies
     //Play Style
@@ -53,7 +53,7 @@ public class Bosses
             if (count % 3 == 0) //Searches for odd since od is just even +1
                 fired = SlotMachine(defenseBiasedAttack);
 
-            if (count % 2 != 0&& count % 3 != 0) //Searches for prime
+            if (count % 2 != 0&& count % 3 != 0) //Searches for prime including multiples of 5
                 fired = SlotMachine(strategicAttack);
 
             if (fired)

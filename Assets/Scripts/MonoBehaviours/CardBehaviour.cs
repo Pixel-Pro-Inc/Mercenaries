@@ -556,7 +556,7 @@ public class CardBehaviour : Card
                 damageObject.DamageValue = CharacterInstance.DamageGiven() / 2;
                 int eCount3 = GameManager.Instance.enemyCharacters.Count;
                 int digaoogaoo = UnityEngine.Random.Range(0, eCount3); int diguyy = UnityEngine.Random.Range(0, eCount3); //random index of the enemy
-                Persona firthealth = GameManager.Instance.enemyCharacters[digaoogaoo].GetComponentInChildren<CharacterBehaviour>().person; Persona sechealths = GameManager.Instance.enemyCharacters[diguyy].GetComponentInChildren<CharacterBehaviour>().person;
+                object firthealth = GameManager.Instance.enemyCharacters[digaoogaoo].GetComponentInChildren<CharacterBehaviour>().person; object sechealths = GameManager.Instance.enemyCharacters[diguyy].GetComponentInChildren<CharacterBehaviour>().person;
 
                 if (GameManager.Instance.enemyCharacters.Count > 1)
                 {

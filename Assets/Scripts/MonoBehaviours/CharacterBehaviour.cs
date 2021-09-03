@@ -269,6 +269,7 @@ namespace Assets.Scripts.MonoBehaviours
                     HammerHead.CharacterName = "HammerHead";
                     HammerHead.CharacterDescription = "Look me in the eye and say that again";
                     HammerHead.CharacterSpecies = SpeciesType.Fish;
+                    HammerHead.EnemyType = enemyType.Boss;
 
                     HammerHead.Allies.AddRange(GameManager.Instance.enemyCharacters);
                     HammerHead.Enemies.AddRange(GameManager.Instance.playerCharacters);
@@ -288,6 +289,7 @@ namespace Assets.Scripts.MonoBehaviours
                     GreatWhite.CharacterName = "GreatWhite";
                     GreatWhite.CharacterDescription = "Oh my god, my teeth are killing me";
                     GreatWhite.CharacterSpecies = SpeciesType.Fish;
+                    GreatWhite.EnemyType = enemyType.Boss;
 
                     GreatWhite.Allies.AddRange(GameManager.Instance.enemyCharacters);
                     GreatWhite.Enemies.AddRange(GameManager.Instance.playerCharacters);
@@ -307,6 +309,7 @@ namespace Assets.Scripts.MonoBehaviours
                     SpiderCrustacean.CharacterName = "SpiderCrustacean";
                     SpiderCrustacean.CharacterDescription = "......";
                     SpiderCrustacean.CharacterSpecies = SpeciesType.Fish;
+                    SpiderCrustacean.EnemyType = enemyType.Boss;
 
                     SpiderCrustacean.Allies.AddRange(GameManager.Instance.enemyCharacters);
                     SpiderCrustacean.Enemies.AddRange(GameManager.Instance.playerCharacters);
@@ -326,6 +329,7 @@ namespace Assets.Scripts.MonoBehaviours
                     NecroBoar.CharacterName = "NecroBoar";
                     NecroBoar.CharacterDescription = "Call me atheist, but I dont believe in the Last Supper";
                     NecroBoar.CharacterSpecies = SpeciesType.Boar;
+                    NecroBoar.EnemyType = enemyType.Boss;
 
                     NecroBoar.Allies.AddRange(GameManager.Instance.enemyCharacters);
                     NecroBoar.Enemies.AddRange(GameManager.Instance.playerCharacters);
@@ -345,6 +349,7 @@ namespace Assets.Scripts.MonoBehaviours
                     ElderStag.CharacterName = "ElderStag";
                     ElderStag.CharacterDescription = "My Eternal core spews cold hatred and pure darkness......(just like mothers words *sadness*)";
                     ElderStag.CharacterSpecies = SpeciesType.Deer;
+                    ElderStag.EnemyType = enemyType.Boss;
 
                     ElderStag.Allies.AddRange(GameManager.Instance.enemyCharacters);
                     ElderStag.Enemies.AddRange(GameManager.Instance.playerCharacters);
@@ -364,6 +369,7 @@ namespace Assets.Scripts.MonoBehaviours
                     DevilBird.CharacterName = "DevilBird";
                     DevilBird.CharacterDescription = "SQUUACCK!";
                     DevilBird.CharacterSpecies = SpeciesType.Bird;
+                    DevilBird.EnemyType = enemyType.Boss;
 
                     DevilBird.Allies.AddRange(GameManager.Instance.enemyCharacters);
                     DevilBird.Enemies.AddRange(GameManager.Instance.playerCharacters);
@@ -383,6 +389,7 @@ namespace Assets.Scripts.MonoBehaviours
                     DragonSloth.CharacterName = "DragonSloth";
                     DragonSloth.CharacterDescription = "W..a..i..t....u....p..y...o...u....g....u";
                     DragonSloth.CharacterSpecies = SpeciesType.Sloth;
+                    DragonSloth.EnemyType = enemyType.Boss;
 
                     DragonSloth.Allies.AddRange(GameManager.Instance.enemyCharacters);
                     DragonSloth.Enemies.AddRange(GameManager.Instance.playerCharacters);
@@ -461,32 +468,36 @@ namespace Assets.Scripts.MonoBehaviours
         #region Enemy Code
         public void EnemyAttack()
         {
-            EnemyActions Villiany = new EnemyActions();// since they dont use cards here is where their actions will be found
-
-            /*
-             Ai logic would be put here.
-
-            It will call Villiany.PassiveEnemyAbility(Villian); first
-            then depending on health of enemies or aallies, health of the boss or all that good good it will fire Villiany.Attack1(), 2 or 3. Whatever makes sense
-             */
-
-            /*CardBehaviour cardBehaviour = new CardBehaviour();
-
-            cardName[] array = (cardName[])(cardName.GetValues(typeof(cardName)));
-            cardBehaviour.cardname = array[Random.Range(0, array.Length)];
-            cardBehaviour.species = SpeciesType.Enemy; 
-
-            cardBehaviour.OnAction(GameManager.Instance.activeCharacter.person);*/
-
+            switch (person.EnemyType)
+            {
+                case enemyType.Boss:
+                    gameObject.AddComponent<Bosses>();
+                    gameObject.GetComponent<Bosses>().Decision();
+                    break;
+                case enemyType.Elite:
+                    gameObject.AddComponent<Elite>();
+                    //gameObject.GetComponent<Elite>().Decision();
+                    break;
+                case enemyType.Normal:
+                    gameObject.AddComponent<Normal>();
+                    //gameObject.GetComponent<Normal>().Decision();
+                    break;
+                case enemyType.Minion:
+                    gameObject.AddComponent<Minions>();
+                    //gameObject.GetComponent<Minions>().Decision();
+                    break;
+                default:
+                    break;
+            }
+            
             turnUsed = true;
             GameManager.Instance.CheckRoundDone();
         }
 
-
         #endregion
         public void Flee(List<object> Targets)
         {
-
+            Debug.Log("Yewo, you were to finish this method. Its supposed to make enemies run away");
         }
         public void DrawExtraCard()
         {

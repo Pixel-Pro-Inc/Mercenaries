@@ -79,6 +79,7 @@ namespace Assets.Scripts.Entities.Character
         public virtual string CharacterName { get { return CharacterName; } set { CharacterName = "UnKnown"; } }
         public virtual string CharacterDescription { get { return CharacterDescription; } set { CharacterDescription = "UnKnown"; } } //Here the personality and backstory of a unique character will be defined
         public SpeciesType CharacterSpecies { get; set; }
+        public enemyType EnemyType { get; set; }
 
         internal bool _foe { get; set; }
         public virtual bool Foe { get { return _foe; } set { _foe = value; } }
