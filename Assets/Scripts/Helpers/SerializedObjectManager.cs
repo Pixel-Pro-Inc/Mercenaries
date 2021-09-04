@@ -25,7 +25,7 @@ public class SerializedObjectManager
     public object RetrieveData(string path)
     {
         string savePath = Application.persistentDataPath + path;
-        Persona load = new Persona();
+        Persona load = null;
 
         if (File.Exists(savePath))
         {            

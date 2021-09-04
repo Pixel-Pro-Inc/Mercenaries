@@ -364,7 +364,6 @@ public class CardBehaviour : Card
                 
                 break;
             case cardName.fishSecondCard:
-                Debug.Log("We made it up to here, lets see if physcial doesnt damage");
                 CharacterInstance.PhysicalDamage(CharacterInstance, Target);
                 break;
             case cardName.fishThirdCard:
@@ -738,7 +737,7 @@ public class CardBehaviour : Card
                 int totalEnemyHealth = 0;
                 int indienemyhealth;
                 int count = 0;
-                Persona lowestenemy = new Persona();
+                Persona lowestenemy = null;
                 foreach (var item in GameManager.Instance.enemyCharacters)
                 {
                     Persona enemy= item.GetComponentInChildren<CharacterBehaviour>().person;

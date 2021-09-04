@@ -23,7 +23,7 @@ namespace Assets.Scripts.MonoBehaviours
         public Image Deck;
         public bool turnUsed;
 
-        //public Persona person;
+
         public Persona person;
 
         void Awake()
@@ -49,7 +49,13 @@ namespace Assets.Scripts.MonoBehaviours
 
         }
         private void Start()
-        {            
+        {
+
+            List<Persona> heroCharacters = new List<Persona>();
+            for (int i = 0; i < GameManager.Instance.playerCharacters.Count; i++)
+            {
+                heroCharacters.Add(GameManager.Instance.playerCharacters[i].GetComponentInChildren<Persona>());
+            }
             switch (Everyone)
             {
                 case MasterCharacterList.Peter:                    
@@ -285,6 +291,8 @@ namespace Assets.Scripts.MonoBehaviours
                     HammerHead.Foe = true;
 
                     person = HammerHead;//gameObject.AddComponent<Persona>();
+                    gameObject.GetComponent<Bosses>().opponents = heroCharacters;
+                    gameObject.GetComponent<Bosses>().myStats = person;
                     break;
                 case MasterCharacterList.GreatWhite:
                     WarriorTemplate GreatWhite = gameObject.AddComponent<WarriorTemplate>();
@@ -306,6 +314,8 @@ namespace Assets.Scripts.MonoBehaviours
                     GreatWhite.Foe = true;
 
                     person = GreatWhite;//gameObject.AddComponent<Persona>();
+                    gameObject.GetComponent<Bosses>().opponents = heroCharacters;
+                    gameObject.GetComponent<Bosses>().myStats = person;
                     break;
                 case MasterCharacterList.SpiderCrustacean:
                     WarriorTemplate SpiderCrustacean = gameObject.AddComponent<WarriorTemplate>();
@@ -327,6 +337,8 @@ namespace Assets.Scripts.MonoBehaviours
                     SpiderCrustacean.Foe = true;
 
                     person = SpiderCrustacean;//gameObject.AddComponent<Persona>();
+                    gameObject.GetComponent<Bosses>().opponents = heroCharacters;
+                    gameObject.GetComponent<Bosses>().myStats = person;
                     break;
                 case MasterCharacterList.NecroBoar:
                     WarriorTemplate NecroBoar = gameObject.AddComponent<WarriorTemplate>();
@@ -348,6 +360,8 @@ namespace Assets.Scripts.MonoBehaviours
                     NecroBoar.Foe = true;
 
                     person = NecroBoar;//gameObject.AddComponent<Persona>();
+                    gameObject.GetComponent<Bosses>().opponents = heroCharacters;
+                    gameObject.GetComponent<Bosses>().myStats = person;
                     break;
                 case MasterCharacterList.ElderStag:
                     MageTemplate ElderStag = gameObject.AddComponent<MageTemplate>();
@@ -355,7 +369,7 @@ namespace Assets.Scripts.MonoBehaviours
                     ElderStag.CharacterDescription = "My Eternal core spews cold hatred and pure darkness......(just like mothers words *sadness*)";
                     ElderStag.CharacterSpecies = SpeciesType.Deer;
                     ElderStag.EnemyType = enemyType.Boss;
-                    gameObject.AddComponent<Bosses>();
+                    gameObject.AddComponent<Bosses>(); 
 
                     ElderStag.Allies.AddRange(GameManager.Instance.enemyCharacters);
                     ElderStag.Enemies.AddRange(GameManager.Instance.playerCharacters);
@@ -369,6 +383,9 @@ namespace Assets.Scripts.MonoBehaviours
                     ElderStag.Foe = true;
 
                     person = ElderStag;//gameObject.AddComponent<Persona>();
+                    gameObject.GetComponent<Bosses>().opponents = heroCharacters;
+                    gameObject.GetComponent<Bosses>().myStats = person;
+
                     break;
                 case MasterCharacterList.DevilBird:
                     MageTemplate DevilBird = gameObject.AddComponent<MageTemplate>();
@@ -390,6 +407,8 @@ namespace Assets.Scripts.MonoBehaviours
                     DevilBird.Foe = true;
 
                     person = DevilBird;//gameObject.AddComponent<Persona>();
+                    gameObject.GetComponent<Bosses>().opponents = heroCharacters;
+                    gameObject.GetComponent<Bosses>().myStats = person;
                     break;
                 case MasterCharacterList.DragonSloth:
                     ControllerTemplate DragonSloth = gameObject.AddComponent<ControllerTemplate>();
@@ -411,6 +430,8 @@ namespace Assets.Scripts.MonoBehaviours
                     DragonSloth.Foe = true;
 
                     person = DragonSloth;//gameObject.AddComponent<Persona>();
+                    gameObject.GetComponent<Bosses>().opponents = heroCharacters;
+                    gameObject.GetComponent<Bosses>().myStats = person;
                     break;
                 default:
                     break;
@@ -457,10 +478,10 @@ namespace Assets.Scripts.MonoBehaviours
             float health = 0;
 
             if (species != SpeciesType.Enemy)
-                health = (float)(person.Health) / (float)(new MageTemplate().Health);
+                health = (float)(person.Health) / (float)(person.Life);
 
             if (species == SpeciesType.Enemy)
-                health = (float)(person.Health) / (float)(new MageTemplate().Health);
+                health = (float)(person.Health) / (float)(person.Life);
 
             healthSlider.fillAmount = health;            
         }  
@@ -479,26 +500,20 @@ namespace Assets.Scripts.MonoBehaviours
             switch (person.EnemyType)
             {
                 case enemyType.Boss:
-                    List<Persona> heros= new List<Persona>();
-                    for (int i = 0; i < GameManager.Instance.playerCharacters.Count; i++)
-                    {
-                        heros.Add(GameManager.Instance.playerCharacters[i].GetComponentInChildren<Persona>());
-                    }
-                    gameObject.GetComponent<Bosses>().opponents = heros;
-                    gameObject.GetComponent<Bosses>().myStats = person;
+                    
                     gameObject.GetComponent<Bosses>().Decision();
                     //I don't like whats happening above here, the fact that we had to make mystats public. Yewo has to tell me how this works
                     break;
                 case enemyType.Elite:
-                    gameObject.AddComponent<Elite>();
+                    gameObject.AddComponent<Elite>(); //This should be added when the enemy is first instanciated. Not here
                     //gameObject.GetComponent<Elite>().Decision();
                     break;
                 case enemyType.Normal:
-                    gameObject.AddComponent<Normal>();
+                    gameObject.AddComponent<Normal>();//This should be added when the enemy is first instanciated. Not here
                     //gameObject.GetComponent<Normal>().Decision();
                     break;
                 case enemyType.Minion:
-                    gameObject.AddComponent<Minions>();
+                    gameObject.AddComponent<Minions>();//This should be added when the enemy is first instanciated. Not here
                     //gameObject.GetComponent<Minions>().Decision();
                     break;
                 default:
