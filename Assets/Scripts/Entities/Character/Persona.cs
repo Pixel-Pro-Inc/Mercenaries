@@ -85,16 +85,7 @@ namespace Assets.Scripts.Entities.Character
         public virtual bool Foe { get { return _foe; } set { _foe = value; } }
 
         internal int _Life = 0;
-        public virtual int Life
-        {
-            get { return _Life; }
-            set
-            {
-                if (Life < 0) _Life = 0;
-                _Life = value;
-                _Life = Health;
-            }
-        }
+        public virtual int Life { get; set; }
 
         internal int _health = 0;
         public virtual int Health
@@ -467,6 +458,7 @@ namespace Assets.Scripts.Entities.Character
                 }
             }
             //fire levelIncrease animation
+            new SerializedObjectManager().SaveData(this, new SerializedObjectManager().paths[0] + CharacterName);
         }
         public void TraitLevelUpActivation(int experienceLevel, List<ItemTemplate> Items)
         {
@@ -632,7 +624,11 @@ namespace Assets.Scripts.Entities.Character
         #region Defend
         public void PutArmour(object TargetInstance, bool state, int amount) => new Defend((Persona)TargetInstance).Armour(state, amount);
         public void IncreaseMagicalResistance(object TargetInstance, bool state, int amount) => new Defend((Persona)TargetInstance).MagicalResistance(state, amount);
-        public void ShieldUp(object TargetInstance, bool state, int amount) => new Defend((Persona)TargetInstance).Shield(state, amount);
+        public void ShieldUp(object TargetInstance, bool state, int amount) 
+        {
+            Debug.Log(TargetInstance.ToString());
+            new Defend((Persona)TargetInstance).Shield(state, amount); 
+        }
         public void Purified(object TargetInstance, bool state) => new Defend((Persona)TargetInstance).Purified(state);
         public void Block(object TargetInstance, bool state) => new Defend((Persona)TargetInstance).Block(state);
         public void Immune(object TargetInstance, bool state) => new Defend((Persona)TargetInstance).Immune(state);

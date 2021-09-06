@@ -50,7 +50,6 @@ namespace Assets.Scripts.MonoBehaviours
         }
         private void Start()
         {
-
             List<Persona> heroCharacters = new List<Persona>();
             for (int i = 0; i < GameManager.Instance.playerCharacters.Count; i++)
             {
@@ -65,10 +64,8 @@ namespace Assets.Scripts.MonoBehaviours
                     WarriorTemplate MisterGlub = gameObject.AddComponent<WarriorTemplate>();
                     MisterGlub.CharacterName = "Mister_Glubglub";
                     MisterGlub.CharacterDescription = "He is a fish. What did you expect?";
-                    MisterGlub.CharacterSpecies = SpeciesType.Fish;  
-
-                    MisterGlub.Allies.AddRange(GameManager.Instance.playerCharacters);
-                    MisterGlub.Enemies.AddRange(GameManager.Instance.enemyCharacters);
+                    MisterGlub.CharacterSpecies = SpeciesType.Fish;                    
+                    
 
                     //Right now below these have been set to be species affinities but they seem to be originaliy invisioned to be COmbat classes
                     List<SpeciesType> NaturalAlliedGlub = new List<SpeciesType> { SpeciesType.Frog, SpeciesType.Fish };
@@ -76,19 +73,16 @@ namespace Assets.Scripts.MonoBehaviours
                     List<SpeciesType> NaturalenemiedGlub = new List<SpeciesType> { SpeciesType.Crocodile, SpeciesType.Lion };
                     MisterGlub.NaturalEnemies = NaturalenemiedGlub;
 
-                    MisterGlub.Foe = false;
+                    MisterGlub.Foe = false;                   
 
                     person = (Persona)MisterGlub;//gameObject.AddComponent<Persona>();
+                    person.Life = 30;
                     break;
                 case MasterCharacterList.Mister_Froggo:
                     MageTemplate MisterFroggo = gameObject.AddComponent<MageTemplate>();
                     MisterFroggo.CharacterName = "Mister_Froggo";
                     MisterFroggo.CharacterDescription = "Ribbit, ribbit, Keroo, Ribbit";
                     MisterFroggo.CharacterSpecies = SpeciesType.Frog;
-
-                    MisterFroggo.Allies.AddRange(GameManager.Instance.playerCharacters);
-                    MisterFroggo.Enemies.AddRange(GameManager.Instance.enemyCharacters);
-
                     //Right now below these have been set to be species affinities but they seem to be originaliy invisioned to be COmbat classes
                     List<SpeciesType> NaturalAlliedFroggo = new List<SpeciesType> { SpeciesType.Frog, SpeciesType.Fish };
                     MisterFroggo.NaturalAllies = NaturalAlliedFroggo;
@@ -104,9 +98,6 @@ namespace Assets.Scripts.MonoBehaviours
                     MisterSalaboned.CharacterName = "Mister_Salaboned";
                     MisterSalaboned.CharacterDescription = "A man plagued by demonic shadows. After discovering forbiden gray magic, he uses his skill to reach his deepest desire, no matter the cost";
                     MisterSalaboned.CharacterSpecies = SpeciesType.Salamander;
-
-                    MisterSalaboned.Allies.AddRange(GameManager.Instance.playerCharacters);
-                    MisterSalaboned.Enemies.AddRange(GameManager.Instance.enemyCharacters);
 
                     //Right now below these have been set to be species affinities but they seem to be originaliy invisioned to be COmbat classes
                     List<SpeciesType> NaturalAlliedSala = new List<SpeciesType> { SpeciesType.Triton };
@@ -124,9 +115,6 @@ namespace Assets.Scripts.MonoBehaviours
                     MisterLizzacorn.CharacterDescription = "I'm not being defensive, you are!";
                     MisterLizzacorn.CharacterSpecies = SpeciesType.Triton;
 
-                    MisterLizzacorn.Allies.AddRange(GameManager.Instance.playerCharacters);
-                    MisterLizzacorn.Enemies.AddRange(GameManager.Instance.enemyCharacters);
-
                     //Right now below these have been set to be species affinities but they seem to be originaliy invisioned to be COmbat classes
                     List<SpeciesType> NaturalAlliedLizza = new List<SpeciesType> { SpeciesType.Salamander, SpeciesType.Triton };
                     MisterLizzacorn.NaturalAllies = NaturalAlliedLizza;
@@ -142,10 +130,6 @@ namespace Assets.Scripts.MonoBehaviours
                     MisterLiodin.CharacterName = "Mister_Liodin";
                     MisterLiodin.CharacterDescription = "Yes, thats correct. Everything the Light touches";
                     MisterLiodin.CharacterSpecies = SpeciesType.Lion;
-
-                    MisterLiodin.Allies.AddRange(GameManager.Instance.playerCharacters);
-                    MisterLiodin.Enemies.AddRange(GameManager.Instance.enemyCharacters);
-
                     //Right now below these have been set to be species affinities but they seem to be originaliy invisioned to be COmbat classes
                     List<SpeciesType> NaturalAlliedLiodin = new List<SpeciesType> { SpeciesType.Lion, SpeciesType.Salamander };
                     MisterLiodin.NaturalAllies = NaturalAlliedLiodin;
@@ -161,10 +145,6 @@ namespace Assets.Scripts.MonoBehaviours
                     MisterLacrox.CharacterName = "Mister_Lacrox";
                     MisterLacrox.CharacterDescription = "Nani?!Kotowaru!";
                     MisterLacrox.CharacterSpecies = SpeciesType.Crocodile;
-
-                    MisterLacrox.Allies.AddRange(GameManager.Instance.playerCharacters);
-                    MisterLacrox.Enemies.AddRange(GameManager.Instance.enemyCharacters);
-
                     //Right now below these have been set to be species affinities but they seem to be originaliy invisioned to be COmbat classes
                     List<SpeciesType> NaturalAlliedLacrox = new List<SpeciesType> { };
                     MisterLacrox.NaturalAllies = NaturalAlliedLacrox;
@@ -180,10 +160,6 @@ namespace Assets.Scripts.MonoBehaviours
                     MisterBirbarcher.CharacterName = "Mister_Birbarcher";
                     MisterBirbarcher.CharacterDescription = "Has anyone seen any female elves here? Nevermind.....";
                     MisterBirbarcher.CharacterSpecies = SpeciesType.Fish;
-
-                    MisterBirbarcher.Allies.AddRange(GameManager.Instance.playerCharacters);
-                    MisterBirbarcher.Enemies.AddRange(GameManager.Instance.enemyCharacters);
-
                     //Right now below these have been set to be species affinities but they seem to be originaliy invisioned to be COmbat classes
                     List<SpeciesType> NaturalAlliedBircher = new List<SpeciesType> { SpeciesType.Frog, SpeciesType.Fish };
                     MisterBirbarcher.NaturalAllies = NaturalAlliedBircher;
@@ -199,10 +175,6 @@ namespace Assets.Scripts.MonoBehaviours
                     MisterPirateParrot.CharacterName = "Mister_PirateParrot";
                     MisterPirateParrot.CharacterDescription = "Say cracker one more time, I dare ya.....";
                     MisterPirateParrot.CharacterSpecies = SpeciesType.Parrot;
-
-                    MisterPirateParrot.Allies.AddRange(GameManager.Instance.playerCharacters);
-                    MisterPirateParrot.Enemies.AddRange(GameManager.Instance.enemyCharacters);
-
                     //Right now below these have been set to be species affinities but they seem to be originaliy invisioned to be COmbat classes
                     List<SpeciesType> NaturalAlliedPirate = new List<SpeciesType> { SpeciesType.Frog, SpeciesType.Fish };
                     MisterPirateParrot.NaturalAllies = NaturalAlliedPirate;
@@ -218,10 +190,6 @@ namespace Assets.Scripts.MonoBehaviours
                     MisterSilverSkull.CharacterName = "Mister_SilverSkull";
                     MisterSilverSkull.CharacterDescription = "Oh where am I from? Earth...";
                     MisterSilverSkull.CharacterSpecies = SpeciesType.Triton;
-
-                    MisterSilverSkull.Allies.AddRange(GameManager.Instance.playerCharacters);
-                    MisterSilverSkull.Enemies.AddRange(GameManager.Instance.enemyCharacters);
-
                     //Right now below these have been set to be species affinities but they seem to be originaliy invisioned to be COmbat classes
                     List<SpeciesType> NaturalAlliedSkull = new List<SpeciesType> { SpeciesType.Salamander, SpeciesType.Triton };
                     MisterSilverSkull.NaturalAllies.AddRange(NaturalAlliedSkull);
@@ -238,9 +206,6 @@ namespace Assets.Scripts.MonoBehaviours
                     MisterMantis.CharacterDescription = "No youre thinking of my cousin, Mantis. He is the REAL dragon warrior. Obviously....";
                     MisterMantis.CharacterSpecies = SpeciesType.Insect;
 
-                    MisterMantis.Allies.AddRange(GameManager.Instance.playerCharacters);
-                    MisterMantis.Enemies.AddRange(GameManager.Instance.enemyCharacters);
-
                     //Right now below these have been set to be species affinities but they seem to be originaliy invisioned to be COmbat classes
                     List<SpeciesType> NaturalAlliedMAntis = new List<SpeciesType> { SpeciesType.Frog, SpeciesType.Fish };
                     MisterMantis.NaturalAllies = NaturalAlliedMAntis;
@@ -256,10 +221,6 @@ namespace Assets.Scripts.MonoBehaviours
                     MisterHippo.CharacterName = "Mister_Hippo";
                     MisterHippo.CharacterDescription = "Is it hot in here? I some space. *huffing* No stop seriously, give me room. *Huffing intensifies* I'm not kidding get aWAY FR";
                     MisterHippo.CharacterSpecies = SpeciesType.Hippo;
-
-                    MisterHippo.Allies.AddRange(GameManager.Instance.playerCharacters);
-                    MisterHippo.Enemies.AddRange(GameManager.Instance.enemyCharacters);
-
                     //Right now below these have been set to be species affinities but they seem to be originaliy invisioned to be COmbat classes
                     List<SpeciesType> NaturalAlliedHippo = new List<SpeciesType> { SpeciesType.Frog, SpeciesType.Fish };
                     MisterHippo.NaturalAllies = NaturalAlliedHippo;
@@ -276,12 +237,6 @@ namespace Assets.Scripts.MonoBehaviours
                     HammerHead.CharacterDescription = "Look me in the eye and say that again";
                     HammerHead.CharacterSpecies = SpeciesType.Fish;
                     HammerHead.EnemyType = enemyType.Boss;
-                    gameObject.AddComponent<Bosses>();
-
-
-                    HammerHead.Allies.AddRange(GameManager.Instance.enemyCharacters);
-                    HammerHead.Enemies.AddRange(GameManager.Instance.playerCharacters);
-
                     //Right now below these have been set to be species affinities but they seem to be originaliy invisioned to be COmbat classes
                     List<SpeciesType> NaturalAlliedHammerHead = new List<SpeciesType> { SpeciesType.Frog, SpeciesType.Fish };
                     HammerHead.NaturalAllies = NaturalAlliedHammerHead;
@@ -290,9 +245,7 @@ namespace Assets.Scripts.MonoBehaviours
 
                     HammerHead.Foe = true;
 
-                    person = HammerHead;//gameObject.AddComponent<Persona>();
-                    gameObject.GetComponent<Bosses>().opponents = heroCharacters;
-                    gameObject.GetComponent<Bosses>().myStats = person;
+                    person = HammerHead;//gameObject.AddComponent<Persona>();                    
                     break;
                 case MasterCharacterList.GreatWhite:
                     WarriorTemplate GreatWhite = gameObject.AddComponent<WarriorTemplate>();
@@ -300,11 +253,6 @@ namespace Assets.Scripts.MonoBehaviours
                     GreatWhite.CharacterDescription = "Oh my god, my teeth are killing me";
                     GreatWhite.CharacterSpecies = SpeciesType.Fish;
                     GreatWhite.EnemyType = enemyType.Boss;
-                    gameObject.AddComponent<Bosses>();
-
-                    GreatWhite.Allies.AddRange(GameManager.Instance.enemyCharacters);
-                    GreatWhite.Enemies.AddRange(GameManager.Instance.playerCharacters);
-
                     //Right now below these have been set to be species affinities but they seem to be originaliy invisioned to be COmbat classes
                     List<SpeciesType> NaturalAlliedGreatWhite = new List<SpeciesType> { SpeciesType.Frog, SpeciesType.Fish };
                     GreatWhite.NaturalAllies = NaturalAlliedGreatWhite;
@@ -314,8 +262,6 @@ namespace Assets.Scripts.MonoBehaviours
                     GreatWhite.Foe = true;
 
                     person = GreatWhite;//gameObject.AddComponent<Persona>();
-                    gameObject.GetComponent<Bosses>().opponents = heroCharacters;
-                    gameObject.GetComponent<Bosses>().myStats = person;
                     break;
                 case MasterCharacterList.SpiderCrustacean:
                     WarriorTemplate SpiderCrustacean = gameObject.AddComponent<WarriorTemplate>();
@@ -323,11 +269,6 @@ namespace Assets.Scripts.MonoBehaviours
                     SpiderCrustacean.CharacterDescription = "......";
                     SpiderCrustacean.CharacterSpecies = SpeciesType.Fish;
                     SpiderCrustacean.EnemyType = enemyType.Boss;
-                    gameObject.AddComponent<Bosses>();
-
-                    SpiderCrustacean.Allies.AddRange(GameManager.Instance.enemyCharacters);
-                    SpiderCrustacean.Enemies.AddRange(GameManager.Instance.playerCharacters);
-
                     //Right now below these have been set to be species affinities but they seem to be originaliy invisioned to be COmbat classes
                     List<SpeciesType> NaturalAlliedSpiderCrustacean = new List<SpeciesType> { SpeciesType.Frog, SpeciesType.Fish };
                     SpiderCrustacean.NaturalAllies = NaturalAlliedSpiderCrustacean;
@@ -337,8 +278,6 @@ namespace Assets.Scripts.MonoBehaviours
                     SpiderCrustacean.Foe = true;
 
                     person = SpiderCrustacean;//gameObject.AddComponent<Persona>();
-                    gameObject.GetComponent<Bosses>().opponents = heroCharacters;
-                    gameObject.GetComponent<Bosses>().myStats = person;
                     break;
                 case MasterCharacterList.NecroBoar:
                     WarriorTemplate NecroBoar = gameObject.AddComponent<WarriorTemplate>();
@@ -346,11 +285,6 @@ namespace Assets.Scripts.MonoBehaviours
                     NecroBoar.CharacterDescription = "Call me atheist, but I dont believe in the Last Supper";
                     NecroBoar.CharacterSpecies = SpeciesType.Boar;
                     NecroBoar.EnemyType = enemyType.Boss;
-                    gameObject.AddComponent<Bosses>();
-
-                    NecroBoar.Allies.AddRange(GameManager.Instance.enemyCharacters);
-                    NecroBoar.Enemies.AddRange(GameManager.Instance.playerCharacters);
-
                     //Right now below these have been set to be species affinities but they seem to be originaliy invisioned to be COmbat classes
                     List<SpeciesType> NaturalAlliedNecroBoar = new List<SpeciesType> { SpeciesType.Frog, SpeciesType.Fish };
                     NecroBoar.NaturalAllies = NaturalAlliedNecroBoar;
@@ -360,8 +294,8 @@ namespace Assets.Scripts.MonoBehaviours
                     NecroBoar.Foe = true;
 
                     person = NecroBoar;//gameObject.AddComponent<Persona>();
-                    gameObject.GetComponent<Bosses>().opponents = heroCharacters;
-                    gameObject.GetComponent<Bosses>().myStats = person;
+                   
+                    
                     break;
                 case MasterCharacterList.ElderStag:
                     MageTemplate ElderStag = gameObject.AddComponent<MageTemplate>();
@@ -369,10 +303,6 @@ namespace Assets.Scripts.MonoBehaviours
                     ElderStag.CharacterDescription = "My Eternal core spews cold hatred and pure darkness......(just like mothers words *sadness*)";
                     ElderStag.CharacterSpecies = SpeciesType.Deer;
                     ElderStag.EnemyType = enemyType.Boss;
-                    gameObject.AddComponent<Bosses>(); 
-
-                    ElderStag.Allies.AddRange(GameManager.Instance.enemyCharacters);
-                    ElderStag.Enemies.AddRange(GameManager.Instance.playerCharacters);
 
                     //Right now below these have been set to be species affinities but they seem to be originaliy invisioned to be COmbat classes
                     List<SpeciesType> NaturalAlliedElderStag = new List<SpeciesType> { SpeciesType.Frog, SpeciesType.Fish };
@@ -383,8 +313,8 @@ namespace Assets.Scripts.MonoBehaviours
                     ElderStag.Foe = true;
 
                     person = ElderStag;//gameObject.AddComponent<Persona>();
-                    gameObject.GetComponent<Bosses>().opponents = heroCharacters;
-                    gameObject.GetComponent<Bosses>().myStats = person;
+                   
+                    
 
                     break;
                 case MasterCharacterList.DevilBird:
@@ -393,10 +323,6 @@ namespace Assets.Scripts.MonoBehaviours
                     DevilBird.CharacterDescription = "SQUUACCK!";
                     DevilBird.CharacterSpecies = SpeciesType.Bird;
                     DevilBird.EnemyType = enemyType.Boss;
-                    gameObject.AddComponent<Bosses>();
-
-                    DevilBird.Allies.AddRange(GameManager.Instance.enemyCharacters);
-                    DevilBird.Enemies.AddRange(GameManager.Instance.playerCharacters);
 
                     //Right now below these have been set to be species affinities but they seem to be originaliy invisioned to be COmbat classes
                     List<SpeciesType> NaturalAlliedDevilBird = new List<SpeciesType> { SpeciesType.Frog, SpeciesType.Fish };
@@ -407,8 +333,8 @@ namespace Assets.Scripts.MonoBehaviours
                     DevilBird.Foe = true;
 
                     person = DevilBird;//gameObject.AddComponent<Persona>();
-                    gameObject.GetComponent<Bosses>().opponents = heroCharacters;
-                    gameObject.GetComponent<Bosses>().myStats = person;
+                   
+                    
                     break;
                 case MasterCharacterList.DragonSloth:
                     ControllerTemplate DragonSloth = gameObject.AddComponent<ControllerTemplate>();
@@ -416,10 +342,6 @@ namespace Assets.Scripts.MonoBehaviours
                     DragonSloth.CharacterDescription = "W..a..i..t....u....p..y...o...u....g....u";
                     DragonSloth.CharacterSpecies = SpeciesType.Sloth;
                     DragonSloth.EnemyType = enemyType.Boss;
-                    gameObject.AddComponent<Bosses>();
-
-                    DragonSloth.Allies.AddRange(GameManager.Instance.enemyCharacters);
-                    DragonSloth.Enemies.AddRange(GameManager.Instance.playerCharacters);
 
                     //Right now below these have been set to be species affinities but they seem to be originaliy invisioned to be COmbat classes
                     List<SpeciesType> NaturalAlliedDragonSloth = new List<SpeciesType> { SpeciesType.Frog, SpeciesType.Fish };
@@ -430,12 +352,18 @@ namespace Assets.Scripts.MonoBehaviours
                     DragonSloth.Foe = true;
 
                     person = DragonSloth;//gameObject.AddComponent<Persona>();
-                    gameObject.GetComponent<Bosses>().opponents = heroCharacters;
-                    gameObject.GetComponent<Bosses>().myStats = person;
+                   
+                    
                     break;
                 default:
                     break;
             }
+            SetAlliesEnemies(person);
+
+            ApplySavedStats(person);
+
+            //person.Health = person.Life;
+
             person.characterBehaviour = this;
         }
         public void OnMouseDown()
@@ -483,6 +411,8 @@ namespace Assets.Scripts.MonoBehaviours
             if (species == SpeciesType.Enemy)
                 health = (float)(person.Health) / (float)(person.Life);
 
+            Debug.Log(person.Health);
+
             healthSlider.fillAmount = health;            
         }  
         public void HoverAction()
@@ -492,6 +422,30 @@ namespace Assets.Scripts.MonoBehaviours
         public void SetColor(Color color)
         {
             GetComponent<SpriteRenderer>().color = color;
+        }
+
+        void SetAlliesEnemies(Persona objects)
+        {
+            for (int i = 0; i < GameManager.Instance.playerCharacters.Count; i++)
+            {
+                objects.Allies.Add(GameManager.Instance.playerCharacters[i].GetComponentInChildren<CharacterBehaviour>().person);
+            }
+            for (int i = 0; i < GameManager.Instance.enemyCharacters.Count; i++)
+            {
+                objects.Allies.Add(GameManager.Instance.enemyCharacters[i].GetComponentInChildren<CharacterBehaviour>().person);
+            }
+        }
+
+        void ApplySavedStats(Persona character)
+        {
+            SerializedObjectManager serializedObjectManager = new SerializedObjectManager();
+            Persona savedPersona = (Persona)serializedObjectManager.RetrieveData(serializedObjectManager.paths[0] + person.CharacterName);           
+
+            if(savedPersona != null)
+            {
+                character = savedPersona;
+                character.Health = character.Life;//In case it saves a characters data with below max health
+            }            
         }
 
         #region Enemy Code

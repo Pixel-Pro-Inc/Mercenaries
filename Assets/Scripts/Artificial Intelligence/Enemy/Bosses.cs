@@ -46,7 +46,7 @@ public class Bosses: MonoBehaviour
         int count = 0;
         while (k == 0)
         {
-            count = Random.Range(1, 101);
+            count++;
 
             bool fired = false;
             if (count % 2 == 0)
@@ -174,9 +174,10 @@ public class Bosses: MonoBehaviour
     bool SlotMachine(float chance)
     {
         int max = (int)(1f / chance);
-        int n = Random.Range(1, max + 1); //I changed this to one cause say the percentage is 100%, n will have to be within 1 and 2, which will be it will choose only 1
+        int n = Random.Range(0, max + 1); //I changed this to one cause say the percentage is 100%, n will have to be within 1 and 2, which will be it will choose only 1
+        Debug.Log(max);
 
-        if (n == 1)
+        if (n == 0)
         {
             return true;
         }

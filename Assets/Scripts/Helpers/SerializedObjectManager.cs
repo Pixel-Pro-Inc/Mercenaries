@@ -25,14 +25,14 @@ public class SerializedObjectManager
     public object RetrieveData(string path)
     {
         string savePath = Application.persistentDataPath + path;
-        Persona load = null;
+        Object load = null;
 
         if (File.Exists(savePath))
         {            
             var binaryFormatter = new BinaryFormatter();
             using (var fileStream = File.Open(savePath, FileMode.Open))
             {
-                load = (Persona)binaryFormatter.Deserialize(fileStream);
+                load = (Object)binaryFormatter.Deserialize(fileStream);
             }
         }
 

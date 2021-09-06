@@ -253,6 +253,7 @@ namespace Assets.Scripts.Entities.Character
             }
             #endregion
             //fire levelIncrease animation
+            new SerializedObjectManager().SaveData(this, new SerializedObjectManager().paths[0] + CharacterName);
         }
         public override int DamageGiven()
         {
