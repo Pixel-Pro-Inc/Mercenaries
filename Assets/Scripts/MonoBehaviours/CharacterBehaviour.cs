@@ -76,7 +76,7 @@ namespace Assets.Scripts.MonoBehaviours
                     MisterGlub.Foe = false;                   
 
                     person = (Persona)MisterGlub;//gameObject.AddComponent<Persona>();
-                    person.Life = 30;
+                    person.Life = 70;
                     break;
                 case MasterCharacterList.Mister_Froggo:
                     MageTemplate MisterFroggo = gameObject.AddComponent<MageTemplate>();
@@ -92,6 +92,7 @@ namespace Assets.Scripts.MonoBehaviours
                     MisterFroggo.Foe = false;
 
                     person = MisterFroggo;//gameObject.AddComponent<Persona>();
+                    person.Life = 55;
                     break;
                 case MasterCharacterList.Mister_Salaboned:
                     TankWarriorTemplate MisterSalaboned = gameObject.AddComponent<TankWarriorTemplate>();
@@ -108,6 +109,7 @@ namespace Assets.Scripts.MonoBehaviours
                     MisterSalaboned.Foe = false;
 
                     person = MisterSalaboned;//gameObject.AddComponent<Persona>();
+                    person.Life = 120;
                     break;
                 case MasterCharacterList.Mister_Lizzacorn:
                     WarriorTemplate MisterLizzacorn = gameObject.AddComponent<WarriorTemplate>();
@@ -124,6 +126,7 @@ namespace Assets.Scripts.MonoBehaviours
                     MisterLizzacorn.Foe = false;
 
                     person = MisterLizzacorn;//gameObject.AddComponent<Persona>();
+                    person.Life = 70;
                     break;
                 case MasterCharacterList.Mister_Liodin:
                     WarriorTemplate MisterLiodin = gameObject.AddComponent<WarriorTemplate>();
@@ -139,6 +142,7 @@ namespace Assets.Scripts.MonoBehaviours
                     MisterLiodin.Foe = false;
 
                     person = MisterLiodin;//gameObject.AddComponent<Persona>();
+                    person.Life = 70;
                     break;
                 case MasterCharacterList.Mister_Lacrox:
                     WarriorTemplate MisterLacrox = gameObject.AddComponent<WarriorTemplate>();
@@ -154,6 +158,7 @@ namespace Assets.Scripts.MonoBehaviours
                     MisterLacrox.Foe = false;
 
                     person = MisterLacrox;//gameObject.AddComponent<Persona>();
+                    person.Life = 70;
                     break;
                 case MasterCharacterList.Mister_Birbarcher:
                     RangeTemplate MisterBirbarcher = gameObject.AddComponent<RangeTemplate>();
@@ -169,6 +174,7 @@ namespace Assets.Scripts.MonoBehaviours
                     MisterBirbarcher.Foe = false;
 
                     person = MisterBirbarcher;//gameObject.AddComponent<Persona>();
+                    person.Life = 58;
                     break;
                 case MasterCharacterList.Mister_PirateParrot:
                     ControllerTemplate MisterPirateParrot = gameObject.AddComponent<ControllerTemplate>();
@@ -184,6 +190,7 @@ namespace Assets.Scripts.MonoBehaviours
                     MisterPirateParrot.Foe = false;
 
                     person = MisterPirateParrot;//gameObject.AddComponent<Persona>();
+                    person.Life = 68;
                     break;
                 case MasterCharacterList.Mister_SilverSkull:
                     WarriorTemplate MisterSilverSkull = gameObject.AddComponent<WarriorTemplate>();
@@ -199,6 +206,7 @@ namespace Assets.Scripts.MonoBehaviours
                     MisterSilverSkull.Foe = false;
 
                     person = MisterSilverSkull;//gameObject.AddComponent<Persona>();
+                    person.Life = 70;
                     break;
                 case MasterCharacterList.Mister_Mantis:
                     WarriorTemplate MisterMantis = gameObject.AddComponent<WarriorTemplate>();
@@ -215,6 +223,7 @@ namespace Assets.Scripts.MonoBehaviours
                     MisterMantis.Foe = false;
 
                     person = MisterMantis;//gameObject.AddComponent<Persona>();
+                    person.Life = 70;
                     break;
                 case MasterCharacterList.Mister_Hippo:
                     WarriorTemplate MisterHippo = gameObject.AddComponent<WarriorTemplate>();
@@ -230,6 +239,7 @@ namespace Assets.Scripts.MonoBehaviours
                     MisterHippo.Foe = false;
 
                     person = MisterHippo;//gameObject.AddComponent<Persona>();
+                    person.Life = 70;
                     break;
                 case MasterCharacterList.HammerHead:
                     WarriorTemplate HammerHead = gameObject.AddComponent<WarriorTemplate>();
@@ -245,7 +255,8 @@ namespace Assets.Scripts.MonoBehaviours
 
                     HammerHead.Foe = true;
 
-                    person = HammerHead;//gameObject.AddComponent<Persona>();                    
+                    person = HammerHead;//gameObject.AddComponent<Persona>();                
+                    person.Life = 70;
                     break;
                 case MasterCharacterList.GreatWhite:
                     WarriorTemplate GreatWhite = gameObject.AddComponent<WarriorTemplate>();
@@ -262,6 +273,7 @@ namespace Assets.Scripts.MonoBehaviours
                     GreatWhite.Foe = true;
 
                     person = GreatWhite;//gameObject.AddComponent<Persona>();
+                    person.Life = 70;
                     break;
                 case MasterCharacterList.SpiderCrustacean:
                     WarriorTemplate SpiderCrustacean = gameObject.AddComponent<WarriorTemplate>();
@@ -278,6 +290,7 @@ namespace Assets.Scripts.MonoBehaviours
                     SpiderCrustacean.Foe = true;
 
                     person = SpiderCrustacean;//gameObject.AddComponent<Persona>();
+                    person.Life = 70;
                     break;
                 case MasterCharacterList.NecroBoar:
                     WarriorTemplate NecroBoar = gameObject.AddComponent<WarriorTemplate>();
@@ -294,8 +307,9 @@ namespace Assets.Scripts.MonoBehaviours
                     NecroBoar.Foe = true;
 
                     person = NecroBoar;//gameObject.AddComponent<Persona>();
-                   
-                    
+                    person.Life = 70;
+
+
                     break;
                 case MasterCharacterList.ElderStag:
                     MageTemplate ElderStag = gameObject.AddComponent<MageTemplate>();
@@ -313,8 +327,7 @@ namespace Assets.Scripts.MonoBehaviours
                     ElderStag.Foe = true;
 
                     person = ElderStag;//gameObject.AddComponent<Persona>();
-                   
-                    
+                    person.Life = 55;
 
                     break;
                 case MasterCharacterList.DevilBird:
@@ -333,8 +346,9 @@ namespace Assets.Scripts.MonoBehaviours
                     DevilBird.Foe = true;
 
                     person = DevilBird;//gameObject.AddComponent<Persona>();
-                   
-                    
+                    person.Life = 55;
+
+
                     break;
                 case MasterCharacterList.DragonSloth:
                     ControllerTemplate DragonSloth = gameObject.AddComponent<ControllerTemplate>();
@@ -352,8 +366,9 @@ namespace Assets.Scripts.MonoBehaviours
                     DragonSloth.Foe = true;
 
                     person = DragonSloth;//gameObject.AddComponent<Persona>();
-                   
-                    
+                    person.Life = 68;
+
+
                     break;
                 default:
                     break;
@@ -361,8 +376,6 @@ namespace Assets.Scripts.MonoBehaviours
             SetAlliesEnemies(person);
 
             ApplySavedStats(person);
-
-            //person.Health = person.Life;
 
             person.characterBehaviour = this;
         }

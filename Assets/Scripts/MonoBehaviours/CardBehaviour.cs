@@ -737,7 +737,7 @@ public class CardBehaviour : Card
                 int totalEnemyHealth = 0;
                 int indienemyhealth;
                 int count = 0;
-                Persona lowestenemy = null;
+                Persona lowestenemy = new Persona();
                 foreach (var item in GameManager.Instance.enemyCharacters)
                 {
                     Persona enemy= item.GetComponentInChildren<CharacterBehaviour>().person;
@@ -811,7 +811,7 @@ public class CardBehaviour : Card
                
                 break;
             case cardName.tritonEighthCard:
-                TankWarriorTemplate trr = new TankWarriorTemplate();
+                TankWarriorTemplate trr = new TankWarriorTemplate(); Debug.Log("This card throws a waring cause we use new Tankwarrior to get an initial shield value. Unity doesn't actually like that");
                 if (CharacterInstance.shield <= 0) CharacterInstance.ShieldUp(CharacterInstance, true,(int)(trr.shield * 0.2));
                 if(CharacterInstance.shield >0)
                 {
