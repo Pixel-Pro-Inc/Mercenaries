@@ -406,7 +406,7 @@ public class CardBehaviour : Card
                 {
                     if (RoundInfo.RoundsPassed == getem)
                     { 
-                        CharacterInstance.GetComponent<CharacterBehaviour>().DrawExtraCard();
+                        CharacterInstance.GetComponent<CharacterBehaviour>().DrawExtraCard(2);
                         mytocon.Close();
                     }
                 }
@@ -474,7 +474,7 @@ public class CardBehaviour : Card
                 {
                     if (RoundInfo.RoundsPassed == saint + 1)
                     {
-                        CharacterInstance.GetComponent<CharacterBehaviour>().DrawExtraCard();
+                        CharacterInstance.GetComponent<CharacterBehaviour>().DrawExtraCard(2);
                     }
                 }
                 int pathogen= (int)(0.95 * CharacterInstance.Life);
@@ -636,7 +636,7 @@ public class CardBehaviour : Card
                 break;
             case cardName.frogSixthCard:
                 Debug.Log("Not done or special card");
-                CharacterInstance.GetComponent<CharacterBehaviour>().DrawExtraCard();
+                CharacterInstance.GetComponent<CharacterBehaviour>().DrawExtraCard(2);
                 break;
             case cardName.frogSeventhCard:
                 int enee3 = CharacterInstance.RevengeDa.Count;
@@ -850,6 +850,13 @@ public class CardBehaviour : Card
         //turn played
         if (GameManager.Instance.roundInfo.inControl == WhoseInControl.Human)
         {
+            if (GameManager.Instance.activeCharacter.consecutiveTurns != 0 && GameManager.Instance.activeCharacter.extraTurn)
+            {
+                GameManager.Instance.activeCharacter.consecutiveTurns--;
+                Destroy(gameObject);
+                return;
+            }
+
             GameManager.Instance.activeCharacter.turnUsed = true;
 
             DeckPopulate.Instance.HideDeck();

@@ -416,13 +416,19 @@ namespace Assets.Scripts.MonoBehaviours
                 {
                     Transform _transform = parent.transform.parent.transform;
 
+                    int check = 0;
                     for (int i = 0; i < _transform.childCount; i++)
                     {
                         if (_transform.GetChild(i).transform.GetChild(0).position.x == positions[3].x)
                         {
+                            check++;
                             _transform.GetChild(i).transform.GetChild(0).GetComponent<CharacterBehaviour>().Goto = transform.position;
                             Goto = positions[3];
-                        }
+                        }                        
+                    }
+                    if (check == 0)
+                    {
+                        Goto = positions[3];
                     }
 
                     SpeciesType[] array = (SpeciesType[])(SpeciesType.GetValues(typeof(SpeciesType)));
@@ -515,13 +521,36 @@ namespace Assets.Scripts.MonoBehaviours
         public void Flee(List<object> Targets)
         {
             //Comment
-            Debug.Log("Yewo, you were to finish this method. Its supposed to make enemies run away");
+            for (int i = 0; i < GameManager.Instance.playerCharacters.Count; i++)
+            {
+                if (GameManager.Instance.playerCharacters[i].name == gameObject.transform.root.gameObject.name)
+                    GameManager.Instance.playerCharacters.Remove(GameManager.Instance.playerCharacters[i]);//Abel needs to update all lists that make use of this
+
+                if (GameManager.Instance.playerCharacters[i].name == gameObject.transform.root.gameObject.name)
+                    Goto = new Vector3(-10f, transform.position.y, transform.position.z);
+
+                Destroy(transform.root.gameObject, 3);
+            }
+
+            for (int i = 0; i < GameManager.Instance.enemyCharacters.Count; i++)
+            {
+                if (GameManager.Instance.enemyCharacters[i].name == gameObject.transform.root.gameObject.name)
+                    GameManager.Instance.enemyCharacters.Remove(GameManager.Instance.enemyCharacters[i]);//Abel needs to update all lists that make use of this
+
+                if (GameManager.Instance.enemyCharacters[i].name == gameObject.transform.root.gameObject.name)
+                    Goto = new Vector3(10f, transform.position.y, transform.position.z);
+
+                Destroy(transform.root.gameObject, 3);
+            }
+
+            GameManager.Instance.CheckGameOver();
         }
-        public void DrawExtraCard()
+        public bool extraTurn;
+        public int consecutiveTurns;
+        public void DrawExtraCard(int extraTurns)
         {
-            turnUsed = false;
-            //does the next card addition
-            Debug.Log("Yewo, you were to finish this method. Its supposed to give character 1 extra action");
+            extraTurn = true;
+            consecutiveTurns = extraTurns;
         }
     }
 }

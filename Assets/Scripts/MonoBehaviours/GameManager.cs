@@ -32,6 +32,10 @@ namespace Assets.Scripts.MonoBehaviours
             };
         }
 
+        public void CheckGameOver()
+        {
+            //Something
+        }
         public void CheckRoundDone()
         {
             switch (roundInfo.inControl)
