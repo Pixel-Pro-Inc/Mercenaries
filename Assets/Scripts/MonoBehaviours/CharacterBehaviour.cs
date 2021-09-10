@@ -77,6 +77,8 @@ namespace Assets.Scripts.MonoBehaviours
 
                     person = (Persona)MisterGlub;//gameObject.AddComponent<Persona>();
                     person.Life = 70;
+
+                    person.maxShield = new WarriorTemplate().shield;
                     break;
                 case MasterCharacterList.Mister_Froggo:
                     MageTemplate MisterFroggo = gameObject.AddComponent<MageTemplate>();
@@ -93,6 +95,8 @@ namespace Assets.Scripts.MonoBehaviours
 
                     person = MisterFroggo;//gameObject.AddComponent<Persona>();
                     person.Life = 55;
+
+                    person.maxShield = new MageTemplate().shield;
                     break;
                 case MasterCharacterList.Mister_Salaboned:
                     TankWarriorTemplate MisterSalaboned = gameObject.AddComponent<TankWarriorTemplate>();
@@ -110,6 +114,8 @@ namespace Assets.Scripts.MonoBehaviours
 
                     person = MisterSalaboned;//gameObject.AddComponent<Persona>();
                     person.Life = 120;
+
+                    person.maxShield = new TankWarriorTemplate().shield;
                     break;
                 case MasterCharacterList.Mister_Lizzacorn:
                     WarriorTemplate MisterLizzacorn = gameObject.AddComponent<WarriorTemplate>();
@@ -127,6 +133,8 @@ namespace Assets.Scripts.MonoBehaviours
 
                     person = MisterLizzacorn;//gameObject.AddComponent<Persona>();
                     person.Life = 70;
+
+                    person.maxShield = new WarriorTemplate().shield;
                     break;
                 case MasterCharacterList.Mister_Liodin:
                     WarriorTemplate MisterLiodin = gameObject.AddComponent<WarriorTemplate>();
@@ -143,6 +151,8 @@ namespace Assets.Scripts.MonoBehaviours
 
                     person = MisterLiodin;//gameObject.AddComponent<Persona>();
                     person.Life = 70;
+
+                    person.maxShield = new WarriorTemplate().shield;
                     break;
                 case MasterCharacterList.Mister_Lacrox:
                     WarriorTemplate MisterLacrox = gameObject.AddComponent<WarriorTemplate>();
@@ -159,6 +169,8 @@ namespace Assets.Scripts.MonoBehaviours
 
                     person = MisterLacrox;//gameObject.AddComponent<Persona>();
                     person.Life = 70;
+
+                    person.maxShield = new WarriorTemplate().shield;
                     break;
                 case MasterCharacterList.Mister_Birbarcher:
                     RangeTemplate MisterBirbarcher = gameObject.AddComponent<RangeTemplate>();
@@ -175,6 +187,8 @@ namespace Assets.Scripts.MonoBehaviours
 
                     person = MisterBirbarcher;//gameObject.AddComponent<Persona>();
                     person.Life = 58;
+
+                    person.maxShield = new RangeTemplate().shield;
                     break;
                 case MasterCharacterList.Mister_PirateParrot:
                     ControllerTemplate MisterPirateParrot = gameObject.AddComponent<ControllerTemplate>();
@@ -191,6 +205,8 @@ namespace Assets.Scripts.MonoBehaviours
 
                     person = MisterPirateParrot;//gameObject.AddComponent<Persona>();
                     person.Life = 68;
+
+                    person.maxShield = new ControllerTemplate().shield;
                     break;
                 case MasterCharacterList.Mister_SilverSkull:
                     WarriorTemplate MisterSilverSkull = gameObject.AddComponent<WarriorTemplate>();
@@ -207,6 +223,8 @@ namespace Assets.Scripts.MonoBehaviours
 
                     person = MisterSilverSkull;//gameObject.AddComponent<Persona>();
                     person.Life = 70;
+
+                    person.maxShield = new WarriorTemplate().shield;
                     break;
                 case MasterCharacterList.Mister_Mantis:
                     WarriorTemplate MisterMantis = gameObject.AddComponent<WarriorTemplate>();
@@ -224,6 +242,8 @@ namespace Assets.Scripts.MonoBehaviours
 
                     person = MisterMantis;//gameObject.AddComponent<Persona>();
                     person.Life = 70;
+
+                    person.maxShield = new WarriorTemplate().shield;
                     break;
                 case MasterCharacterList.Mister_Hippo:
                     WarriorTemplate MisterHippo = gameObject.AddComponent<WarriorTemplate>();
@@ -240,6 +260,8 @@ namespace Assets.Scripts.MonoBehaviours
 
                     person = MisterHippo;//gameObject.AddComponent<Persona>();
                     person.Life = 70;
+
+                    person.maxShield = new WarriorTemplate().shield;
                     break;
                 case MasterCharacterList.HammerHead:
                     WarriorTemplate HammerHead = gameObject.AddComponent<WarriorTemplate>();
@@ -257,6 +279,8 @@ namespace Assets.Scripts.MonoBehaviours
 
                     person = HammerHead;//gameObject.AddComponent<Persona>();                
                     person.Life = 70;
+
+                    person.maxShield = new WarriorTemplate().shield;
                     break;
                 case MasterCharacterList.GreatWhite:
                     WarriorTemplate GreatWhite = gameObject.AddComponent<WarriorTemplate>();
@@ -274,6 +298,8 @@ namespace Assets.Scripts.MonoBehaviours
 
                     person = GreatWhite;//gameObject.AddComponent<Persona>();
                     person.Life = 70;
+
+                    person.maxShield = new WarriorTemplate().shield;
                     break;
                 case MasterCharacterList.SpiderCrustacean:
                     WarriorTemplate SpiderCrustacean = gameObject.AddComponent<WarriorTemplate>();
@@ -291,6 +317,8 @@ namespace Assets.Scripts.MonoBehaviours
 
                     person = SpiderCrustacean;//gameObject.AddComponent<Persona>();
                     person.Life = 70;
+
+                    person.maxShield = new WarriorTemplate().shield;
                     break;
                 case MasterCharacterList.NecroBoar:
                     WarriorTemplate NecroBoar = gameObject.AddComponent<WarriorTemplate>();
@@ -309,7 +337,7 @@ namespace Assets.Scripts.MonoBehaviours
                     person = NecroBoar;//gameObject.AddComponent<Persona>();
                     person.Life = 70;
 
-
+                    person.maxShield = new WarriorTemplate().shield;
                     break;
                 case MasterCharacterList.ElderStag:
                     MageTemplate ElderStag = gameObject.AddComponent<MageTemplate>();
@@ -328,6 +356,8 @@ namespace Assets.Scripts.MonoBehaviours
 
                     person = ElderStag;//gameObject.AddComponent<Persona>();
                     person.Life = 55;
+
+                    person.maxShield = new MageTemplate().shield;
 
                     break;
                 case MasterCharacterList.DevilBird:
@@ -348,7 +378,7 @@ namespace Assets.Scripts.MonoBehaviours
                     person = DevilBird;//gameObject.AddComponent<Persona>();
                     person.Life = 55;
 
-
+                    person.maxShield = new MageTemplate().shield;
                     break;
                 case MasterCharacterList.DragonSloth:
                     ControllerTemplate DragonSloth = gameObject.AddComponent<ControllerTemplate>();
@@ -368,7 +398,7 @@ namespace Assets.Scripts.MonoBehaviours
                     person = DragonSloth;//gameObject.AddComponent<Persona>();
                     person.Life = 68;
 
-
+                    person.maxShield = new ControllerTemplate().shield;
                     break;
                 default:
                     break;
@@ -416,17 +446,19 @@ namespace Assets.Scripts.MonoBehaviours
 
             Image healthSlider = transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>();
 
+            Image shieldSlider = transform.GetChild(0).GetChild(1).GetChild(0).GetComponent<Image>();
+
             float health = 0;
+            float shield = 0;
 
-            if (species != SpeciesType.Enemy)
-                health = (float)(person.Health) / (float)(person.Life);
+            health = (float)(person.Health) / (float)(person.Life);
 
-            if (species == SpeciesType.Enemy)
-                health = (float)(person.Health) / (float)(person.Life);
+            shield = (float)(person.shield) / (float)(person.maxShield);
 
-            Debug.Log(person.Health);
+            Debug.Log(person.shield.ToString() + ", " + person.maxShield.ToString());
 
-            healthSlider.fillAmount = health;            
+            healthSlider.fillAmount = health;
+            shieldSlider.fillAmount = shield;
         }  
         public void HoverAction()
         {

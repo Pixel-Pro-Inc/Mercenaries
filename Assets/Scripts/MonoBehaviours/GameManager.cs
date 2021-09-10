@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Models;
+﻿using Assets.Scripts.Entities.Character;
+using Assets.Scripts.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace Assets.Scripts.MonoBehaviours
         public CharacterBehaviour activeCharacter;
         public CharacterBehaviour activeEnemy;
 
-        public GameObject[] debuffs;
+        public GameObject[] effects;
 
         private void Awake()
         {
@@ -72,64 +73,75 @@ namespace Assets.Scripts.MonoBehaviours
                         DeckPopulate.Instance.DeleteCards();
                     }
                     break;
+                    
+            }
+
+            List<Persona> personas = new List<Persona>();
+
+            //Hungry Debuff Implementation
+            for (int i = 0; i < playerCharacters.Count; i++)
+            {
+                personas.Add(playerCharacters[i].GetComponentInChildren<CharacterBehaviour>().person);
+            }
+            for (int i = 0; i < enemyCharacters.Count; i++)
+            {
+                personas.Add(enemyCharacters[i].GetComponentInChildren<CharacterBehaviour>().person);
+            }
+
+            for (int i = 0; i < personas.Count; i++)
+            {
+                List<DebuffObject> debuffs = personas[i].GetDebuffs();
+                foreach (var item in debuffs)
+                {
+                    if (item.type == debuffType.Hungry)
+                        personas[i].Health -= (int)((float)personas[i].Life * (float)item.amount); 
+                }
+            }
+            //Remove Debuffs
+            for (int i = 0; i < playerCharacters.Count; i++)
+            {
+                personas.Add(playerCharacters[i].GetComponentInChildren<CharacterBehaviour>().person);
+            }
+            for (int i = 0; i < enemyCharacters.Count; i++)
+            {
+                personas.Add(enemyCharacters[i].GetComponentInChildren<CharacterBehaviour>().person);
+            }
+
+            for (int i = 0; i < personas.Count; i++)
+            {
+                List<DebuffObject> debuffs = personas[i].GetDebuffs();
+                foreach (var item in debuffs)
+                {
+                    if (item.roundsActive >= item.lifeTime)
+                    {
+                        personas[i].RemoveDebuff(item);//remove effect
+                    }
+
+                    item.roundsActive++;
+                }
             }
         }
 
-        public void InstantiateEffect(debuffType type, CharacterBehaviour target)
+        public void InstantiateEffect(EffectType type, CharacterBehaviour target)
         {
-            switch (type)
-            {
-                case debuffType.Slow:
-                    break;
-                case debuffType.Rooted:
-                    SpawnEffect(target.gameObject.transform, debuffs[15]);
-                    break;
-                case debuffType.WeakGrip:
-                    SpawnEffect(target.gameObject.transform, debuffs[17]);
-                    break;
-                case debuffType.Exiled:
-                    SpawnEffect(target.gameObject.transform, debuffs[13]);
-                    break;
-                case debuffType.Marked:                    
-                    break;
-                case debuffType.Calm:
-                    SpawnEffect(target.gameObject.transform, debuffs[5]);
-                    break;
-                case debuffType.BrokenGaurd:
-                    SpawnEffect(target.gameObject.transform, debuffs[14]);
-                    break;
-                case debuffType.Burnt:
-                    SpawnEffect(target.gameObject.transform, debuffs[4]);
-                    break;
-                case debuffType.Stun:
-                    SpawnEffect(target.gameObject.transform, debuffs[16]);
-                    break;
-                case debuffType.Freeze:
-                    SpawnEffect(target.gameObject.transform, debuffs[12]);
-                    break;
-                case debuffType.Cold:
-                    SpawnEffect(target.gameObject.transform, debuffs[8]);
-                    break;
-                case debuffType.Blinded:
-                    SpawnEffect(target.gameObject.transform, debuffs[3]);
-                    break;
-                case debuffType.Tainted:
-                    break;
-                case debuffType.Sleep:
-                    break;
-                case debuffType.Hungry:
-                    break;
-                case debuffType.Healthy:
-                    break;
-                case debuffType.UnHealthy:
-                    break;
-                case debuffType.GodsAnger:
-                    break;
-                default:
-                    break;
-            }
+            SpawnEffect(target.gameObject.transform, effects[GetIndexOfEffect(type)]);
         }
         int blockEffect = 0;
+
+        int GetIndexOfEffect(EffectType type)
+        {
+            string id = type.ToString();
+            id = id.Replace('_', ' ');
+
+            for (int i = 0; i < effects.Length; i++)
+            {
+                if (effects[i].name == id)
+                    return i;
+            }
+
+            return 0;
+        }
+
         void SpawnEffect(Transform character, GameObject effect)
         {
             if(blockEffect == 0)
@@ -138,6 +150,8 @@ namespace Assets.Scripts.MonoBehaviours
 
                 GameObject x = Instantiate(effect, location, Quaternion.identity);
                 x.transform.SetParent(character);
+
+                x.transform.localPosition = location;
 
                 blockEffect = 1;
             }            

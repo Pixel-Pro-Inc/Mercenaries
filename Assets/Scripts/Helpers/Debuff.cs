@@ -14,17 +14,64 @@ namespace Assets.Scripts.Helpers
     {
         public void CreateDebuff(object TargetInstance, double debuffPercent, debuffType type, int lifeTime) //this would prolly be the last thing thats called in the method
         {
-            Persona Target = (Persona)TargetInstance;            
-          DebuffObject debuffObject = new DebuffObject()
-                {
-                    state = true,
-                    type = type,
-                    amount = debuffPercent,
-                    lifeTime = lifeTime,
-                    roundsActive = 0
-                };
-          Target.AddDebuff(debuffObject);
-          GameManager.Instance.InstantiateEffect(debuffObject.type, ((Persona)TargetInstance).characterBehaviour);
+            Persona Target = (Persona)TargetInstance;
+            DebuffObject debuffObject = new DebuffObject()
+            {
+                state = true,
+                type = type,
+                amount = debuffPercent,
+                lifeTime = 2,//lifeTime,
+                roundsActive = 0
+            };
+            Target.AddDebuff(debuffObject);
+
+            EffectType effectType = EffectType.Balanced;
+
+            switch (type)
+            {
+                case debuffType.Slow:
+                    break;
+                case debuffType.Rooted:
+                    effectType = EffectType.Rooted;
+                    break;
+                case debuffType.WeakGrip:
+                    break;
+                case debuffType.Exiled:
+                    break;
+                case debuffType.Marked:
+                    break;
+                case debuffType.Calm:
+                    break;
+                case debuffType.BrokenGaurd:
+                    break;
+                case debuffType.Burnt:
+                    break;
+                case debuffType.Stun:
+                    break;
+                case debuffType.Freeze:
+                    break;
+                case debuffType.Cold:
+                    break;
+                case debuffType.Blinded:
+                    break;
+                case debuffType.Tainted:
+                    break;
+                case debuffType.Sleep:
+                    break;
+                case debuffType.Hungry:
+                    break;
+                case debuffType.Healthy:
+                    break;
+                case debuffType.UnHealthy:
+                    break;
+                case debuffType.GodsAnger:
+                    break;
+                default:
+                    break;
+            }
+
+            if (!effectType.Equals(EffectType.Balanced))
+                GameManager.Instance.InstantiateEffect(effectType, ((Persona)TargetInstance).characterBehaviour);
         }
     }
 }

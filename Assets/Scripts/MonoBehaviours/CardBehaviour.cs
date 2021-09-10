@@ -34,7 +34,6 @@ public class CardBehaviour : Card
     }
     public void OnAction(object TargetInstance)
     {
-
         Persona CharacterInstance = null;
         Persona Target = (Persona)TargetInstance;
         //MageTemplate Target = (MageTemplate)TargetInstance;
@@ -43,6 +42,19 @@ public class CardBehaviour : Card
         if (GameManager.Instance.activeCharacter != null && GameManager.Instance.roundInfo.inControl == WhoseInControl.Human) CharacterInstance = GameManager.Instance.activeCharacter.person;
 
         if (GameManager.Instance.activeEnemy != null && GameManager.Instance.roundInfo.inControl == WhoseInControl.CPU) CharacterInstance = GameManager.Instance.activeEnemy.person;
+
+        for (int i = 0; i < ((Persona)TargetInstance).GetDebuffs().Count; i++)
+        {
+            if(((Persona)TargetInstance).GetDebuffs()[i].type == debuffType.Sleep)
+            {
+                ((Persona)TargetInstance).RemoveDebuff(((Persona)CharacterInstance).GetDebuffs()[i]);
+                foreach (var item in ((Persona)TargetInstance).GetDebuffs())
+                {
+                    if(item.type == debuffType.Stun)
+                        ((Persona)TargetInstance).RemoveDebuff(item);
+                }                
+            }
+        }
 
         switch (cardname)
         {
@@ -675,7 +687,7 @@ public class CardBehaviour : Card
                                         CharacterInstance.Exiled(CharacterInstance, Target, 1);
                                         break;
                                     case debuffType.Marked:
-                                        CharacterInstance.Marked(Target);
+                                        CharacterInstance.Marked(CharacterInstance, Target, 1);
                                         break;
                                     case debuffType.Calm:
                                         CharacterInstance.Calm(CharacterInstance, Target, 1);
@@ -684,7 +696,7 @@ public class CardBehaviour : Card
                                         CharacterInstance.BrokenGuard(CharacterInstance, Target, 1);
                                         break;
                                     case debuffType.Burnt:
-                                        CharacterInstance.Burnt(CharacterInstance, Target);
+                                        CharacterInstance.Burnt(CharacterInstance, Target, 1);
                                         break;
                                     case debuffType.Stun:
                                         CharacterInstance.Stun(CharacterInstance, Target, 1);

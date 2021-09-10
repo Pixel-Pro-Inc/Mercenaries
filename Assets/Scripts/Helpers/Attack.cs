@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Entities.Character;
 using Assets.Scripts.Models;
+using Assets.Scripts.MonoBehaviours;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -128,6 +129,10 @@ namespace Assets.Scripts.Helpers
             Target.ProtectionSponser = null;
             #endregion
 
+            EffectType effectType = EffectType.Physical_Damage;//Ranged?
+
+            GameManager.Instance.InstantiateEffect(effectType, ((Persona)TargetInstance).characterBehaviour);
+
         }
         public void PhysicalDamage(object CharacterInstance, object TargetInstance, DamageObject damageObject)
         {
@@ -223,6 +228,10 @@ namespace Assets.Scripts.Helpers
             Target.ProtectionSponser = null;
             #endregion
 
+            EffectType effectType = EffectType.Physical_Damage;//Ranged?
+
+            GameManager.Instance.InstantiateEffect(effectType, ((Persona)TargetInstance).characterBehaviour);
+
         }// this is so someone can put a tailored value
         public void MagicalDamage(object CharacterInstance, object TargetInstance)
         {
@@ -314,6 +323,10 @@ namespace Assets.Scripts.Helpers
             Target.ProtectionSponser = null;
             #endregion
 
+            EffectType effectType = EffectType.Magical_Damage;//Ranged?
+
+            GameManager.Instance.InstantiateEffect(effectType, ((Persona)TargetInstance).characterBehaviour);
+
         }
         public void MagicalDamage(object CharacterInstance, object TargetInstance, int amount)
         {
@@ -403,6 +416,10 @@ namespace Assets.Scripts.Helpers
             Target.ProtectionSponser = null;
             #endregion
 
+            EffectType effectType = EffectType.Magical_Damage;//Ranged?
+
+            GameManager.Instance.InstantiateEffect(effectType, ((Persona)TargetInstance).characterBehaviour);
+
         }
         public void Drain(object CharacterInstance, object TargetInstance)
         {
@@ -465,6 +482,12 @@ namespace Assets.Scripts.Helpers
                 }
             }
 
+            EffectType effectType = EffectType.Ignite;//Ranged?
+
+            GameManager.Instance.InstantiateEffect(effectType, ((Persona)TargetInstance).characterBehaviour);
+
+            ((Persona)TargetInstance).Burnt(CharacterInstance, TargetInstance, 1);
+
         }
         public void Bleed(object CharacterInstance, object TargetInstance)
         {
@@ -487,6 +510,10 @@ namespace Assets.Scripts.Helpers
             { }
             else { if (RoundInfo.RoundDone == true) PhysicalDamage(CharacterInstance, TargetInstance); }
 
+            EffectType effectType = EffectType.Bleed;//Ranged?
+
+            GameManager.Instance.InstantiateEffect(effectType, ((Persona)TargetInstance).characterBehaviour);
+
         }
         public void Bleed(object CharacterInstance, object TargetInstance, DamageObject damageObject)
         {
@@ -508,6 +535,10 @@ namespace Assets.Scripts.Helpers
             if (Target.ImmuneState == true)
             { }
             else { if (RoundInfo.RoundDone == true) PhysicalDamage(CharacterInstance, TargetInstance, damageObject); }
+
+            EffectType effectType = EffectType.Bleed;//Ranged?
+
+            GameManager.Instance.InstantiateEffect(effectType, ((Persona)TargetInstance).characterBehaviour);
 
         }// check reference foe explaination
         public void Blight(object CharacterInstance, object TargetInstance, int amountOfRounds, int amountOfDamage)
@@ -556,6 +587,10 @@ namespace Assets.Scripts.Helpers
                 }
                 if (countofroundsineffect >= amountOfRounds) Choisss.Close();
             }
+
+            EffectType effectType = EffectType.Blight;//Ranged?
+
+            GameManager.Instance.InstantiateEffect(effectType, ((Persona)TargetInstance).characterBehaviour);
         }
         public void BalancedDamage(object CharacterInstance, object TargetInstance)
         {
@@ -649,6 +684,10 @@ namespace Assets.Scripts.Helpers
             }
             Target.ProtectionSponser = null;
             #endregion
+
+            EffectType effectType = EffectType.Balanced;//Ranged?
+
+            GameManager.Instance.InstantiateEffect(effectType, ((Persona)TargetInstance).characterBehaviour);
 
         }
         public void Curse(object CharacterInstance, object TargetInstance)
