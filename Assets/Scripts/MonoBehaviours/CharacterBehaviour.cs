@@ -477,7 +477,7 @@ namespace Assets.Scripts.MonoBehaviours
             }
             for (int i = 0; i < GameManager.Instance.enemyCharacters.Count; i++)
             {
-                objects.Allies.Add(GameManager.Instance.enemyCharacters[i].GetComponentInChildren<CharacterBehaviour>().person);
+                objects.Enemies.Add(GameManager.Instance.enemyCharacters[i].GetComponentInChildren<CharacterBehaviour>().person);
             }
         }
 

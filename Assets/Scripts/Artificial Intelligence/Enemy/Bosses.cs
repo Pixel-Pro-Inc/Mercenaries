@@ -46,32 +46,32 @@ public class Bosses: MonoBehaviour
         int count = 0;
         while (k == 0)
         {
-            count++;
+            count = Random.Range(0, 5);
 
             bool fired = false;
-            if (count % 2 == 0)
+            if (count == 2)
                 fired = SlotMachine(blindAttack);
 
-            if (count % 3 == 0)
+            if (count == 3)
                 fired = SlotMachine(defenseBiasedAttack);
 
-            if (count % 4 == 0)
+            if (count == 4)
                 fired = SlotMachine(strategicAttack);
 
             if (fired)
             {
-                if (count % 2 == 0) // blind attack
+                if (count == 2) // blind attack
                     BlindAttack();
 
-                if (count % 3 == 0) // defense Biased Attack
+                if (count == 3) // defense Biased Attack
                     DefenseBiasedAttack();
 
-                if (count % 4 == 0) // strategic Attack
+                if (count == 4) // strategic Attack
                     StrategicAttack();
 
                 k++;
             }
-        }        
+        }  
     }
     void BlindAttack()
     {

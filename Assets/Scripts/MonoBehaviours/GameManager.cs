@@ -90,12 +90,14 @@ namespace Assets.Scripts.MonoBehaviours
 
             for (int i = 0; i < personas.Count; i++)
             {
-                List<DebuffObject> debuffs = personas[i].GetDebuffs();
-                foreach (var item in debuffs)
-                {
-                    if (item.type == debuffType.Hungry)
-                        personas[i].Health -= (int)((float)personas[i].Life * (float)item.amount); 
-                }
+                List<DebuffObject> debuffs = new List<DebuffObject>();
+                debuffs.AddRange(personas[i].GetDebuffs());
+                if (debuffs.Count != 0)
+                    foreach (var item in debuffs)
+                    {
+                        if (item.type == debuffType.Hungry)
+                            personas[i].Health -= (int)((float)personas[i].Life * (float)item.amount);
+                    }
             }
             //Remove Debuffs
             for (int i = 0; i < playerCharacters.Count; i++)
@@ -109,16 +111,18 @@ namespace Assets.Scripts.MonoBehaviours
 
             for (int i = 0; i < personas.Count; i++)
             {
-                List<DebuffObject> debuffs = personas[i].GetDebuffs();
-                foreach (var item in debuffs)
-                {
-                    if (item.roundsActive >= item.lifeTime)
+                List<DebuffObject> debuffs = new List<DebuffObject>();
+                debuffs.AddRange(personas[i].GetDebuffs());
+                if (debuffs.Count != 0)
+                    foreach (var item in debuffs)
                     {
-                        personas[i].RemoveDebuff(item);//remove effect
-                    }
+                        if (item.roundsActive >= item.lifeTime)
+                        {
+                            personas[i].RemoveDebuff(item);//remove effect
+                        }
 
-                    item.roundsActive++;
-                }
+                        item.roundsActive++;
+                    }
             }
         }
 

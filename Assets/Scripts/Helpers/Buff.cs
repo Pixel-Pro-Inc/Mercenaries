@@ -202,7 +202,7 @@ namespace Assets.Scripts.Helpers
             Character.AddBuff(buffObject);
 
             object scapegoat = Character;
-            scapegoat = Character.Allies.Any();
+            scapegoat = Character.Allies[UnityEngine.Random.Range(0, Character.Allies.Count)];
             Random r = new Random();
             double chanceDa = r.Next(1, 101);
             if (chanceDa <= Character.ProvokingBuffPercent)
