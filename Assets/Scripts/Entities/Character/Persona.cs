@@ -277,17 +277,18 @@ namespace Assets.Scripts.Entities.Character
 
         internal int ExperienceLevel { get { return ExperienceLevel; } set { if (ExperienceLevel < 0) ExperienceLevel = 0; } }
 
-        /*
-          int Mana
+        internal int _Mana = 0;
+        public virtual int Mana
         {
             get; set;
             // We never discussed if Mana was going to be used so I just put it cause, I mean RPG right, we have to nerf the characters somehow right.
             //Pluss in my head the cards that a character will be able to use from the many cards on deck will be dependant on the amount of mana the individual 
             //character has currently
         }
-        int Stamina { get; set; }//I assume the hunger method will affect this trait
-         */
-        //Above is the mana and stamina int
+        internal int _Stamina = 0;
+        public virtual int Stamina { get; set; }//I assume the hunger method will affect this trait
+
+        public InnerVoice InnerVoice = new InnerVoice(); //This is used for special actions. Dont remove !!!
 
         #endregion
         #region Attack Percent

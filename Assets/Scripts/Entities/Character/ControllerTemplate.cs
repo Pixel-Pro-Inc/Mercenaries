@@ -21,6 +21,7 @@ namespace Assets.Scripts.Entities.Character
         public override string CharacterDescription { get; set; }
         private string _brief="Controller-(Debuffer)";
         public string BriefDescription { get { return _brief; } set { _brief = value; } }
+        public override string ToString() => $"{CharacterName} is a ${BriefDescription}. Look further and you'll find ${CharacterDescription}";
 
         //private int _health = 0;
         public override int Health

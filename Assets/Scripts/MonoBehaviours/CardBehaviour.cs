@@ -37,7 +37,7 @@ public class CardBehaviour : Card
 
         Persona CharacterInstance = null;
         Persona Target = (Persona)TargetInstance;
-        //MageTemplate Target = (MageTemplate)TargetInstance;
+        char Spoken; //This is the character that will be given 
 
         DamageObject damageObject = new DamageObject();
         if (GameManager.Instance.activeCharacter != null && GameManager.Instance.roundInfo.inControl == WhoseInControl.Human) CharacterInstance = GameManager.Instance.activeCharacter.person;
@@ -834,6 +834,10 @@ public class CardBehaviour : Card
             default:
                 break;
         }
+
+        string Innermessage = CharacterInstance.InnerVoice.InnerMessage;
+        int manifestnumber = CharacterInstance.InnerVoice.manifest.Length +1; //It has to be plus one so it can get the next alphabet character
+        CharacterInstance.InnerVoice.CallInnerVoice(Innermessage[manifestnumber],CharacterInstance, Target);
 
         //turn played
         if (GameManager.Instance.roundInfo.inControl == WhoseInControl.Human)
