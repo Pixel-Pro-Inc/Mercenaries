@@ -848,7 +848,7 @@ public class CardBehaviour : Card
         }
 
         string Innermessage = CharacterInstance.InnerVoice.InnerMessage;
-        int manifestnumber = CharacterInstance.InnerVoice.manifest.Length +1; //It has to be plus one so it can get the next alphabet character
+        int manifestnumber = CharacterInstance.InnerVoice.manifest.Length +1; //It has to be plus one so it can get the next alphabet character. Also, theres no need to update manifest here, since its already done
         CharacterInstance.InnerVoice.CallInnerVoice(Innermessage[manifestnumber],CharacterInstance, Target);
 
         //turn played

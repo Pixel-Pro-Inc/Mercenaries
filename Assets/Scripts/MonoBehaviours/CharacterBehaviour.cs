@@ -64,8 +64,8 @@ namespace Assets.Scripts.MonoBehaviours
                     WarriorTemplate MisterGlub = gameObject.AddComponent<WarriorTemplate>();
                     MisterGlub.CharacterName = "Mister_Glubglub";
                     MisterGlub.CharacterDescription = "He is a fish. What did you expect?";
-                    MisterGlub.CharacterSpecies = SpeciesType.Fish;                    
-                    
+                    MisterGlub.CharacterSpecies = SpeciesType.Fish;
+                    MisterGlub.PersonName = Everyone;
 
                     //Right now below these have been set to be species affinities but they seem to be originaliy invisioned to be COmbat classes
                     List<SpeciesType> NaturalAlliedGlub = new List<SpeciesType> { SpeciesType.Frog, SpeciesType.Fish };
@@ -85,6 +85,8 @@ namespace Assets.Scripts.MonoBehaviours
                     MisterFroggo.CharacterName = "Mister_Froggo";
                     MisterFroggo.CharacterDescription = "Ribbit, ribbit, Keroo, Ribbit";
                     MisterFroggo.CharacterSpecies = SpeciesType.Frog;
+                    MisterFroggo.PersonName = Everyone;
+
                     //Right now below these have been set to be species affinities but they seem to be originaliy invisioned to be COmbat classes
                     List<SpeciesType> NaturalAlliedFroggo = new List<SpeciesType> { SpeciesType.Frog, SpeciesType.Fish };
                     MisterFroggo.NaturalAllies = NaturalAlliedFroggo;
@@ -103,6 +105,7 @@ namespace Assets.Scripts.MonoBehaviours
                     MisterSalaboned.CharacterName = "Mister_Salaboned";
                     MisterSalaboned.CharacterDescription = "A man plagued by demonic shadows. After discovering forbiden gray magic, he uses his skill to reach his deepest desire, no matter the cost";
                     MisterSalaboned.CharacterSpecies = SpeciesType.Salamander;
+                    MisterSalaboned.PersonName = Everyone;
 
                     //Right now below these have been set to be species affinities but they seem to be originaliy invisioned to be COmbat classes
                     List<SpeciesType> NaturalAlliedSala = new List<SpeciesType> { SpeciesType.Triton };
@@ -122,6 +125,7 @@ namespace Assets.Scripts.MonoBehaviours
                     MisterLizzacorn.CharacterName = "Mister_Lizzacorn";
                     MisterLizzacorn.CharacterDescription = "I'm not being defensive, you are!";
                     MisterLizzacorn.CharacterSpecies = SpeciesType.Triton;
+                    MisterLizzacorn.PersonName = Everyone;
 
                     //Right now below these have been set to be species affinities but they seem to be originaliy invisioned to be COmbat classes
                     List<SpeciesType> NaturalAlliedLizza = new List<SpeciesType> { SpeciesType.Salamander, SpeciesType.Triton };
@@ -141,6 +145,8 @@ namespace Assets.Scripts.MonoBehaviours
                     MisterLiodin.CharacterName = "Mister_Liodin";
                     MisterLiodin.CharacterDescription = "Yes, thats correct. Everything the Light touches";
                     MisterLiodin.CharacterSpecies = SpeciesType.Lion;
+                    MisterLiodin.PersonName = Everyone;
+
                     //Right now below these have been set to be species affinities but they seem to be originaliy invisioned to be COmbat classes
                     List<SpeciesType> NaturalAlliedLiodin = new List<SpeciesType> { SpeciesType.Lion, SpeciesType.Salamander };
                     MisterLiodin.NaturalAllies = NaturalAlliedLiodin;
@@ -159,6 +165,8 @@ namespace Assets.Scripts.MonoBehaviours
                     MisterLacrox.CharacterName = "Mister_Lacrox";
                     MisterLacrox.CharacterDescription = "Nani?!Kotowaru!";
                     MisterLacrox.CharacterSpecies = SpeciesType.Crocodile;
+                    MisterLacrox.PersonName = Everyone;
+
                     //Right now below these have been set to be species affinities but they seem to be originaliy invisioned to be COmbat classes
                     List<SpeciesType> NaturalAlliedLacrox = new List<SpeciesType> { };
                     MisterLacrox.NaturalAllies = NaturalAlliedLacrox;
@@ -177,6 +185,8 @@ namespace Assets.Scripts.MonoBehaviours
                     MisterBirbarcher.CharacterName = "Mister_Birbarcher";
                     MisterBirbarcher.CharacterDescription = "Has anyone seen any female elves here? Nevermind.....";
                     MisterBirbarcher.CharacterSpecies = SpeciesType.Fish;
+                    MisterBirbarcher.PersonName = Everyone;
+
                     //Right now below these have been set to be species affinities but they seem to be originaliy invisioned to be COmbat classes
                     List<SpeciesType> NaturalAlliedBircher = new List<SpeciesType> { SpeciesType.Frog, SpeciesType.Fish };
                     MisterBirbarcher.NaturalAllies = NaturalAlliedBircher;
@@ -195,6 +205,8 @@ namespace Assets.Scripts.MonoBehaviours
                     MisterPirateParrot.CharacterName = "Mister_PirateParrot";
                     MisterPirateParrot.CharacterDescription = "Say cracker one more time, I dare ya.....";
                     MisterPirateParrot.CharacterSpecies = SpeciesType.Parrot;
+                    MisterPirateParrot.PersonName = Everyone;
+
                     //Right now below these have been set to be species affinities but they seem to be originaliy invisioned to be COmbat classes
                     List<SpeciesType> NaturalAlliedPirate = new List<SpeciesType> { SpeciesType.Frog, SpeciesType.Fish };
                     MisterPirateParrot.NaturalAllies = NaturalAlliedPirate;
@@ -213,6 +225,8 @@ namespace Assets.Scripts.MonoBehaviours
                     MisterSilverSkull.CharacterName = "Mister_SilverSkull";
                     MisterSilverSkull.CharacterDescription = "Oh where am I from? Earth...";
                     MisterSilverSkull.CharacterSpecies = SpeciesType.Triton;
+                    MisterSilverSkull.PersonName = Everyone;
+
                     //Right now below these have been set to be species affinities but they seem to be originaliy invisioned to be COmbat classes
                     List<SpeciesType> NaturalAlliedSkull = new List<SpeciesType> { SpeciesType.Salamander, SpeciesType.Triton };
                     MisterSilverSkull.NaturalAllies.AddRange(NaturalAlliedSkull);
@@ -231,6 +245,8 @@ namespace Assets.Scripts.MonoBehaviours
                     MisterMantis.CharacterName = "Mister_Mantis";
                     MisterMantis.CharacterDescription = "No youre thinking of my cousin, Mantis. He is the REAL dragon warrior. Obviously....";
                     MisterMantis.CharacterSpecies = SpeciesType.Insect;
+                    MisterMantis.PersonName = Everyone;
+
 
                     //Right now below these have been set to be species affinities but they seem to be originaliy invisioned to be COmbat classes
                     List<SpeciesType> NaturalAlliedMAntis = new List<SpeciesType> { SpeciesType.Frog, SpeciesType.Fish };
@@ -250,6 +266,8 @@ namespace Assets.Scripts.MonoBehaviours
                     MisterHippo.CharacterName = "Mister_Hippo";
                     MisterHippo.CharacterDescription = "Is it hot in here? I some space. *huffing* No stop seriously, give me room. *Huffing intensifies* I'm not kidding get aWAY FR";
                     MisterHippo.CharacterSpecies = SpeciesType.Hippo;
+                    MisterHippo.PersonName = Everyone;
+
                     //Right now below these have been set to be species affinities but they seem to be originaliy invisioned to be COmbat classes
                     List<SpeciesType> NaturalAlliedHippo = new List<SpeciesType> { SpeciesType.Frog, SpeciesType.Fish };
                     MisterHippo.NaturalAllies = NaturalAlliedHippo;
@@ -269,6 +287,8 @@ namespace Assets.Scripts.MonoBehaviours
                     HammerHead.CharacterDescription = "Look me in the eye and say that again";
                     HammerHead.CharacterSpecies = SpeciesType.Fish;
                     HammerHead.EnemyType = enemyType.Boss;
+                    HammerHead.PersonName = Everyone;
+
                     //Right now below these have been set to be species affinities but they seem to be originaliy invisioned to be COmbat classes
                     List<SpeciesType> NaturalAlliedHammerHead = new List<SpeciesType> { SpeciesType.Frog, SpeciesType.Fish };
                     HammerHead.NaturalAllies = NaturalAlliedHammerHead;
@@ -288,6 +308,8 @@ namespace Assets.Scripts.MonoBehaviours
                     GreatWhite.CharacterDescription = "Oh my god, my teeth are killing me";
                     GreatWhite.CharacterSpecies = SpeciesType.Fish;
                     GreatWhite.EnemyType = enemyType.Boss;
+                    GreatWhite.PersonName = Everyone;
+
                     //Right now below these have been set to be species affinities but they seem to be originaliy invisioned to be COmbat classes
                     List<SpeciesType> NaturalAlliedGreatWhite = new List<SpeciesType> { SpeciesType.Frog, SpeciesType.Fish };
                     GreatWhite.NaturalAllies = NaturalAlliedGreatWhite;
@@ -307,6 +329,8 @@ namespace Assets.Scripts.MonoBehaviours
                     SpiderCrustacean.CharacterDescription = "......";
                     SpiderCrustacean.CharacterSpecies = SpeciesType.Fish;
                     SpiderCrustacean.EnemyType = enemyType.Boss;
+                    SpiderCrustacean.PersonName = Everyone;
+
                     //Right now below these have been set to be species affinities but they seem to be originaliy invisioned to be COmbat classes
                     List<SpeciesType> NaturalAlliedSpiderCrustacean = new List<SpeciesType> { SpeciesType.Frog, SpeciesType.Fish };
                     SpiderCrustacean.NaturalAllies = NaturalAlliedSpiderCrustacean;
@@ -326,6 +350,8 @@ namespace Assets.Scripts.MonoBehaviours
                     NecroBoar.CharacterDescription = "Call me atheist, but I dont believe in the Last Supper";
                     NecroBoar.CharacterSpecies = SpeciesType.Boar;
                     NecroBoar.EnemyType = enemyType.Boss;
+                    NecroBoar.PersonName = Everyone;
+
                     //Right now below these have been set to be species affinities but they seem to be originaliy invisioned to be COmbat classes
                     List<SpeciesType> NaturalAlliedNecroBoar = new List<SpeciesType> { SpeciesType.Frog, SpeciesType.Fish };
                     NecroBoar.NaturalAllies = NaturalAlliedNecroBoar;
@@ -345,6 +371,7 @@ namespace Assets.Scripts.MonoBehaviours
                     ElderStag.CharacterDescription = "My Eternal core spews cold hatred and pure darkness......(just like mothers words *sadness*)";
                     ElderStag.CharacterSpecies = SpeciesType.Deer;
                     ElderStag.EnemyType = enemyType.Boss;
+                    ElderStag.PersonName = Everyone;
 
                     //Right now below these have been set to be species affinities but they seem to be originaliy invisioned to be COmbat classes
                     List<SpeciesType> NaturalAlliedElderStag = new List<SpeciesType> { SpeciesType.Frog, SpeciesType.Fish };
@@ -366,6 +393,7 @@ namespace Assets.Scripts.MonoBehaviours
                     DevilBird.CharacterDescription = "SQUUACCK!";
                     DevilBird.CharacterSpecies = SpeciesType.Bird;
                     DevilBird.EnemyType = enemyType.Boss;
+                    DevilBird.PersonName = Everyone;
 
                     //Right now below these have been set to be species affinities but they seem to be originaliy invisioned to be COmbat classes
                     List<SpeciesType> NaturalAlliedDevilBird = new List<SpeciesType> { SpeciesType.Frog, SpeciesType.Fish };
@@ -386,6 +414,7 @@ namespace Assets.Scripts.MonoBehaviours
                     DragonSloth.CharacterDescription = "W..a..i..t....u....p..y...o...u....g....u";
                     DragonSloth.CharacterSpecies = SpeciesType.Sloth;
                     DragonSloth.EnemyType = enemyType.Boss;
+                    DragonSloth.PersonName = Everyone;
 
                     //Right now below these have been set to be species affinities but they seem to be originaliy invisioned to be COmbat classes
                     List<SpeciesType> NaturalAlliedDragonSloth = new List<SpeciesType> { SpeciesType.Frog, SpeciesType.Fish };

@@ -37,12 +37,13 @@ namespace Assets.Scripts.Helpers
         void SpeakInnervoice()
         {
             
-            Debug.Log("Yewo, You didnt put a place for the mercenary lanaguage to be shown. The Image list is called SpokenWord");
+            Debug.Log("Yewo, You didnt put a place for the mercenary lanaguage to be shown on screen as Alex asked. The Image list is called SpokenWord. " +
+                "If this is done remove this log and everything should work fine");
             for (int i = 0; i < manifest.Length; i++)
             {
                 SpokenWord.Add(GameObject.Find($"{GetTranlateLetterImagepath(manifest[i])}").GetComponent<Image>());
-                Task.Delay(1000);
             }
+            //Show SpokenWord
         }
 
         public void CallInnerVoice(char spoken, object CharacterInstance, object TargetInstance) //spoken will be one letter each and the method called every time an action happens to a person

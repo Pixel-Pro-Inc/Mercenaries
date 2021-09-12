@@ -138,5 +138,46 @@ namespace Assets.Scripts.Models
             Normal,
             Minion
         }
+        public enum PositiveQuirkList
+        {
+            Masoquist,
+            i_can_crit,
+            SharpEyesight,
+            GoodReflexes,
+            Healthy,
+            Shaman,
+            BreathDeep,
+            Wild,
+            LastRun,
+            Agile,
+            StrongBones,
+            Blessed,
+            Ranger,
+            Eagleyes,
+            SharpFists,
+            SprintBurst,
+            GoodGenetics,
+            Strong,
+        }
+        public enum NegativeQuirkList
+        {
+            Fragile,
+            WeakAim,
+            SlowReflexes,
+            Ill,
+            Invalid,
+            Desperate,
+            Nanism,
+            Dehydrated,
+            Nerfed,
+            WeakBones,
+            CursedByTheGods,
+            BadVision,
+            GrandMa,
+            Tendinits,
+            Slowed,
+            BadGenetics,
+            Weakened
+        }
     }
 }

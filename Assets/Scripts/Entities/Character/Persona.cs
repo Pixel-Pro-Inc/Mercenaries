@@ -26,6 +26,7 @@ namespace Assets.Scripts.Entities.Character
 
         public virtual CharacterBehaviour characterBehaviour { get; set; }
 
+        
         #region GivenCharacterTraits
 
         public enum Kingdom { FarWest, MiddleEarth, DarkSyde };
@@ -78,6 +79,8 @@ namespace Assets.Scripts.Entities.Character
         #region Stats
         public virtual string CharacterName { get { return CharacterName; } set { CharacterName = "UnKnown"; } }
         public virtual string CharacterDescription { get { return CharacterDescription; } set { CharacterDescription = "UnKnown"; } } //Here the personality and backstory of a unique character will be defined
+
+        public MasterCharacterList PersonName;
         public SpeciesType CharacterSpecies { get; set; }
         public enemyType EnemyType { get; set; }
 
@@ -370,8 +373,10 @@ namespace Assets.Scripts.Entities.Character
             float damageGiven = (float)damageObject.DamageValue;
             for (int i = 0; i < GetDebuffs().Count; i++)
             {
-                if (GetDebuffs()[i].type == debuffType.Marked)
-                    damageGiven *= (1f + (float)MarkedDeBuffPerent);
+                Debug.Log("My guy Yewo, i have already done this, check Attack, with any physical damage you'll see markedda set in character logic and checked in target logic if debuff is present");
+                /*if (GetDebuffs()[i].type == debuffType.Marked)
+                    damageGiven *= (1f + (float)MarkedDeBuffPerent);*/
+
             }
 
             //My Implementation of Immune
@@ -723,7 +728,53 @@ namespace Assets.Scripts.Entities.Character
         #region UniqueActons
         public virtual void UniqueSkill(object CharacterInstance, object TargetInstance)
         {
-            throw new NotImplementedException();
+            Persona Character= (Persona)CharacterInstance;
+            Persona Target = (Persona)TargetInstance;
+            // We might need to remove the UniqueSkills in every template, or rename them to be the unique skill of the template type
+            switch (PersonName)
+            {
+                case MasterCharacterList.Peter:
+                    break;
+                case MasterCharacterList.Mister_Glubglub:
+                    break;
+                case MasterCharacterList.Mister_Froggo:
+                    break;
+                case MasterCharacterList.Mister_Salaboned:
+                    break;
+                case MasterCharacterList.Mister_Lizzacorn:
+                    break;
+                case MasterCharacterList.Mister_Liodin:
+                    break;
+                case MasterCharacterList.Mister_Lacrox:
+                    break;
+                case MasterCharacterList.Mister_Birbarcher:
+                    break;
+                case MasterCharacterList.Mister_PirateParrot:
+                    break;
+                case MasterCharacterList.Mister_SilverSkull:
+                    break;
+                case MasterCharacterList.Mister_Mantis:
+                    break;
+                case MasterCharacterList.Mister_Hippo:
+                    break;
+                case MasterCharacterList.HammerHead:
+                    break;
+                case MasterCharacterList.GreatWhite:
+                    break;
+                case MasterCharacterList.SpiderCrustacean:
+                    break;
+                case MasterCharacterList.NecroBoar:
+                    Character.Revive(TargetInstance);
+                    break;
+                case MasterCharacterList.ElderStag:
+                    break;
+                case MasterCharacterList.DevilBird:
+                    break;
+                case MasterCharacterList.DragonSloth:
+                    break;
+                default:
+                    break;
+            }
         }
 
         public virtual void UniqueActiveBuff(object CharacterInstance, object TargetInstance)
