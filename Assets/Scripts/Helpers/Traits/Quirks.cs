@@ -10,19 +10,16 @@ namespace Assets.Scripts.Helpers.Traits
 {
     public class Quirks : Persona
     {
-        
         public void MyHeroAcademia(QuirkColour quirkColour)
         {
             QuirkColour = quirkColour;
 
-            List<PositiveQuirks> Light = new List<PositiveQuirks>(); Light.AddRange(OneForAll((CharacterName,QuirkColour)));
-            foreach (PositiveQuirks positive in Light)
+            foreach (PositiveQuirks positive in OneForAll((CharacterName, QuirkColour)))
             {
                 PositiveQuirkSet(positive);
             }
 
-            List<NegativeQuirks> Dark = new List<NegativeQuirks>(); Dark.AddRange(AllForOne((CharacterName, QuirkColour)));
-            foreach (NegativeQuirks negative in Dark)
+            foreach (NegativeQuirks negative in AllForOne((CharacterName, QuirkColour)))
             {
                 NegativeQuirkSet(negative);
             }
@@ -31,14 +28,14 @@ namespace Assets.Scripts.Helpers.Traits
 
         public PositiveQuirks[] OneForAll((string, QuirkColour) DekuArchives) => DekuArchives switch
         {
-           //("Peter",QuirkColour.Red)=>  (PositiveQuirks.StrongBones, PositiveQuirks.SharpEyesight ),
-            _ => throw new ArgumentOutOfRangeException("Not expected direction value"),
+           ("Peter",QuirkColour.Red)=> new PositiveQuirks[] {PositiveQuirks.SharpEyesight,PositiveQuirks.StrongBones },
+            _ => null
         };
 
         public NegativeQuirks[] AllForOne((string, QuirkColour) TomuraArchives) => TomuraArchives switch
         {
-            //("Peter", QuirkColour.Red) => (PositiveQuirks.StrongBones, PositiveQuirks.SharpEyesight),
-            _ => throw new ArgumentOutOfRangeException("Not expected direction value"),
+            ("Peter", QuirkColour.Red) => new NegativeQuirks[] { NegativeQuirks.Fragile,NegativeQuirks.WeakAim },
+            _ => null
         };
 
         //These set the values onto the character
