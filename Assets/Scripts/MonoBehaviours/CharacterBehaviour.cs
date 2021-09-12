@@ -50,6 +50,7 @@ namespace Assets.Scripts.MonoBehaviours
         }
         private void Start()
         {
+           
             List<Persona> heroCharacters = new List<Persona>();
             for (int i = 0; i < GameManager.Instance.playerCharacters.Count; i++)
             {
@@ -581,5 +582,6 @@ namespace Assets.Scripts.MonoBehaviours
             extraTurn = true;
             consecutiveTurns = extraTurns;
         }
+        
     }
 }

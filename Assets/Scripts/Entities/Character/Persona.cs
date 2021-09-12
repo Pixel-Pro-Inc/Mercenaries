@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Entities.Item;
 using Assets.Scripts.Helpers;
+using Assets.Scripts.Helpers.Traits;
 using Assets.Scripts.Interface;
 using Assets.Scripts.Models;
 using Assets.Scripts.MonoBehaviours;
@@ -82,6 +83,7 @@ namespace Assets.Scripts.Entities.Character
 
         public MasterCharacterList PersonName;
         public SpeciesType CharacterSpecies { get; set; }
+        internal QuirkColour _qColor { get; set; } public virtual QuirkColour QuirkColour { get { return _qColor; } set{ _qColor = value;}} //This is used in persona when trying to make a quirk character
         public enemyType EnemyType { get; set; }
 
         internal bool _foe { get; set; }
@@ -625,6 +627,12 @@ namespace Assets.Scripts.Entities.Character
         }
         #endregion
 
+        #region Quirk Methods
+
+        public void CreateQuirkCharacter(QuirkColour quirkColour)=>new Quirks().MyHeroAcademia(quirkColour);
+
+
+        #endregion
         #endregion
         #region Combat Actions
 

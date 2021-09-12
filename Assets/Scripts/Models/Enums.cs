@@ -138,7 +138,18 @@ namespace Assets.Scripts.Models
             Normal,
             Minion
         }
-        public enum PositiveQuirkList
+        public enum QuirkColour
+        {
+            Original,
+            Red,
+            Orange,
+            Yellow,
+            Green,
+            Blue,
+            Purple,
+            Indigo
+        }
+        public enum PositiveQuirks
         {
             Masoquist,
             i_can_crit,
@@ -159,7 +170,7 @@ namespace Assets.Scripts.Models
             GoodGenetics,
             Strong,
         }
-        public enum NegativeQuirkList
+        public enum NegativeQuirks
         {
             Fragile,
             WeakAim,
