@@ -1,6 +1,7 @@
 ﻿
 using Assets.Scripts.Entities.Character;
 using Assets.Scripts.Models;
+using Assets.Scripts.MonoBehaviours;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -100,6 +101,10 @@ namespace Assets.Scripts.Helpers
                 }
             }
 
+            EffectType effectType = EffectType.Chosen;//Ranged?
+
+            GameManager.Instance.InstantiateEffect(effectType, ((Persona)CharacterInstance).characterBehaviour);
+
         }
         public bool Aware(object CharacterInstance)
         {
@@ -197,7 +202,7 @@ namespace Assets.Scripts.Helpers
             Character.AddBuff(buffObject);
 
             object scapegoat = Character;
-            scapegoat = Character.Allies.Any();
+            scapegoat = Character.Allies[UnityEngine.Random.Range(0, Character.Allies.Count)];
             Random r = new Random();
             double chanceDa = r.Next(1, 101);
             if (chanceDa <= Character.ProvokingBuffPercent)
@@ -314,6 +319,14 @@ namespace Assets.Scripts.Helpers
             Persona Character = (Persona)CharacterInstance;
             Persona Target = (Persona)TargetInstance;
             HealingCache = (int)(Target.Health * Character.HealBuffPercent);
+
+
+            for (int i = 0; i < ((Persona)TargetInstance).GetDebuffs().Count; i++)
+            {
+                if(((Persona)TargetInstance).GetDebuffs()[i].type == debuffType.Burnt)
+                    HealingCache = (int)((double)HealingCache * ((Persona)TargetInstance).GetDebuffs()[i].amount);
+            }
+
             Target.Health += HealingCache;
         }
         public void HealVictim(object TargetInstance, int damageobj)

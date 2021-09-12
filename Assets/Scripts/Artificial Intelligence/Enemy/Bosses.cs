@@ -44,34 +44,38 @@ public class Bosses: MonoBehaviour
     {
         int k = 0;
         int count = 0;
+        Debug.Log(count);
+
         while (k == 0)
         {
-            count++;
+            count = Random.Range(0, 3);
+            Debug.Log(count);
 
+            k = 1;
             bool fired = false;
-            if (count % 2 == 0)
+            if (count == 0)
                 fired = SlotMachine(blindAttack);
 
-            if (count % 3 == 0)
+            if (count == 1)
                 fired = SlotMachine(defenseBiasedAttack);
 
-            if (count % 4 == 0)
+            if (count == 2)
                 fired = SlotMachine(strategicAttack);
 
             if (fired)
             {
-                if (count % 2 == 0) // blind attack
+                if (count == 0) // blind attack
                     BlindAttack();
 
-                if (count % 3 == 0) // defense Biased Attack
+                if (count == 1) // defense Biased Attack
                     DefenseBiasedAttack();
 
-                if (count % 4 == 0) // strategic Attack
+                if (count == 2) // strategic Attack
                     StrategicAttack();
 
-                k++;
+                k = 1;
             }
-        }        
+        }
     }
     void BlindAttack()
     {
@@ -174,7 +178,8 @@ public class Bosses: MonoBehaviour
     bool SlotMachine(float chance)
     {
         int max = (int)(1f / chance);
-        int n = Random.Range(0, max + 1); //I changed this to one cause say the percentage is 100%, n will have to be within 1 and 2, which will be it will choose only 1
+        int n = Random.Range(0, max);
+
         Debug.Log(max);
 
         if (n == 0)

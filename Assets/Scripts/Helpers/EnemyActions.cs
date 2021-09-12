@@ -903,16 +903,16 @@ namespace Assets.Scripts.Helpers
                     object fVictim = Character.Enemies[UnityEngine.Random.Range(0, Character.Enemies.Count)];
                     object SVictim = Character.Enemies[UnityEngine.Random.Range(0, Character.Enemies.Count)];
                     int roundsbaby = RoundInfo.RoundsPassed;
-                    Character.Rooted(Character, fVictim, 1); Character.Burnt(Character, fVictim);
-                    Character.Rooted(Character, SVictim, 1); Character.Burnt(Character, SVictim);
+                    Character.Rooted(Character, fVictim, 1); Character.Burnt(Character, fVictim, 1);
+                    Character.Rooted(Character, SVictim, 1); Character.Burnt(Character, SVictim, 1);
 
                     System.Timers.Timer  summer; summer = new System.Timers.Timer (); summer.Elapsed += new ElapsedEventHandler(vivaldiiii); summer.Interval = 1000; summer.Enabled = true;
                     void vivaldiiii(object source2, ElapsedEventArgs e)
                     {
                         if (roundsbaby + 1 == RoundInfo.RoundsPassed)
                         {
-                            Character.Burnt(Character, fVictim);
-                            Character.Burnt(Character, SVictim);
+                            Character.Burnt(Character, fVictim, 1);
+                            Character.Burnt(Character, SVictim, 1);
                             summer.Close();
                         }
                     }

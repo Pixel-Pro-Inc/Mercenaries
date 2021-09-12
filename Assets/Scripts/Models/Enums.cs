@@ -8,6 +8,19 @@ namespace Assets.Scripts.Models
 {
     public class Enums
     {
+        public enum EffectType
+        {
+            Bleed,
+            Blight,
+            Ignite,
+            Balanced,
+            Rooted,
+            Chosen,
+            Exhausted,
+            Magical_Damage,
+            Physical_Damage,
+            Ranged_Physical_Damage
+        }
         public enum AttackType
         {
             TrueDamage,

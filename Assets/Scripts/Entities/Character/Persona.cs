@@ -86,6 +86,7 @@ namespace Assets.Scripts.Entities.Character
 
         internal int _Life = 0;
         public virtual int Life { get; set; }
+        public virtual int maxShield { get; set; }
 
         internal int _health = 0;
         public virtual int Health
@@ -366,58 +367,12 @@ namespace Assets.Scripts.Entities.Character
         }
         public virtual void HealthLoss(DamageObject damageObject)
         {
-            int damageGiven = damageObject.DamageValue;
-            /*
-             My guy if you read through my code in Attack you'll find that this was aleady done
-             if (ArmourState && source == AttackType.PhysicalDamage)
+            float damageGiven = (float)damageObject.DamageValue;
+            for (int i = 0; i < GetDebuffs().Count; i++)
             {
-                if (damageGiven >= Armour)
-                {
-                    damageGiven -= Armour;
-                    Armour = 0;
-                }
-                else
-                {
-                    damageGiven = 0;
-                    Armour -= damageGiven;
-                }
+                if (GetDebuffs()[i].type == debuffType.Marked)
+                    damageGiven *= (1f + (float)MarkedDeBuffPerent);
             }
-
-
-            if (MagicResState && source == AttackType.MagicalDamage)
-            {
-                if (damageGiven >= MagicRes)
-                {
-                    damageGiven -= MagicRes;
-                    MagicRes = 0;
-                }
-                else
-                {
-                    damageGiven = 0;
-                    MagicRes -= damageGiven;
-                }
-            }
-            if (shieldState && source == AttackType.PhysicalDamage)
-            {
-                if (damageGiven >= shield)
-                {
-                    damageGiven -= shield;
-                    shield = 0;
-                }
-                else
-                {
-                    damageGiven = 0;
-                    shield -= damageGiven;
-                }
-            }
-
-            //My Implementation of Block
-            if (BlockState && source == AttackType.PhysicalDamage)
-            {
-                damageGiven = 0;
-            }
-
-             */
 
             //My Implementation of Immune
             if (ImmuneState)
@@ -425,7 +380,7 @@ namespace Assets.Scripts.Entities.Character
                 damageGiven = 0;
             }
 
-            Health -= damageGiven;
+            Health -= (int)damageGiven;
         }
         public virtual void LevelIncrease()
         {
@@ -540,12 +495,15 @@ namespace Assets.Scripts.Entities.Character
         }
         public void RemoveDebuff(DebuffObject debuffObject)
         {
-            //Revert First
+            RevertDebuff(debuffObject);
             DebuffsInEffect.Remove(debuffObject);
         }
         public void RemoveAllDebuff()
         {
-            //Revert First
+            for (int i = 0; i < DebuffsInEffect.Count; i++)
+            {
+                RevertDebuff(DebuffsInEffect[i]);
+            }           
             DebuffsInEffect.Clear();
         }
         public void ActiveDeBuff()
@@ -561,30 +519,90 @@ namespace Assets.Scripts.Entities.Character
             switch (debuffObject.type)
             {
                 case debuffType.Slow:
+                    Speed *= debuffObject.amount;
                     break;
                 case debuffType.Rooted:
+                    dodge *= debuffObject.amount;
                     break;
                 case debuffType.WeakGrip:
                     break;
                 case debuffType.Exiled:
                     break;
-                case debuffType.Marked:
-                    break;
                 case debuffType.Calm:
+                    break;
+                case debuffType.Stun:
+                    stunState = true;
+                    characterBehaviour.turnUsed = true;
+                    break;
+                case debuffType.Freeze:
+                    freezeState = true;
+                    characterBehaviour.turnUsed = true;
+                    break;
+                case debuffType.Cold:
+                    Speed *= debuffObject.amount;
+                    dodge *= debuffObject.amount;
+                    break;
+                case debuffType.Blinded:
+                    Accuracy *= debuffObject.amount;
+                    break;
+                case debuffType.Tainted:
+                    debuffChance = (int)debuffObject.amount;
                     break;
                 case debuffType.BrokenGaurd:
                     break;
                 case debuffType.Burnt:
                     break;
+                case debuffType.Sleep:
+                    break;
+                case debuffType.Hungry:
+                    break;
+                case debuffType.Healthy:
+                    break;
+                case debuffType.UnHealthy:
+                    break;
+                case debuffType.GodsAnger:
+                    break;
+                default:
+                    break;
+            }
+        }
+        public void RevertDebuff(DebuffObject debuffObject)
+        {
+            switch (debuffObject.type)
+            {
+                case debuffType.Slow:
+                    Speed /= debuffObject.amount;
+                    break;
+                case debuffType.Rooted:
+                    dodge /= debuffObject.amount;
+                    break;
+                case debuffType.WeakGrip:
+                    break;
+                case debuffType.Exiled:
+                    break;
+                case debuffType.Calm:
+                    break;
                 case debuffType.Stun:
+                    stunState = false;
+                    characterBehaviour.turnUsed = false;
                     break;
                 case debuffType.Freeze:
+                    freezeState = false;
+                    characterBehaviour.turnUsed = false;
                     break;
                 case debuffType.Cold:
+                    Speed /= debuffObject.amount;
+                    dodge /= debuffObject.amount;
                     break;
                 case debuffType.Blinded:
+                    Accuracy /= debuffObject.amount;
                     break;
                 case debuffType.Tainted:
+                    debuffChance -= (int)debuffObject.amount;
+                    break;
+                case debuffType.BrokenGaurd:
+                    break;
+                case debuffType.Burnt:
                     break;
                 case debuffType.Sleep:
                     break;
@@ -657,41 +675,49 @@ namespace Assets.Scripts.Entities.Character
         public void Rooted(object CharacterInstance, object TargetInstance, int lifeTime) => new Debuff().CreateDebuff(TargetInstance, ((Persona)CharacterInstance).RootedDeBuffPercent, debuffType.Rooted, lifeTime);
         public void WeakGrip(object CharacterInstance, object TargetInstance, int lifeTime) => new Debuff().CreateDebuff(TargetInstance, ((Persona)CharacterInstance).WeakGripDeBuffPercent, debuffType.WeakGrip, lifeTime);
         public void Exiled(object CharacterInstance, object TargetInstance, int lifeTime) => new Debuff().CreateDebuff(TargetInstance, ((Persona)CharacterInstance).ExiledDeBuffPercent, debuffType.Exiled, lifeTime);
-        public void Marked(object TargetInstance) { }
+        public void Marked(object CharacterInstance, object TargetInstance, int lifeTime) => new Debuff().CreateDebuff(TargetInstance, ((Persona)CharacterInstance).MarkedDeBuffPerent, debuffType.Marked, lifeTime);
         public void Calm(object CharacterInstance, object TargetInstance, int lifeTime) => new Debuff().CreateDebuff(TargetInstance, ((Persona)CharacterInstance).CalmDeBuffPercent, debuffType.Calm, lifeTime);
         public void BrokenGuard(object CharacterInstance, object TargetInstance, int lifeTime) => new Debuff().CreateDebuff(TargetInstance, ((Persona)CharacterInstance).BrokenGaurdDeBuffPercent, debuffType.BrokenGaurd, lifeTime);
-        public void Burnt(object CharacterInstance, object TargetInstance) { }
-
+        public void Burnt(object CharacterInstance, object TargetInstance, int lifeTime) => new Debuff().CreateDebuff(TargetInstance, 0.5, debuffType.Burnt, lifeTime);
         public void Stun(object CharacterInstance, object TargetInstance, int lifeTime) => new Debuff().CreateDebuff(TargetInstance, 0, debuffType.Stun, lifeTime);
-
         public void Freeze(object CharacterInstance, object TargetInstance, int lifeTime) => new Debuff().CreateDebuff(TargetInstance, 0, debuffType.Freeze, lifeTime);
-
         public void Cold(object CharacterInstance, object TargetInstance, int lifeTime) => new Debuff().CreateDebuff(TargetInstance, ((Persona)CharacterInstance).ColdDeBuffPercent, debuffType.Cold, lifeTime);
-
         public void Blinded(object CharacterInstance, object TargetInstance, int lifeTime) => new Debuff().CreateDebuff(TargetInstance, ((Persona)CharacterInstance).BlindedDeBuffPercent, debuffType.Blinded, lifeTime);
-
         public void Tainted(object CharacterInstance, object TargetInstance, int lifeTime) => new Debuff().CreateDebuff(TargetInstance, ((Persona)CharacterInstance).TaintedDebuffPercent, debuffType.Tainted, lifeTime);
-
-        public bool Sleep(object CharacterInstance, object TargetInstance)
-        {
-            throw new NotImplementedException();
+        public void Sleep(object CharacterInstance, object TargetInstance) 
+        { 
+            new Debuff().CreateDebuff(TargetInstance, 0, debuffType.Sleep, 0);
+            new Debuff().CreateDebuff(TargetInstance, 0, debuffType.Stun, 0);
         }
-
-        public bool Hungry(object CharacterInstance, object TargetInstance)
+        public void Hungry(object CharacterInstance, object TargetInstance) => new Debuff().CreateDebuff(TargetInstance, 0.05, debuffType.Hungry, 1);
+        public void Unhealthy(object CharacterInstance, object TargetInstance) => new Debuff().CreateDebuff(TargetInstance, 0.25, debuffType.UnHealthy, 1);
+        public void GodsAnger(object CharacterInstance, List<object> Allies)
         {
-            throw new NotImplementedException();
-        }
 
-        public bool Unhealthy(object CharacterInstance, object TargetInstance)
-        {
-            throw new NotImplementedException();
-        }
 
-        public bool GodsAnger(object CharacterInstance, List<object> Allies)
-        {
-            throw new NotImplementedException();
-        }
+            object TargetInstance = Allies[UnityEngine.Random.Range(0, Allies.Count)];
+            int r = UnityEngine.Random.Range(0, 5);
 
+            switch(r)
+            {
+                case 0:
+                    Blinded(CharacterInstance, TargetInstance, 1);
+                    break;
+                case 1:
+                    Stun(CharacterInstance, TargetInstance, 1);
+                    break;
+                case 2:
+                    Rooted(CharacterInstance, TargetInstance, 1);
+                    break;
+                case 3:
+                    Hungry(CharacterInstance, TargetInstance);
+                    break;
+                case 4:
+                    Unhealthy(CharacterInstance, TargetInstance);
+                    break;
+            }
+            new Debuff().CreateDebuff(TargetInstance, 0.25, debuffType.UnHealthy, 1);
+        }
         #endregion
 
         #region UniqueActons
