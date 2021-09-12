@@ -435,24 +435,6 @@ namespace Assets.Scripts.Entities.Character
 
         #region Attack Logic
 
-        public void AddAttack(AttackObject attack)
-        {
-            AttacksGiven.Add(attack);
-            Timer Attack = new Timer();
-            Attack.Elapsed += new ElapsedEventHandler(Attacker);
-            // Set it to go off every one seconds
-            Attack.Interval = 1000;
-            // And start it        
-            Attack.Enabled = true;
-            void Attacker(object source2, ElapsedEventArgs e)
-            {
-                if (RoundInfo.RoundDone == true)
-                {
-                    Attack.Close(); //Not really sure what this was supposed to do
-                }
-            }
-
-        }
         public List<AttackObject> GetAttack(object CharacterInstance)
         {
             Persona meed = (Persona)CharacterInstance;
@@ -627,12 +609,13 @@ namespace Assets.Scripts.Entities.Character
         }
         #endregion
 
-        #region Quirk Methods
+        #region Extra Methods
 
         public void CreateQuirkCharacter(QuirkColour quirkColour)=>new Quirks().MyHeroAcademia(quirkColour);
 
 
         #endregion
+
         #endregion
         #region Combat Actions
 

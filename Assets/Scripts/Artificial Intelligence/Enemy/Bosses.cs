@@ -38,7 +38,7 @@ public class Bosses: MonoBehaviour
 
         enemyActions.PassiveEnemyAbility();
 
-        enemyActions.bossesScript = this;
+        enemyActions.bossesScript = this; //this doesnt make sense
     }
     public void Decision() //Play Style Decision
     {
@@ -90,7 +90,7 @@ public class Bosses: MonoBehaviour
                 enemyActions.PhysicalAttacks(opponents[Random.Range(0, opponents.Count)]);
                 break;
             case 2:
-                enemyActions.TrueDamageAttacks(opponents[Random.Range(0, opponents.Count)]);//opponents.Any()); this returns a bool https://docs.microsoft.com/en-us/dotnet/api/system.linq.enumerable.any?view=net-5.0
+                enemyActions.TrueDamageAttacks(opponents[Random.Range(0, opponents.Count)]);
                 break;
             case 3:
                 enemyActions.Debuffs(opponents[Random.Range(0, opponents.Count)]);

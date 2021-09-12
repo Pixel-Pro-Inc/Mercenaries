@@ -23,6 +23,12 @@ namespace Assets.Scripts.MonoBehaviours
 
         public GameObject[] effects;
 
+        //The list below work for the Gods Mechanism
+        public List<object> TeamAttacks = new List<object>();
+        public List<object> TeamDefence = new List<object>();
+        public List<object> TeamBuffs = new List<object>();
+        public List<object> TeamDeBuffs = new List<object>();
+
         private void Awake()
         {
             Instance = this;

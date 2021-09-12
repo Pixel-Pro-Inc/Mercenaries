@@ -36,10 +36,7 @@ namespace Assets.Scripts.Interface
 
         #region Combat logic
 
-        void AddAttack(AttackObject attack);
         List<AttackObject> GetAttack(object CharacterInstance);
-
-
 
         void AddBuff(BuffObject buff);
         List<BuffObject> GetBuff(object CharacterInstance);

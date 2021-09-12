@@ -30,6 +30,10 @@ namespace Assets.Scripts.Helpers
                 amount = buffamout
             };
             Character.AddBuff(buffObject);
+            if (Character.Foe == false)
+            {
+                Character.GetComponent<GameManager>().TeamBuffs.Add(buffObject);
+            }
 
             Timer BuffTimer = new Timer();
             BuffTimer.Elapsed += new ElapsedEventHandler(AgileWait);
@@ -58,6 +62,10 @@ namespace Assets.Scripts.Helpers
                 type = buffType.PolishedWeapon,
             };
             Character.AddBuff(buffObject);
+            if (Character.Foe == false)
+            {
+                Character.GetComponent<GameManager>().TeamBuffs.Add(buffObject);
+            }
 
             Timer BuffTimer = new Timer();
             BuffTimer.Elapsed += new ElapsedEventHandler(PolishWait);
@@ -85,6 +93,10 @@ namespace Assets.Scripts.Helpers
                 type = buffType.Chosen,
             };
             Character.AddBuff(buffObject);
+            if (Character.Foe == false)
+            {
+                Character.GetComponent<GameManager>().TeamBuffs.Add(buffObject);
+            }
 
             Timer BuffTimer = new Timer();
             BuffTimer.Elapsed += new ElapsedEventHandler(ChosenWait);
@@ -117,6 +129,10 @@ namespace Assets.Scripts.Helpers
                 type = buffType.Aware,
             };
             Character.AddBuff(buffObject);
+            if (Character.Foe == false)
+            {
+                Character.GetComponent<GameManager>().TeamBuffs.Add(buffObject);
+            }
 
             Timer BuffTimer = new Timer();
             BuffTimer.Elapsed += new ElapsedEventHandler(AwareWait);
@@ -153,6 +169,10 @@ namespace Assets.Scripts.Helpers
                 type = buffType.OnGuard,
             };
             Character.AddBuff(buffObject);
+            if (Character.Foe == false)
+            {
+                Character.GetComponent<GameManager>().TeamBuffs.Add(buffObject);
+            }
 
             Timer BuffTimer = new Timer();
             BuffTimer.Elapsed += new ElapsedEventHandler(OnGuardWait);
@@ -200,6 +220,10 @@ namespace Assets.Scripts.Helpers
                 type = buffType.Provoking,
             };
             Character.AddBuff(buffObject);
+            if (Character.Foe == false)
+            {
+                Character.GetComponent<GameManager>().TeamBuffs.Add(buffObject);
+            }
 
             object scapegoat = Character;
             scapegoat = Character.Allies[UnityEngine.Random.Range(0, Character.Allies.Count)];
@@ -253,6 +277,10 @@ namespace Assets.Scripts.Helpers
                 type = buffType.Protected,
             };
             Target.AddBuff(buffObject);
+            if (Character.Foe == false)
+            {
+                Character.GetComponent<GameManager>().TeamBuffs.Add(buffObject);
+            }
 
             Timer BuffTimer = new Timer();
             BuffTimer.Elapsed += new ElapsedEventHandler(protectorWait);
@@ -307,20 +335,40 @@ namespace Assets.Scripts.Helpers
             }
             return sponser;
         }
-        public void Revigorate(object TargetInstance)// i didn't even give this a BuffObject, cause really its a once off method
+        public void Revigorate(object TargetInstance)// i gave it a Buffobject for teamBuff but its is NOT SUPPOSED to be added to the character bufflist
         {
             Persona Target = (Persona)TargetInstance;
             Target.RemoveDebuffEffects = true;
+
+            BuffObject buffObject = null;
+            buffObject = new BuffObject()
+            {
+                state = true, 
+                type = buffType.Revigorate,
+            };
+            if (Target.Foe == false)
+            {
+                Target.GetComponent<GameManager>().TeamBuffs.Add(buffObject);
+            }
             //in every Debuff there will be a removeBuff==false, but of course it will ask first if it equals true
         }
-        public void HealVictim(object CharacterInstance, object TargetInstance)// i didn't even give this a BuffObject, cause really its a once off method
+        public void HealVictim(object CharacterInstance, object TargetInstance)// i gave it a Buffobject for teamBuff but its is NOT SUPPOSED to be added to the character bufflist
         {
             int HealingCache = 0;
             Persona Character = (Persona)CharacterInstance;
             Persona Target = (Persona)TargetInstance;
             HealingCache = (int)(Target.Health * Character.HealBuffPercent);
 
-
+            BuffObject buffObject = null;
+            buffObject = new BuffObject()
+            {
+                state = true,
+                type = buffType.HealVictim,
+            };
+            if (Character.Foe == false)
+            {
+                Character.GetComponent<GameManager>().TeamBuffs.Add(buffObject);
+            }
             for (int i = 0; i < ((Persona)TargetInstance).GetDebuffs().Count; i++)
             {
                 if(((Persona)TargetInstance).GetDebuffs()[i].type == debuffType.Burnt)
@@ -333,6 +381,17 @@ namespace Assets.Scripts.Helpers
         {
             Persona Target = (Persona)TargetInstance;
             Target.Health += damageobj;
+
+            BuffObject buffObject = null;
+            buffObject = new BuffObject()
+            {
+                state = true,
+                type = buffType.HealVictim,
+            };
+            if (Target.Foe == false)
+            {
+                Target.GetComponent<GameManager>().TeamBuffs.Add(buffObject);
+            }
         }
         public void GodsBlessing(object CharacterInstance, List<string> Allies)
         {

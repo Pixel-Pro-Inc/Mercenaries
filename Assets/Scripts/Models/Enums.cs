@@ -34,6 +34,15 @@ namespace Assets.Scripts.Models
             Curse, 
             Feign
         }
+        public enum DefenceType
+        {
+            Armour,
+            MagicalResistance,
+            Shield,
+            Purified,
+            Block,
+            Immune
+        }
         public enum WhoseInControl
         {
             Human,
@@ -137,6 +146,12 @@ namespace Assets.Scripts.Models
             Elite,
             Normal,
             Minion
+        }
+        public enum Deity
+        {
+            Keeper,
+            Devotion,
+            Edge
         }
         public enum QuirkColour
         {

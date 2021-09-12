@@ -19,8 +19,10 @@ public class CardBehaviour : Card
     public bool moving;
     public Vector3 initial;
 
-    //Create Card Interact with Target Script
-    //Shouldn't we get cardname to equal to the sprite name?
+    internal List<object> TeamAttacks = new List<object>();
+    internal List<object> TeamDefence = new List<object>();
+    internal List<object> TeamBuffs = new List<object>();
+    internal List<object> TeamDeBuffs = new List<object>();
 
     private void Start()
     {

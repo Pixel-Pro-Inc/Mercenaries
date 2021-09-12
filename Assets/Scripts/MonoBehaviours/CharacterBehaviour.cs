@@ -18,8 +18,11 @@ namespace Assets.Scripts.MonoBehaviours
         public Vector3[] positions = { new Vector3(-7.0f, -1.6f, 1.0f), new Vector3(-5.0f, -1.6f, 1.0f), new Vector3(-3.0f, -1.6f, 1.0f), new Vector3(-1.0f, -1.6f, 1.0f) };
         public GameObject parent;
         public Vector3 Goto;
+
+        public Deity Norgami;
         public SpeciesType species; //dont like this ode at all, but he put us too deep to manage
         public MasterCharacterList Everyone;
+
         public Image Deck;
         public bool turnUsed;
 

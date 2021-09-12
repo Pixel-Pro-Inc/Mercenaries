@@ -18,7 +18,7 @@ namespace Assets.Scripts.Helpers
         MasterCharacterList EnemyNames;
         Persona CharacterInstance = null;
 
-        public Bosses bossesScript;
+        public Bosses bossesScript; //yeah, still doesnt make sense, Whats happening here?
         public void PassiveEnemyAbility()
         {
             if (GameManager.Instance.activeEnemy != null && GameManager.Instance.roundInfo.inControl == WhoseInControl.CPU)

@@ -24,6 +24,10 @@ namespace Assets.Scripts.Helpers
                 roundsActive = 0
             };
             Target.AddDebuff(debuffObject);
+            if (Target.Foe == false)
+            {
+                Target.GetComponent<GameManager>().TeamDeBuffs.Add(debuffObject);
+            }
 
             EffectType effectType = EffectType.Balanced;
 

@@ -27,6 +27,10 @@ namespace Assets.Scripts.Helpers
                 Victim = target
             };
             Character.AttacksGiven.Add(attackObject);
+            if (Character.Foe==false)
+            {
+                Character.GetComponent<GameManager>().TeamAttacks.Add(attackObject);
+            }
 
             if (target.ImmuneState == true)
             { }
@@ -56,9 +60,13 @@ namespace Assets.Scripts.Helpers
                 Victim = Target
             };
             Character.AttacksGiven.Add(attackObject);
+            if (Character.Foe == false)
+            {
+                Character.GetComponent<GameManager>().TeamAttacks.Add(attackObject);
+            }
 
             #region Character Logic
-            
+
             markedda = Character.MarkedDeBuffPerent;
             if (Character.CriticalChance == true)
             {
@@ -155,6 +163,10 @@ namespace Assets.Scripts.Helpers
                 Victim= Target
             };
             Character.AttacksGiven.Add(attackObject);
+            if (Character.Foe == false)
+            {
+                Character.GetComponent<GameManager>().TeamAttacks.Add(attackObject);
+            }
 
             #region Character Logic
 
@@ -257,6 +269,10 @@ namespace Assets.Scripts.Helpers
                 Victim = Target
             };
             Character.AttacksGiven.Add(attackObject);
+            if (Character.Foe == false)
+            {
+                Character.GetComponent<GameManager>().TeamAttacks.Add(attackObject);
+            }
 
             #region Character Logic
 
@@ -350,9 +366,13 @@ namespace Assets.Scripts.Helpers
                 Victim = Target
             };
             Character.AttacksGiven.Add(attackObject);
+            if (Character.Foe == false)
+            {
+                Character.GetComponent<GameManager>().TeamAttacks.Add(attackObject);
+            }
 
             #region Character Logic
-            
+
             markedda = Character.MarkedDeBuffPerent;
             if (Character.CriticalChance == true)
             {
@@ -439,6 +459,10 @@ namespace Assets.Scripts.Helpers
                 Victim = Target
             };
             Character.AttacksGiven.Add(attackObject);
+            if (Character.Foe == false)
+            {
+                Character.GetComponent<GameManager>().TeamAttacks.Add(attackObject);
+            }
 
             Target.AttackSponser = Character;
             if (Target.ImmuneState == true)
@@ -464,6 +488,10 @@ namespace Assets.Scripts.Helpers
                 Victim = Target
             };
             Character.AttacksGiven.Add(attackObject);
+            if (Character.Foe == false)
+            {
+                Character.GetComponent<GameManager>().TeamAttacks.Add(attackObject);
+            }
 
             bool howmany = RoundInfo.RoundDone;
             int count = 0;
@@ -505,6 +533,10 @@ namespace Assets.Scripts.Helpers
                 Victim = Target
             };
             Character.AttacksGiven.Add(attackObject);
+            if (Character.Foe == false)
+            {
+                Character.GetComponent<GameManager>().TeamAttacks.Add(attackObject);
+            }
 
             if (Target.ImmuneState == true)
             { }
@@ -531,6 +563,10 @@ namespace Assets.Scripts.Helpers
                 Victim = Target
             };
             Character.AttacksGiven.Add(attackObject);
+            if (Character.Foe == false)
+            {
+                Character.GetComponent<GameManager>().TeamAttacks.Add(attackObject);
+            }
 
             if (Target.ImmuneState == true)
             { }
@@ -559,6 +595,10 @@ namespace Assets.Scripts.Helpers
                 Victim = Target
             };
             Character.AttacksGiven.Add(attackObject);
+            if (Character.Foe == false)
+            {
+                Character.GetComponent<GameManager>().TeamAttacks.Add(attackObject);
+            }
 
             int countofroundsineffect = 0;
             int Numberroun = RoundInfo.RoundsPassed;
@@ -616,6 +656,10 @@ namespace Assets.Scripts.Helpers
                 Victim = Target
             };
             Character.AttacksGiven.Add(attackObject);
+            if (Character.Foe == false)
+            {
+                Character.GetComponent<GameManager>().TeamAttacks.Add(attackObject);
+            }
 
             #region Character Logic
 
@@ -709,6 +753,10 @@ namespace Assets.Scripts.Helpers
                 Victim = Target
             };
             Character.AttacksGiven.Add(CurseattackObject);
+            if (Character.Foe == false)
+            {
+                Character.GetComponent<GameManager>().TeamAttacks.Add(CurseattackObject);
+            }
 
             Target.AttackSponser = Character;// I have doubts that this should be here
 
