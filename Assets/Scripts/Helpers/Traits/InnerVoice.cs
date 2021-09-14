@@ -30,18 +30,18 @@ namespace Assets.Scripts.Helpers
 
         };
 
-        string GetTranlateLetterImagepath(char CapitalAlphabetLetter)
+        string GetTranlateLetterImageName(char CapitalAlphabetLetter)
         {
             return MercenariesDialect[CapitalAlphabetLetter.ToString()];
         }
         void SpeakInnervoice()
         {
             
-            Debug.Log("Yewo, You didnt put a place for the mercenary lanaguage to be shown on screen as Alex asked. The Image list is called SpokenWord. " +
+            Debug.Log("Yewo, You didnt put an image place for the mercenary lanaguage to be shown on screen as Alex asked. The Image list to get from is called SpokenWord. " +
                 "If this is done remove this log and everything should work fine");
             for (int i = 0; i < manifest.Length; i++)
             {
-                SpokenWord.Add(GameObject.Find($"{GetTranlateLetterImagepath(manifest[i])}").GetComponent<Image>());
+                SpokenWord.Add(GameObject.Find($"{GetTranlateLetterImageName(manifest[i])}").GetComponent<Image>());
             }
             //Show SpokenWord
         }

@@ -38,7 +38,6 @@ public class CardBehaviour : Card
     {
         Persona CharacterInstance = null;
         Persona Target = (Persona)TargetInstance;
-        char Spoken; //This is the character that will be given 
 
         DamageObject damageObject = new DamageObject();
         if (GameManager.Instance.activeCharacter != null && GameManager.Instance.roundInfo.inControl == WhoseInControl.Human) CharacterInstance = GameManager.Instance.activeCharacter.person;
