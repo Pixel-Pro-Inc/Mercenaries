@@ -611,7 +611,7 @@ namespace Assets.Scripts.Entities.Character
 
         #region Extra Methods
 
-        public void CreateQuirkCharacter(QuirkColour quirkColour)=>new Quirks().MyHeroAcademia(quirkColour);
+        public void CreateQuirkCharacter(QuirkColour quirkColour)=>new Quirks().MyHeroAcademia(quirkColour); //Bassically sets the CHaracter who called it, his quirkcolour
 
 
         #endregion
@@ -663,7 +663,7 @@ namespace Assets.Scripts.Entities.Character
         public void Revigorate(object TargetInstance) => new Buff().Revigorate(TargetInstance);
         public void HealVictim(object CharacterInstance, object TargetInstance) => new Buff().HealVictim(CharacterInstance,TargetInstance);
         public void HealVictim(object TargetInstance, int damageobj) => new Buff().HealVictim(TargetInstance, damageobj);
-        public void GodsBlessing(object CharacterInstance, List<string> Allies) => new Buff().GodsBlessing(CharacterInstance, Allies);
+        public void GodsBlessing(object CharacterInstance) => new Buff().GodsBlessing(CharacterInstance);
 
         #endregion
         #region Debuff
@@ -687,10 +687,9 @@ namespace Assets.Scripts.Entities.Character
         }
         public void Hungry(object CharacterInstance, object TargetInstance) => new Debuff().CreateDebuff(TargetInstance, 0.05, debuffType.Hungry, 1);
         public void Unhealthy(object CharacterInstance, object TargetInstance) => new Debuff().CreateDebuff(TargetInstance, 0.25, debuffType.UnHealthy, 1);
-        public void GodsAnger(object CharacterInstance, List<object> Allies)
+        public void GodsAnger(object CharacterInstance)
         {
-
-
+            Persona Character = (Persona)CharacterInstance;
             object TargetInstance = Allies[UnityEngine.Random.Range(0, Allies.Count)];
             int r = UnityEngine.Random.Range(0, 5);
 
@@ -712,7 +711,7 @@ namespace Assets.Scripts.Entities.Character
                     Unhealthy(CharacterInstance, TargetInstance);
                     break;
             }
-            new Debuff().CreateDebuff(TargetInstance, 0.25, debuffType.UnHealthy, 1);
+            //Character.GetComponent<GameManager>().BattleLost();
         }
         #endregion
 

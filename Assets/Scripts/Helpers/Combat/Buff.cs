@@ -364,7 +364,9 @@ namespace Assets.Scripts.Helpers
             {
                 state = true,
                 type = buffType.HealVictim,
+                target=Target
             };
+            buffObject.amount = HealingCache;
             if (Character.Foe == false)
             {
                 Character.GetComponent<GameManager>().TeamBuffs.Add(buffObject);
@@ -387,15 +389,39 @@ namespace Assets.Scripts.Helpers
             {
                 state = true,
                 type = buffType.HealVictim,
+                target = Target
             };
+            buffObject.amount = damageobj;
             if (Target.Foe == false)
             {
                 Target.GetComponent<GameManager>().TeamBuffs.Add(buffObject);
             }
         }
-        public void GodsBlessing(object CharacterInstance, List<string> Allies)
+        public void GodsBlessing(object CharacterInstance)
         {
-            throw new NotImplementedException();
+            Persona Character = (Persona)CharacterInstance;
+            object TargetInstance = Character.Allies[UnityEngine.Random.Range(0, Character.Allies.Count)];
+            int r = UnityEngine.Random.Range(0, 5);
+
+            switch (r)
+            {
+                case 0:
+                    Character.HealVictim(CharacterInstance, TargetInstance);
+                    break;
+                case 1:
+                    Character.PolishWeapon(TargetInstance);
+                    break;
+                case 2:
+                    Character.Revigorate(TargetInstance);
+                    break;
+                case 3:
+                    Character.OnGuard(CharacterInstance, TargetInstance);
+                    break;
+                case 4:
+                    Character.Aware(CharacterInstance);
+                    break;
+            }
+            //Character.GetComponent<GameManager>().BattleWon();
         }
 
     }

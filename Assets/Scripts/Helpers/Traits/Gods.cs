@@ -1,10 +1,12 @@
-﻿using Assets.Scripts.Models;
+﻿using Assets.Scripts.Entities.Character;
+using Assets.Scripts.Models;
 using Assets.Scripts.MonoBehaviours;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 using static Assets.Scripts.Models.Enums;
 
 namespace Assets.Scripts.Helpers.Traits
@@ -12,6 +14,16 @@ namespace Assets.Scripts.Helpers.Traits
     public class Gods: GameManager
     {
         //These below are objects cause some gods like Keeper use different Combat actions
+        List<object> AbsoluteKeepersLivingScroll = new List<object>
+        {
+           new DefendObject { type=DefenceType.Shield },
+           new DefendObject { type=DefenceType.MagicalResistance },
+           new DefendObject { type=DefenceType.Armour },
+
+           new BuffObject { type=buffType.OnGuard },
+           new BuffObject { type=buffType.Protected }, //We use protected here cause its fired as protected in Buff()
+           new BuffObject { type=buffType.Aware },
+        };
         List<object> KeepersLivingScroll = new List<object>
         {
            new DefendObject { type=DefenceType.Shield },
@@ -22,6 +34,29 @@ namespace Assets.Scripts.Helpers.Traits
            new BuffObject { type=buffType.Protected }, //We use protected here cause its fired as protected in Buff()
            new BuffObject { type=buffType.Aware },
         };
+        List<object> AbsoluteKeepersDeathNotte = new List<object>
+        {
+           new DebuffObject { type=debuffType.Hungry },
+           new DebuffObject { type=debuffType.BrokenGaurd },
+           new DebuffObject { type=debuffType.Rooted},
+           new DebuffObject { type=debuffType.Freeze }
+        };
+        List<object> KeepersDeathNotte = new List<object>
+        {
+           new DebuffObject { type=debuffType.Hungry },
+           new DebuffObject { type=debuffType.BrokenGaurd },
+           new DebuffObject { type=debuffType.Rooted},
+           new DebuffObject { type=debuffType.Freeze }
+        };
+
+        List<object> AbsoluteDevotionsLivingScroll = new List<object>
+        {
+           new DefendObject { type=DefenceType.Immune },
+
+           new BuffObject { type=buffType.HealVictim },
+           new BuffObject { type=buffType.Revigorate },
+           new BuffObject { type=buffType.Agile },
+        };
         List<object> DevotionsLivingScroll = new List<object>
         {
            new DefendObject { type=DefenceType.Immune },
@@ -29,6 +64,39 @@ namespace Assets.Scripts.Helpers.Traits
            new BuffObject { type=buffType.HealVictim },
            new BuffObject { type=buffType.Revigorate }, 
            new BuffObject { type=buffType.Agile },
+        };
+        List<object> AbsoluteDevotionsDeathNotte = new List<object>
+        {
+           new AttackObject { type=AttackType.Bleed },
+           new AttackObject { type=AttackType.Blight },
+           new AttackObject { type=AttackType.Ignite },
+           new AttackObject { type=AttackType.Curse },
+
+           new DebuffObject { type=debuffType.Marked},
+           new DebuffObject { type=debuffType.Slow},
+           new DebuffObject { type=debuffType.Cold},
+        };
+        List<object> DevotionsDeathNotte = new List<object>
+        {
+           new AttackObject { type=AttackType.Bleed },
+           new AttackObject { type=AttackType.Blight },
+           new AttackObject { type=AttackType.Ignite },
+           new AttackObject { type=AttackType.Curse },
+
+           new DebuffObject { type=debuffType.Marked},
+           new DebuffObject { type=debuffType.Slow},
+           new DebuffObject { type=debuffType.Cold},
+        };
+
+        List<object> AbsoluteEdgesLivingScroll = new List<object>
+        {
+           new AttackObject { type=AttackType.Bleed },
+           new AttackObject { type=AttackType.Blight },
+           new AttackObject { type=AttackType.Ignite },
+           new AttackObject { type=AttackType.Curse },
+
+           new BuffObject { type=buffType.Chosen },
+           new BuffObject { type=buffType.PolishedWeapon },
         };
         List<object> EdgesLivingScroll = new List<object>
         {
@@ -40,20 +108,29 @@ namespace Assets.Scripts.Helpers.Traits
            new BuffObject { type=buffType.Chosen },
            new BuffObject { type=buffType.PolishedWeapon },
         };
-
-        int _karma { get; set; }
-        int Karma
+        List<object> AbsoluteEdgesDeathNotte = new List<object>
         {
-            get { return _karma; }
-            set 
-            { 
-                _karma = value; 
-                if (_karma < -5) { _karma = -5; }
-                if (_karma > 5) { _karma = 5; }
-            }
-        }
+          new DebuffObject { type=debuffType.Calm },
+          new DebuffObject { type=debuffType.WeakGrip },
+          new DebuffObject { type=debuffType.Exiled },
+          new DebuffObject { type=debuffType.Blinded },
+          new DebuffObject { type=debuffType.Sleep },
 
-        public void GodsHand(Deity deity)
+          new AttackObject { type=AttackType.MagicalDamage }
+        };
+        List<object> EdgesDeathNotte = new List<object>
+        {
+          new DebuffObject { type=debuffType.Calm },
+          new DebuffObject { type=debuffType.WeakGrip },
+          new DebuffObject { type=debuffType.Exiled },
+          new DebuffObject { type=debuffType.Blinded },
+          new DebuffObject { type=debuffType.Sleep },
+
+          new AttackObject { type=AttackType.MagicalDamage }
+        };
+
+       
+        public void GodsHand(Deity deity, Persona Character)
         {
             switch (deity)
             {
@@ -69,12 +146,26 @@ namespace Assets.Scripts.Helpers.Traits
                 default:
                     break;
             }
+            if ((KeepersLivingScroll.Count==0)|| (DevotionsLivingScroll.Count == 0)|| (EdgesLivingScroll.Count == 0))
+            {
+                Character.GodsBlessing(Character);
+                KeepersLivingScroll = AbsoluteKeepersLivingScroll;
+                DevotionsLivingScroll = AbsoluteDevotionsLivingScroll;
+                EdgesLivingScroll = AbsoluteEdgesLivingScroll;
+            }
+            else if((KeepersDeathNotte.Count == 0)|| (DevotionsDeathNotte.Count == 0)|| (EdgesDeathNotte.Count == 0))
+            {
+                Character.GodsAnger(Character);
+                KeepersDeathNotte = AbsoluteKeepersDeathNotte;
+                DevotionsDeathNotte = AbsoluteDevotionsDeathNotte;
+                EdgesDeathNotte = AbsoluteEdgesDeathNotte;
+            }
         }
 
         //I could have used a switch expression below here but i was tired of fighting
         void KeepersMiracle()
         {
-            DefendObject Amy; BuffObject Mia;
+            DefendObject Amy; BuffObject Mia; DebuffObject Michelle;
             foreach (var item in KeepersLivingScroll)
             {
 
@@ -85,7 +176,7 @@ namespace Assets.Scripts.Helpers.Traits
                         Amy = (DefendObject)item;
                         if (Amy.type == GetDefenceType(DefenceAction))
                         {
-                            Karma++;
+                            KeepersLivingScroll.Remove(Amy);
                         }
                     }
                 }
@@ -97,15 +188,30 @@ namespace Assets.Scripts.Helpers.Traits
                         Mia = (BuffObject)item;
                         if (Mia.type == GetBuffType(BuffAction))
                         {
-                            Karma++;
+                            KeepersLivingScroll.Remove(Mia);
                         }
                     }
                 }
             }
+            foreach (var item in KeepersDeathNotte)
+            {
+                foreach (DebuffObject debuff in TeamDeBuffs) //Gets the debuffs experienced by character
+                {
+                    if (debuff.GetType() == typeof(DebuffObject))
+                    {
+                        Michelle = (DebuffObject)item;
+                        if (Michelle.type == GetDebuffType(debuff))
+                        {
+                            KeepersDeathNotte.Remove(Michelle);
+                        }
+                    }
+                }
+            }
+
         }
         void DevotionsMiracle()
         {
-            DefendObject Amy; BuffObject Mia;
+            DefendObject Amy; BuffObject Mia; AttackObject Abel; DebuffObject Michelle;
             foreach (var item in DevotionsLivingScroll)
             {
 
@@ -116,7 +222,7 @@ namespace Assets.Scripts.Helpers.Traits
                         Amy = (DefendObject)item;
                         if (Amy.type == GetDefenceType(DefenceAction))
                         {
-                            Karma++;
+                            DevotionsLivingScroll.Remove(Amy);
                         }
                     }
                 }
@@ -128,7 +234,35 @@ namespace Assets.Scripts.Helpers.Traits
                         Mia = (BuffObject)item;
                         if (Mia.type == GetBuffType(BuffAction))
                         {
-                            Karma++;
+                            DevotionsLivingScroll.Remove(Mia);
+                        }
+                    }
+                }
+            }
+            foreach (var item in DevotionsDeathNotte)
+            {
+                foreach (DebuffObject debuff in TeamDeBuffs)
+                {
+                    if (item.GetType() == typeof(DebuffObject))
+                    {
+                        Michelle = (DebuffObject)item;
+                        if (Michelle.type == GetDebuffType(debuff))
+                        {
+                            DevotionsDeathNotte.Remove(Michelle);
+                        }
+                    }
+                }
+                foreach (var villian in enemyCharacters) //This is to ask if somone else Attacked the character and fire, eg bleed or blight
+                {
+                    foreach (AttackObject AttackAction in villian.GetComponentInChildren<Persona>().GetAttack(villian.GetComponentInChildren<Persona>()))
+                    {
+                        if (item.GetType() == typeof(AttackObject))
+                        {
+                            Abel = (AttackObject)item;
+                            if (Abel.type == GetAttackType(AttackAction))
+                            {
+                                DevotionsDeathNotte.Remove(Abel);
+                            }
                         }
                     }
                 }
@@ -136,18 +270,18 @@ namespace Assets.Scripts.Helpers.Traits
         }
         void EdgesMiracle()
         {
-            AttackObject Amy; BuffObject Mia;
+            BuffObject Mia; AttackObject Abel; DebuffObject Michelle;
             foreach (var item in EdgesLivingScroll)
             {
 
-                foreach (AttackObject AttackAction in TeamDefence)
+                foreach (AttackObject AttackAction in TeamAttacks)
                 {
                     if (item.GetType() == typeof(AttackObject))
                     {
-                        Amy = (AttackObject)item;
-                        if (Amy.type == GetAttackType(AttackAction))
+                        Abel = (AttackObject)item;
+                        if (Abel.type == GetAttackType(AttackAction))
                         {
-                            Karma++;
+                            EdgesLivingScroll.Remove(Abel);
                         }
                     }
                 }
@@ -159,7 +293,37 @@ namespace Assets.Scripts.Helpers.Traits
                         Mia = (BuffObject)item;
                         if (Mia.type == GetBuffType(BuffAction))
                         {
-                            Karma++;
+                            EdgesLivingScroll.Remove(Mia);
+                        }
+                    }
+                }
+            }
+            foreach (var item in EdgesDeathNotte)
+            {
+
+                foreach (var villian in enemyCharacters) //This is to ask if somone else Attacked the character and fire, eg bleed or blight
+                {
+                    foreach (AttackObject AttackAction in villian.GetComponentInChildren<Persona>().GetAttack(villian.GetComponentInChildren<Persona>()))
+                    {
+                        if (item.GetType() == typeof(AttackObject))
+                        {
+                            Abel = (AttackObject)item;
+                            if (Abel.type == GetAttackType(AttackAction))
+                            {
+                                EdgesDeathNotte.Remove(Abel);
+                            }
+                        }
+                    }
+                }
+
+                foreach (DebuffObject DeBuffAction in TeamDeBuffs)
+                {
+                    if (item.GetType() == typeof(DebuffObject))
+                    {
+                        Michelle = (DebuffObject)item;
+                        if (Michelle.type == GetDebuffType(DeBuffAction))
+                        {
+                            EdgesDeathNotte.Remove(Michelle);
                         }
                     }
                 }

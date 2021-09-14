@@ -19,7 +19,7 @@ namespace Assets.Scripts.MonoBehaviours
         public GameObject parent;
         public Vector3 Goto;
 
-        public Deity Norgami;
+        public Deity Norgami=Deity.Atheos;
         public SpeciesType species; //dont like this ode at all, but he put us too deep to manage
         public MasterCharacterList Everyone;
 

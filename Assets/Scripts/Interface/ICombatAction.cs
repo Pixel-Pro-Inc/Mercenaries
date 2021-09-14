@@ -58,7 +58,7 @@ namespace Assets.Scripts.Interface
         void Revigorate(object TargetInstance);
         void HealVictim(object CharacterInstance, object TargetInstance); //this works on anyone, not just allies
         void HealVictim( object TargetInstance, int damageobj); //another overload
-        void GodsBlessing(object CharacterInstance, List<string> Allies);// I left it as allies so that its easier to deal with but really we dont need it as a parameter
+        void GodsBlessing(object CharacterInstance);// I left it as allies so that its easier to deal with but really we dont need it as a parameter
 
         #endregion
     }

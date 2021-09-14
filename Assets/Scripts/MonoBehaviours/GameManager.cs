@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Entities.Character;
+using Assets.Scripts.Helpers.Traits;
 using Assets.Scripts.Models;
 using System;
 using System.Collections.Generic;
@@ -24,10 +25,11 @@ namespace Assets.Scripts.MonoBehaviours
         public GameObject[] effects;
 
         //The list below work for the Gods Mechanism
-        public List<object> TeamAttacks = new List<object>();
+        public List<object> TeamAttacks = new List<object>(); //These are the Attacks actually sent out by the character
         public List<object> TeamDefence = new List<object>();
         public List<object> TeamBuffs = new List<object>();
-        public List<object> TeamDeBuffs = new List<object>();
+        public List<object> TeamDeBuffs = new List<object>(); //These are the Debuffs actually experienced by the character
+        Gods GodsMechanism;
 
         private void Awake()
         {
@@ -38,6 +40,12 @@ namespace Assets.Scripts.MonoBehaviours
             };
         }
 
+        public void Update()
+        {
+            GodsMechanism = activeCharacter.GetComponentInChildren<Gods>();
+            if (activeCharacter.Norgami != Deity.Atheos)
+                GodsMechanism.GodsHand(activeCharacter.Norgami, activeCharacter.GetComponentInChildren<Persona>());
+        }
         public void CheckGameOver()
         {
             //Something
@@ -56,6 +64,7 @@ namespace Assets.Scripts.MonoBehaviours
 
                     if (roundInfo.inControl == Enums.WhoseInControl.CPU)
                     {
+                       
                         for (int i = 0; i < enemyCharacters.Count; i++)
                         {
                             enemyCharacters[i].GetComponentInChildren<CharacterBehaviour>().turnUsed = false;
@@ -169,6 +178,15 @@ namespace Assets.Scripts.MonoBehaviours
 
                 blockEffect = 1;
             }            
+        }
+        public void BattleWon()
+        {
+            Debug.Log("Yeah here should be the battle won animation, and call the Gamefinished() logic. We might have to do this together? What you think");
+        }
+        public void BattleLost()
+        {
+            Debug.Log("Battle lost animation and Game over logic");
+
         }
     }
 }

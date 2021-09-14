@@ -149,6 +149,7 @@ namespace Assets.Scripts.Models
         }
         public enum Deity
         {
+            Atheos,
             Keeper,
             Devotion,
             Edge
@@ -190,6 +191,7 @@ namespace Assets.Scripts.Models
             Fragile,
             WeakAim,
             SlowReflexes,
+            i_cant_crit,
             Ill,
             Invalid,
             Desperate,

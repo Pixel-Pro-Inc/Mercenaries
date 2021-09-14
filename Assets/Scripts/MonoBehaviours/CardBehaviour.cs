@@ -725,7 +725,7 @@ public class CardBehaviour : Card
                                         CharacterInstance.Unhealthy(CharacterInstance, Target);
                                         break;
                                     case debuffType.GodsAnger:
-                                        CharacterInstance.GodsAnger(CharacterInstance, Target.Allies);
+                                        CharacterInstance.GodsAnger(CharacterInstance);
                                         break;
                                     default:
                                         break;
