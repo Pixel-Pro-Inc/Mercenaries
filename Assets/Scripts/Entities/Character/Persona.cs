@@ -1,4 +1,6 @@
 ﻿using Assets.Scripts.Entities.Item;
+using Assets.Scripts.Entities.Item.Food;
+using Assets.Scripts.Entities.Item.Relics;
 using Assets.Scripts.Helpers;
 using Assets.Scripts.Helpers.Traits;
 using Assets.Scripts.Interface;
@@ -848,6 +850,30 @@ namespace Assets.Scripts.Entities.Character
         {
             ImmuneState = state;
         }
+        #endregion
+        #region Items 
+
+        RelicClass RelicsInventory = new RelicClass();
+        FoodClass StoreHouse = new FoodClass();
+
+        public void EquipItem(object item, object CharacterInstance) //The item has to be the enum type eg foodType or relic type
+        {
+            if (item.GetType() == typeof(RelicType))
+            {
+                RelicType relic = (RelicType)item;
+                RelicsInventory.CreateRelic(relic);
+            }
+            else if (item.GetType() == typeof(FoodType))
+            {
+                FoodType food = (FoodType)item;
+                StoreHouse.CreateFood(food);
+            }
+            else
+            {
+                Debug.Log("The item has to be the enum type eg foodType or relic type");
+            }
+        }
+
         #endregion
     }
 }

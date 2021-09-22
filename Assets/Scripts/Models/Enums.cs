@@ -207,5 +207,17 @@ namespace Assets.Scripts.Models
             BadGenetics,
             Weakened
         }
+        public enum RelicType
+        {
+            NthMetal,
+            HolyCross,
+            GaiaShield,
+        }
+        public enum FoodType
+        {
+            Meat,
+            Grain,
+            Vegetables
+        }
     }
 }

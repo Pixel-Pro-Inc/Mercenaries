@@ -16,12 +16,12 @@ namespace Assets.Scripts.Entities.Item
         public enum MasterItemList
         {
             //Here a list of every individual item will be defined.Then they will be accessed with their indexes as needed in below lists eg List<>Items
+            //Remeber this includes the certain type of foods and all that good good
         }
 
         abstract public string ItemName { get; set; }
         abstract public string ItemDescription { get; set; }//A Brief description of what the item does and what its worth in a desired currency
-        abstract public int Owner { get; set; }
-        abstract public object Ownertype { get; set; }
+        abstract public object Owner { get; set; }
         abstract public bool Relic { get; set; } // this will be set true if relic and so will be nonconsumbalable 
         abstract public bool BeingUsed { get; set; }
 
@@ -29,10 +29,6 @@ namespace Assets.Scripts.Entities.Item
         abstract public void Remove();
         abstract public bool ActivationRequireMent(object CharacterInstance); //Returns if you have all the necessary things to activate the item and if true it equips it
 
-        #region Abilities
-        abstract public void UniqueActiveBuff();
-        abstract public void UniqueActiveDeBuff();
-        #endregion
-
+       
     }
 }

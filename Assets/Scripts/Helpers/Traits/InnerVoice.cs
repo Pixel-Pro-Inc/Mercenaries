@@ -15,7 +15,7 @@ namespace Assets.Scripts.Helpers
         public List<Image> SpokenWord { get; set; }
         public string manifest { get; set; } //This is word (complete or not) of what actually shows up on the screen. Only when manifest has the right string Keys will innerVoice method fire
 
-        public Dictionary<string, string> MercenariesDialect = new Dictionary<string, string>
+        Dictionary<string, string> MercenariesDialect = new Dictionary<string, string>
         {
            
             {"A", "Image name"},{"B", "Image name"},{"C", "Image name"},{"D", "Image name"},
