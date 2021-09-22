@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Interface;
+﻿using Assets.Scripts.Entities.Character;
+using Assets.Scripts.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,7 @@ namespace Assets.Scripts.Entities.Item
 
         abstract public string ItemName { get; set; }
         abstract public string ItemDescription { get; set; }//A Brief description of what the item does and what its worth in a desired currency
-        abstract public object Owner { get; set; }
+        abstract public Persona Owner { get; set; }
         abstract public bool Relic { get; set; } // this will be set true if relic and so will be nonconsumbalable 
         abstract public bool BeingUsed { get; set; }
 

@@ -4,26 +4,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Assets.Scripts.Entities.Item
 {
     class HolyCrossTemplate : RelicClass
     {
-        public static HolyCrossTemplate Instance { get; set; }
-        public HolyCrossTemplate()
-        {
-            Instance = this;
-        }
 
         public override void Activate(object CharacterInstance)
         {
-            //Within the food, Here the effects will be coded
-            Debug.Log("You didn't put the logic to put the effects");
+            int OwnerHealthpercent = (int)(Owner.Health * 0.1);
+            Owner.Health += OwnerHealthpercent;
+            healthICache += OwnerHealthpercent;
         }
+
         public override void Deactivate(object CharacterInstance)
         {
-            //Within the food, Here the effects will be removed
-            Debug.Log("You didn't put the logic to remove the effects");
+            Owner.Health -= healthICache;
         }
         public override bool WorthyorNot(object CharacterInstance)
         {

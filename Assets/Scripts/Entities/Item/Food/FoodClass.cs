@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts.Entities.Character;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,7 +14,7 @@ namespace Assets.Scripts.Entities.Item.Food
     {
         public override string ItemName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public override string ItemDescription { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public override object Owner { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public override Persona Owner { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public override bool Relic { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public override bool BeingUsed { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
@@ -40,7 +41,7 @@ namespace Assets.Scripts.Entities.Item.Food
 
         public override bool ActivationRequireMent(object CharacterInstance)
         {
-            Owner = CharacterInstance;
+            Owner = (Persona)CharacterInstance;
             if (CanChew(Owner))
             {
                 Equip();
@@ -75,6 +76,7 @@ namespace Assets.Scripts.Entities.Item.Food
             BeingUsed = false;
         }
 
+        //The UniqueBuffs below will be called on purpose, not randomly when first made
         public virtual void UniqueActiveBuff()
         {
             Debug.Log("Food isnt supposed to have unique effects, It works the same for everyone. So yeah its redundant to do uniqueActiveBuff");

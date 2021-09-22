@@ -10,20 +10,20 @@ namespace Assets.Scripts.Entities.Item
 {
     class GaiaShieldTemplate : RelicClass
     {
-        public static GaiaShieldTemplate Instance { get; set; }
-        public GaiaShieldTemplate()
-        {
-            Instance = this;
-        }
         public override void Activate(object CharacterInstance)
         {
-            //Within the food, Here the effects will be coded
-            Debug.Log("You didn't put the logic to put the effects");
+            int OwnerArmourpercent = (int)(Owner.Armour * 0.1);
+            Owner.Armour += OwnerArmourpercent;
+            armourICache += OwnerArmourpercent;
+
+            int OwnerMagRespercent= (int)(Owner.MagicRes * 0.1);
+            Owner.MagicRes += OwnerMagRespercent;
+            magresICache += OwnerMagRespercent;
         }
         public override void Deactivate(object CharacterInstance)
         {
-            //Within the food, Here the effects will be removed
-            Debug.Log("You didn't put the logic to remove the effects");
+            Owner.Armour -= armourICache;
+            Owner.MagicRes -= magresICache;
         }
         public override bool WorthyorNot(object CharacterInstance)
         {

@@ -10,21 +10,16 @@ namespace Assets.Scripts.Entities.Item
 {
     class NthMetalTemplate : RelicClass
     {
-        public static NthMetalTemplate Instance { get; set; }
-        public NthMetalTemplate()
-        {
-            Instance = this;
-        }
-
+       
         public override void Activate(object CharacterInstance)
         {
-            //Within the food, Here the effects will be coded
-            Debug.Log("You didn't put the logic to put the effects");
+            int OwnerHealthpercent = (int)(Owner.Health * 0.1);
+            Owner.Health += OwnerHealthpercent;
+            healthICache += OwnerHealthpercent;
         }
         public override void Deactivate(object CharacterInstance)
         {
-            //Within the food, Here the effects will be removed
-            Debug.Log("You didn't put the logic to remove the effects");
+            Owner.Health -= healthICache;
         }
         public override bool WorthyorNot(object CharacterInstance)
         {
