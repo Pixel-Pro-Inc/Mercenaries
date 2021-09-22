@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Entities.Item.Food
 {
-    class Vegetables:FoodClass
+    class Fruits:FoodClass
     {
         public override void Eat(object CharacterInstance)
         {

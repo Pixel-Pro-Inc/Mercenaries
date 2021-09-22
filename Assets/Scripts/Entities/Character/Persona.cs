@@ -285,16 +285,23 @@ namespace Assets.Scripts.Entities.Character
 
         internal int ExperienceLevel { get { return ExperienceLevel; } set { if (ExperienceLevel < 0) ExperienceLevel = 0; } }
 
+        #region Food system traits that I dont trust
         internal int _Mana = 0;
         public virtual int Mana
         {
             get; set;
-            // We never discussed if Mana was going to be used so I just put it cause, I mean RPG right, we have to nerf the characters somehow right.
-            //Pluss in my head the cards that a character will be able to use from the many cards on deck will be dependant on the amount of mana the individual 
-            //character has currently
         }
         internal int _Stamina = 0;
         public virtual int Stamina { get; set; }//I assume the hunger method will affect this trait
+        internal int _sustainance = 0;
+        public virtual int Sustainance
+        {
+            get; set;
+        }
+        internal int _vitality = 0;
+        public virtual int Vitality { get; set; }
+
+        #endregion
 
         public InnerVoice InnerVoice = new InnerVoice(); //This is used for special actions. Dont remove !!!
 
@@ -856,7 +863,7 @@ namespace Assets.Scripts.Entities.Character
         RelicClass RelicsInventory = new RelicClass();
         FoodClass StoreHouse = new FoodClass();
 
-        public void EquipItem(object item, object CharacterInstance) //The item has to be the enum type eg foodType or relic type
+        public void CreateItem(object item) //The item has to be the enum type eg foodType or relic type
         {
             if (item.GetType() == typeof(RelicType))
             {
@@ -867,6 +874,22 @@ namespace Assets.Scripts.Entities.Character
             {
                 FoodType food = (FoodType)item;
                 StoreHouse.CreateFood(food);
+            }
+            else
+            {
+                Debug.Log("The item has to be the enum type eg foodType or relic type");
+            }
+        }
+        public void EquipItem(object item)
+        {
+            if (item.GetType() == typeof(RelicType))
+            {
+                RelicsInventory.ActivationRequireMent(this);
+            }
+            else if (item.GetType() == typeof(FoodType))
+            {
+                FoodType food = (FoodType)item;
+                StoreHouse.ActivationRequireMent(this);
             }
             else
             {

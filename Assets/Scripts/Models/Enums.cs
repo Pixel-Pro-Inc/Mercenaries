@@ -217,7 +217,8 @@ namespace Assets.Scripts.Models
         {
             Meat,
             Grain,
-            Vegetables
+            Vegetables,
+            Fruits
         }
     }
 }
