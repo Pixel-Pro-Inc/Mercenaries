@@ -27,6 +27,7 @@ namespace Assets.Scripts.Helpers
             {"W", "Image name"},
             {"X", "Image name"},
             {"Y", "Image name"},{"Z", "Image name"},
+            {" ", "White space" }
 
         };
 
