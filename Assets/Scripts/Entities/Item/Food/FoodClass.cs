@@ -26,6 +26,7 @@ namespace Assets.Scripts.Entities.Item.Food
             Starved
         }
         public Status CharacterStatus { get; set; }
+        public FoodType foodType { get; set; }
         #region System variables
 
         int _systemValue { get; set; } int SystemValue { get { return _systemValue; } set { _systemValue = value; } } //System value goes up to a hundred
@@ -39,7 +40,7 @@ namespace Assets.Scripts.Entities.Item.Food
 
         #endregion
 
-        List<FoodClass> Silo = new List<FoodClass>(); //List of the Characters food that it has, Dont be confused, We are not making a list of the food Systems, we are just using the superClass Type
+        public List<FoodClass> Silo = new List<FoodClass>(); //List of the Characters food that it has, Dont be confused, We are not making a list of the food Systems, we are just using the superClass Type
 
 
         public void Update()

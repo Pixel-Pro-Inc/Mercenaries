@@ -32,7 +32,7 @@ namespace Assets.Scripts.Entities.Character
         
         #region GivenCharacterTraits
 
-        public enum Kingdom { FarWest, MiddleEarth, DarkSyde };
+        
 
         public enum MasterCharacterList
         {
@@ -45,9 +45,7 @@ namespace Assets.Scripts.Entities.Character
             HammerHead, GreatWhite, SpiderCrustacean, NecroBoar, ElderStag, DevilBird, DragonSloth
             #endregion
         }
-        public List<object> Master = new List<object>();
-        public List<object> Allies = new List<object>();
-        public List<object> Enemies = new List<object>();
+       
 
         #region Combat Object Lists
 
@@ -101,7 +99,8 @@ namespace Assets.Scripts.Entities.Character
             get { return _health; }
             set
             {
-                if (Health < 0) Health = 0;
+                _health = value;
+                if (Health < 0) _health = 0;
                 if (Foe == false)
                 {
                     _health = 0;
@@ -258,10 +257,10 @@ namespace Assets.Scripts.Entities.Character
             get { return _NewExpoint; }
             set
             {
-                if (NewEarnedXp < 0) NewEarnedXp = 0;
+                if (NewEarnedXp < 0) _NewExpoint = 0;
                 if (EarnedXp == true)
                 {
-                    _NewExpoint = NewEarnedXp;
+                    _NewExpoint = value;
                 }
                 else
                 {
@@ -276,10 +275,7 @@ namespace Assets.Scripts.Entities.Character
             get { return _EarnedXp; }
             set
             {
-                if (RoundInfo.RoundDone == false/*This means characters can level up durning battle*/)
-                {
-                    _EarnedXp = false;
-                }
+                _EarnedXp = value;
             }
         } //This bool is made true when XPIncrease is fired and should be made of when sessionOver is true
 
@@ -860,19 +856,19 @@ namespace Assets.Scripts.Entities.Character
         #endregion
         #region Items 
 
-        RelicClass RelicsInventory = new RelicClass();
-        FoodClass StoreHouse = new FoodClass();
+        RelicClass RelicsInventory = new RelicClass(); //Don't bedecieve this is entire info of Relics the chracter has, including the list of Relics
+        FoodClass StoreHouse = new FoodClass();//Don't be decieve this is entire info of food the chracter has, including the list of food
 
-        public void CreateItem(object item) //The item has to be the enum type eg foodType or relic type
+        public void CreateItem(object enumtype) //The item has to be the enum type eg foodType or relic type
         {
-            if (item.GetType() == typeof(RelicType))
+            if (enumtype.GetType() == typeof(RelicType))
             {
-                RelicType relic = (RelicType)item;
+                RelicType relic = (RelicType)enumtype;
                 RelicsInventory.CreateRelic(relic);
             }
-            else if (item.GetType() == typeof(FoodType))
+            else if (enumtype.GetType() == typeof(FoodType))
             {
-                FoodType food = (FoodType)item;
+                FoodType food = (FoodType)enumtype;
                 StoreHouse.CreateFood(food);
             }
             else
@@ -880,20 +876,21 @@ namespace Assets.Scripts.Entities.Character
                 Debug.Log("The item has to be the enum type eg foodType or relic type");
             }
         }
-        public void EquipItem(object item)
+        public void EquipItem(object item) //this is supposed to get an Item from either RelicInventory or StoreHouse
         {
-            if (item.GetType() == typeof(RelicType))
+            if (item.GetType() == typeof(RelicClass))
             {
-                RelicsInventory.ActivationRequireMent(this);
+                RelicClass relic = (RelicClass)item;
+                relic.ActivationRequireMent(this);
             }
-            else if (item.GetType() == typeof(FoodType))
+            else if (item.GetType() == typeof(FoodClass))
             {
-                FoodType food = (FoodType)item;
-                StoreHouse.ActivationRequireMent(this);
+                FoodClass food = (FoodClass)item;
+                food.ActivationRequireMent(this);
             }
             else
             {
-                Debug.Log("The item has to be the enum type eg foodType or relic type");
+                Debug.Log("The item has to be a Type eg FoodClass or RelicClass");
             }
         }
 

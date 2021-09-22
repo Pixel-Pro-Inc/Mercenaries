@@ -213,6 +213,16 @@ namespace Assets.Scripts.Models
             HolyCross,
             GaiaShield,
         }
+        public enum ToolType
+        {
+            PickAxe,
+            Sickle,
+            Hoe,
+            Bow,
+            Anvil,
+            Stove,
+            Fabricator
+        }
         public enum FoodType
         {
             Meat,
@@ -220,5 +230,6 @@ namespace Assets.Scripts.Models
             Vegetables,
             Fruits
         }
+       
     }
 }

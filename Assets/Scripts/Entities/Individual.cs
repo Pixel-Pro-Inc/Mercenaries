@@ -19,7 +19,10 @@ public class Individual : MonoBehaviour
     protected float Cost { get; set; }
     protected int IndividualId { get; set; }
     protected string IndividualType { get; set; }
-
+    public enum Kingdom { FarWest, MiddleEarth, DarkSyde };
+    public List<object> Master = new List<object>();
+    public List<object> Allies = new List<object>();
+    public List<object> Enemies = new List<object>();
 
     public void passiveTraits()
     {
