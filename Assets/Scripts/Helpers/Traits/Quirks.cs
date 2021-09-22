@@ -14,6 +14,7 @@ namespace Assets.Scripts.Helpers.Traits
 {
     public class Quirks : Persona
     {
+        int RandomSize = 5;
         public void MyHeroAcademia(QuirkColour quirkColour)
         {
             QuirkColour = quirkColour; //Sets the Caller of this methods quirk colour this colour
@@ -30,17 +31,77 @@ namespace Assets.Scripts.Helpers.Traits
             
         }
 
-        public PositiveQuirks[] OneForAll((string, QuirkColour) DekuArchives) => DekuArchives switch
+        PositiveQuirks[] OneForAll((string, QuirkColour) DekuArchives)
         {
-           ("Peter",QuirkColour.Red)=> new PositiveQuirks[] {PositiveQuirks.SharpEyesight,PositiveQuirks.StrongBones },
-            _ => null
-        };
+            int v = UnityEngine.Random.Range(0, RandomSize);
+            RandomSize -= v; //This is so the number of quirks will always be 5, never more or less
+            int r = UnityEngine.Random.Range(0, 18);
+            List<PositiveQuirks> Nen = new List<PositiveQuirks>();
+            for (int i = 0; i < v; i++)
+            {
+                PositiveQuirks gift = (PositiveQuirks)r; //We do this first cause we want a random quirk
+                if (!Nen.Contains(gift))
+                {
+                    Nen.Add(gift);
+                }
+                else //We do this more structured way cause we want anything else thats not taken
+                {
+                    System.Random gas = new System.Random();
+                    int count = gas.Next(0, 18);
+                    while (Nen.Contains((PositiveQuirks)count))
+                    {
+                        count = gas.Next(0, 18);
+                    }
+                    PositiveQuirks present = (PositiveQuirks)(count);
+                    Nen.Add(present);
+                }
+               
+            }
+            return Nen.ToArray<PositiveQuirks>();
 
-        public NegativeQuirks[] AllForOne((string, QuirkColour) TomuraArchives) => TomuraArchives switch
+        }
+        NegativeQuirks[] AllForOne((string, QuirkColour) TomuraArchives)
         {
-            ("Peter", QuirkColour.Red) => new NegativeQuirks[] { NegativeQuirks.Fragile,NegativeQuirks.WeakAim },
-            _ => null
-        };
+            int r = UnityEngine.Random.Range(0, 18);
+            List<NegativeQuirks> Nen = new List<NegativeQuirks>();
+            for (int i = 0; i < RandomSize; i++) //We use randomSize here cause we already did Positive
+            {
+                NegativeQuirks gift = (NegativeQuirks)r; //We do this first cause we want a random quirk
+                if (!Nen.Contains(gift))
+                {
+                    Nen.Add(gift);
+                }
+                else //We do this more structured way cause we want anything else thats not taken
+                {
+                    System.Random gas = new System.Random();
+                    int count = gas.Next(0,18);
+                    while (Nen.Contains((NegativeQuirks)count))
+                    {
+                        count= gas.Next(0, 18);
+                    }
+                    NegativeQuirks present = (NegativeQuirks)(count);
+                    Nen.Add(present);
+                }
+
+            }
+            return Nen.ToArray<NegativeQuirks>();
+        }
+        /*
+          PositiveQuirks[] OneForAll((string, QuirkColour) DekuArchives) => DekuArchives switch
+    {
+       ("Peter",QuirkColour.Red)=> new PositiveQuirks[] {PositiveQuirks.SharpEyesight,PositiveQuirks.StrongBones },
+        _ => null
+    };
+
+      NegativeQuirks[] AllForOne((string, QuirkColour) TomuraArchives) => TomuraArchives switch
+    {
+        ("Peter", QuirkColour.Red) => new NegativeQuirks[] { NegativeQuirks.Fragile,NegativeQuirks.WeakAim },
+        _ => null
+    };
+        */
+
+
+
 
         //These set the values onto the character
         void PositiveQuirkSet(PositiveQuirks Positive)
