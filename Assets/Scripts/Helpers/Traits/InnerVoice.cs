@@ -41,7 +41,7 @@ namespace Assets.Scripts.Helpers
                 "If this is done remove this log and everything should work fine");
             for (int i = 0; i < manifest.Length; i++)
             {
-                SpokenWord.Add(GameObject.Find($"{GetTranlateLetterImageName(manifest[i])}").GetComponent<Image>());
+                SpokenWord.Add(GameObject.Find($"{GetTranlateLetterImageName(char.ToUpper(manifest[i]))}").GetComponent<Image>());
             }
             //Show SpokenWord
         }
