@@ -8,11 +8,11 @@ namespace Assets.Scripts.Interface
 {
     interface IWorkerAntTraits
     {
-        public void Farm();
-        public void Mine();
-        public void Smith();
-        public void Craft();
-        public void Forage();
+        void Farm();
+        void Mine();
+        void Smith();
+        void Craft();
+        void Forage();
 
     }
 }
