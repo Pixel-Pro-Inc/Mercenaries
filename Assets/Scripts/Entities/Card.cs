@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Card : MonoBehaviour,ICard
 {
@@ -17,10 +18,12 @@ public class Card : MonoBehaviour,ICard
         
     }
 
-    protected bool PassiveTraitsState { get; set; }
-    protected float Cost { get; set; }
-    protected int CardId { get; set; }
-    protected string CardType { get; set; }//This describes what kind of card it is eg, Item, character, minion 
+    public bool PassiveTraitsState { get; set; }
+    public float Cost { get; set; }
+    public string CardId { get; set; }
+    public string CardType { get; set; }//This describes what kind of card it is eg, Item, character, minion 
+    public Image CardImage { get; set; }
+    public Sprite CardSprite { get; set; }
 
 
     public void passiveTraits()

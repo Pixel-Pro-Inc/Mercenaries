@@ -27,6 +27,8 @@ namespace Assets.Scripts.Entities.Item.Food
         }
         public Status CharacterStatus { get; set; }
         public FoodType foodType { get; set; }
+
+        static int InstantiatedCardNumber;
         #region System variables
 
         int _systemValue { get; set; } int SystemValue { get { return _systemValue; } set { _systemValue = value; } } //System value goes up to a hundred
@@ -58,18 +60,22 @@ namespace Assets.Scripts.Entities.Item.Food
             {
                 case FoodType.Meat:
                     Meat meat = new Meat();
+                    meat.CardId = $"{(int)CardIdReference.FoodCards}.0{(int)FoodType.Meat}.00{InstantiatedCardNumber}"; InstantiatedCardNumber++;
                     Silo.Add(meat);
                     break;
                 case FoodType.Grain:
                     Grain grain = new Grain();
+                    grain.CardId = $"{(int)CardIdReference.FoodCards}.0{(int)FoodType.Grain}.00{InstantiatedCardNumber}"; InstantiatedCardNumber++;
                     Silo.Add(grain);
                     break;
                 case FoodType.Vegetables:
                     Vegetables veg = new Vegetables();
+                    veg.CardId = $"{(int)CardIdReference.FoodCards}.0{(int)FoodType.Vegetables}.00{InstantiatedCardNumber}"; InstantiatedCardNumber++;
                     Silo.Add(veg);
                     break;
                 case FoodType.Fruits:
                     Fruits fruit = new Fruits();
+                    fruit.CardId = $"{(int)CardIdReference.FoodCards}.0{(int)FoodType.Fruits}.00{InstantiatedCardNumber}"; InstantiatedCardNumber++;
                     Silo.Add(fruit);
                     break;
                 default: 

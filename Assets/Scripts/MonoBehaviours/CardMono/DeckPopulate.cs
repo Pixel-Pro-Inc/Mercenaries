@@ -168,6 +168,11 @@ public class DeckPopulate : MonoBehaviour
 
         cardBehaviour.species = species;
         cardBehaviour.cardname = name;
+
+        cardBehaviour.CardSprite = sprite;
+        if (cardBehaviour.CardId==null) cardBehaviour.CardId= $"{(int)CardIdReference.BattleCards}.0{(int)name}";
+        //these above two are necessary, debate with Abel before you consider removing them
+
         cardBehaviour.GoTo = position;
     }
 }

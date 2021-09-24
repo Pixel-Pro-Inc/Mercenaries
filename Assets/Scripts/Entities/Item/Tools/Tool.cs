@@ -16,13 +16,15 @@ namespace Assets.Scripts.Entities.Item.Tools
         public override Persona Owner { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public override bool Relic { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public override bool BeingUsed { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        List<Tool> Artillery = new List<Tool>();
+        public List<Tool> Artillery = new List<Tool>();
+        static int InstantiatedCardNumber;
         public void CreateTool(ToolType tool)
         {
             switch (tool)
             {
                 case ToolType.PickAxe:
                     PickAxe pickAxe = new PickAxe();
+                    pickAxe.CardId = $"{(int)CardIdReference.ToolCards}.0{(int)ToolType.PickAxe}.00{InstantiatedCardNumber}"; InstantiatedCardNumber++;
                     Artillery.Add(pickAxe);
                     break;
                 case ToolType.Sickle:

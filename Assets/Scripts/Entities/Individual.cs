@@ -28,4 +28,9 @@ public class Individual : MonoBehaviour
     {
         throw new System.NotImplementedException();
     }
+    public virtual List<object> RetrieveItemsAtDisposal()
+    {
+        List<object> Items = new List<object>();
+        return Items;
+    }
 }

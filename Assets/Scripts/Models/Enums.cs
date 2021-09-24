@@ -230,6 +230,14 @@ namespace Assets.Scripts.Models
             Vegetables,
             Fruits
         }
+        public enum CardIdReference
+        {
+            BattleCards,
+            FoodCards,
+            ToolCards,
+            RelicCards,
+            CurrencyCards
+        }
        
     }
 }

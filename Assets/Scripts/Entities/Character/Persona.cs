@@ -893,6 +893,13 @@ namespace Assets.Scripts.Entities.Character
                 Debug.Log("The item has to be a Type eg FoodClass or RelicClass");
             }
         }
+        public override List<object> RetrieveItemsAtDisposal() 
+        {
+            List<object> Items=new List<object>();
+            Items.Add(this.StoreHouse.Silo);
+            Items.Add(this.RelicsInventory.Vault);
+            return Items;
+        }
 
         #endregion
     }

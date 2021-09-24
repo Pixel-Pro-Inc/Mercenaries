@@ -243,7 +243,13 @@ namespace Assets.Scripts.Entities.Worker
                 Debug.Log("The item has to be a Tool");
             }
         }
-
+        public override List<object> RetrieveItemsAtDisposal()
+        {
+            List<object> Items = new List<object>();
+            Items.Add(this.Bag.Silo);
+            Items.Add(this.Belt.Artillery);
+            return Items;
+        }
         #endregion
 
         public virtual void LevelIncrease()

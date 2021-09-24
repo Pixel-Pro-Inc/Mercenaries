@@ -17,24 +17,29 @@ namespace Assets.Scripts.Entities.Item.Relics
         public override bool Relic { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public override bool BeingUsed { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
+        static int InstantiatedCardNumber;
+
         internal int healthICache=0; internal int manaICache = 0; internal int staminaICache = 0; internal int dodgeICache = 0; internal int speedICache = 0;
         internal int critCICache = 0; internal int magresICache = 0; internal int armourICache = 0; internal int damageICache = 0; internal int accuracyICache = 0;
 
-        List<object> Vault = new List<object>();
+        public List<object> Vault = new List<object>();
         public void CreateRelic(RelicType relic)
         {
             switch (relic)
             {
                 case RelicType.NthMetal:
                     NthMetalTemplate Nth_Metal_Item = new NthMetalTemplate();
+                    Nth_Metal_Item.CardId = $"{(int)CardIdReference.RelicCards}.0{(int)RelicType.NthMetal}.00{InstantiatedCardNumber}"; InstantiatedCardNumber++;
                     Vault.Add(Nth_Metal_Item);
                     break;
                 case RelicType.HolyCross:
                     HolyCrossTemplate HolyCrossItem = new HolyCrossTemplate();
+                    HolyCrossItem.CardId = $"{(int)CardIdReference.RelicCards}.0{(int)RelicType.HolyCross}.00{InstantiatedCardNumber}"; InstantiatedCardNumber++;
                     Vault.Add(HolyCrossItem);
                     break;
                 case RelicType.GaiaShield:
                     GaiaShieldTemplate GaiaShieldTemplate = new GaiaShieldTemplate();
+                    GaiaShieldTemplate.CardId = $"{(int)CardIdReference.RelicCards}.0{(int)RelicType.GaiaShield}.00{InstantiatedCardNumber}"; InstantiatedCardNumber++;
                     Vault.Add(GaiaShieldTemplate);
                     break;
                 default:
