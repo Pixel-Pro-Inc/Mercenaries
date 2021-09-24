@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace Assets.Scripts.MonoBehaviours.ReGroup
 {
-    class LifeSkills: TavernBar
+    public class LifeSkills
     {
-        public int FarmingLevel { get; set; }
-        public int MiningLevel { get; set; }
-        public int SmithingLevel { get; set; }
-        public int CraftingLevel { get; set; }
-        public int HunterGatheringLevel { get; set; }
+        //Even if several instances of LifeSkills are created, eg for different Teams and bands, the Owner of the game will have these translate into all of them
+        public static int FarmingLevel { get; set; }
+        public static int MiningLevel { get; set; }
+        public static int SmithingLevel { get; set; }
+        public static int CraftingLevel { get; set; }
+        public static int HunterGatheringLevel { get; set; }
     }
 }

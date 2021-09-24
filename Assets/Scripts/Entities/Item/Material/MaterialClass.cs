@@ -7,37 +7,34 @@ using System.Threading.Tasks;
 using UnityEngine;
 using static Assets.Scripts.Models.Enums;
 
-namespace Assets.Scripts.Entities.Item.Tools
+namespace Assets.Scripts.Entities.Item.Material
 {
-    class Tool : ItemTemplate
+    class MaterialClass : ItemTemplate
     {
         public override string ItemName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public override string ItemDescription { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public override Persona Owner { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public override bool NonConsumable { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public override bool BeingUsed { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public List<Tool> Artillery = new List<Tool>();
+
+        public List<MaterialClass> Shed = new List<MaterialClass>();
         static int InstantiatedCardNumber;
-        public void CreateTool(ToolType tool)
+        public void CreateMaterial(MaterialType material)
         {
-            switch (tool)
+            switch (material)
             {
-                case ToolType.PickAxe:
-                    PickAxe pickAxe = new PickAxe();
-                    pickAxe.CardId = $"{(int)CardIdReference.ToolCards}.0{(int)ToolType.PickAxe}.00{InstantiatedCardNumber}"; InstantiatedCardNumber++;
-                    Artillery.Add(pickAxe);
+                case MaterialType.Wood:
+                    Wood wood = new Wood();
+                    wood.CardId = $"{(int)CardIdReference.MaterialCards}.0{(int)MaterialType.Wood}.00{InstantiatedCardNumber}"; InstantiatedCardNumber++;
+                    Shed.Add(wood);
                     break;
-                case ToolType.Sickle:
+                case MaterialType.Water:
                     break;
-                case ToolType.Hoe:
+                case MaterialType.Earth:
                     break;
-                case ToolType.Bow:
+                case MaterialType.Stone:
                     break;
-                case ToolType.Anvil:
-                    break;
-                case ToolType.Stove:
-                    break;
-                case ToolType.Fabricator:
+                case MaterialType.IronOre:
                     break;
                 default:
                     break;
@@ -49,7 +46,7 @@ namespace Assets.Scripts.Entities.Item.Tools
         public override bool ActivationRequireMent(object Worker)
         {
             Owner = (Persona)Worker; //WOrkerAnt and Persona share alot of simpliar methods so We just have to remeber that we shouldn't call any properties that WorkerAnt doesnt have
-            if (HeavyorNot(Owner))
+            if (QualityorNot(Owner))
             {
                 Equip();
             }
@@ -59,11 +56,11 @@ namespace Assets.Scripts.Entities.Item.Tools
         {
             BeingUsed = true;// This has to be first otherwise the values wont change
             passiveTraits();
-            Act(Owner);
+            Use(Owner);
         }
         public override void Remove()
         {
-            Stop(Owner);
+            Abandon(Owner);
             BeingUsed = false;
         }
 
@@ -80,21 +77,22 @@ namespace Assets.Scripts.Entities.Item.Tools
 
         #endregion
 
-        public virtual void Act(object CharacterInstance)
+        public virtual void Use(object CharacterInstance)
         {
             //Within the food, Here the effects will be coded
             Debug.Log("You didn't put the logic to put the effects");
         }
-        public virtual void Stop(object CharacterInstance)
+        public virtual void Abandon(object CharacterInstance)
         {
             //Within the food, Here the effects will be removed
             Debug.Log("You didn't put the logic to remove the effects");
         }
-        public virtual bool HeavyorNot(object CharacterInstance)
+        public virtual bool QualityorNot(object CharacterInstance)
         {
             //Here in the food the character is checked to see if they qualify
             Debug.Log("You didn't put the logic to check if that person can equip the item");
             return true;
         }
+
     }
 }

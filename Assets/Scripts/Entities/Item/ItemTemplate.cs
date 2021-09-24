@@ -23,7 +23,7 @@ namespace Assets.Scripts.Entities.Item
         abstract public string ItemName { get; set; }
         abstract public string ItemDescription { get; set; }//A Brief description of what the item does and what its worth in a desired currency
         abstract public Persona Owner { get; set; }
-        abstract public bool Relic { get; set; } // this will be set true if relic and so will be nonconsumbalable 
+        abstract public bool NonConsumable { get; set; } // this will be set true if relic and so will be nonconsumbalable 
         abstract public bool BeingUsed { get; set; }
 
         abstract public void Equip();

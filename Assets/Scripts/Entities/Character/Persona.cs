@@ -399,12 +399,12 @@ namespace Assets.Scripts.Entities.Character
             ExperienceLevel++;
             if (Foe == false)
             {
-                Health += 0 * ExperienceLevel;
-                dodge += 0 * ExperienceLevel;
-                Speed += 0 * ExperienceLevel;
-                CritC += 0 * ExperienceLevel;
-                MagicRes += 0 * ExperienceLevel;
-                Armour += 0 * ExperienceLevel;
+                Health += 1 * ExperienceLevel;
+                dodge += 1 * ExperienceLevel;
+                Speed += 1 * ExperienceLevel;
+                CritC += 1 * ExperienceLevel;
+                MagicRes += 1 * ExperienceLevel;
+                Armour += 1 * ExperienceLevel;
                 if (LowDamage == true) Damage += 0 * ExperienceLevel;
                 else
                 {
@@ -413,16 +413,16 @@ namespace Assets.Scripts.Entities.Character
             }
             else
             {
-                Health += 0 * ExperienceLevel;
-                dodge += 0 * ExperienceLevel;
-                Speed += 0 * ExperienceLevel;
-                CritC += 0 * ExperienceLevel;
-                MagicRes += 0;
-                Armour += 0;
+                Health += 1 * ExperienceLevel;
+                dodge +=1* ExperienceLevel;
+                Speed +=1* ExperienceLevel;
+                CritC +=1* ExperienceLevel;
+                MagicRes += 1;
+                Armour += 1;
                 if (LowDamage == true) Damage += 1 * ExperienceLevel;
                 else
                 {
-                    Damage += 0 * ExperienceLevel;
+                    Damage += 1 * ExperienceLevel;
                 }
             }
             //fire levelIncrease animation
@@ -896,8 +896,8 @@ namespace Assets.Scripts.Entities.Character
         public override List<object> RetrieveItemsAtDisposal() 
         {
             List<object> Items=new List<object>();
-            Items.Add(this.StoreHouse.Silo);
-            Items.Add(this.RelicsInventory.Vault);
+            Items.Add(StoreHouse.Silo);
+            Items.Add(RelicsInventory.Vault);
             return Items;
         }
 

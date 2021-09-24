@@ -12,14 +12,16 @@ using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 using static Assets.Scripts.Models.Enums;
+using Assets.Scripts.Entities.Item.Material;
+using Assets.Scripts.MonoBehaviours.ReGroup;
 
 namespace Assets.Scripts.Entities.Worker
 {
     public class WorkerAnt : Individual, IWorkerAntTraits
     {
+
         #region Traits
 
-        
         public enum SpeciesType
         {
             Lion,
@@ -148,16 +150,19 @@ namespace Assets.Scripts.Entities.Worker
 
         public void Craft()
         {
+            TavernBar.CraftingCount++;
             throw new NotImplementedException();
         }
 
         public void Farm()
         {
+            TavernBar.FarmingCount++;
             throw new NotImplementedException();
         }
 
-        public void Forage()
+        public void Forage() //For getting food, eg meat and fruits
         {
+            TavernBar.HunterGathringCount++;
             void Forging()
             {
                 DateTime startime = DateTime.Now;
@@ -181,15 +186,57 @@ namespace Assets.Scripts.Entities.Worker
             
             Forage.Abort();
         }
-
-        public void Mine()
+        public void Mine()//For getting material, eg ore and wood and stone
         {
-            throw new NotImplementedException();
+            TavernBar.MiningCount++;
+            void Mining()
+            {
+                DateTime startime = DateTime.Now;
+                TimeSpan pacer = new TimeSpan(UnityEngine.Random.Range(1, 300000)); //A random time within 5 minutes
+                while (TavernBar.OutOnExpedition == true)
+                {
+                    if (DateTime.Now == startime + pacer)
+                    {
+                        CollectMaterial((MaterialType)UnityEngine.Random.Range(0, 4)); //Collects Random Material
+                        startime = DateTime.Now;
+                        pacer = new TimeSpan(UnityEngine.Random.Range(1, 300000)); //A random time within 5 minutes
+                    }
+                }
+            }
+            ThreadStart BeginMining = new ThreadStart(Mining); //this is a declaration of what happens at commencement
+            Thread Mine = new Thread(BeginMining);//this is the actual thread
+            Mine.Priority = System.Threading.ThreadPriority.BelowNormal;
+
+            Debug.Log("Im told that this has to be trial and error to figure out the number that doesn't crash");
+            Mine.Start(); Debug.Log("I am a bit anxious about the number of workers and therefore the number of threads that can be used");
+
+            Mine.Abort();
         }
-
-        public void Smith()
+        public void Smith(ToolType tooltype)
         {
-            throw new NotImplementedException();
+            TavernBar.SmithingCount++;
+            void Smithing()
+            {
+                DateTime startime = DateTime.Now;
+                TimeSpan pacer = new TimeSpan(UnityEngine.Random.Range(1, 300000)); //A random time within 5 minutes
+                while (TavernBar.OutOnExpedition == true)
+                {
+                    if (DateTime.Now == startime + pacer)
+                    {
+                        AcquireTool(tooltype); //Collects Tool type given in the parameter
+                        startime = DateTime.Now;
+                        pacer = new TimeSpan(UnityEngine.Random.Range(1, 300000)); //A random time within 5 minutes
+                    }
+                }
+            }
+            ThreadStart BeginSmithing = new ThreadStart(Smithing); //this is a declaration of what happens at commencement
+            Thread Smith = new Thread(BeginSmithing);//this is the actual thread
+            Smith.Priority = System.Threading.ThreadPriority.BelowNormal;
+
+            Debug.Log("Im told that this has to be trial and error to figure out the number that doesn't crash");
+            Smith.Start(); Debug.Log("I am a bit anxious about the number of workers and therefore the number of threads that can be used");
+
+            Smith.Abort();
         }
 
         public void Eat(object edible) //This has to get the meal from the bag
@@ -206,6 +253,7 @@ namespace Assets.Scripts.Entities.Worker
 
         FoodClass Bag = new FoodClass();
         Tool Belt = new Tool();
+        MaterialClass Chest = new MaterialClass();
 
         public void CollectFood( object enumtype)
         {
@@ -219,11 +267,12 @@ namespace Assets.Scripts.Entities.Worker
                 Debug.Log("The item has to be the enum type  foodType ");
             }
         }
-        public void CreateTool(object enumtype) //The item has to be the enum type eg toolType
+        public void AcquireTool(object enumtypeTool) //The item has to be the enum type eg toolType
         {
-            if (enumtype.GetType() == typeof(ToolType))
+            //I am unsure of whether making tools falls under smithing , i think it does. Then crafting will be clothes and trinkets and shit
+            if (enumtypeTool.GetType() == typeof(ToolType))
             {
-                ToolType tool = (ToolType)enumtype;
+                ToolType tool = (ToolType)enumtypeTool;
                 Belt.CreateTool(tool);
             }
             else
@@ -231,11 +280,24 @@ namespace Assets.Scripts.Entities.Worker
                 Debug.Log("The item has to be the enum type tooltype");
             }
         }
+        public void CollectMaterial(object enumtype)
+        {
+            if (enumtype.GetType() == typeof(MaterialType))
+            {
+                MaterialType material = (MaterialType)enumtype;
+                Chest.CreateMaterial(material);
+            }
+            else
+            {
+                Debug.Log("The item has to be the enum type  MaterialType ");
+            }
+        }
+
         public void UseTool(object item) //this is supposed to get an Item from Belt
         {
             if (item.GetType() == typeof(Tool))
             {
-                Tool tool = (Tool)item;
+                Tool tool = (Tool)item; //You dont need to put logic to check what tool it is cause using virtual methods it finnesses and does as it should respectively
                 tool.ActivationRequireMent(this);
             }
             else
@@ -243,20 +305,23 @@ namespace Assets.Scripts.Entities.Worker
                 Debug.Log("The item has to be a Tool");
             }
         }
+
         public override List<object> RetrieveItemsAtDisposal()
         {
             List<object> Items = new List<object>();
-            Items.Add(this.Bag.Silo);
-            Items.Add(this.Belt.Artillery);
+            Items.Add(Bag.Silo);
+            Items.Add(Belt.Artillery);
+            Items.Add(Chest.Shed);
             return Items;
         }
+
         #endregion
 
         public virtual void LevelIncrease()
         {
             ExperienceLevel++;
-            Health += 0 * ExperienceLevel;
-            Armour += 0 * ExperienceLevel;
+            Health += 1 * ExperienceLevel;
+            Armour += 1 * ExperienceLevel;
             //fire levelIncrease animation
             new SerializedObjectManager().SaveData(this, new SerializedObjectManager().paths[0] + IndividualId); //We use IndividualId here insteaad of name
         }

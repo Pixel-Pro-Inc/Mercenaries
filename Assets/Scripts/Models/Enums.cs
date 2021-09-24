@@ -230,12 +230,21 @@ namespace Assets.Scripts.Models
             Vegetables,
             Fruits
         }
+        public enum MaterialType
+        {
+            Wood,
+            Water,
+            Earth,
+            Stone,
+            IronOre,
+        }
         public enum CardIdReference
         {
             BattleCards,
             FoodCards,
             ToolCards,
             RelicCards,
+            MaterialCards,
             CurrencyCards
         }
        

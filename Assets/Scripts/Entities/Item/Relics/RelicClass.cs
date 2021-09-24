@@ -14,7 +14,7 @@ namespace Assets.Scripts.Entities.Item.Relics
         public override string ItemName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public override string ItemDescription { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public override Persona Owner { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public override bool Relic { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public override bool NonConsumable { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public override bool BeingUsed { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         static int InstantiatedCardNumber;
@@ -98,7 +98,7 @@ namespace Assets.Scripts.Entities.Item.Relics
         {
             //Here in the food the character is checked to see if they qualify
             Debug.Log("You didn't put the logic to check if that person can equip the item");
-            return false;
+            return true;
         }
 
     }
