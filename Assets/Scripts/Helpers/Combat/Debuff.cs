@@ -12,6 +12,12 @@ namespace Assets.Scripts.Helpers
 {
     public class Debuff
     {
+        public Debuff(object CharacterInstance)
+        {
+            Persona p = (Persona)CharacterInstance;
+            p.characterBehaviour.AttackAnimation();
+        }
+
         public void CreateDebuff(object TargetInstance, double debuffPercent, debuffType type, int lifeTime) //this would prolly be the last thing thats called in the method
         {
             Persona Target = (Persona)TargetInstance;
@@ -26,7 +32,7 @@ namespace Assets.Scripts.Helpers
             Target.AddDebuff(debuffObject);
             if (Target.Foe == false)
             {
-                Target.GetComponent<GameManager>().TeamDeBuffs.Add(debuffObject);
+                GameManager.Instance.TeamDeBuffs.Add(debuffObject);
             }
 
             EffectType effectType = EffectType.Balanced;

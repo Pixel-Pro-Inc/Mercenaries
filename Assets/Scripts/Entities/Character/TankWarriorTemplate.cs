@@ -14,6 +14,8 @@ namespace Assets.Scripts.Entities.Character
         {
             Instance = this;
             InitiationMethod();
+
+            Speed = 10;
         }
 
         #region Character variables

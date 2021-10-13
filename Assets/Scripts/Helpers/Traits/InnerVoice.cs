@@ -53,7 +53,7 @@ namespace Assets.Scripts.Helpers
             Persona Target = (Persona)TargetInstance;
             manifest += spoken;
 
-            if (InnerMessage== manifest)
+            if (InnerMessage == manifest)
             {
                 SpeakInnervoice();
                 Character.UniqueSkill(Character, Target);

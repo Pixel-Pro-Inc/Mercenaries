@@ -34,7 +34,7 @@ namespace Assets.Scripts.Helpers
             };
             if (target.Foe == false)
             {
-                target.GetComponent<GameManager>().TeamDefence.Add(defendObject);
+                GameManager.Instance.TeamDefence.Add(defendObject);
             }
         }
         public void MagicalResistance(bool state, int amount)
@@ -50,7 +50,7 @@ namespace Assets.Scripts.Helpers
             };
             if (target.Foe == false)
             {
-                target.GetComponent<GameManager>().TeamDefence.Add(defendObject);
+                GameManager.Instance.TeamDefence.Add(defendObject);
             }
         }
         public void Shield(bool state, int amount)
@@ -65,7 +65,7 @@ namespace Assets.Scripts.Helpers
             };
             if (target.Foe == false)
             {
-                target.GetComponent<GameManager>().TeamDefence.Add(defendObject);
+                GameManager.Instance.TeamDefence.Add(defendObject);
             }
         }
         public void Purified(bool state)
@@ -78,7 +78,7 @@ namespace Assets.Scripts.Helpers
             };
             if (target.Foe == false)
             {
-                target.GetComponent<GameManager>().TeamDefence.Add(defendObject);
+                GameManager.Instance.TeamDefence.Add(defendObject);
             }
         }
         public void Block(bool state)
@@ -91,7 +91,7 @@ namespace Assets.Scripts.Helpers
             };
             if (target.Foe == false)
             {
-                target.GetComponent<GameManager>().TeamDefence.Add(defendObject);
+                GameManager.Instance.TeamDefence.Add(defendObject);
             }
         }
         public void Immune(bool state)
@@ -104,7 +104,7 @@ namespace Assets.Scripts.Helpers
             };
             if (target.Foe == false)
             {
-                target.GetComponent<GameManager>().TeamDefence.Add(defendObject);
+                GameManager.Instance.TeamDefence.Add(defendObject);
             }
         }
     }

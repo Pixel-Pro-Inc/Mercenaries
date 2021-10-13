@@ -848,9 +848,10 @@ public class CardBehaviour : Card
                 break;
         }
 
-        string Innermessage = CharacterInstance.InnerVoice.InnerMessage;
-        int manifestnumber = CharacterInstance.InnerVoice.manifest.Length +1; //It has to be plus one so it can get the next alphabet character. Also, theres no need to update manifest here, since its already done
-        CharacterInstance.InnerVoice.CallInnerVoice(Innermessage[manifestnumber],CharacterInstance, Target);
+        /*string Innermessage = CharacterInstance.InnerVoice.InnerMessage;
+        Debug.Log(Innermessage);
+        int manifestnumber = CharacterInstance.InnerVoice.manifest.Length + 1; //It has to be plus one so it can get the next alphabet character. Also, theres no need to update manifest here, since its already done
+        CharacterInstance.InnerVoice.CallInnerVoice(Innermessage[manifestnumber],CharacterInstance, Target);*/
 
         //turn played
         if (GameManager.Instance.roundInfo.inControl == WhoseInControl.Human)
@@ -872,11 +873,32 @@ public class CardBehaviour : Card
     }
     public void OnMouseDown()
     {
+        //Clicked
+
+
         
     }
     float tapTimer = 0;
     public void OnMouseUp()
     {
+        block = 0;
+        if (tapTimer > 0.6f && tapTimer != 0) 
+            return;
+
+
+        GameManager.Instance.selectedCard = this;
+        GameManager.Instance.cardSelected = true;
+
+        //Selection Outline
+        for (int i = 0; i < GameObject.Find("Cards").transform.childCount; i++)
+        {
+            GameObject.Find("Cards").transform.GetChild(i).GetComponentInChildren<SpriteRenderer>().material = GameManager.Instance.defaultSprite;
+        }
+
+        GetComponent<SpriteRenderer>().material = GameManager.Instance.outlineMat;
+
+        tapTimer = 0;
+        /*
         if (!CardDescriptionManager.Instance.cardDetailsView.activeSelf)
         {
             if(tapTimer < .3f)
@@ -898,13 +920,38 @@ public class CardBehaviour : Card
             moving = false;
 
             GoTo = initial;
-        }            
+        } 
+        */
     }
+    int block = 0;
     public void OnMouseDrag()
     {
+        tapTimer += Time.deltaTime;
+
+        if (tapTimer > .6f && block == 0)
+            if (!CardDescriptionManager.Instance.cardDetailsView.activeSelf)
+            {
+                block = 1;
+                tapTimer = 0;
+
+                CardDescriptionManager.Instance.CardDetailsShow(GetComponent<SpriteRenderer>().sprite);
+
+                GameManager.Instance.selectedCard = this;
+                GameManager.Instance.cardSelected = true;
+
+                //Selection Outline
+                for (int i = 0; i < GameObject.Find("Cards").transform.childCount; i++)
+                {
+                    GameObject.Find("Cards").transform.GetChild(i).GetComponentInChildren<SpriteRenderer>().material = GameManager.Instance.defaultSprite;
+                }
+                GetComponent<SpriteRenderer>().material = GameManager.Instance.outlineMat;
+                
+                return;
+            }
+        /*
         if (!CardDescriptionManager.Instance.cardDetailsView.activeSelf)
         {
-            tapTimer += Time.deltaTime;
+            
 
             moving = true;
 
@@ -925,7 +972,8 @@ public class CardBehaviour : Card
             {
                 obj.transform.GetChild(0).GetComponentInChildren<CharacterBehaviour>().SetColor(new Color(255, 255, 255, 255));
             }
-        }            
+        }    
+        */
     }
     public List<float> playerDistances = new List<float>();
     public List<float> enemyDistances = new List<float>();

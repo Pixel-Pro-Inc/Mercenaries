@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.UI;
 using static Assets.Scripts.Models.Enums;
 
 namespace Assets.Scripts.MonoBehaviours
@@ -31,6 +32,16 @@ namespace Assets.Scripts.MonoBehaviours
         public List<object> TeamDeBuffs = new List<object>(); //These are the Debuffs actually experienced by the character
         Gods GodsMechanism;
 
+        public CardBehaviour selectedCard;
+        public bool cardSelected;
+
+        public Material outlineMat;
+        public Material defaultSprite;
+
+        public GameObject gameOverScreen;
+
+        public bool gameIsOver;
+
         private void Awake()
         {
             Instance = this;
@@ -38,6 +49,16 @@ namespace Assets.Scripts.MonoBehaviours
             {
                 inControl = Enums.WhoseInControl.Human
             };
+
+            
+        }
+        private void Start()
+        {
+            Invoke("SceneReady", 0.1f);
+        }
+        public void SceneReady()
+        {
+            SwitchActiveCharacter(); //Call after Scene is Ready Once
         }
 
         public void Update()
@@ -46,102 +67,136 @@ namespace Assets.Scripts.MonoBehaviours
             if (activeCharacter.Norgami != Deity.Atheos)
                 GodsMechanism.GodsHand(activeCharacter.Norgami, activeCharacter.GetComponentInChildren<Persona>());
         }
-        public void CheckGameOver()
-        {
-            //Something
-        }
         public void CheckRoundDone()
         {
-            switch (roundInfo.inControl)
+            if (!gameIsOver)
             {
-                case Enums.WhoseInControl.Human:
-                    roundInfo.inControl = Enums.WhoseInControl.CPU;
-                    for (int i = 0; i < playerCharacters.Count; i++)
-                    {
-                        if (!playerCharacters[i].GetComponentInChildren<CharacterBehaviour>().turnUsed)
-                            roundInfo.inControl = Enums.WhoseInControl.Human;
-                    }
+                switch (roundInfo.inControl)
+                {
+                    case Enums.WhoseInControl.Human:
+                        roundInfo.inControl = Enums.WhoseInControl.CPU;
 
-                    if (roundInfo.inControl == Enums.WhoseInControl.CPU)
-                    {
-                       
-                        for (int i = 0; i < enemyCharacters.Count; i++)
-                        {
-                            enemyCharacters[i].GetComponentInChildren<CharacterBehaviour>().turnUsed = false;
-                        }
-                        //Attack
-                        GameManager.Instance.activeEnemy = enemyCharacters[0].GetComponentInChildren<CharacterBehaviour>();
-
-                        enemyCharacters[0].GetComponentInChildren<CharacterBehaviour>().EnemyAttack();
-                    }
-                    break;
-                case Enums.WhoseInControl.CPU:
-                    roundInfo.inControl = Enums.WhoseInControl.Human;
-                    for (int i = 0; i < enemyCharacters.Count; i++)
-                    {
-                        if (!enemyCharacters[i].GetComponentInChildren<CharacterBehaviour>().turnUsed)
-                            roundInfo.inControl = Enums.WhoseInControl.CPU;
-                    }
-
-                    if(roundInfo.inControl == Enums.WhoseInControl.Human)
-                    {
                         for (int i = 0; i < playerCharacters.Count; i++)
                         {
-                            playerCharacters[i].GetComponentInChildren<CharacterBehaviour>().turnUsed = false;                            
+                            if (!playerCharacters[i].GetComponentInChildren<CharacterBehaviour>().turnUsed)
+                                roundInfo.inControl = Enums.WhoseInControl.Human;
                         }
-                        DeckPopulate.Instance.DeleteCards();
-                    }
-                    break;
-                    
-            }
 
-            List<Persona> personas = new List<Persona>();
-
-            //Hungry Debuff Implementation
-            for (int i = 0; i < playerCharacters.Count; i++)
-            {
-                personas.Add(playerCharacters[i].GetComponentInChildren<CharacterBehaviour>().person);
-            }
-            for (int i = 0; i < enemyCharacters.Count; i++)
-            {
-                personas.Add(enemyCharacters[i].GetComponentInChildren<CharacterBehaviour>().person);
-            }
-
-            for (int i = 0; i < personas.Count; i++)
-            {
-                List<DebuffObject> debuffs = new List<DebuffObject>();
-                debuffs.AddRange(personas[i].GetDebuffs());
-                if (debuffs.Count != 0)
-                    foreach (var item in debuffs)
-                    {
-                        if (item.type == debuffType.Hungry)
-                            personas[i].Health -= (int)((float)personas[i].Life * (float)item.amount);
-                    }
-            }
-            //Remove Debuffs
-            for (int i = 0; i < playerCharacters.Count; i++)
-            {
-                personas.Add(playerCharacters[i].GetComponentInChildren<CharacterBehaviour>().person);
-            }
-            for (int i = 0; i < enemyCharacters.Count; i++)
-            {
-                personas.Add(enemyCharacters[i].GetComponentInChildren<CharacterBehaviour>().person);
-            }
-
-            for (int i = 0; i < personas.Count; i++)
-            {
-                List<DebuffObject> debuffs = new List<DebuffObject>();
-                debuffs.AddRange(personas[i].GetDebuffs());
-                if (debuffs.Count != 0)
-                    foreach (var item in debuffs)
-                    {
-                        if (item.roundsActive >= item.lifeTime)
+                        if (roundInfo.inControl == Enums.WhoseInControl.CPU)
                         {
-                            personas[i].RemoveDebuff(item);//remove effect
+                            for (int i = 0; i < enemyCharacters.Count; i++)
+                            {
+                                enemyCharacters[i].GetComponentInChildren<CharacterBehaviour>().turnUsed = false;
+                            }
+                        }
+                        break;
+                    case Enums.WhoseInControl.CPU:
+                        roundInfo.inControl = Enums.WhoseInControl.Human;
+                        for (int i = 0; i < enemyCharacters.Count; i++)
+                        {
+                            if (!enemyCharacters[i].GetComponentInChildren<CharacterBehaviour>().turnUsed)
+                                roundInfo.inControl = Enums.WhoseInControl.CPU;
                         }
 
-                        item.roundsActive++;
-                    }
+                        if (roundInfo.inControl == Enums.WhoseInControl.Human)
+                        {
+                            for (int i = 0; i < playerCharacters.Count; i++)
+                            {
+                                playerCharacters[i].GetComponentInChildren<CharacterBehaviour>().turnUsed = false;
+                            }
+
+                            DeckPopulate.Instance.DeleteCards();
+                        }
+                        break;
+
+                }
+
+                List<Persona> personas = new List<Persona>();
+
+                //Hungry Debuff Implementation
+                for (int i = 0; i < playerCharacters.Count; i++)
+                {
+                    personas.Add(playerCharacters[i].GetComponentInChildren<CharacterBehaviour>().person);
+                }
+                for (int i = 0; i < enemyCharacters.Count; i++)
+                {
+                    personas.Add(enemyCharacters[i].GetComponentInChildren<CharacterBehaviour>().person);
+                }
+
+                for (int i = 0; i < personas.Count; i++)
+                {
+                    List<DebuffObject> debuffs = new List<DebuffObject>();
+                    debuffs.AddRange(personas[i].GetDebuffs());
+                    if (debuffs.Count != 0)
+                        foreach (var item in debuffs)
+                        {
+                            if (item.type == debuffType.Hungry)
+                                personas[i].Health -= (int)((float)personas[i].Life * (float)item.amount);
+                        }
+                }
+                //Remove Debuffs
+                for (int i = 0; i < playerCharacters.Count; i++)
+                {
+                    personas.Add(playerCharacters[i].GetComponentInChildren<CharacterBehaviour>().person);
+                }
+                for (int i = 0; i < enemyCharacters.Count; i++)
+                {
+                    personas.Add(enemyCharacters[i].GetComponentInChildren<CharacterBehaviour>().person);
+                }
+
+                for (int i = 0; i < personas.Count; i++)
+                {
+                    List<DebuffObject> debuffs = new List<DebuffObject>();
+                    debuffs.AddRange(personas[i].GetDebuffs());
+                    if (debuffs.Count != 0)
+                        foreach (var item in debuffs)
+                        {
+                            if (item.roundsActive >= item.lifeTime)
+                            {
+                                personas[i].RemoveDebuff(item);//remove effect
+                            }
+
+                            item.roundsActive++;
+                        }
+                }
+
+                CheckBattleOver();
+                SwitchActiveCharacter();
+            }            
+        }
+        public void SwitchActiveCharacter()
+        {
+            //Switch Active Character (Character with highest speed attacks first)
+            if (roundInfo.inControl == WhoseInControl.Human)
+                ActiveCharacterLogic(playerCharacters, enemyCharacters);
+
+            if (roundInfo.inControl == WhoseInControl.CPU)
+                ActiveCharacterLogic(enemyCharacters, playerCharacters);
+        }
+        void ActiveCharacterLogic(List<GameObject> objects, List<GameObject> opps)
+        {
+            List<Persona> p = new List<Persona>();
+            for (int i = 0; i < objects.Count; i++)
+            {
+                p.Add(objects[i].transform.GetComponentInChildren<CharacterBehaviour>().person);
+            }
+
+            List<float> speeds = new List<float>();
+            for (int i = 0; i < p.Count; i++)
+            {
+                speeds.Add((float)p[i].Speed);
+            }
+
+            float val = Mathf.Max(speeds.ToArray());
+
+            int ndex = speeds.IndexOf(val);
+
+            objects[ndex].transform.GetComponentInChildren<CharacterBehaviour>().SetAsActiveCharacter();
+            p[ndex].Speed *= .75f;
+
+            for (int i = 0; i < opps.Count; i++)
+            {
+                opps[i].GetComponentInChildren<CharacterBehaviour>().person.Speed /= .75f; //= opps[i].GetComponentInChildren<CharacterBehaviour>().GetDefaultValues().Speed;
             }
         }
 
@@ -164,7 +219,6 @@ namespace Assets.Scripts.MonoBehaviours
 
             return 0;
         }
-
         void SpawnEffect(Transform character, GameObject effect)
         {
             if(blockEffect == 0)
@@ -176,17 +230,50 @@ namespace Assets.Scripts.MonoBehaviours
 
                 x.transform.localPosition = location;
 
-                blockEffect = 1;
+                //blockEffect = 1;
             }            
+        }
+        public void CheckBattleOver()
+        {
+            int totalHealth = 0;
+            for (int i = 0; i < playerCharacters.Count; i++)
+            {
+                totalHealth += playerCharacters[i].transform.GetComponentInChildren<CharacterBehaviour>().person.Health;
+            }
+
+            if (totalHealth <= 0)
+            {
+                BattleLost();
+                gameIsOver = true;
+                return;
+            }
+
+            totalHealth = 0;
+            for (int i = 0; i < enemyCharacters.Count; i++)
+            {
+                totalHealth += enemyCharacters[i].transform.GetComponentInChildren<CharacterBehaviour>().person.Health;
+            }
+
+            if (totalHealth <= 0)
+            {
+                BattleWon();
+                gameIsOver = true;
+                return;
+            }
         }
         public void BattleWon()
         {
+            gameOverScreen.SetActive(true);
+            Text t = gameOverScreen.transform.GetChild(0).gameObject.GetComponent<Text>();
+            t.text = "You Won!!!";
             Debug.Log("Yeah here should be the battle won animation, and call the Gamefinished() logic. We might have to do this together? What you think");
         }
         public void BattleLost()
         {
+            gameOverScreen.SetActive(true);
+            Text t = gameOverScreen.transform.GetChild(0).gameObject.GetComponent<Text>();
+            t.text = "You Lost!!!";
             Debug.Log("Battle lost animation and Game over logic");
-
         }
     }
 }

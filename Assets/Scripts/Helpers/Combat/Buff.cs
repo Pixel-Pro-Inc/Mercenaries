@@ -32,7 +32,7 @@ namespace Assets.Scripts.Helpers
             Character.AddBuff(buffObject);
             if (Character.Foe == false)
             {
-                Character.GetComponent<GameManager>().TeamBuffs.Add(buffObject);
+                GameManager.Instance.TeamBuffs.Add(buffObject);
             }
 
             Timer BuffTimer = new Timer();
@@ -64,7 +64,7 @@ namespace Assets.Scripts.Helpers
             Character.AddBuff(buffObject);
             if (Character.Foe == false)
             {
-                Character.GetComponent<GameManager>().TeamBuffs.Add(buffObject);
+                GameManager.Instance.TeamBuffs.Add(buffObject);
             }
 
             Timer BuffTimer = new Timer();
@@ -95,7 +95,7 @@ namespace Assets.Scripts.Helpers
             Character.AddBuff(buffObject);
             if (Character.Foe == false)
             {
-                Character.GetComponent<GameManager>().TeamBuffs.Add(buffObject);
+                GameManager.Instance.TeamBuffs.Add(buffObject);
             }
 
             Timer BuffTimer = new Timer();
@@ -131,7 +131,7 @@ namespace Assets.Scripts.Helpers
             Character.AddBuff(buffObject);
             if (Character.Foe == false)
             {
-                Character.GetComponent<GameManager>().TeamBuffs.Add(buffObject);
+                GameManager.Instance.TeamBuffs.Add(buffObject);
             }
 
             Timer BuffTimer = new Timer();
@@ -171,7 +171,7 @@ namespace Assets.Scripts.Helpers
             Character.AddBuff(buffObject);
             if (Character.Foe == false)
             {
-                Character.GetComponent<GameManager>().TeamBuffs.Add(buffObject);
+                GameManager.Instance.TeamBuffs.Add(buffObject);
             }
 
             Timer BuffTimer = new Timer();
@@ -222,7 +222,7 @@ namespace Assets.Scripts.Helpers
             Character.AddBuff(buffObject);
             if (Character.Foe == false)
             {
-                Character.GetComponent<GameManager>().TeamBuffs.Add(buffObject);
+                GameManager.Instance.TeamBuffs.Add(buffObject);
             }
 
             object scapegoat = Character;
@@ -279,7 +279,7 @@ namespace Assets.Scripts.Helpers
             Target.AddBuff(buffObject);
             if (Character.Foe == false)
             {
-                Character.GetComponent<GameManager>().TeamBuffs.Add(buffObject);
+                GameManager.Instance.TeamBuffs.Add(buffObject);
             }
 
             Timer BuffTimer = new Timer();
@@ -348,7 +348,7 @@ namespace Assets.Scripts.Helpers
             };
             if (Target.Foe == false)
             {
-                Target.GetComponent<GameManager>().TeamBuffs.Add(buffObject);
+                GameManager.Instance.TeamBuffs.Add(buffObject);
             }
             //in every Debuff there will be a removeBuff==false, but of course it will ask first if it equals true
         }
@@ -369,7 +369,7 @@ namespace Assets.Scripts.Helpers
             buffObject.amount = HealingCache;
             if (Character.Foe == false)
             {
-                Character.GetComponent<GameManager>().TeamBuffs.Add(buffObject);
+                GameManager.Instance.TeamBuffs.Add(buffObject);
             }
             for (int i = 0; i < ((Persona)TargetInstance).GetDebuffs().Count; i++)
             {
@@ -394,7 +394,7 @@ namespace Assets.Scripts.Helpers
             buffObject.amount = damageobj;
             if (Target.Foe == false)
             {
-                Target.GetComponent<GameManager>().TeamBuffs.Add(buffObject);
+                GameManager.Instance.TeamBuffs.Add(buffObject);
             }
         }
         public void GodsBlessing(object CharacterInstance)
@@ -421,7 +421,7 @@ namespace Assets.Scripts.Helpers
                     Character.Aware(CharacterInstance);
                     break;
             }
-            //Character.GetComponent<GameManager>().BattleWon();
+            //GameManager.Instance.BattleWon();
         }
 
     }

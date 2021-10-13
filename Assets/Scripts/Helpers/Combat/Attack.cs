@@ -13,6 +13,11 @@ namespace Assets.Scripts.Helpers
 {
     public class Attack
     {
+        public Attack(object CharacterInstance, object TargetInstance)
+        {
+            Persona p = (Persona)CharacterInstance;
+            p.characterBehaviour.AttackAnimation();
+        }
         public void TrueDamage(object CharacterInstance, object TargetInstance, DamageObject DamageObj)
         {
             Persona Character = (Persona)CharacterInstance;
@@ -29,7 +34,7 @@ namespace Assets.Scripts.Helpers
             Character.AttacksGiven.Add(attackObject);
             if (Character.Foe==false)
             {
-                Character.GetComponent<GameManager>().TeamAttacks.Add(attackObject);
+                GameManager.Instance.TeamAttacks.Add(attackObject);
             }
 
             if (target.ImmuneState == true)
@@ -62,7 +67,7 @@ namespace Assets.Scripts.Helpers
             Character.AttacksGiven.Add(attackObject);
             if (Character.Foe == false)
             {
-                Character.GetComponent<GameManager>().TeamAttacks.Add(attackObject);
+                GameManager.Instance.TeamAttacks.Add(attackObject);
             }
 
             #region Character Logic
@@ -165,7 +170,7 @@ namespace Assets.Scripts.Helpers
             Character.AttacksGiven.Add(attackObject);
             if (Character.Foe == false)
             {
-                Character.GetComponent<GameManager>().TeamAttacks.Add(attackObject);
+                GameManager.Instance.TeamAttacks.Add(attackObject);
             }
 
             #region Character Logic
@@ -271,7 +276,7 @@ namespace Assets.Scripts.Helpers
             Character.AttacksGiven.Add(attackObject);
             if (Character.Foe == false)
             {
-                Character.GetComponent<GameManager>().TeamAttacks.Add(attackObject);
+                GameManager.Instance.TeamAttacks.Add(attackObject);
             }
 
             #region Character Logic
@@ -368,7 +373,7 @@ namespace Assets.Scripts.Helpers
             Character.AttacksGiven.Add(attackObject);
             if (Character.Foe == false)
             {
-                Character.GetComponent<GameManager>().TeamAttacks.Add(attackObject);
+                GameManager.Instance.TeamAttacks.Add(attackObject);
             }
 
             #region Character Logic
@@ -461,7 +466,7 @@ namespace Assets.Scripts.Helpers
             Character.AttacksGiven.Add(attackObject);
             if (Character.Foe == false)
             {
-                Character.GetComponent<GameManager>().TeamAttacks.Add(attackObject);
+                GameManager.Instance.TeamAttacks.Add(attackObject);
             }
 
             Target.AttackSponser = Character;
@@ -490,7 +495,7 @@ namespace Assets.Scripts.Helpers
             Character.AttacksGiven.Add(attackObject);
             if (Character.Foe == false)
             {
-                Character.GetComponent<GameManager>().TeamAttacks.Add(attackObject);
+                GameManager.Instance.TeamAttacks.Add(attackObject);
             }
 
             bool howmany = RoundInfo.RoundDone;
@@ -535,7 +540,7 @@ namespace Assets.Scripts.Helpers
             Character.AttacksGiven.Add(attackObject);
             if (Character.Foe == false)
             {
-                Character.GetComponent<GameManager>().TeamAttacks.Add(attackObject);
+                GameManager.Instance.TeamAttacks.Add(attackObject);
             }
 
             if (Target.ImmuneState == true)
@@ -565,7 +570,7 @@ namespace Assets.Scripts.Helpers
             Character.AttacksGiven.Add(attackObject);
             if (Character.Foe == false)
             {
-                Character.GetComponent<GameManager>().TeamAttacks.Add(attackObject);
+                GameManager.Instance.TeamAttacks.Add(attackObject);
             }
 
             if (Target.ImmuneState == true)
@@ -597,7 +602,7 @@ namespace Assets.Scripts.Helpers
             Character.AttacksGiven.Add(attackObject);
             if (Character.Foe == false)
             {
-                Character.GetComponent<GameManager>().TeamAttacks.Add(attackObject);
+                GameManager.Instance.TeamAttacks.Add(attackObject);
             }
 
             int countofroundsineffect = 0;
@@ -658,7 +663,7 @@ namespace Assets.Scripts.Helpers
             Character.AttacksGiven.Add(attackObject);
             if (Character.Foe == false)
             {
-                Character.GetComponent<GameManager>().TeamAttacks.Add(attackObject);
+                GameManager.Instance.TeamAttacks.Add(attackObject);
             }
 
             #region Character Logic
@@ -755,7 +760,7 @@ namespace Assets.Scripts.Helpers
             Character.AttacksGiven.Add(CurseattackObject);
             if (Character.Foe == false)
             {
-                Character.GetComponent<GameManager>().TeamAttacks.Add(CurseattackObject);
+                GameManager.Instance.TeamAttacks.Add(CurseattackObject);
             }
 
             Target.AttackSponser = Character;// I have doubts that this should be here
@@ -792,7 +797,6 @@ namespace Assets.Scripts.Helpers
                 }
             }
         }
-
         public bool Feign(object CharacterInstance, object TargetInstance)
         {
             throw new NotImplementedException();

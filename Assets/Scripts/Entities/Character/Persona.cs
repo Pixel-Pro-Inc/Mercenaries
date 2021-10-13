@@ -626,19 +626,19 @@ namespace Assets.Scripts.Entities.Character
 
         #region Attack
 
-        public void TrueDamage(object CharacterInstance, object TargetInstance, DamageObject DamageObj) => new Attack().TrueDamage(CharacterInstance,TargetInstance,DamageObj);
-        public void PhysicalDamage(object CharacterInstance, object TargetInstance) => new Attack().PhysicalDamage(CharacterInstance,TargetInstance);
-        public void PhysicalDamage(object CharacterInstance, object TargetInstance, DamageObject damageObject) => new Attack().PhysicalDamage(CharacterInstance, TargetInstance, damageObject);// this is so someone can put a tailored value
-        public void MagicalDamage(object CharacterInstance, object TargetInstance) => new Attack().MagicalDamage(CharacterInstance, TargetInstance);
-        public void MagicalDamage(object CharacterInstance, object TargetInstance, int amount) => new Attack().MagicalDamage(CharacterInstance, TargetInstance,amount);
-        public void Drain(object CharacterInstance, object TargetInstance) => new Attack().Drain(CharacterInstance, TargetInstance);
-        public void Ignite(object CharacterInstance, object TargetInstance, int amount) => new Attack().Ignite(CharacterInstance, TargetInstance, amount);
-        public void Bleed(object CharacterInstance, object TargetInstance) => new Attack().Bleed(CharacterInstance, TargetInstance);
-        public void Bleed(object CharacterInstance, object TargetInstance, DamageObject damageObject)=> new Attack().Bleed(CharacterInstance, TargetInstance,damageObject); // this is an overload that acts just like physicalDamage overload for a tailors value pulled in
-        public void Blight(object CharacterInstance, object TargetInstance, int amountOfRounds, int amountOfDamage) => new Attack().Blight(CharacterInstance, TargetInstance,amountOfRounds,amountOfDamage);
-        public void BalancedDamage(object CharacterInstance, object TargetInstance) => new Attack().BalancedDamage(CharacterInstance, TargetInstance);
-        public void Curse(object CharacterInstance, object TargetInstance) => new Attack().Curse(CharacterInstance, TargetInstance);
-        public bool Feign(object CharacterInstance, object TargetInstance) => new Attack().Feign(CharacterInstance, TargetInstance);
+        public void TrueDamage(object CharacterInstance, object TargetInstance, DamageObject DamageObj) => new Attack(CharacterInstance, TargetInstance).TrueDamage(CharacterInstance,TargetInstance,DamageObj);
+        public void PhysicalDamage(object CharacterInstance, object TargetInstance) => new Attack(CharacterInstance, TargetInstance).PhysicalDamage(CharacterInstance,TargetInstance);
+        public void PhysicalDamage(object CharacterInstance, object TargetInstance, DamageObject damageObject) => new Attack(CharacterInstance, TargetInstance).PhysicalDamage(CharacterInstance, TargetInstance, damageObject);// this is so someone can put a tailored value
+        public void MagicalDamage(object CharacterInstance, object TargetInstance) => new Attack(CharacterInstance, TargetInstance).MagicalDamage(CharacterInstance, TargetInstance);
+        public void MagicalDamage(object CharacterInstance, object TargetInstance, int amount) => new Attack(CharacterInstance, TargetInstance).MagicalDamage(CharacterInstance, TargetInstance,amount);
+        public void Drain(object CharacterInstance, object TargetInstance) => new Attack(CharacterInstance, TargetInstance).Drain(CharacterInstance, TargetInstance);
+        public void Ignite(object CharacterInstance, object TargetInstance, int amount) => new Attack(CharacterInstance, TargetInstance).Ignite(CharacterInstance, TargetInstance, amount);
+        public void Bleed(object CharacterInstance, object TargetInstance) => new Attack(CharacterInstance, TargetInstance).Bleed(CharacterInstance, TargetInstance);
+        public void Bleed(object CharacterInstance, object TargetInstance, DamageObject damageObject)=> new Attack(CharacterInstance, TargetInstance).Bleed(CharacterInstance, TargetInstance,damageObject); // this is an overload that acts just like physicalDamage overload for a tailors value pulled in
+        public void Blight(object CharacterInstance, object TargetInstance, int amountOfRounds, int amountOfDamage) => new Attack(CharacterInstance, TargetInstance).Blight(CharacterInstance, TargetInstance,amountOfRounds,amountOfDamage);
+        public void BalancedDamage(object CharacterInstance, object TargetInstance) => new Attack(CharacterInstance, TargetInstance).BalancedDamage(CharacterInstance, TargetInstance);
+        public void Curse(object CharacterInstance, object TargetInstance) => new Attack(CharacterInstance, TargetInstance).Curse(CharacterInstance, TargetInstance);
+        public bool Feign(object CharacterInstance, object TargetInstance) => new Attack(CharacterInstance, TargetInstance).Feign(CharacterInstance, TargetInstance);
 
         #endregion
         #region Defend
@@ -672,26 +672,26 @@ namespace Assets.Scripts.Entities.Character
 
         #endregion
         #region Debuff
-        public void Slow(object CharacterInstance, object TargetInstance, int lifeTime) => new Debuff().CreateDebuff(TargetInstance, ((Persona)CharacterInstance).SlowDeBuffPercent, debuffType.Slow, lifeTime);
-        public void Rooted(object CharacterInstance, object TargetInstance, int lifeTime) => new Debuff().CreateDebuff(TargetInstance, ((Persona)CharacterInstance).RootedDeBuffPercent, debuffType.Rooted, lifeTime);
-        public void WeakGrip(object CharacterInstance, object TargetInstance, int lifeTime) => new Debuff().CreateDebuff(TargetInstance, ((Persona)CharacterInstance).WeakGripDeBuffPercent, debuffType.WeakGrip, lifeTime);
-        public void Exiled(object CharacterInstance, object TargetInstance, int lifeTime) => new Debuff().CreateDebuff(TargetInstance, ((Persona)CharacterInstance).ExiledDeBuffPercent, debuffType.Exiled, lifeTime);
-        public void Marked(object CharacterInstance, object TargetInstance, int lifeTime) => new Debuff().CreateDebuff(TargetInstance, ((Persona)CharacterInstance).MarkedDeBuffPerent, debuffType.Marked, lifeTime);
-        public void Calm(object CharacterInstance, object TargetInstance, int lifeTime) => new Debuff().CreateDebuff(TargetInstance, ((Persona)CharacterInstance).CalmDeBuffPercent, debuffType.Calm, lifeTime);
-        public void BrokenGuard(object CharacterInstance, object TargetInstance, int lifeTime) => new Debuff().CreateDebuff(TargetInstance, ((Persona)CharacterInstance).BrokenGaurdDeBuffPercent, debuffType.BrokenGaurd, lifeTime);
-        public void Burnt(object CharacterInstance, object TargetInstance, int lifeTime) => new Debuff().CreateDebuff(TargetInstance, 0.5, debuffType.Burnt, lifeTime);
-        public void Stun(object CharacterInstance, object TargetInstance, int lifeTime) => new Debuff().CreateDebuff(TargetInstance, 0, debuffType.Stun, lifeTime);
-        public void Freeze(object CharacterInstance, object TargetInstance, int lifeTime) => new Debuff().CreateDebuff(TargetInstance, 0, debuffType.Freeze, lifeTime);
-        public void Cold(object CharacterInstance, object TargetInstance, int lifeTime) => new Debuff().CreateDebuff(TargetInstance, ((Persona)CharacterInstance).ColdDeBuffPercent, debuffType.Cold, lifeTime);
-        public void Blinded(object CharacterInstance, object TargetInstance, int lifeTime) => new Debuff().CreateDebuff(TargetInstance, ((Persona)CharacterInstance).BlindedDeBuffPercent, debuffType.Blinded, lifeTime);
-        public void Tainted(object CharacterInstance, object TargetInstance, int lifeTime) => new Debuff().CreateDebuff(TargetInstance, ((Persona)CharacterInstance).TaintedDebuffPercent, debuffType.Tainted, lifeTime);
+        public void Slow(object CharacterInstance, object TargetInstance, int lifeTime) => new Debuff(CharacterInstance).CreateDebuff(TargetInstance, ((Persona)CharacterInstance).SlowDeBuffPercent, debuffType.Slow, lifeTime);
+        public void Rooted(object CharacterInstance, object TargetInstance, int lifeTime) => new Debuff(CharacterInstance).CreateDebuff(TargetInstance, ((Persona)CharacterInstance).RootedDeBuffPercent, debuffType.Rooted, lifeTime);
+        public void WeakGrip(object CharacterInstance, object TargetInstance, int lifeTime) => new Debuff(CharacterInstance).CreateDebuff(TargetInstance, ((Persona)CharacterInstance).WeakGripDeBuffPercent, debuffType.WeakGrip, lifeTime);
+        public void Exiled(object CharacterInstance, object TargetInstance, int lifeTime) => new Debuff(CharacterInstance).CreateDebuff(TargetInstance, ((Persona)CharacterInstance).ExiledDeBuffPercent, debuffType.Exiled, lifeTime);
+        public void Marked(object CharacterInstance, object TargetInstance, int lifeTime) => new Debuff(CharacterInstance).CreateDebuff(TargetInstance, ((Persona)CharacterInstance).MarkedDeBuffPerent, debuffType.Marked, lifeTime);
+        public void Calm(object CharacterInstance, object TargetInstance, int lifeTime) => new Debuff(CharacterInstance).CreateDebuff(TargetInstance, ((Persona)CharacterInstance).CalmDeBuffPercent, debuffType.Calm, lifeTime);
+        public void BrokenGuard(object CharacterInstance, object TargetInstance, int lifeTime) => new Debuff(CharacterInstance).CreateDebuff(TargetInstance, ((Persona)CharacterInstance).BrokenGaurdDeBuffPercent, debuffType.BrokenGaurd, lifeTime);
+        public void Burnt(object CharacterInstance, object TargetInstance, int lifeTime) => new Debuff(CharacterInstance).CreateDebuff(TargetInstance, 0.5, debuffType.Burnt, lifeTime);
+        public void Stun(object CharacterInstance, object TargetInstance, int lifeTime) => new Debuff(CharacterInstance).CreateDebuff(TargetInstance, 0, debuffType.Stun, lifeTime);
+        public void Freeze(object CharacterInstance, object TargetInstance, int lifeTime) => new Debuff(CharacterInstance).CreateDebuff(TargetInstance, 0, debuffType.Freeze, lifeTime);
+        public void Cold(object CharacterInstance, object TargetInstance, int lifeTime) => new Debuff(CharacterInstance).CreateDebuff(TargetInstance, ((Persona)CharacterInstance).ColdDeBuffPercent, debuffType.Cold, lifeTime);
+        public void Blinded(object CharacterInstance, object TargetInstance, int lifeTime) => new Debuff(CharacterInstance).CreateDebuff(TargetInstance, ((Persona)CharacterInstance).BlindedDeBuffPercent, debuffType.Blinded, lifeTime);
+        public void Tainted(object CharacterInstance, object TargetInstance, int lifeTime) => new Debuff(CharacterInstance).CreateDebuff(TargetInstance, ((Persona)CharacterInstance).TaintedDebuffPercent, debuffType.Tainted, lifeTime);
         public void Sleep(object CharacterInstance, object TargetInstance) 
         { 
-            new Debuff().CreateDebuff(TargetInstance, 0, debuffType.Sleep, 0);
-            new Debuff().CreateDebuff(TargetInstance, 0, debuffType.Stun, 0);
+            new Debuff(CharacterInstance).CreateDebuff(TargetInstance, 0, debuffType.Sleep, 0);
+            new Debuff(CharacterInstance).CreateDebuff(TargetInstance, 0, debuffType.Stun, 0);
         }
-        public void Hungry(object CharacterInstance, object TargetInstance) => new Debuff().CreateDebuff(TargetInstance, 0.05, debuffType.Hungry, 1);
-        public void Unhealthy(object CharacterInstance, object TargetInstance) => new Debuff().CreateDebuff(TargetInstance, 0.25, debuffType.UnHealthy, 1);
+        public void Hungry(object CharacterInstance, object TargetInstance) => new Debuff(CharacterInstance).CreateDebuff(TargetInstance, 0.05, debuffType.Hungry, 1);
+        public void Unhealthy(object CharacterInstance, object TargetInstance) => new Debuff(CharacterInstance).CreateDebuff(TargetInstance, 0.25, debuffType.UnHealthy, 1);
         public void GodsAnger(object CharacterInstance)
         {
             Persona Character = (Persona)CharacterInstance;
@@ -716,7 +716,7 @@ namespace Assets.Scripts.Entities.Character
                     Unhealthy(CharacterInstance, TargetInstance);
                     break;
             }
-            //Character.GetComponent<GameManager>().BattleLost();
+            //GameManager.Instance.BattleLost();
         }
         #endregion
 

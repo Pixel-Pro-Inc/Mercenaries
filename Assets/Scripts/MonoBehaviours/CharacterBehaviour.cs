@@ -10,6 +10,7 @@ using Assets.Scripts.Entities.Character;
 using Random = UnityEngine.Random;
 using static Assets.Scripts.Models.Enums;
 using Assets.Scripts.Helpers;
+using System.Collections;
 
 namespace Assets.Scripts.MonoBehaviours
 {
@@ -18,6 +19,7 @@ namespace Assets.Scripts.MonoBehaviours
         public Vector3[] positions = { new Vector3(-7.0f, -1.6f, 1.0f), new Vector3(-5.0f, -1.6f, 1.0f), new Vector3(-3.0f, -1.6f, 1.0f), new Vector3(-1.0f, -1.6f, 1.0f) };
         public GameObject parent;
         public Vector3 Goto;
+        public Vector3 origin;
 
         public Deity Norgami=Deity.Atheos;
         public SpeciesType species; //dont like this ode at all, but he put us too deep to manage
@@ -25,6 +27,8 @@ namespace Assets.Scripts.MonoBehaviours
 
         public Image Deck;
         public bool turnUsed;
+
+        public Vector3 attackOffset = new Vector3(1, 0, 0);
 
 
         public Persona person;
@@ -34,26 +38,11 @@ namespace Assets.Scripts.MonoBehaviours
             parent = transform.parent.gameObject;
             Goto = transform.position;
             Deck = GameObject.Find("Deck").GetComponent<Image>();
-
-            /*for (int i = 0; i < positions.Length; i++)
-            {
-                positions[i] = GameManager.Instance.playerCharacters[i].transform.GetChild(0).position;
-            }*/
-
-            /*GameManager.Instance = GameObject.Find("GameManager").GetComponent<GameManager>();
-            if (species != SpeciesType.Enemy)
-            {
-                GameManager.Instance.playerCharacters.Add(gameObject);
-            }
-            else
-            {
-                GameManager.Instance.enemyCharacters.Add(gameObject);
-            }*/
-
         }
         private void Start()
         {
-           
+            origin = transform.position;
+
             List<Persona> heroCharacters = new List<Persona>();
             for (int i = 0; i < GameManager.Instance.playerCharacters.Count; i++)
             {
@@ -440,30 +429,52 @@ namespace Assets.Scripts.MonoBehaviours
 
             ApplySavedStats(person);
 
+            //new SerializedObjectManager().SaveData(person, new SerializedObjectManager().paths[2] + person.CharacterName);
+
             person.characterBehaviour = this;
         }
         public void OnMouseDown()
         {
+
+            if (GameManager.Instance.cardSelected)
+            {
+                GameManager.Instance.selectedCard.OnAction(person);
+
+                GameManager.Instance.selectedCard = null;
+                GameManager.Instance.cardSelected = false;
+                
+                //Remove Outlines
+            }                
+            //On Click On Player
+        }
+        bool startAnimTimer;
+        float timer;
+        public void AttackAnimation()
+        {
+            Goto = transform.position.x < 0 ? Goto + attackOffset: Goto - attackOffset;
+            startAnimTimer = true;
+        }
+        public void SetAsActiveCharacter()
+        {
+            turnUsed = false;
+
+            //Set Indicator
+            for (int i = 0; i < GameManager.Instance.playerCharacters.Count; i++)
+            {
+                GameObject x = GameManager.Instance.playerCharacters[i].GetComponentInChildren<CharacterBehaviour>().gameObject;
+                x.transform.Find("Indicator").gameObject.SetActive(false);
+            }
+            for (int i = 0; i < GameManager.Instance.enemyCharacters.Count; i++)
+            {
+                GameObject x = GameManager.Instance.enemyCharacters[i].GetComponentInChildren<CharacterBehaviour>().gameObject;
+                x.transform.Find("Indicator").gameObject.SetActive(false);
+            }
+
+            transform.Find("Indicator").gameObject.SetActive(true);
+
             if (!turnUsed && !CardDescriptionManager.Instance.cardDetailsView.activeSelf)
                 if (species != SpeciesType.Enemy)
                 {
-                    Transform _transform = parent.transform.parent.transform;
-
-                    int check = 0;
-                    for (int i = 0; i < _transform.childCount; i++)
-                    {
-                        if (_transform.GetChild(i).transform.GetChild(0).position.x == positions[3].x)
-                        {
-                            check++;
-                            _transform.GetChild(i).transform.GetChild(0).GetComponent<CharacterBehaviour>().Goto = transform.position;
-                            Goto = positions[3];
-                        }                        
-                    }
-                    if (check == 0)
-                    {
-                        Goto = positions[3];
-                    }
-
                     SpeciesType[] array = (SpeciesType[])(SpeciesType.GetValues(typeof(SpeciesType)));
                     for (int i = 0; i < array.Length; i++)
                     {
@@ -478,10 +489,24 @@ namespace Assets.Scripts.MonoBehaviours
 
                     GameManager.Instance.activeCharacter = this;
                 }
+
+            if (species == SpeciesType.Enemy)
+                GameManager.Instance.activeEnemy = this;
+
+            if (species == SpeciesType.Enemy)
+                StartCoroutine(waitToStrike());
         }
         public void Update()
         {
             transform.position = Vector3.Lerp(Goto, transform.position, .125f);
+
+            if (timer > .33f)
+            {
+                Goto = origin;
+
+                timer = 0;
+                startAnimTimer = false;
+            }
 
             Image healthSlider = transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>();
 
@@ -494,20 +519,29 @@ namespace Assets.Scripts.MonoBehaviours
 
             shield = (float)(person.shield) / (float)(person.maxShield);
 
-            Debug.Log(person.shield.ToString() + ", " + person.maxShield.ToString());
-
             healthSlider.fillAmount = health;
             shieldSlider.fillAmount = shield;
+
+            if (startAnimTimer)
+                timer += Time.deltaTime;
         }  
         public void HoverAction()
         {
             //Highlight
         }
+        public Persona GetDefaultValues()
+        {
+            Persona persona = new Persona();
+            //object x = new SerializedObjectManager().RetrieveData(new SerializedObjectManager().paths[2] + person.CharacterName);
+
+            //persona = (Persona)x;
+
+            return persona;
+        }
         public void SetColor(Color color)
         {
             GetComponent<SpriteRenderer>().color = color;
         }
-
         void SetAlliesEnemies(Persona objects)
         {
             for (int i = 0; i < GameManager.Instance.playerCharacters.Count; i++)
@@ -519,7 +553,6 @@ namespace Assets.Scripts.MonoBehaviours
                 objects.Enemies.Add(GameManager.Instance.enemyCharacters[i].GetComponentInChildren<CharacterBehaviour>().person);
             }
         }
-
         void ApplySavedStats(Persona character)
         {
             SerializedObjectManager serializedObjectManager = new SerializedObjectManager();
@@ -531,8 +564,12 @@ namespace Assets.Scripts.MonoBehaviours
                 character.Health = character.Life;//In case it saves a characters data with below max health
             }            
         }
-
         #region Enemy Code
+        IEnumerator waitToStrike()
+        {
+            yield return new WaitForSeconds(2f);
+            EnemyAttack();
+        }
         public void EnemyAttack()
         {
             Bosses bossScript = GetComponent<Bosses>();
@@ -576,7 +613,7 @@ namespace Assets.Scripts.MonoBehaviours
                 Destroy(transform.root.gameObject, 3);
             }
 
-            GameManager.Instance.CheckGameOver();
+            GameManager.Instance.CheckBattleOver();
         }
         public bool extraTurn;
         public int consecutiveTurns;
@@ -584,7 +621,6 @@ namespace Assets.Scripts.MonoBehaviours
         {
             extraTurn = true;
             consecutiveTurns = extraTurns;
-        }
-        
+        }        
     }
 }

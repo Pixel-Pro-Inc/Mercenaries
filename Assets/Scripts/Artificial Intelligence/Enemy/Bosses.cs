@@ -40,19 +40,16 @@ public class Bosses: MonoBehaviour
 
         enemyActions.bossesScript = this; //this doesnt make sense
     }
+    int block = 0;
     public void Decision() //Play Style Decision
     {
-        int k = 0;
-        int count = 0;
-        Debug.Log(count);
-
-        while (k == 0)
+        if(block == 0)
         {
-            count = Random.Range(0, 3);
-            Debug.Log(count);
-
-            k = 1;
+            int count = 0;
             bool fired = false;
+
+            count = Random.Range(0, 3);
+
             if (count == 0)
                 fired = SlotMachine(blindAttack);
 
@@ -73,12 +70,25 @@ public class Bosses: MonoBehaviour
                 if (count == 2) // strategic Attack
                     StrategicAttack();
 
-                k = 1;
+                return;
             }
+
+            if (count == 0) // blind attack
+                BlindAttack();
+
+            if (count == 1) // defense Biased Attack
+                DefenseBiasedAttack();
+
+            if (count == 2) // strategic Attack
+                StrategicAttack();
+
+            block = 1;
         }
+        
     }
     void BlindAttack()
     {
+        Debug.Log("entered 1");
         int r = Random.Range(0, 4);
 
         switch (r)
@@ -99,6 +109,7 @@ public class Bosses: MonoBehaviour
     }
     void DefenseBiasedAttack()
     {
+        Debug.Log("entered 2");
         if (((float)myStats.Health / (float)myStats.Life) < (float)healthThreshold) //Persona.Life is not set
         {
             //BUff involves healing, cause it is not always possible to heal
@@ -106,11 +117,12 @@ public class Bosses: MonoBehaviour
         }
         else
         {
-            Decision(); //Try another strategy
+            //Decision(); //Try another strategy // might cause error
         }
     }
     void StrategicAttack()
     {
+        Debug.Log("entered 3");
         bool fired = false;
 
         if (!fired)
@@ -171,7 +183,8 @@ public class Bosses: MonoBehaviour
 
         if (!fired)
         {
-            Decision(); //Try another strategy. !! This is necessary cause there should be no such thing as inaction, it has to keep trying to do something until something fires cause sometimes a boss might not have some of these mehods
+            //this too
+            //Decision(); //Try another strategy. !! This is necessary cause there should be no such thing as inaction, it has to keep trying to do something until something fires cause sometimes a boss might not have some of these mehods
             fired = true;
         }
     }
@@ -180,14 +193,12 @@ public class Bosses: MonoBehaviour
         int max = (int)(1f / chance);
         int n = Random.Range(0, max);
 
-        Debug.Log(max);
-
         if (n == 0)
         {
             return true;
         }
 
-        return false;
+        return false;        
     }
 
 }
