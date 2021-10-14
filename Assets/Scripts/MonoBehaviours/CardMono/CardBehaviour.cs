@@ -559,7 +559,7 @@ public class CardBehaviour : Card
                  int numberofDebuff= new int();
                  foreach (var item in GameManager.Instance.enemyCharacters)
                  {
-                    Persona judas= item.GetComponent<CharacterBehaviour>().person;
+                    Persona judas= item.GetComponentInChildren<CharacterBehaviour>().person;
                     numberofDebuff+=judas.GetDebuffs().Count;
                  }
                 CharacterInstance.Health+= (int)(CharacterInstance.Life*0.02*numberofDebuff);

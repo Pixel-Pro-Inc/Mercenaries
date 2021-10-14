@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Assets.Scripts.Entities.Character;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,8 +22,8 @@ public class Individual : MonoBehaviour
     protected string IndividualType { get; set; }
     public enum Kingdom { FarWest, MiddleEarth, DarkSyde };
     public List<object> Master = new List<object>();
-    public List<object> Allies = new List<object>();
-    public List<object> Enemies = new List<object>();
+    public List<Persona> Allies = new List<Persona>();
+    public List<Persona> Enemies = new List<Persona>();
 
     public void passiveTraits()
     {

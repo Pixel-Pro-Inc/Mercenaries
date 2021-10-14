@@ -15,7 +15,7 @@ namespace Assets.Scripts.Helpers
 {
     class EnemyActions: Persona, IEnemyAction
     {
-        MasterCharacterList EnemyNames;
+        public MasterCharacterList EnemyNames;
         Persona CharacterInstance = null;
 
         public Bosses bossesScript; //yeah, still doesnt make sense, Whats happening here?
@@ -658,11 +658,16 @@ namespace Assets.Scripts.Helpers
             {
                 case MasterCharacterList.ElderStag:
                     //Attack 1
+                    
+
                     int ElderFist = (int)(Character.DamageGiven() * 0.4);
-                    Persona Face = (Persona)Character.Enemies[UnityEngine.Random.Range(0, Character.Enemies.Count)];
-                    Persona Face2 = (Persona)Character.Enemies[UnityEngine.Random.Range(0, Character.Enemies.Count)];
-                    Persona Face3 = (Persona)Character.Enemies[UnityEngine.Random.Range(0, Character.Enemies.Count)];
-                    List<Persona> Faces = new List<Persona> { Face, Face2, Face3 };
+                    
+                    List<Persona> Faces = new List<Persona>();
+
+                    for (int i = 0; i < Character.Enemies.Count; i++)
+                    {
+                        Faces.Add((Persona)Character.Enemies[i]);
+                    }
                     foreach (var item in Faces)
                     {
                         Character.MagicalDamage(Character, item, ElderFist);
@@ -985,7 +990,7 @@ namespace Assets.Scripts.Helpers
                     if (canceDa3 > 50)
                     {
                         //Attack 2
-                        int storedhealth = new int(); int count = 0; int lowest = new int();
+                        int storedhealth = new int(); int count = 0; int lowest = 0;
                         for (int i = 0; i < Character.Allies.Count; i++)
                         {
                             Persona friend = (Persona)Character.Allies[i];
@@ -997,8 +1002,11 @@ namespace Assets.Scripts.Helpers
                                 lowest = i; storedhealth = friend.Health;
                             }
                         }
-                        Persona weak = (Persona)Character.Allies[lowest];
-                        weak.Health += weak.Health;
+                        if(lowest < ((Persona)Character).Allies.Count)
+                        {
+                            Persona weak = (Persona)Character.Allies[lowest];
+                            weak.Health += weak.Health;
+                        }                        
                     }
                     else
                     {

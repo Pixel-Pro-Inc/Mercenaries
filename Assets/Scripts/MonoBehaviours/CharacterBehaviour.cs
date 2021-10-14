@@ -33,6 +33,8 @@ namespace Assets.Scripts.MonoBehaviours
 
         public Persona person;
 
+        public List<Persona> enemies = new List<Persona>();
+
         void Awake()
         {
             parent = transform.parent.gameObject;
@@ -425,7 +427,7 @@ namespace Assets.Scripts.MonoBehaviours
                 default:
                     break;
             }
-            SetAlliesEnemies(person);
+            Invoke("SetAlliesEnemies", .1f);
 
             ApplySavedStats(person);
 
@@ -542,16 +544,35 @@ namespace Assets.Scripts.MonoBehaviours
         {
             GetComponent<SpriteRenderer>().color = color;
         }
-        void SetAlliesEnemies(Persona objects)
+        void SetAlliesEnemies()
         {
+            Persona objects = person;
+            if(species != SpeciesType.Enemy)
+            {
+                for (int i = 0; i < GameManager.Instance.playerCharacters.Count; i++)
+                {
+                    if (GameManager.Instance.playerCharacters[i].GetComponentInChildren<CharacterBehaviour>() != this)
+                        objects.Allies.Add(GameManager.Instance.playerCharacters[i].GetComponentInChildren<CharacterBehaviour>().person);
+                }
+                for (int i = 0; i < GameManager.Instance.enemyCharacters.Count; i++)
+                {
+                    objects.Enemies.Add(GameManager.Instance.enemyCharacters[i].GetComponentInChildren<CharacterBehaviour>().person);
+                }
+
+                return;
+            }
+
             for (int i = 0; i < GameManager.Instance.playerCharacters.Count; i++)
             {
-                objects.Allies.Add(GameManager.Instance.playerCharacters[i].GetComponentInChildren<CharacterBehaviour>().person);
+                objects.Enemies.Add(GameManager.Instance.playerCharacters[i].GetComponentInChildren<CharacterBehaviour>().person);
             }
             for (int i = 0; i < GameManager.Instance.enemyCharacters.Count; i++)
             {
-                objects.Enemies.Add(GameManager.Instance.enemyCharacters[i].GetComponentInChildren<CharacterBehaviour>().person);
+                if (GameManager.Instance.enemyCharacters[i].GetComponentInChildren<CharacterBehaviour>() != this)
+                    objects.Allies.Add(GameManager.Instance.enemyCharacters[i].GetComponentInChildren<CharacterBehaviour>().person);
             }
+
+            enemies.AddRange(objects.Enemies);
         }
         void ApplySavedStats(Persona character)
         {

@@ -404,47 +404,49 @@ namespace Assets.Scripts.Helpers
             if (CalmDebuffM == true) magicalDamage -= (int)(magicalDamage * Character.CalmDeBuffPercent);
             #endregion
             #region Target Logic
-
-            bool MArkedDebuffM = new bool();
-            List<DebuffObject> DebuffmaybeTar = Target.GetDebuffs();
-            foreach (var item in DebuffmaybeTar)
+            if(Target != null)
             {
-                if (item.type == debuffType.Marked) MArkedDebuffM = true;
-            }
-            Target.AttackSponser = Character; //for Onguard()
-            Target.HitCount++;
-            Random Papaer = new Random();
-            int thin = Papaer.Next(1, 101);
-            if (thin < Character.dodge) magicalDamage = 0;
-            shieldcache = Target.shield;
-            magrescache = Target.MagicRes;
-            if (Target.ImmuneState == true) magicalDamage = 0;
-            shieldcache -= magicalDamage; Target.shield -= magicalDamage;
-            if (Target.ProtectionSponser != null) Target = (Persona)Target.ProtectionSponser; attackObject.Victim = Target;
-            if (MArkedDebuffM == true) magicalDamage += (int)(magicalDamage * markedda);
-
-            if (shieldcache < 0)//this asks if there is no more sheild left
-            {
-                magrescache += shieldcache;// here the negative value adds with the positive- following negative number addition laws i hope
-                if (magrescache < 0)//this asks if there is no more resistance left
+                bool MArkedDebuffM = new bool();
+                List<DebuffObject> DebuffmaybeTar = Target == null ? new List<DebuffObject>() : Target.GetDebuffs();
+                foreach (var item in DebuffmaybeTar)
                 {
-                    Target.MagicRes = 0;
-                    hitval.DamageValue = Math.Abs(magrescache);
-                    Character.TrueDamage(Character, Target, hitval); //This removes the health of the target
+                    if (item.type == debuffType.Marked) MArkedDebuffM = true;
                 }
-                else { Target.MagicRes = magrescache; }
+                Target.AttackSponser = Character; //for Onguard()
+                Target.HitCount++;
+                Random Papaer = new Random();
+                int thin = Papaer.Next(1, 101);
+                if (thin < Character.dodge) magicalDamage = 0;
+                shieldcache = Target.shield;
+                magrescache = Target.MagicRes;
+                if (Target.ImmuneState == true) magicalDamage = 0;
+                shieldcache -= magicalDamage; Target.shield -= magicalDamage;
+                if (Target.ProtectionSponser != null) Target = (Persona)Target.ProtectionSponser; attackObject.Victim = Target;
+                if (MArkedDebuffM == true) magicalDamage += (int)(magicalDamage * markedda);
+
+                if (shieldcache < 0)//this asks if there is no more sheild left
+                {
+                    magrescache += shieldcache;// here the negative value adds with the positive- following negative number addition laws i hope
+                    if (magrescache < 0)//this asks if there is no more resistance left
+                    {
+                        Target.MagicRes = 0;
+                        hitval.DamageValue = Math.Abs(magrescache);
+                        Character.TrueDamage(Character, Target, hitval); //This removes the health of the target
+                    }
+                    else { Target.MagicRes = magrescache; }
+                }
+                else
+                {
+                    Target.shield = shieldcache;
+                }
+                Target.ProtectionSponser = null;
+                
+
+                EffectType effectType = EffectType.Magical_Damage;//Ranged?
+
+                GameManager.Instance.InstantiateEffect(effectType, ((Persona)TargetInstance).characterBehaviour);
             }
-            else
-            {
-                Target.shield = shieldcache;
-            }
-            Target.ProtectionSponser = null;
             #endregion
-
-            EffectType effectType = EffectType.Magical_Damage;//Ranged?
-
-            GameManager.Instance.InstantiateEffect(effectType, ((Persona)TargetInstance).characterBehaviour);
-
         }
         public void Drain(object CharacterInstance, object TargetInstance)
         {

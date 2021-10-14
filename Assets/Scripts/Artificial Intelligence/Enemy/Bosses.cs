@@ -7,6 +7,7 @@ using UnityEngine;
 
 public class Bosses: MonoBehaviour
 {
+    public Persona.MasterCharacterList enemyName;
     #region Tendencies
     //Play Style
     public float blindAttack; //Chance of attacking without thinking
@@ -39,58 +40,53 @@ public class Bosses: MonoBehaviour
         enemyActions.PassiveEnemyAbility();
 
         enemyActions.bossesScript = this; //this doesnt make sense
+
+        enemyActions.EnemyNames = enemyName;
     }
     int block = 0;
     public void Decision() //Play Style Decision
     {
         if(block == 0)
         {
-            int count = 0;
-            bool fired = false;
-
-            count = Random.Range(0, 3);
-
-            if (count == 0)
-                fired = SlotMachine(blindAttack);
-
-            if (count == 1)
-                fired = SlotMachine(defenseBiasedAttack);
-
-            if (count == 2)
-                fired = SlotMachine(strategicAttack);
-
-            if (fired)
+            int k = 0;
+            while(k == 0)
             {
-                if (count == 0) // blind attack
-                    BlindAttack();
+                int count = 0;
+                bool fired = false;
 
-                if (count == 1) // defense Biased Attack
-                    DefenseBiasedAttack();
+                //count = Random.Range(0, 3);
 
-                if (count == 2) // strategic Attack
-                    StrategicAttack();
+                if (count == 0)
+                    fired = SlotMachine(blindAttack);
 
-                return;
-            }
+                if (count == 1)
+                    fired = SlotMachine(defenseBiasedAttack);
 
-            if (count == 0) // blind attack
-                BlindAttack();
+                if (count == 2)
+                    fired = SlotMachine(strategicAttack);
 
-            if (count == 1) // defense Biased Attack
-                DefenseBiasedAttack();
+                if (fired)
+                {
+                    if (count == 0) // blind attack
+                        BlindAttack();
 
-            if (count == 2) // strategic Attack
-                StrategicAttack();
+                    if (count == 1) // defense Biased Attack
+                        DefenseBiasedAttack();
 
-            block = 1;
+                    if (count == 2) // strategic Attack
+                        StrategicAttack();
+
+                    k = 1;
+                }
+            }            
+
+            //block = 1;
         }
-        
     }
     void BlindAttack()
     {
         Debug.Log("entered 1");
         int r = Random.Range(0, 4);
-
         switch (r)
         {
             case 0:
@@ -106,10 +102,13 @@ public class Bosses: MonoBehaviour
                 enemyActions.Debuffs(opponents[Random.Range(0, opponents.Count)]);
                 break;
         }
+
+        block = 0;
     }
     void DefenseBiasedAttack()
     {
-        Debug.Log("entered 2");
+        block = 0;
+
         if (((float)myStats.Health / (float)myStats.Life) < (float)healthThreshold) //Persona.Life is not set
         {
             //BUff involves healing, cause it is not always possible to heal
@@ -117,11 +116,13 @@ public class Bosses: MonoBehaviour
         }
         else
         {
-            //Decision(); //Try another strategy // might cause error
+            Decision(); //Try another strategy // might cause error
         }
     }
     void StrategicAttack()
     {
+        block = 0;
+
         Debug.Log("entered 3");
         bool fired = false;
 
@@ -184,7 +185,7 @@ public class Bosses: MonoBehaviour
         if (!fired)
         {
             //this too
-            //Decision(); //Try another strategy. !! This is necessary cause there should be no such thing as inaction, it has to keep trying to do something until something fires cause sometimes a boss might not have some of these mehods
+            Decision(); //Try another strategy. !! This is necessary cause there should be no such thing as inaction, it has to keep trying to do something until something fires cause sometimes a boss might not have some of these mehods
             fired = true;
         }
     }

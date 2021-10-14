@@ -1676,6 +1676,7 @@ MonoBehaviour:
   turnUsed: 0
   attackOffset: {x: 1, y: 0, z: 0}
   person: {fileID: 0}
+  enemies: []
   extraTurn: 0
   consecutiveTurns: 0
 --- !u!61 &526992293
@@ -2453,6 +2454,7 @@ MonoBehaviour:
   turnUsed: 0
   attackOffset: {x: 1, y: 0, z: 0}
   person: {fileID: 0}
+  enemies: []
   extraTurn: 0
   consecutiveTurns: 0
 --- !u!61 &790798337
@@ -2744,6 +2746,7 @@ MonoBehaviour:
   turnUsed: 0
   attackOffset: {x: 1, y: 0, z: 0}
   person: {fileID: 0}
+  enemies: []
   extraTurn: 0
   consecutiveTurns: 0
 --- !u!114 &809300058
@@ -2758,7 +2761,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5cdb6e5ad797d04f8a9e76289fd8a22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blindAttack: 0.4
+  enemyName: 16
+  blindAttack: 0.9
   defenseBiasedAttack: 0.5
   strategicAttack: 0.6
   debuffLikelyHood: 0.1
@@ -4587,6 +4591,7 @@ MonoBehaviour:
   turnUsed: 0
   attackOffset: {x: 1, y: 0, z: 0}
   person: {fileID: 0}
+  enemies: []
   extraTurn: 0
   consecutiveTurns: 0
 --- !u!61 &1522216991
@@ -4869,6 +4874,7 @@ MonoBehaviour:
   turnUsed: 0
   attackOffset: {x: 1, y: 0, z: 0}
   person: {fileID: 0}
+  enemies: []
   extraTurn: 0
   consecutiveTurns: 0
 --- !u!61 &1675079435
